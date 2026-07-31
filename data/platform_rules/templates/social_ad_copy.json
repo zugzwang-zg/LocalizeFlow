@@ -1,0 +1,88 @@
+{
+  "template_id": "LF-TPL-GENERIC-SOCIAL-1.0",
+  "version": "1.0.0",
+  "updated_at": "2026-07-28",
+  "platform": "Generic Social",
+  "content_type": "social_ad_copy",
+  "markets": [
+    "US",
+    "MX"
+  ],
+  "applied_rule_ids": [
+    "INT-SOC-001",
+    "INT-SOC-002",
+    "INT-SOC-003",
+    "BRAND-H-001",
+    "BRAND-H-002",
+    "INT-MKT-001",
+    "INT-REV-001"
+  ],
+  "input_contract": {
+    "required": [
+      "sku",
+      "market",
+      "language",
+      "marketing_goal",
+      "matched_insight_ids",
+      "product_fact_ids",
+      "aigc_status"
+    ]
+  },
+  "output_contract": {
+    "sku": "",
+    "market": "",
+    "language": "",
+    "platform": "generic_social",
+    "platform_scope_note": "尚未指定真实发布平台，因此不应用或声称满足任何单个平台的字符上限。",
+    "strategy": {
+      "marketing_goal": "",
+      "insight_ids": [],
+      "angle": ""
+    },
+    "content": {
+      "hook": "",
+      "body": "",
+      "cta": ""
+    },
+    "claims": [
+      {
+        "text": "",
+        "fact_ids": [],
+        "support_status": "pending"
+      }
+    ],
+    "conditional_claims": {
+      "price": null,
+      "discount": null,
+      "free_shipping": null,
+      "scarcity": null,
+      "review_or_endorsement": null,
+      "certification": null
+    },
+    "ai_disclosure": {
+      "aigc_status": "unknown",
+      "target_platform_policy_check_required": true,
+      "method": null,
+      "disclosure_text": null
+    },
+    "checks": {
+      "brand_rules": "pending",
+      "internal_rules": "pending",
+      "target_platform_rules": "not_run_platform_unspecified"
+    },
+    "warnings": [
+      "发布前必须选择真实平台并加载该平台最新规则。"
+    ],
+    "human_review": {
+      "required": true,
+      "status": "pending",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  },
+  "generation_notes": [
+    "通用社媒模板只定义内容结构，不冒充 Instagram、Facebook、X、Pinterest 等平台的发布规则。",
+    "价格、折扣、免邮、稀缺性、评论、认证和背书没有事实依据时必须保持为 null。",
+    "选定真实发布平台后，必须再次执行该平台的最新规则检查和人工审核。"
+  ]
+}

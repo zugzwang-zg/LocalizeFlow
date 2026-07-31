@@ -1,0 +1,237 @@
+{
+  "status": "success",
+  "sku": "MV-SERUM-001",
+  "market": "US",
+  "language": "en-US",
+  "platform": "google_merchant_center",
+  "content_type": "product_listing",
+  "content_version": {
+    "content_id": "content_MV-SERUM-001_US_listing",
+    "version_id": "content_MV-SERUM-001_US_listing_v02",
+    "parent_version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+    "created_by": "human",
+    "change_reason": "Removed high-risk claims, corrected volume, completed listing structure, and added platform verification context."
+  },
+  "content": {
+    "title": "Mirevane Botanics Hydrating Serum, Fragrance-Free, 30 mL",
+    "bullet_points": [
+      "A water-based gel serum made without added fragrance.",
+      "Made with glycerin, sodium hyaluronate and panthenol.",
+      "Helps skin feel hydrated and soft.",
+      "Apply 1–2 pumps to the face and neck after cleansing, then follow with moisturizer; avoid the eye area.",
+      "Presented in an opaque 30 mL PP pump bottle."
+    ],
+    "description": "A water-based gel hydrating serum made without added fragrance. The simulated formula lists glycerin, sodium hyaluronate and panthenol. It helps skin feel hydrated and soft. After cleansing, apply 1–2 pumps to the face and neck, follow with moisturizer and avoid the eye area. Presented in an opaque 30 mL PP pump bottle.",
+    "scenes": [],
+    "caption": null,
+    "hook": null,
+    "body": null,
+    "cta": null
+  },
+  "claims": [
+    {
+      "claim_id": "claim_v02_001",
+      "text": "Hydrating Serum",
+      "location": "content.title",
+      "fact_ids": ["MV-SERUM-001-F002"],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_002",
+      "text": "Fragrance-Free",
+      "location": "content.title",
+      "fact_ids": ["MV-SERUM-001-F018"],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_003",
+      "text": "30 mL",
+      "location": "content.title",
+      "fact_ids": ["MV-SERUM-001-F003"],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_004",
+      "text": "A water-based gel serum made without added fragrance.",
+      "location": "content.bullet_points[0]",
+      "fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F018",
+        "MV-SERUM-001-F019"
+      ],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_005",
+      "text": "Made with glycerin, sodium hyaluronate and panthenol.",
+      "location": "content.bullet_points[1]",
+      "fact_ids": [
+        "MV-SERUM-001-F005",
+        "MV-SERUM-001-F007",
+        "MV-SERUM-001-F008",
+        "MV-SERUM-001-F020"
+      ],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_006",
+      "text": "Helps skin feel hydrated and soft.",
+      "location": "content.bullet_points[2]",
+      "fact_ids": [
+        "MV-SERUM-001-F022",
+        "MV-SERUM-001-F024"
+      ],
+      "evidence_level": "B"
+    },
+    {
+      "claim_id": "claim_v02_007",
+      "text": "Apply 1–2 pumps to the face and neck after cleansing, then follow with moisturizer; avoid the eye area.",
+      "location": "content.bullet_points[3]",
+      "fact_ids": [
+        "MV-SERUM-001-F015",
+        "MV-SERUM-001-F016",
+        "MV-SERUM-001-F017"
+      ],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_008",
+      "text": "Presented in an opaque 30 mL PP pump bottle.",
+      "location": "content.bullet_points[4]",
+      "fact_ids": [
+        "MV-SERUM-001-F003",
+        "MV-SERUM-001-F021",
+        "MV-SERUM-001-F031"
+      ],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_009",
+      "text": "A water-based gel hydrating serum made without added fragrance.",
+      "location": "content.description",
+      "fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F018",
+        "MV-SERUM-001-F019"
+      ],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_010",
+      "text": "The simulated formula lists glycerin, sodium hyaluronate and panthenol.",
+      "location": "content.description",
+      "fact_ids": [
+        "MV-SERUM-001-F005",
+        "MV-SERUM-001-F007",
+        "MV-SERUM-001-F008",
+        "MV-SERUM-001-F020"
+      ],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_011",
+      "text": "It helps skin feel hydrated and soft.",
+      "location": "content.description",
+      "fact_ids": [
+        "MV-SERUM-001-F022",
+        "MV-SERUM-001-F024"
+      ],
+      "evidence_level": "B"
+    },
+    {
+      "claim_id": "claim_v02_012",
+      "text": "After cleansing, apply 1–2 pumps to the face and neck, follow with moisturizer and avoid the eye area.",
+      "location": "content.description",
+      "fact_ids": [
+        "MV-SERUM-001-F015",
+        "MV-SERUM-001-F016",
+        "MV-SERUM-001-F017"
+      ],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "claim_v02_013",
+      "text": "Presented in an opaque 30 mL PP pump bottle.",
+      "location": "content.description",
+      "fact_ids": [
+        "MV-SERUM-001-F003",
+        "MV-SERUM-001-F021",
+        "MV-SERUM-001-F031"
+      ],
+      "evidence_level": "A"
+    }
+  ],
+  "platform_fields": {
+    "title_field_name": "structured_title",
+    "description_field_name": "structured_description",
+    "digital_source_type": "trained_algorithmic_media",
+    "duration_seconds": null,
+    "aspect_ratio": null
+  },
+  "platform_context": {
+    "feed_fields": {
+      "id": "MV-SERUM-001-US",
+      "title": null,
+      "structured_title": {
+        "digital_source_type": "trained_algorithmic_media",
+        "content": "Mirevane Botanics Hydrating Serum, Fragrance-Free, 30 mL"
+      },
+      "description": null,
+      "structured_description": {
+        "digital_source_type": "trained_algorithmic_media",
+        "content": "A water-based gel hydrating serum made without added fragrance. The simulated formula lists glycerin, sodium hyaluronate and panthenol. It helps skin feel hydrated and soft. After cleansing, apply 1–2 pumps to the face and neck, follow with moisturizer and avoid the eye area. Presented in an opaque 30 mL PP pump bottle."
+      },
+      "link": "https://example.invalid/products/mv-serum-001-us",
+      "image_link": "https://example.invalid/images/mv-serum-001-us.jpg",
+      "availability": "in_stock",
+      "price": {
+        "amount": 24,
+        "currency": "USD"
+      }
+    },
+    "landing_page": {
+      "url": "https://example.invalid/products/mv-serum-001-us",
+      "domain_verified": true,
+      "accessible": true,
+      "title_matches_content": true,
+      "description_matches_content": true,
+      "availability_matches": true,
+      "price_matches": true,
+      "required_information": {
+        "total_price_and_currency": true,
+        "payment_conditions": true,
+        "terms_and_conditions": true,
+        "shipping_information": true,
+        "return_and_refund_policy": true,
+        "purchasable": true
+      }
+    },
+    "image": {
+      "url": "https://example.invalid/images/mv-serum-001-us.jpg",
+      "ai_origin": "not_ai",
+      "accurately_depicts_product": true,
+      "crawlable": true,
+      "no_promotional_text": true,
+      "no_watermark": true,
+      "no_border": true,
+      "not_placeholder_or_generic": true,
+      "iptc_digital_source_type": null
+    },
+    "verification_note": "Simulated deterministic fixture values; no live network or platform approval check was performed."
+  },
+  "ai_disclosure": {
+    "aigc_status": "generative_ai_text",
+    "label_required": true,
+    "method": "structured_title_and_structured_description",
+    "disclosure_text": null
+  },
+  "warnings": [
+    "Revised fixture with simulated platform-context confirmations.",
+    "Human final review is required before any export."
+  ],
+  "insufficient_information": [],
+  "human_review": {
+    "required": true,
+    "status": "pending"
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localizeflow.example/schemas/fact-extraction-output-v1.json",
+  "title": "LocalizeFlow Fact Extraction Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "sku",
+    "source_ref",
+    "facts",
+    "insufficient_information",
+    "warnings"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "insufficient_information"
+      ]
+    },
+    "sku": {
+      "type": "string"
+    },
+    "source_ref": {
+      "type": "string"
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "fact_id",
+          "attribute",
+          "value",
+          "value_type",
+          "unit",
+          "evidence_level",
+          "source",
+          "allowed_expression",
+          "prohibited_expression",
+          "generation_policy"
+        ],
+        "properties": {
+          "fact_id": {
+            "type": "string"
+          },
+          "attribute": {
+            "type": "string"
+          },
+          "value": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "type": "string"
+          },
+          "allowed_expression": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prohibited_expression": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "generation_policy": {
+            "type": "string",
+            "enum": [
+              "direct",
+              "cautious",
+              "not_directly_usable",
+              "blocked"
+            ]
+          }
+        }
+      }
+    },
+    "insufficient_information": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

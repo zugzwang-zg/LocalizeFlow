@@ -1,0 +1,6342 @@
+{
+  "dataset_name": "LocalizeFlow Product Facts",
+  "dataset_version": "1.0.0",
+  "generated_date": "2026-07-28",
+  "source_workbook": "data/products/product_master.xlsx",
+  "data_nature": "project_simulated",
+  "record_count": 191,
+  "sku_count": 5,
+  "evidence_summary": {
+    "A": 135,
+    "B": 14,
+    "C": 10,
+    "D": 32
+  },
+  "sku_summary": {
+    "MV-CLEAN-001": 43,
+    "MV-SERUM-001": 39,
+    "MV-CREAM-001": 38,
+    "MV-HAND-001": 39,
+    "MV-KIT-001": 32
+  },
+  "generation_gate": {
+    "A": "direct",
+    "B": "cautious",
+    "C": "not_directly_usable",
+    "D": "blocked"
+  },
+  "facts": [
+    {
+      "fact_id": "MV-CLEAN-001-F001",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "basic_info",
+      "attribute": "product_name_zh",
+      "value": "云柔氨基酸洁面乳",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "云柔氨基酸洁面乳"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他商品名称"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F002",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "basic_info",
+      "attribute": "category",
+      "value": "面部洁面乳",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "面部洁面乳"
+      ],
+      "prohibited_expression": [
+        "药品",
+        "医疗器械"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F003",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "specification",
+      "attribute": "net_volume",
+      "value": 120,
+      "value_type": "number",
+      "unit": "mL",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "120 mL"
+      ],
+      "prohibited_expression": [
+        "超过或少于120 mL"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F004",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "水",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含水",
+        "水"
+      ],
+      "prohibited_expression": [
+        "不含水"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F005",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "甘油",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含甘油",
+        "甘油"
+      ],
+      "prohibited_expression": [
+        "不含甘油"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F006",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "椰油酰甘氨酸钠",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含椰油酰甘氨酸钠",
+        "椰油酰甘氨酸钠"
+      ],
+      "prohibited_expression": [
+        "不含椰油酰甘氨酸钠"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F007",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "椰油酰胺丙基甜菜碱",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含椰油酰胺丙基甜菜碱",
+        "椰油酰胺丙基甜菜碱"
+      ],
+      "prohibited_expression": [
+        "不含椰油酰胺丙基甜菜碱"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F008",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "泛醇",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含泛醇",
+        "泛醇"
+      ],
+      "prohibited_expression": [
+        "不含泛醇"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F009",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "甜菜碱",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含甜菜碱",
+        "甜菜碱"
+      ],
+      "prohibited_expression": [
+        "不含甜菜碱"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F010",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "尿囊素",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 7,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含尿囊素",
+        "尿囊素"
+      ],
+      "prohibited_expression": [
+        "不含尿囊素"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F011",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "柠檬酸",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 8,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含柠檬酸",
+        "柠檬酸"
+      ],
+      "prohibited_expression": [
+        "不含柠檬酸"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F012",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "苯甲酸钠",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 9,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含苯甲酸钠",
+        "苯甲酸钠"
+      ],
+      "prohibited_expression": [
+        "不含苯甲酸钠"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F013",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "山梨酸钾",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 10,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含山梨酸钾",
+        "山梨酸钾"
+      ],
+      "prohibited_expression": [
+        "不含山梨酸钾"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F014",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "target_user",
+      "attribute": "target_users",
+      "value": "希望获得温和日常清洁体验的中性、干性或混合性肌肤成年人",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "希望获得温和日常清洁体验的中性、干性或混合性肌肤成年人"
+      ],
+      "prohibited_expression": [
+        "适合所有人",
+        "对所有敏感肌绝对安全"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F015",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "usage",
+      "attribute": "usage_instruction",
+      "value": "取1—2泵于湿润面部，轻柔按摩约30秒后用清水洗净；避开眼周",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "取1—2泵于湿润面部，轻柔按摩约30秒后用清水洗净；避开眼周"
+      ],
+      "prohibited_expression": [
+        "改变使用顺序或用量",
+        "省略必要注意事项"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F016",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "usage",
+      "attribute": "usage_amount_min",
+      "value": 1,
+      "value_type": "number",
+      "unit": "pump",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "1 pump"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他用量或时长"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F017",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "usage",
+      "attribute": "usage_amount_max",
+      "value": 2,
+      "value_type": "number",
+      "unit": "pump",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "2 pump"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他用量或时长"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F018",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "usage",
+      "attribute": "massage_duration",
+      "value": 30,
+      "value_type": "number",
+      "unit": "second",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "30 second"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他用量或时长"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F019",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "无添加香精",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "无添加香精"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F020",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "不含硫酸盐表面活性剂",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "不含硫酸盐表面活性剂"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F021",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "模拟规格pH 5.5±0.5",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "模拟规格pH 5.5±0.5"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F022",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "泵式包装",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "泵式包装"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F023",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "specification",
+      "attribute": "ph_nominal",
+      "value": 5.5,
+      "value_type": "number",
+      "unit": "pH",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "pH 5.5±0.5"
+      ],
+      "prohibited_expression": [
+        "对所有肤质完美平衡"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F024",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "specification",
+      "attribute": "ph_tolerance",
+      "value": 0.5,
+      "value_type": "number",
+      "unit": "pH",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "±0.5"
+      ],
+      "prohibited_expression": [
+        "省略公差并表述为绝对值"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F025",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "帮助洗去皮肤表面的污垢和多余油脂",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "帮助洗去皮肤表面的污垢和多余油脂"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F026",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "清洁后肌肤感觉舒适",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "清洁后肌肤感觉舒适"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F027",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "适合日常清洁步骤",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "适合日常清洁步骤"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F028",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "治疗痤疮或湿疹",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "治疗痤疮或湿疹"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F029",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "深层排毒",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "深层排毒"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F030",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "永久缩小毛孔",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "永久缩小毛孔"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F031",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "对所有敏感肌绝对安全",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "对所有敏感肌绝对安全"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F032",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "低敏",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "低敏"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F033",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "临床证明",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CLEAN-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "临床证明"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F034",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "packaging",
+      "attribute": "packaging_feature",
+      "value": "120 mL PET泵瓶",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "120 mL PET泵瓶"
+      ],
+      "prohibited_expression": [
+        "100%环保",
+        "保证可回收",
+        "零废弃"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F035",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "packaging",
+      "attribute": "packaging_feature",
+      "value": "可回收性取决于当地设施",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "可回收性取决于当地设施"
+      ],
+      "prohibited_expression": [
+        "100%环保",
+        "保证可回收",
+        "零废弃"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F036",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "price",
+      "attribute": "price_usd",
+      "value": 16,
+      "value_type": "number",
+      "unit": "USD",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "USD 16.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F037",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "price",
+      "attribute": "price_mxn",
+      "value": 319,
+      "value_type": "number",
+      "unit": "MXN",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MXN 319.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；不是由汇率公式换算，发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F038",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "specification",
+      "attribute": "variants",
+      "value": "仅120 mL",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "仅120 mL"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他规格或套装"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F039",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "US",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "US"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F040",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "MX",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MX"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F041",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "certification",
+      "attribute": "verified_certification",
+      "value": "none_verified",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CLEAN-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "未提供可验证认证"
+      ],
+      "prohibited_expression": [
+        "临床认证",
+        "皮肤科医生认证",
+        "TSA批准",
+        "监管机构批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "表示当前项目资料中没有可验证认证，不表示商品不需要合规审核。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F042",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试简单晨间清洁及清洁后舒适感的内容角度",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-CLEAN-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "en"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-CLEAN-001-F043",
+      "sku": "MV-CLEAN-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试清楚说明日常清洁步骤的内容角度",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-CLEAN-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F001",
+      "sku": "MV-SERUM-001",
+      "fact_category": "basic_info",
+      "attribute": "product_name_zh",
+      "value": "水衡保湿精华",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "水衡保湿精华"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他商品名称"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F002",
+      "sku": "MV-SERUM-001",
+      "fact_category": "basic_info",
+      "attribute": "category",
+      "value": "保湿精华",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "保湿精华"
+      ],
+      "prohibited_expression": [
+        "药品",
+        "医疗器械"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F003",
+      "sku": "MV-SERUM-001",
+      "fact_category": "specification",
+      "attribute": "net_volume",
+      "value": 30,
+      "value_type": "number",
+      "unit": "mL",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "30 mL"
+      ],
+      "prohibited_expression": [
+        "超过或少于30 mL"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F004",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "水",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含水",
+        "水"
+      ],
+      "prohibited_expression": [
+        "不含水"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F005",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "甘油",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含甘油",
+        "甘油"
+      ],
+      "prohibited_expression": [
+        "不含甘油"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F006",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "丙二醇",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含丙二醇",
+        "丙二醇"
+      ],
+      "prohibited_expression": [
+        "不含丙二醇"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F007",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "透明质酸钠",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含透明质酸钠",
+        "透明质酸钠"
+      ],
+      "prohibited_expression": [
+        "不含透明质酸钠"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F008",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "泛醇",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含泛醇",
+        "泛醇"
+      ],
+      "prohibited_expression": [
+        "不含泛醇"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F009",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "甜菜碱",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含甜菜碱",
+        "甜菜碱"
+      ],
+      "prohibited_expression": [
+        "不含甜菜碱"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F010",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "羟乙基纤维素",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 7,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含羟乙基纤维素",
+        "羟乙基纤维素"
+      ],
+      "prohibited_expression": [
+        "不含羟乙基纤维素"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F011",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "柠檬酸",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 8,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含柠檬酸",
+        "柠檬酸"
+      ],
+      "prohibited_expression": [
+        "不含柠檬酸"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F012",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "苯甲酸钠",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 9,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含苯甲酸钠",
+        "苯甲酸钠"
+      ],
+      "prohibited_expression": [
+        "不含苯甲酸钠"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F013",
+      "sku": "MV-SERUM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "山梨酸钾",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 10,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含山梨酸钾",
+        "山梨酸钾"
+      ],
+      "prohibited_expression": [
+        "不含山梨酸钾"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F014",
+      "sku": "MV-SERUM-001",
+      "fact_category": "target_user",
+      "attribute": "target_users",
+      "value": "希望增加日常补水步骤、偏好轻盈质地的成年人",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "希望增加日常补水步骤、偏好轻盈质地的成年人"
+      ],
+      "prohibited_expression": [
+        "适合所有人",
+        "对所有敏感肌绝对安全"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F015",
+      "sku": "MV-SERUM-001",
+      "fact_category": "usage",
+      "attribute": "usage_instruction",
+      "value": "洁面后取1—2泵涂抹于面部和颈部，再使用面霜；避开眼周",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "洁面后取1—2泵涂抹于面部和颈部，再使用面霜；避开眼周"
+      ],
+      "prohibited_expression": [
+        "改变使用顺序或用量",
+        "省略必要注意事项"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F016",
+      "sku": "MV-SERUM-001",
+      "fact_category": "usage",
+      "attribute": "usage_amount_min",
+      "value": 1,
+      "value_type": "number",
+      "unit": "pump",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "1 pump"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他用量或时长"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F017",
+      "sku": "MV-SERUM-001",
+      "fact_category": "usage",
+      "attribute": "usage_amount_max",
+      "value": 2,
+      "value_type": "number",
+      "unit": "pump",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "2 pump"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他用量或时长"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F018",
+      "sku": "MV-SERUM-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "无添加香精",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "无添加香精"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F019",
+      "sku": "MV-SERUM-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "水基凝露质地",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "水基凝露质地"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F020",
+      "sku": "MV-SERUM-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "透明质酸钠与泛醇列于模拟配方",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "透明质酸钠与泛醇列于模拟配方"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F021",
+      "sku": "MV-SERUM-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "按压泵包装",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "按压泵包装"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F022",
+      "sku": "MV-SERUM-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "帮助肌肤感觉水润",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "帮助肌肤感觉水润"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F023",
+      "sku": "MV-SERUM-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "适合作为面霜前的补水步骤",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "适合作为面霜前的补水步骤"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F024",
+      "sku": "MV-SERUM-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "使用后肌肤感觉柔软",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "使用后肌肤感觉柔软"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F025",
+      "sku": "MV-SERUM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "24小时或72小时保湿",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "24小时或72小时保湿"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F026",
+      "sku": "MV-SERUM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "修复受损皮肤屏障",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "修复受损皮肤屏障"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F027",
+      "sku": "MV-SERUM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "消除细纹",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "消除细纹"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F028",
+      "sku": "MV-SERUM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "逆转衰老",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "逆转衰老"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F029",
+      "sku": "MV-SERUM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "医用级",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "医用级"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F030",
+      "sku": "MV-SERUM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "临床证明",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-SERUM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "临床证明"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F031",
+      "sku": "MV-SERUM-001",
+      "fact_category": "packaging",
+      "attribute": "packaging_feature",
+      "value": "30 mL不透明PP按压泵瓶",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "30 mL不透明PP按压泵瓶"
+      ],
+      "prohibited_expression": [
+        "100%环保",
+        "保证可回收",
+        "零废弃"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F032",
+      "sku": "MV-SERUM-001",
+      "fact_category": "price",
+      "attribute": "price_usd",
+      "value": 24,
+      "value_type": "number",
+      "unit": "USD",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "USD 24.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F033",
+      "sku": "MV-SERUM-001",
+      "fact_category": "price",
+      "attribute": "price_mxn",
+      "value": 479,
+      "value_type": "number",
+      "unit": "MXN",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MXN 479.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；不是由汇率公式换算，发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F034",
+      "sku": "MV-SERUM-001",
+      "fact_category": "specification",
+      "attribute": "variants",
+      "value": "仅30 mL",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "仅30 mL"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他规格或套装"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F035",
+      "sku": "MV-SERUM-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "US",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "US"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F036",
+      "sku": "MV-SERUM-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "MX",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MX"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-SERUM-001-F037",
+      "sku": "MV-SERUM-001",
+      "fact_category": "certification",
+      "attribute": "verified_certification",
+      "value": "none_verified",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-SERUM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "未提供可验证认证"
+      ],
+      "prohibited_expression": [
+        "临床认证",
+        "皮肤科医生认证",
+        "TSA批准",
+        "监管机构批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "表示当前项目资料中没有可验证认证，不表示商品不需要合规审核。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F038",
+      "sku": "MV-SERUM-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试轻盈质地与不黏腻诉求的内容角度",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-SERUM-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "en"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F039",
+      "sku": "MV-SERUM-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试与早晚基础护理步骤结合的内容角度",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-SERUM-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F001",
+      "sku": "MV-CREAM-001",
+      "fact_category": "basic_info",
+      "attribute": "product_name_zh",
+      "value": "静润无香面霜",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "静润无香面霜"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他商品名称"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F002",
+      "sku": "MV-CREAM-001",
+      "fact_category": "basic_info",
+      "attribute": "category",
+      "value": "面部保湿霜",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "面部保湿霜"
+      ],
+      "prohibited_expression": [
+        "药品",
+        "医疗器械"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F003",
+      "sku": "MV-CREAM-001",
+      "fact_category": "specification",
+      "attribute": "net_volume",
+      "value": 50,
+      "value_type": "number",
+      "unit": "mL",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "50 mL"
+      ],
+      "prohibited_expression": [
+        "超过或少于50 mL"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F004",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "水",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含水",
+        "水"
+      ],
+      "prohibited_expression": [
+        "不含水"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F005",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "甘油",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含甘油",
+        "甘油"
+      ],
+      "prohibited_expression": [
+        "不含甘油"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F006",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "辛酸/癸酸甘油三酯",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含辛酸/癸酸甘油三酯",
+        "辛酸/癸酸甘油三酯"
+      ],
+      "prohibited_expression": [
+        "不含辛酸/癸酸甘油三酯"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F007",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "角鲨烷",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含角鲨烷",
+        "角鲨烷"
+      ],
+      "prohibited_expression": [
+        "不含角鲨烷"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F008",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "鲸蜡硬脂醇",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含鲸蜡硬脂醇",
+        "鲸蜡硬脂醇"
+      ],
+      "prohibited_expression": [
+        "不含鲸蜡硬脂醇"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F009",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "柠檬酸甘油硬脂酸酯",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含柠檬酸甘油硬脂酸酯",
+        "柠檬酸甘油硬脂酸酯"
+      ],
+      "prohibited_expression": [
+        "不含柠檬酸甘油硬脂酸酯"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F010",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "泛醇",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 7,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含泛醇",
+        "泛醇"
+      ],
+      "prohibited_expression": [
+        "不含泛醇"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F011",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "β-葡聚糖",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 8,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含β-葡聚糖",
+        "β-葡聚糖"
+      ],
+      "prohibited_expression": [
+        "不含β-葡聚糖"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F012",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "黄原胶",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 9,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含黄原胶",
+        "黄原胶"
+      ],
+      "prohibited_expression": [
+        "不含黄原胶"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F013",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "苯甲酸钠",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 10,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含苯甲酸钠",
+        "苯甲酸钠"
+      ],
+      "prohibited_expression": [
+        "不含苯甲酸钠"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F014",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "山梨酸钾",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 11,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含山梨酸钾",
+        "山梨酸钾"
+      ],
+      "prohibited_expression": [
+        "不含山梨酸钾"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F015",
+      "sku": "MV-CREAM-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "柠檬酸",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 12,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含柠檬酸",
+        "柠檬酸"
+      ],
+      "prohibited_expression": [
+        "不含柠檬酸"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F016",
+      "sku": "MV-CREAM-001",
+      "fact_category": "target_user",
+      "attribute": "target_users",
+      "value": "希望使用无香基础面霜的中性、干性或混合性肌肤成年人",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "希望使用无香基础面霜的中性、干性或混合性肌肤成年人"
+      ],
+      "prohibited_expression": [
+        "适合所有人",
+        "对所有敏感肌绝对安全"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F017",
+      "sku": "MV-CREAM-001",
+      "fact_category": "usage",
+      "attribute": "usage_instruction",
+      "value": "取适量涂抹于清洁后的面部和颈部；日间使用后另行涂抹防晒产品",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "取适量涂抹于清洁后的面部和颈部；日间使用后另行涂抹防晒产品"
+      ],
+      "prohibited_expression": [
+        "改变使用顺序或用量",
+        "省略必要注意事项"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F018",
+      "sku": "MV-CREAM-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "无添加香精",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "无添加香精"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F019",
+      "sku": "MV-CREAM-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "含角鲨烷、泛醇和β-葡聚糖",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含角鲨烷、泛醇和β-葡聚糖"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F020",
+      "sku": "MV-CREAM-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "乳霜质地",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "乳霜质地"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F021",
+      "sku": "MV-CREAM-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "帮助肌肤感觉柔软、滋润",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "帮助肌肤感觉柔软、滋润"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F022",
+      "sku": "MV-CREAM-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "为日常护肤步骤补充保湿",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "为日常护肤步骤补充保湿"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F023",
+      "sku": "MV-CREAM-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "无添加香精",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "无添加香精"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F024",
+      "sku": "MV-CREAM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "治疗皮炎或湿疹",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "治疗皮炎或湿疹"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F025",
+      "sku": "MV-CREAM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "修复或重建皮肤屏障",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "修复或重建皮肤屏障"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F026",
+      "sku": "MV-CREAM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "立即消除脱皮或泛红",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "立即消除脱皮或泛红"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F027",
+      "sku": "MV-CREAM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "不致敏",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不致敏"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F028",
+      "sku": "MV-CREAM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "零刺激",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "零刺激"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F029",
+      "sku": "MV-CREAM-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "医生推荐",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-CREAM-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "医生推荐"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F030",
+      "sku": "MV-CREAM-001",
+      "fact_category": "packaging",
+      "attribute": "packaging_feature",
+      "value": "50 mL PP罐，带内盖",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "50 mL PP罐，带内盖"
+      ],
+      "prohibited_expression": [
+        "100%环保",
+        "保证可回收",
+        "零废弃"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F031",
+      "sku": "MV-CREAM-001",
+      "fact_category": "price",
+      "attribute": "price_usd",
+      "value": 22,
+      "value_type": "number",
+      "unit": "USD",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "USD 22.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F032",
+      "sku": "MV-CREAM-001",
+      "fact_category": "price",
+      "attribute": "price_mxn",
+      "value": 439,
+      "value_type": "number",
+      "unit": "MXN",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MXN 439.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；不是由汇率公式换算，发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F033",
+      "sku": "MV-CREAM-001",
+      "fact_category": "specification",
+      "attribute": "variants",
+      "value": "仅50 mL",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "仅50 mL"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他规格或套装"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F034",
+      "sku": "MV-CREAM-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "US",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "US"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F035",
+      "sku": "MV-CREAM-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "MX",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MX"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-CREAM-001-F036",
+      "sku": "MV-CREAM-001",
+      "fact_category": "certification",
+      "attribute": "verified_certification",
+      "value": "none_verified",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-CREAM-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "未提供可验证认证"
+      ],
+      "prohibited_expression": [
+        "临床认证",
+        "皮肤科医生认证",
+        "TSA批准",
+        "监管机构批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "表示当前项目资料中没有可验证认证，不表示商品不需要合规审核。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F037",
+      "sku": "MV-CREAM-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试无香基础护肤步骤的内容角度",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-CREAM-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "en"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-CREAM-001-F038",
+      "sku": "MV-CREAM-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试简洁配方信息和早晚使用场景的内容角度",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-CREAM-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F001",
+      "sku": "MV-HAND-001",
+      "fact_category": "basic_info",
+      "attribute": "product_name_zh",
+      "value": "柔护无香护手霜",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "柔护无香护手霜"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他商品名称"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F002",
+      "sku": "MV-HAND-001",
+      "fact_category": "basic_info",
+      "attribute": "category",
+      "value": "护手霜",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "护手霜"
+      ],
+      "prohibited_expression": [
+        "药品",
+        "医疗器械"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F003",
+      "sku": "MV-HAND-001",
+      "fact_category": "specification",
+      "attribute": "net_volume",
+      "value": 60,
+      "value_type": "number",
+      "unit": "mL",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "60 mL"
+      ],
+      "prohibited_expression": [
+        "超过或少于60 mL"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F004",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "水",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含水",
+        "水"
+      ],
+      "prohibited_expression": [
+        "不含水"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F005",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "甘油",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含甘油",
+        "甘油"
+      ],
+      "prohibited_expression": [
+        "不含甘油"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F006",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "乳木果脂",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含乳木果脂",
+        "乳木果脂"
+      ],
+      "prohibited_expression": [
+        "不含乳木果脂"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F007",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "辛酸/癸酸甘油三酯",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含辛酸/癸酸甘油三酯",
+        "辛酸/癸酸甘油三酯"
+      ],
+      "prohibited_expression": [
+        "不含辛酸/癸酸甘油三酯"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F008",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "鲸蜡硬脂醇",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含鲸蜡硬脂醇",
+        "鲸蜡硬脂醇"
+      ],
+      "prohibited_expression": [
+        "不含鲸蜡硬脂醇"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F009",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "甘油硬脂酸酯",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含甘油硬脂酸酯",
+        "甘油硬脂酸酯"
+      ],
+      "prohibited_expression": [
+        "不含甘油硬脂酸酯"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F010",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "泛醇",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 7,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含泛醇",
+        "泛醇"
+      ],
+      "prohibited_expression": [
+        "不含泛醇"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F011",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "尿囊素",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 8,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含尿囊素",
+        "尿囊素"
+      ],
+      "prohibited_expression": [
+        "不含尿囊素"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F012",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "生育酚",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 9,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含生育酚",
+        "生育酚"
+      ],
+      "prohibited_expression": [
+        "不含生育酚"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F013",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "苯甲酸钠",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 10,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含苯甲酸钠",
+        "苯甲酸钠"
+      ],
+      "prohibited_expression": [
+        "不含苯甲酸钠"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F014",
+      "sku": "MV-HAND-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient",
+      "value": "山梨酸钾",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 11,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含山梨酸钾",
+        "山梨酸钾"
+      ],
+      "prohibited_expression": [
+        "不含山梨酸钾"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "sequence保留模拟配方中的成分顺序。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F015",
+      "sku": "MV-HAND-001",
+      "fact_category": "target_user",
+      "attribute": "target_users",
+      "value": "因日常洗手而希望补充手部保湿的成年人",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "因日常洗手而希望补充手部保湿的成年人"
+      ],
+      "prohibited_expression": [
+        "适合所有人",
+        "对所有敏感肌绝对安全"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F016",
+      "sku": "MV-HAND-001",
+      "fact_category": "usage",
+      "attribute": "usage_instruction",
+      "value": "取适量按摩双手及指缘，按需重复使用；仅限外用",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "取适量按摩双手及指缘，按需重复使用；仅限外用"
+      ],
+      "prohibited_expression": [
+        "改变使用顺序或用量",
+        "省略必要注意事项"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F017",
+      "sku": "MV-HAND-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "无添加香精",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "无添加香精"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F018",
+      "sku": "MV-HAND-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "含甘油、乳木果脂、泛醇和尿囊素",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "含甘油、乳木果脂、泛醇和尿囊素"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F019",
+      "sku": "MV-HAND-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "软管包装",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "软管包装"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F020",
+      "sku": "MV-HAND-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "帮助手部肌肤感觉柔软、滋润",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "帮助手部肌肤感觉柔软、滋润"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F021",
+      "sku": "MV-HAND-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "适合在日常洗手后使用",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "适合在日常洗手后使用"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F022",
+      "sku": "MV-HAND-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "无添加香精",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "无添加香精"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F023",
+      "sku": "MV-HAND-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "治愈皲裂",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "治愈皲裂"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F024",
+      "sku": "MV-HAND-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "修复伤口",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "修复伤口"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F025",
+      "sku": "MV-HAND-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "抗菌",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "抗菌"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F026",
+      "sku": "MV-HAND-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "消炎",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "消炎"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F027",
+      "sku": "MV-HAND-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "预防感染",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "预防感染"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F028",
+      "sku": "MV-HAND-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "形成医用防护屏障",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "形成医用防护屏障"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F029",
+      "sku": "MV-HAND-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "一次使用全天保湿",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 7,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-HAND-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "一次使用全天保湿"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F030",
+      "sku": "MV-HAND-001",
+      "fact_category": "packaging",
+      "attribute": "packaging_feature",
+      "value": "60 mL铝制软管，PP旋盖",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "60 mL铝制软管，PP旋盖"
+      ],
+      "prohibited_expression": [
+        "100%环保",
+        "保证可回收",
+        "零废弃"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F031",
+      "sku": "MV-HAND-001",
+      "fact_category": "packaging",
+      "attribute": "packaging_feature",
+      "value": "可回收性取决于当地设施",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "可回收性取决于当地设施"
+      ],
+      "prohibited_expression": [
+        "100%环保",
+        "保证可回收",
+        "零废弃"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F032",
+      "sku": "MV-HAND-001",
+      "fact_category": "price",
+      "attribute": "price_usd",
+      "value": 12,
+      "value_type": "number",
+      "unit": "USD",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "USD 12.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F033",
+      "sku": "MV-HAND-001",
+      "fact_category": "price",
+      "attribute": "price_mxn",
+      "value": 239,
+      "value_type": "number",
+      "unit": "MXN",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MXN 239.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；不是由汇率公式换算，发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F034",
+      "sku": "MV-HAND-001",
+      "fact_category": "specification",
+      "attribute": "variants",
+      "value": "仅60 mL",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "仅60 mL"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他规格或套装"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F035",
+      "sku": "MV-HAND-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "US",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "US"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F036",
+      "sku": "MV-HAND-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "MX",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MX"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-HAND-001-F037",
+      "sku": "MV-HAND-001",
+      "fact_category": "certification",
+      "attribute": "verified_certification",
+      "value": "none_verified",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-HAND-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "未提供可验证认证"
+      ],
+      "prohibited_expression": [
+        "临床认证",
+        "皮肤科医生认证",
+        "TSA批准",
+        "监管机构批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "表示当前项目资料中没有可验证认证，不表示商品不需要合规审核。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F038",
+      "sku": "MV-HAND-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试办公桌、随身包和洗手后使用场景",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-HAND-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "en"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-HAND-001-F039",
+      "sku": "MV-HAND-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试便携补涂与无香体验的内容角度",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-HAND-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F001",
+      "sku": "MV-KIT-001",
+      "fact_category": "basic_info",
+      "attribute": "product_name_zh",
+      "value": "轻行基础护肤套装",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "轻行基础护肤套装"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他商品名称"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F002",
+      "sku": "MV-KIT-001",
+      "fact_category": "basic_info",
+      "attribute": "category",
+      "value": "旅行装基础护肤套装",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "旅行装基础护肤套装"
+      ],
+      "prohibited_expression": [
+        "药品",
+        "医疗器械"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F003",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "cleanser_volume",
+      "value": 30,
+      "value_type": "number",
+      "unit": "mL",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "30 mL洁面乳"
+      ],
+      "prohibited_expression": [
+        "洁面乳容量超过或少于30 mL"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F004",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "serum_volume",
+      "value": 10,
+      "value_type": "number",
+      "unit": "mL",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "10 mL保湿精华"
+      ],
+      "prohibited_expression": [
+        "精华容量超过或少于10 mL"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F005",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "cream_volume",
+      "value": 15,
+      "value_type": "number",
+      "unit": "mL",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "15 mL面霜"
+      ],
+      "prohibited_expression": [
+        "面霜容量超过或少于15 mL"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F006",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "total_volume",
+      "value": 55,
+      "value_type": "number",
+      "unit": "mL",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "合计55 mL"
+      ],
+      "prohibited_expression": [
+        "总容量超过或少于55 mL"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F007",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "component_count",
+      "value": 3,
+      "value_type": "number",
+      "unit": "item",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "三件套",
+        "包含3件迷你装"
+      ],
+      "prohibited_expression": [
+        "两件套",
+        "四件套"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F008",
+      "sku": "MV-KIT-001",
+      "fact_category": "ingredient",
+      "attribute": "ingredient_reference",
+      "value": "各产品沿用MV-CLEAN-001、MV-SERUM-001、MV-CREAM-001的对应模拟配方",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "各产品沿用MV-CLEAN-001、MV-SERUM-001、MV-CREAM-001的对应模拟配方"
+      ],
+      "prohibited_expression": [
+        "套装拥有独立于组件SKU的新配方"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [
+        "MV-CLEAN-001-F001",
+        "MV-SERUM-001-F001",
+        "MV-CREAM-001-F001"
+      ],
+      "notes": "套装成分必须通过组件SKU事实引用，不复制或创造新成分。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F009",
+      "sku": "MV-KIT-001",
+      "fact_category": "target_user",
+      "attribute": "target_users",
+      "value": "希望使用便携式基础清洁、补水和保湿组合的成年人",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "希望使用便携式基础清洁、补水和保湿组合的成年人"
+      ],
+      "prohibited_expression": [
+        "适合所有人",
+        "对所有敏感肌绝对安全"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F010",
+      "sku": "MV-KIT-001",
+      "fact_category": "usage",
+      "attribute": "usage_instruction",
+      "value": "按洁面乳、保湿精华、面霜顺序使用；各单品用法与正装一致",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "按洁面乳、保湿精华、面霜顺序使用；各单品用法与正装一致"
+      ],
+      "prohibited_expression": [
+        "改变使用顺序或用量",
+        "省略必要注意事项"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F011",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "包含3件迷你装",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "包含3件迷你装"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F012",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "三件产品均无添加香精",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "三件产品均无添加香精"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F013",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "verified_feature",
+      "value": "外盒集中收纳",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "外盒集中收纳"
+      ],
+      "prohibited_expression": [
+        "将规格特征升级为临床或绝对化功效"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F014",
+      "sku": "MV-KIT-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "组合基础清洁、补水和保湿步骤",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "组合基础清洁、补水和保湿步骤"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F015",
+      "sku": "MV-KIT-001",
+      "fact_category": "function",
+      "attribute": "allowed_benefit",
+      "value": "适合希望精简携带日常护肤产品的用户",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "B",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [
+        "适合希望精简携带日常护肤产品的用户"
+      ],
+      "prohibited_expression": [
+        "治疗或治愈皮肤疾病",
+        "临床证明（未提供证据）",
+        "保证所有用户获得相同结果"
+      ],
+      "generation_policy": "cautious",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "caution",
+      "linked_fact_ids": [],
+      "notes": "内部允许的谨慎功效表达；无外部临床或消费者研究证据。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F016",
+      "sku": "MV-KIT-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "TSA批准",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "TSA批准"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F017",
+      "sku": "MV-KIT-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "航空公司认证",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "航空公司认证"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F018",
+      "sku": "MV-KIT-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "保证可以登机",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 3,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "保证可以登机"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F019",
+      "sku": "MV-KIT-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "解决所有皮肤问题",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 4,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "解决所有皮肤问题"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F020",
+      "sku": "MV-KIT-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "预防晒伤或过敏",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 5,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "预防晒伤或过敏"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F021",
+      "sku": "MV-KIT-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "限量",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 6,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "限量"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F022",
+      "sku": "MV-KIT-001",
+      "fact_category": "risk_limit",
+      "attribute": "prohibited_claim",
+      "value": "虚构折扣",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 7,
+      "evidence_level": "D",
+      "source": "SIM-CLAIM-KIT-V1",
+      "source_type": "project_simulated_internal_claim_review",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "虚构折扣"
+      ],
+      "generation_policy": "blocked",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "prohibited",
+      "linked_fact_ids": [],
+      "notes": "命中该表达或语义等价表达时阻止内容导出。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F023",
+      "sku": "MV-KIT-001",
+      "fact_category": "packaging",
+      "attribute": "packaging_feature",
+      "value": "纸质外盒",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 1,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "纸质外盒"
+      ],
+      "prohibited_expression": [
+        "100%环保",
+        "保证可回收",
+        "零废弃"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F024",
+      "sku": "MV-KIT-001",
+      "fact_category": "packaging",
+      "attribute": "packaging_feature",
+      "value": "30 mL洁面泵瓶、10 mL精华泵瓶、15 mL面霜罐",
+      "value_type": "string",
+      "unit": null,
+      "sequence": 2,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "30 mL洁面泵瓶、10 mL精华泵瓶、15 mL面霜罐"
+      ],
+      "prohibited_expression": [
+        "100%环保",
+        "保证可回收",
+        "零废弃"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F025",
+      "sku": "MV-KIT-001",
+      "fact_category": "price",
+      "attribute": "price_usd",
+      "value": 32,
+      "value_type": "number",
+      "unit": "USD",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "USD 32.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F026",
+      "sku": "MV-KIT-001",
+      "fact_category": "price",
+      "attribute": "price_mxn",
+      "value": 639,
+      "value_type": "number",
+      "unit": "MXN",
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MXN 639.00"
+      ],
+      "prohibited_expression": [
+        "虚构折扣",
+        "最低价保证"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": true,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "模拟建议零售价；不是由汇率公式换算，发布前必须重新确认。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F027",
+      "sku": "MV-KIT-001",
+      "fact_category": "specification",
+      "attribute": "variants",
+      "value": "仅三件套配置",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "仅三件套配置"
+      ],
+      "prohibited_expression": [
+        "未经确认的其他规格或套装"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F028",
+      "sku": "MV-KIT-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "US",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "US"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F029",
+      "sku": "MV-KIT-001",
+      "fact_category": "market",
+      "attribute": "target_market",
+      "value": "MX",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "MX"
+      ],
+      "prohibited_expression": [
+        "将目标市场范围表述为已获得当地监管批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": ""
+    },
+    {
+      "fact_id": "MV-KIT-001-F030",
+      "sku": "MV-KIT-001",
+      "fact_category": "certification",
+      "attribute": "verified_certification",
+      "value": "none_verified",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "A",
+      "source": "SIM-SPEC-KIT-V1",
+      "source_type": "project_simulated_product_specification",
+      "allowed_expression": [
+        "未提供可验证认证"
+      ],
+      "prohibited_expression": [
+        "临床认证",
+        "皮肤科医生认证",
+        "TSA批准",
+        "监管机构批准"
+      ],
+      "generation_policy": "direct",
+      "market_scope": [
+        "US",
+        "MX"
+      ],
+      "language_scope": [
+        "zh",
+        "en",
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "active",
+      "linked_fact_ids": [],
+      "notes": "表示当前项目资料中没有可验证认证，不表示商品不需要合规审核。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F031",
+      "sku": "MV-KIT-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试周末出行、健身包和试用组合场景",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-KIT-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "US"
+      ],
+      "language_scope": [
+        "en"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    },
+    {
+      "fact_id": "MV-KIT-001-F032",
+      "sku": "MV-KIT-001",
+      "fact_category": "marketing_direction",
+      "attribute": "content_hypothesis",
+      "value": "测试短途旅行与简化行李的内容角度",
+      "value_type": "string",
+      "unit": null,
+      "sequence": null,
+      "evidence_level": "C",
+      "source": "data/products/product_cards/MV-KIT-001.md#营销建议（不是商品事实）",
+      "source_type": "project_simulated_marketing_hypothesis",
+      "allowed_expression": [],
+      "prohibited_expression": [
+        "不得作为确定商品事实直接输出"
+      ],
+      "generation_policy": "not_directly_usable",
+      "market_scope": [
+        "MX"
+      ],
+      "language_scope": [
+        "es"
+      ],
+      "is_numeric": false,
+      "status": "non_fact",
+      "linked_fact_ids": [],
+      "notes": "只有在消费者洞察阶段获得数据支持且与商品事实匹配后，才能用于卖点选择。"
+    }
+  ]
+}

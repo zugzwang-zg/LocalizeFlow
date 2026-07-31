@@ -1,0 +1,846 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "1.0.0",
+  "rule_check_id": "rulecheck_content_MV-SERUM-001_US_listing_v02",
+  "checked_at": "2026-07-28T09:34:20.466564+00:00",
+  "content_version_id": "content_MV-SERUM-001_US_listing_v02",
+  "sku": "MV-SERUM-001",
+  "market": "US",
+  "language": "en-US",
+  "platform": "google_merchant_center",
+  "content_type": "product_listing",
+  "asset_versions": {
+    "platform_rules": {
+      "path": "data\\platform_rules\\platform_rules.json",
+      "rule_set_id": "LF-PLATFORM-RULES-2026-07-28",
+      "version": "1.0.0",
+      "verified_date": "2026-07-28"
+    },
+    "brand_voice": {
+      "path": "data/brand/brand_voice_guide.md",
+      "version": "1.0"
+    },
+    "terminology": {
+      "path": "data\\brand\\terminology.xlsx",
+      "version": "1.0",
+      "record_count": 40
+    },
+    "prohibited_terms": {
+      "path": "data\\brand\\prohibited_terms.csv",
+      "version": "1.0",
+      "record_count": 40
+    },
+    "fact_check_id": "factcheck_content_MV-SERUM-001_US_listing_v02"
+  },
+  "hard_gate_snapshot": {
+    "fact_gate": {
+      "status": "pass",
+      "export_allowed": false,
+      "reason": "Automated fact checks passed; export remains disabled until rule checks and human final review also pass.",
+      "human_final_review_required": true,
+      "quality_score_can_override": false
+    },
+    "rule_gate": {
+      "block_failures": 0,
+      "unresolved_hard_rules": 0
+    }
+  },
+  "rule_results": [
+    {
+      "rule_id": "GMC-H-001",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_context.feed_fields.id",
+      "matched_text": "MV-SERUM-001-US",
+      "reason": "Feed id is present and within 50 characters.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Provide a unique, stable feed id of no more than 50 characters.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-002",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content.title",
+      "matched_text": "Mirevane Botanics Hydrating Serum, Fragrance-Free, 30 mL",
+      "reason": "Title length is 56/150.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Add or shorten the title to 150 characters or fewer.",
+      "evidence": {
+        "character_count": 56
+      }
+    },
+    {
+      "rule_id": "GMC-H-003",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_fields",
+      "matched_text": null,
+      "reason": "AI title uses structured_title with trained_algorithmic_media.",
+      "source_url": "https://support.google.com/merchants/answer/14784710?hl=en",
+      "suggested_action": "Use structured_title and set digital_source_type to trained_algorithmic_media.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-004",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content.title",
+      "matched_text": "Mirevane Botanics Hydrating Serum, Fragrance-Free, 30 mL",
+      "reason": "Title editorial checks passed and landing-page title consistency is confirmed.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-005",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content.description",
+      "matched_text": "A water-based gel hydrating serum made without added fragrance. The simulated formula lists glycerin, sodium hyaluronate and panthenol. It helps skin feel hydrated and soft. After cleansing, apply 1–2 pumps to the face and neck, follow with moisturizer and avoid the eye area. Presented in an opaque 30 mL PP pump bottle.",
+      "reason": "Description length is 321/5000.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Add or shorten the description to 5000 characters or fewer.",
+      "evidence": {
+        "character_count": 321
+      }
+    },
+    {
+      "rule_id": "GMC-H-006",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_fields",
+      "matched_text": null,
+      "reason": "AI description uses structured_description with trained_algorithmic_media.",
+      "source_url": "https://support.google.com/merchants/answer/14784710?hl=en",
+      "suggested_action": "Use structured_description and set digital_source_type to trained_algorithmic_media.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-007",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content.description",
+      "matched_text": null,
+      "reason": "Description contains product information only and landing-page consistency is confirmed.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-008",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_context.feed_fields.link",
+      "matched_text": "https://example.invalid/products/mv-serum-001-us",
+      "reason": "Landing-page URL, domain verification, and accessibility are confirmed.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-009",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_context.image",
+      "matched_text": "https://example.invalid/images/mv-serum-001-us.jpg",
+      "reason": "Main-image URL and supplied image checks meet the rule.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-010",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "not_applicable",
+      "content_location": "platform_context.image.ai_origin",
+      "matched_text": null,
+      "reason": "The product image is not marked as generative or significantly edited.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-011",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_context.feed_fields.availability",
+      "matched_text": "in_stock",
+      "reason": "Availability value is allowed and consistency is confirmed.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-012",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_context.feed_fields.price",
+      "matched_text": {
+        "amount": 24,
+        "currency": "USD"
+      },
+      "reason": "Price and market currency are valid and consistency is confirmed.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-013",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "hard_gate_snapshot.fact_gate",
+      "matched_text": "pass",
+      "reason": "No blocked fact-check result or prohibited misleading claim was detected.",
+      "source_url": "https://support.google.com/merchants/answer/6150127?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-014",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_context.landing_page.required_information",
+      "matched_text": null,
+      "reason": "All supplied landing-page commercial disclosure checks are confirmed.",
+      "source_url": "https://support.google.com/merchants/answer/6150127?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-015",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": [],
+      "reason": "Deterministic capitalization, punctuation, spacing, and repetition checks passed.",
+      "source_url": "https://support.google.com/merchants/answer/6150244?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-B-001",
+      "rule_type": "platform_best_practice",
+      "severity": "info",
+      "status": "pass",
+      "content_location": "content.title",
+      "matched_text": "Mirevane Botanics Hydrating Serum, Fragrance-Free, 30 mL",
+      "reason": "Title includes a product type and size/variant information.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "INT-LST-001",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": {
+        "title_count": 1,
+        "bullet_count": 5,
+        "description_count": 1
+      },
+      "reason": "Listing contains one title, five bullets, and one description.",
+      "source_url": "project_brief.md",
+      "suggested_action": "Provide exactly one title, five bullet points, and one description.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "INT-LST-002",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "claims",
+      "matched_text": [],
+      "reason": "Every declared claim has at least one fact_id.",
+      "source_url": "project_brief.md",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "BRAND-H-001",
+      "rule_type": "brand_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": [],
+      "reason": "No prohibited medical or structure/function expression was detected.",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "BRAND-H-002",
+      "rule_type": "brand_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": [],
+      "reason": "No miracle, guarantee, perfect, certification, or unsafe absolute expression was detected.",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "INT-MKT-001",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "market/language/platform_context",
+      "matched_text": [],
+      "reason": "Language and supplied currency match the target-market profile.",
+      "source_url": "project_brief.md",
+      "suggested_action": "No action required.",
+      "evidence": {
+        "expected": {
+          "language": "en-US",
+          "currency": "USD"
+        },
+        "currency": "USD"
+      }
+    },
+    {
+      "rule_id": "INT-REV-001",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "human_review",
+      "matched_text": {
+        "required": true,
+        "status": "pending"
+      },
+      "reason": "Human final review remains required and no approval guarantee is stated.",
+      "source_url": "project_brief.md",
+      "suggested_action": "Set human_review.required=true and remove approval or compliance guarantees.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "BRAND-LEXICON",
+      "rule_type": "brand_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": null,
+      "reason": "No prohibited or caution lexicon item was detected.",
+      "source_url": "data/brand/prohibited_terms.csv",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "TERM-CONSISTENCY",
+      "rule_type": "terminology_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": null,
+      "reason": "No avoided terminology variant was detected for the target language.",
+      "source_url": "data/brand/terminology.xlsx",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "BRAND-CTA-001",
+      "rule_type": "brand_rule",
+      "severity": "review",
+      "status": "not_applicable",
+      "content_location": "content.cta",
+      "matched_text": null,
+      "reason": "A standalone CTA is not required for the product-listing content block.",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "INT-AI-001",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "ai_disclosure",
+      "matched_text": "generative_ai_text",
+      "reason": "AI origin, label requirement, and method fields are present.",
+      "source_url": "data/platform_rules/platform_rules.json",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "BRAND-TONE-001",
+      "rule_type": "brand_rule",
+      "severity": "review",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": [],
+      "reason": "Deterministic calmness and concision indicators passed.",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "suggested_action": "No action required; retain human tone review.",
+      "evidence": {}
+    }
+  ],
+  "summary_by_rule_type": {
+    "by_rule_type": {
+      "brand_rule": {
+        "pass": 4,
+        "fail": 0,
+        "not_applicable": 1,
+        "needs_human_review": 0,
+        "total": 5
+      },
+      "platform_best_practice": {
+        "pass": 1,
+        "fail": 0,
+        "not_applicable": 0,
+        "needs_human_review": 0,
+        "total": 1
+      },
+      "platform_hard_rule": {
+        "pass": 14,
+        "fail": 0,
+        "not_applicable": 1,
+        "needs_human_review": 0,
+        "total": 15
+      },
+      "project_internal_rule": {
+        "pass": 5,
+        "fail": 0,
+        "not_applicable": 0,
+        "needs_human_review": 0,
+        "total": 5
+      },
+      "terminology_rule": {
+        "pass": 1,
+        "fail": 0,
+        "not_applicable": 0,
+        "needs_human_review": 0,
+        "total": 1
+      }
+    },
+    "totals": {
+      "evaluated": 27,
+      "pass": 25,
+      "fail": 0,
+      "not_applicable": 2,
+      "needs_human_review": 0,
+      "block_failures": 0,
+      "unresolved_hard_rules": 0
+    }
+  },
+  "quality_score": {
+    "rubric_version": "LF-QUALITY-1.0",
+    "weights_total": 100,
+    "dimensions": {
+      "fact_accuracy": {
+        "weight": 30,
+        "hard_gate": true,
+        "assessment_mode": "deterministic_from_fact_gate",
+        "score": 100,
+        "weighted_points": 30.0,
+        "deductions": [],
+        "explanation": "Derived only from the upstream fact-check snapshot; the rule checker does not rejudge facts."
+      },
+      "platform_fit": {
+        "weight": 20,
+        "hard_gate": false,
+        "assessment_mode": "deterministic_rules",
+        "score": 100,
+        "weighted_points": 20.0,
+        "deductions": [],
+        "explanation": "Based on platform and project-structure results; unresolved checks remain visible."
+      },
+      "language_naturalness": {
+        "weight": 15,
+        "hard_gate": false,
+        "assessment_mode": "heuristic_precheck",
+        "score": 100,
+        "weighted_points": 15.0,
+        "deductions": [],
+        "explanation": "Heuristic language and editorial precheck; native-speaker review is still required."
+      },
+      "brand_consistency": {
+        "weight": 15,
+        "hard_gate": false,
+        "assessment_mode": "deterministic_and_heuristic",
+        "score": 100,
+        "weighted_points": 15.0,
+        "deductions": [],
+        "explanation": "Brand, terminology, tone, and CTA results are scored separately from platform hard rules."
+      },
+      "localization_quality": {
+        "weight": 10,
+        "hard_gate": false,
+        "assessment_mode": "deterministic_and_heuristic",
+        "score": 100,
+        "weighted_points": 10.0,
+        "deductions": [],
+        "explanation": "Checks market-language profile, currency, and selected regional-language indicators."
+      },
+      "marketing_persuasiveness": {
+        "weight": 10,
+        "hard_gate": false,
+        "assessment_mode": "heuristic_precheck",
+        "score": 100,
+        "weighted_points": 10.0,
+        "deductions": [],
+        "explanation": "Checks presence of an opening, cautious benefit, and content-appropriate CTA."
+      }
+    },
+    "weighted_score": 100.0,
+    "hard_gate_independent": true,
+    "quality_score_can_override_hard_gate": false,
+    "interpretation": "Auxiliary precheck score only; not a compliance or publication score."
+  },
+  "modification_suggestions": [],
+  "export_gate": {
+    "status": "pass",
+    "export_allowed": false,
+    "blocking_priority": "human_final_review",
+    "reason": "Automated fact and rule prechecks passed; export remains disabled until human final review.",
+    "fact_error_has_highest_priority": true,
+    "quality_score": 100.0,
+    "quality_score_can_override": false,
+    "human_final_review_required": true
+  },
+  "human_review_items": [],
+  "content_version_record": {
+    "content_id": "content_MV-SERUM-001_US_listing",
+    "current_version_id": "content_MV-SERUM-001_US_listing_v02",
+    "parent_version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+    "previous_snapshot_version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+    "chain_valid": true,
+    "created_by": "human",
+    "change_reason": "Removed high-risk claims, corrected volume, completed listing structure, and added platform verification context.",
+    "snapshots_are_immutable_copies": true,
+    "current_content_snapshot": {
+      "status": "success",
+      "sku": "MV-SERUM-001",
+      "market": "US",
+      "language": "en-US",
+      "platform": "google_merchant_center",
+      "content_type": "product_listing",
+      "content_version": {
+        "content_id": "content_MV-SERUM-001_US_listing",
+        "version_id": "content_MV-SERUM-001_US_listing_v02",
+        "parent_version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+        "created_by": "human",
+        "change_reason": "Removed high-risk claims, corrected volume, completed listing structure, and added platform verification context."
+      },
+      "content": {
+        "title": "Mirevane Botanics Hydrating Serum, Fragrance-Free, 30 mL",
+        "bullet_points": [
+          "A water-based gel serum made without added fragrance.",
+          "Made with glycerin, sodium hyaluronate and panthenol.",
+          "Helps skin feel hydrated and soft.",
+          "Apply 1–2 pumps to the face and neck after cleansing, then follow with moisturizer; avoid the eye area.",
+          "Presented in an opaque 30 mL PP pump bottle."
+        ],
+        "description": "A water-based gel hydrating serum made without added fragrance. The simulated formula lists glycerin, sodium hyaluronate and panthenol. It helps skin feel hydrated and soft. After cleansing, apply 1–2 pumps to the face and neck, follow with moisturizer and avoid the eye area. Presented in an opaque 30 mL PP pump bottle.",
+        "scenes": [],
+        "caption": null,
+        "hook": null,
+        "body": null,
+        "cta": null
+      },
+      "claims": [
+        {
+          "claim_id": "claim_v02_001",
+          "text": "Hydrating Serum",
+          "location": "content.title",
+          "fact_ids": [
+            "MV-SERUM-001-F002"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_002",
+          "text": "Fragrance-Free",
+          "location": "content.title",
+          "fact_ids": [
+            "MV-SERUM-001-F018"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_003",
+          "text": "30 mL",
+          "location": "content.title",
+          "fact_ids": [
+            "MV-SERUM-001-F003"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_004",
+          "text": "A water-based gel serum made without added fragrance.",
+          "location": "content.bullet_points[0]",
+          "fact_ids": [
+            "MV-SERUM-001-F002",
+            "MV-SERUM-001-F018",
+            "MV-SERUM-001-F019"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_005",
+          "text": "Made with glycerin, sodium hyaluronate and panthenol.",
+          "location": "content.bullet_points[1]",
+          "fact_ids": [
+            "MV-SERUM-001-F005",
+            "MV-SERUM-001-F007",
+            "MV-SERUM-001-F008",
+            "MV-SERUM-001-F020"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_006",
+          "text": "Helps skin feel hydrated and soft.",
+          "location": "content.bullet_points[2]",
+          "fact_ids": [
+            "MV-SERUM-001-F022",
+            "MV-SERUM-001-F024"
+          ],
+          "evidence_level": "B"
+        },
+        {
+          "claim_id": "claim_v02_007",
+          "text": "Apply 1–2 pumps to the face and neck after cleansing, then follow with moisturizer; avoid the eye area.",
+          "location": "content.bullet_points[3]",
+          "fact_ids": [
+            "MV-SERUM-001-F015",
+            "MV-SERUM-001-F016",
+            "MV-SERUM-001-F017"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_008",
+          "text": "Presented in an opaque 30 mL PP pump bottle.",
+          "location": "content.bullet_points[4]",
+          "fact_ids": [
+            "MV-SERUM-001-F003",
+            "MV-SERUM-001-F021",
+            "MV-SERUM-001-F031"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_009",
+          "text": "A water-based gel hydrating serum made without added fragrance.",
+          "location": "content.description",
+          "fact_ids": [
+            "MV-SERUM-001-F002",
+            "MV-SERUM-001-F018",
+            "MV-SERUM-001-F019"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_010",
+          "text": "The simulated formula lists glycerin, sodium hyaluronate and panthenol.",
+          "location": "content.description",
+          "fact_ids": [
+            "MV-SERUM-001-F005",
+            "MV-SERUM-001-F007",
+            "MV-SERUM-001-F008",
+            "MV-SERUM-001-F020"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_011",
+          "text": "It helps skin feel hydrated and soft.",
+          "location": "content.description",
+          "fact_ids": [
+            "MV-SERUM-001-F022",
+            "MV-SERUM-001-F024"
+          ],
+          "evidence_level": "B"
+        },
+        {
+          "claim_id": "claim_v02_012",
+          "text": "After cleansing, apply 1–2 pumps to the face and neck, follow with moisturizer and avoid the eye area.",
+          "location": "content.description",
+          "fact_ids": [
+            "MV-SERUM-001-F015",
+            "MV-SERUM-001-F016",
+            "MV-SERUM-001-F017"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "claim_v02_013",
+          "text": "Presented in an opaque 30 mL PP pump bottle.",
+          "location": "content.description",
+          "fact_ids": [
+            "MV-SERUM-001-F003",
+            "MV-SERUM-001-F021",
+            "MV-SERUM-001-F031"
+          ],
+          "evidence_level": "A"
+        }
+      ],
+      "platform_fields": {
+        "title_field_name": "structured_title",
+        "description_field_name": "structured_description",
+        "digital_source_type": "trained_algorithmic_media",
+        "duration_seconds": null,
+        "aspect_ratio": null
+      },
+      "platform_context": {
+        "feed_fields": {
+          "id": "MV-SERUM-001-US",
+          "title": null,
+          "structured_title": {
+            "digital_source_type": "trained_algorithmic_media",
+            "content": "Mirevane Botanics Hydrating Serum, Fragrance-Free, 30 mL"
+          },
+          "description": null,
+          "structured_description": {
+            "digital_source_type": "trained_algorithmic_media",
+            "content": "A water-based gel hydrating serum made without added fragrance. The simulated formula lists glycerin, sodium hyaluronate and panthenol. It helps skin feel hydrated and soft. After cleansing, apply 1–2 pumps to the face and neck, follow with moisturizer and avoid the eye area. Presented in an opaque 30 mL PP pump bottle."
+          },
+          "link": "https://example.invalid/products/mv-serum-001-us",
+          "image_link": "https://example.invalid/images/mv-serum-001-us.jpg",
+          "availability": "in_stock",
+          "price": {
+            "amount": 24,
+            "currency": "USD"
+          }
+        },
+        "landing_page": {
+          "url": "https://example.invalid/products/mv-serum-001-us",
+          "domain_verified": true,
+          "accessible": true,
+          "title_matches_content": true,
+          "description_matches_content": true,
+          "availability_matches": true,
+          "price_matches": true,
+          "required_information": {
+            "total_price_and_currency": true,
+            "payment_conditions": true,
+            "terms_and_conditions": true,
+            "shipping_information": true,
+            "return_and_refund_policy": true,
+            "purchasable": true
+          }
+        },
+        "image": {
+          "url": "https://example.invalid/images/mv-serum-001-us.jpg",
+          "ai_origin": "not_ai",
+          "accurately_depicts_product": true,
+          "crawlable": true,
+          "no_promotional_text": true,
+          "no_watermark": true,
+          "no_border": true,
+          "not_placeholder_or_generic": true,
+          "iptc_digital_source_type": null
+        },
+        "verification_note": "Simulated deterministic fixture values; no live network or platform approval check was performed."
+      },
+      "ai_disclosure": {
+        "aigc_status": "generative_ai_text",
+        "label_required": true,
+        "method": "structured_title_and_structured_description",
+        "disclosure_text": null
+      },
+      "warnings": [
+        "Revised fixture with simulated platform-context confirmations.",
+        "Human final review is required before any export."
+      ],
+      "insufficient_information": [],
+      "human_review": {
+        "required": true,
+        "status": "pending"
+      }
+    },
+    "previous_content_snapshot": {
+      "status": "success",
+      "sku": "MV-SERUM-001",
+      "market": "US",
+      "language": "en-US",
+      "platform": "google_merchant_center",
+      "content_type": "product_listing",
+      "content_version": {
+        "content_id": "content_MV-SERUM-001_US_high_risk_fixture",
+        "version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+        "parent_version_id": null,
+        "created_by": "human",
+        "change_reason": "fact_checker_negative_test_fixture"
+      },
+      "content": {
+        "title": "Clinically Proven Hydrating Serum, 50 mL",
+        "bullet_points": [
+          "Cures dry skin with guaranteed 72-hour hydration."
+        ],
+        "description": null,
+        "scenes": [],
+        "caption": null,
+        "hook": null,
+        "body": null,
+        "cta": null
+      },
+      "claims": [
+        {
+          "claim_id": "risk_claim_001",
+          "text": "Clinically Proven Hydrating Serum, 50 mL",
+          "location": "content.title",
+          "fact_ids": [
+            "MV-SERUM-001-F002",
+            "MV-SERUM-001-F003"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "risk_claim_002",
+          "text": "Cures dry skin with guaranteed 72-hour hydration.",
+          "location": "content.bullet_points[0]",
+          "fact_ids": [
+            "MV-SERUM-001-F022"
+          ],
+          "evidence_level": "B"
+        }
+      ],
+      "platform_fields": {
+        "title_field_name": "structured_title",
+        "description_field_name": "structured_description",
+        "digital_source_type": "trained_algorithmic_media",
+        "duration_seconds": null,
+        "aspect_ratio": null
+      },
+      "ai_disclosure": {
+        "aigc_status": "generative_ai_text",
+        "label_required": true,
+        "method": "structured_title_and_structured_description",
+        "disclosure_text": null
+      },
+      "warnings": [
+        "Deliberately invalid stage 9 test fixture."
+      ],
+      "insufficient_information": [],
+      "human_review": {
+        "required": true,
+        "status": "pending"
+      }
+    }
+  },
+  "limitations": [
+    "Automated checks are prechecks, not platform approval or legal compliance.",
+    "Live landing-page and media checks rely on supplied verification fields.",
+    "Tone, naturalness, localization, and persuasion scores are heuristic and require human review.",
+    "A quality score cannot override fact or platform hard-rule failures."
+  ]
+}

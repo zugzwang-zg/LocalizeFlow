@@ -1,0 +1,902 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "1.0.0",
+  "rule_check_id": "rulecheck_content_MV-SERUM-001_US_high_risk_fixture_v01",
+  "checked_at": "2026-07-28T09:34:19.867181+00:00",
+  "content_version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+  "sku": "MV-SERUM-001",
+  "market": "US",
+  "language": "en-US",
+  "platform": "google_merchant_center",
+  "content_type": "product_listing",
+  "asset_versions": {
+    "platform_rules": {
+      "path": "data\\platform_rules\\platform_rules.json",
+      "rule_set_id": "LF-PLATFORM-RULES-2026-07-28",
+      "version": "1.0.0",
+      "verified_date": "2026-07-28"
+    },
+    "brand_voice": {
+      "path": "data/brand/brand_voice_guide.md",
+      "version": "1.0"
+    },
+    "terminology": {
+      "path": "data\\brand\\terminology.xlsx",
+      "version": "1.0",
+      "record_count": 40
+    },
+    "prohibited_terms": {
+      "path": "data\\brand\\prohibited_terms.csv",
+      "version": "1.0",
+      "record_count": 40
+    },
+    "fact_check_id": "factcheck_content_MV-SERUM-001_US_high_risk_fixture_v01"
+  },
+  "hard_gate_snapshot": {
+    "fact_gate": {
+      "status": "blocked",
+      "export_allowed": false,
+      "reason": "2 high-risk claim(s) require removal or correction before export.",
+      "human_final_review_required": true,
+      "quality_score_can_override": false
+    },
+    "rule_gate": {
+      "block_failures": 14,
+      "unresolved_hard_rules": 3
+    }
+  },
+  "rule_results": [
+    {
+      "rule_id": "GMC-H-001",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "platform_context.feed_fields.id",
+      "matched_text": null,
+      "reason": "Google feed id is missing or exceeds 50 characters.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Provide a unique, stable feed id of no more than 50 characters.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-002",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content.title",
+      "matched_text": "Clinically Proven Hydrating Serum, 50 mL",
+      "reason": "Title length is 40/150.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Add or shorten the title to 150 characters or fewer.",
+      "evidence": {
+        "character_count": 40
+      }
+    },
+    {
+      "rule_id": "GMC-H-003",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_fields",
+      "matched_text": null,
+      "reason": "AI title uses structured_title with trained_algorithmic_media.",
+      "source_url": "https://support.google.com/merchants/answer/14784710?hl=en",
+      "suggested_action": "Use structured_title and set digital_source_type to trained_algorithmic_media.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-004",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "needs_human_review",
+      "content_location": "platform_context.landing_page.title_matches_content",
+      "matched_text": null,
+      "reason": "Title-to-landing-page consistency is not confirmed.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Confirm that the feed title accurately matches the landing page.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-005",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "content.description",
+      "matched_text": "",
+      "reason": "A description is required and must not exceed 5000 characters.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Add or shorten the description to 5000 characters or fewer.",
+      "evidence": {
+        "character_count": 0
+      }
+    },
+    {
+      "rule_id": "GMC-H-006",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "platform_fields",
+      "matched_text": null,
+      "reason": "AI description uses structured_description with trained_algorithmic_media.",
+      "source_url": "https://support.google.com/merchants/answer/14784710?hl=en",
+      "suggested_action": "Use structured_description and set digital_source_type to trained_algorithmic_media.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-007",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "needs_human_review",
+      "content_location": "platform_context.landing_page.description_matches_content",
+      "matched_text": null,
+      "reason": "Description-to-landing-page consistency is not confirmed.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Confirm that the description matches the landing page.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-008",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "platform_context.feed_fields.link",
+      "matched_text": null,
+      "reason": "A valid http/https landing-page link is required.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Provide a valid product landing-page URL.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-009",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "platform_context.feed_fields.image_link",
+      "matched_text": null,
+      "reason": "A valid main-image URL is required.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Provide a crawlable product image URL.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-010",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "not_applicable",
+      "content_location": "platform_context.image.ai_origin",
+      "matched_text": null,
+      "reason": "The product image is not marked as generative or significantly edited.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-011",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "platform_context.feed_fields.availability",
+      "matched_text": null,
+      "reason": "Availability is missing or not an allowed value.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Use an allowed availability value.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-012",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "platform_context.feed_fields.price",
+      "matched_text": {},
+      "reason": "Price is missing, invalid, or uses the wrong market currency.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "Provide a non-negative price in USD.",
+      "evidence": {
+        "expected_currency": "USD"
+      }
+    },
+    {
+      "rule_id": "GMC-H-013",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "hard_gate_snapshot.fact_gate",
+      "matched_text": [
+        "R-P001",
+        "R-P006",
+        "R-P019"
+      ],
+      "reason": "The prior fact gate is blocked or prohibited misleading claims were detected.",
+      "source_url": "https://support.google.com/merchants/answer/6150127?hl=en",
+      "suggested_action": "Resolve fact-check failures and remove unsupported or misleading claims.",
+      "evidence": {
+        "fact_gate": "blocked"
+      }
+    },
+    {
+      "rule_id": "GMC-H-014",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "needs_human_review",
+      "content_location": "platform_context.landing_page.required_information",
+      "matched_text": [
+        "payment_conditions",
+        "purchasable",
+        "return_and_refund_policy",
+        "shipping_information",
+        "terms_and_conditions",
+        "total_price_and_currency"
+      ],
+      "reason": "Landing-page commercial disclosures are unconfirmed: payment_conditions, purchasable, return_and_refund_policy, shipping_information, terms_and_conditions, total_price_and_currency.",
+      "source_url": "https://support.google.com/merchants/answer/6150127?hl=en",
+      "suggested_action": "Confirm all required disclosures and product purchase availability.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-H-015",
+      "rule_type": "platform_hard_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": [],
+      "reason": "Deterministic capitalization, punctuation, spacing, and repetition checks passed.",
+      "source_url": "https://support.google.com/merchants/answer/6150244?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "GMC-B-001",
+      "rule_type": "platform_best_practice",
+      "severity": "info",
+      "status": "pass",
+      "content_location": "content.title",
+      "matched_text": "Clinically Proven Hydrating Serum, 50 mL",
+      "reason": "Title includes a product type and size/variant information.",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "INT-LST-001",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "content",
+      "matched_text": {
+        "title_count": 1,
+        "bullet_count": 1,
+        "description_count": 0
+      },
+      "reason": "Internal listing structure is incomplete.",
+      "source_url": "project_brief.md",
+      "suggested_action": "Provide exactly one title, five bullet points, and one description.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "INT-LST-002",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "claims",
+      "matched_text": [],
+      "reason": "Every declared claim has at least one fact_id.",
+      "source_url": "project_brief.md",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "BRAND-H-001",
+      "rule_type": "brand_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "content.bullet_points[0]",
+      "matched_text": [
+        "cures",
+        "clinically proven"
+      ],
+      "reason": "Medical/structure-function prohibited expression(s) detected: ['R-P001', 'R-P006'].",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "suggested_action": "Remove the medicalized claim and use a supported cosmetic experience statement.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "BRAND-H-002",
+      "rule_type": "brand_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "content.bullet_points[0]",
+      "matched_text": [
+        "cures",
+        "clinically proven",
+        "72-hour hydration"
+      ],
+      "reason": "Prohibited brand expression(s) detected: ['R-P001', 'R-P006', 'R-P019'].",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "suggested_action": "Replace prohibited wording with the approved cautious alternative.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "INT-MKT-001",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "market/language/platform_context",
+      "matched_text": [],
+      "reason": "Language and supplied currency match the target-market profile.",
+      "source_url": "project_brief.md",
+      "suggested_action": "No action required.",
+      "evidence": {
+        "expected": {
+          "language": "en-US",
+          "currency": "USD"
+        },
+        "currency": null
+      }
+    },
+    {
+      "rule_id": "INT-REV-001",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "human_review",
+      "matched_text": {
+        "required": true,
+        "status": "pending"
+      },
+      "reason": "Human final review remains required and no approval guarantee is stated.",
+      "source_url": "project_brief.md",
+      "suggested_action": "Set human_review.required=true and remove approval or compliance guarantees.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "R-P001",
+      "rule_type": "brand_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "content.bullet_points[0]",
+      "matched_text": "cures",
+      "reason": "基础化妆品不得宣称治愈疾病。",
+      "source_url": "https://www.fda.gov/cosmetics/cosmetics-labeling/cosmetics-labeling-claims",
+      "suggested_action": "helps skin feel comfortable",
+      "evidence": {
+        "category": "medical_claim",
+        "evidence_required": "not_applicable_in_current_MVP"
+      }
+    },
+    {
+      "rule_id": "R-P006",
+      "rule_type": "brand_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "content.title",
+      "matched_text": "clinically proven",
+      "reason": "没有临床研究资料。",
+      "source_url": "data/products/product_facts.json",
+      "suggested_action": "based on the project product specification",
+      "evidence": {
+        "category": "clinical_claim",
+        "evidence_required": "clinical_study_and_claim_review"
+      }
+    },
+    {
+      "rule_id": "R-P019",
+      "rule_type": "brand_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "content.bullet_points[0]",
+      "matched_text": "72-hour hydration",
+      "reason": "没有持续时间测试。",
+      "source_url": "data/products/product_facts.json",
+      "suggested_action": "helps skin feel hydrated",
+      "evidence": {
+        "category": "duration_claim",
+        "evidence_required": "time_bound_hydration_study"
+      }
+    },
+    {
+      "rule_id": "TERM-CONSISTENCY",
+      "rule_type": "terminology_rule",
+      "severity": "block",
+      "status": "fail",
+      "content_location": "content.bullet_points[0]",
+      "matched_text": [
+        "72-hour hydration"
+      ],
+      "reason": "Non-preferred or avoided terminology detected in 1 location(s).",
+      "source_url": "data/brand/terminology.xlsx",
+      "suggested_action": "Use the preferred term: hydrating.",
+      "evidence": {
+        "violations": [
+          {
+            "term_id": "TERM-010",
+            "location": "content.bullet_points[0]",
+            "matched_text": "72-hour hydration",
+            "preferred": "hydrating",
+            "reason": "使用基础保湿词，不添加未经测试的持续时间。"
+          }
+        ]
+      }
+    },
+    {
+      "rule_id": "BRAND-CTA-001",
+      "rule_type": "brand_rule",
+      "severity": "review",
+      "status": "not_applicable",
+      "content_location": "content.cta",
+      "matched_text": null,
+      "reason": "A standalone CTA is not required for the product-listing content block.",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "INT-AI-001",
+      "rule_type": "project_internal_rule",
+      "severity": "block",
+      "status": "pass",
+      "content_location": "ai_disclosure",
+      "matched_text": "generative_ai_text",
+      "reason": "AI origin, label requirement, and method fields are present.",
+      "source_url": "data/platform_rules/platform_rules.json",
+      "suggested_action": "No action required.",
+      "evidence": {}
+    },
+    {
+      "rule_id": "BRAND-TONE-001",
+      "rule_type": "brand_rule",
+      "severity": "review",
+      "status": "pass",
+      "content_location": "content",
+      "matched_text": [],
+      "reason": "Deterministic calmness and concision indicators passed.",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "suggested_action": "No action required; retain human tone review.",
+      "evidence": {}
+    }
+  ],
+  "summary_by_rule_type": {
+    "by_rule_type": {
+      "brand_rule": {
+        "pass": 1,
+        "fail": 5,
+        "not_applicable": 1,
+        "needs_human_review": 0,
+        "total": 7
+      },
+      "platform_best_practice": {
+        "pass": 1,
+        "fail": 0,
+        "not_applicable": 0,
+        "needs_human_review": 0,
+        "total": 1
+      },
+      "platform_hard_rule": {
+        "pass": 4,
+        "fail": 7,
+        "not_applicable": 1,
+        "needs_human_review": 3,
+        "total": 15
+      },
+      "project_internal_rule": {
+        "pass": 4,
+        "fail": 1,
+        "not_applicable": 0,
+        "needs_human_review": 0,
+        "total": 5
+      },
+      "terminology_rule": {
+        "pass": 0,
+        "fail": 1,
+        "not_applicable": 0,
+        "needs_human_review": 0,
+        "total": 1
+      }
+    },
+    "totals": {
+      "evaluated": 29,
+      "pass": 10,
+      "fail": 14,
+      "not_applicable": 2,
+      "needs_human_review": 3,
+      "block_failures": 14,
+      "unresolved_hard_rules": 3
+    }
+  },
+  "quality_score": {
+    "rubric_version": "LF-QUALITY-1.0",
+    "weights_total": 100,
+    "dimensions": {
+      "fact_accuracy": {
+        "weight": 30,
+        "hard_gate": true,
+        "assessment_mode": "deterministic_from_fact_gate",
+        "score": 0,
+        "weighted_points": 0.0,
+        "deductions": [
+          {
+            "points": 100,
+            "reason": "Unsupported or contradicted factual claims reduce fact accuracy.",
+            "evidence": {
+              "fact_error_rate": 1.0
+            }
+          }
+        ],
+        "explanation": "Derived only from the upstream fact-check snapshot; the rule checker does not rejudge facts."
+      },
+      "platform_fit": {
+        "weight": 20,
+        "hard_gate": false,
+        "assessment_mode": "deterministic_rules",
+        "score": 0,
+        "weighted_points": 0.0,
+        "deductions": [
+          {
+            "points": 15,
+            "reason": "Google feed id is missing or exceeds 50 characters.",
+            "rule_id": "GMC-H-001"
+          },
+          {
+            "points": 4,
+            "reason": "Title-to-landing-page consistency is not confirmed.",
+            "rule_id": "GMC-H-004"
+          },
+          {
+            "points": 15,
+            "reason": "A description is required and must not exceed 5000 characters.",
+            "rule_id": "GMC-H-005"
+          },
+          {
+            "points": 4,
+            "reason": "Description-to-landing-page consistency is not confirmed.",
+            "rule_id": "GMC-H-007"
+          },
+          {
+            "points": 15,
+            "reason": "A valid http/https landing-page link is required.",
+            "rule_id": "GMC-H-008"
+          },
+          {
+            "points": 15,
+            "reason": "A valid main-image URL is required.",
+            "rule_id": "GMC-H-009"
+          },
+          {
+            "points": 15,
+            "reason": "Availability is missing or not an allowed value.",
+            "rule_id": "GMC-H-011"
+          },
+          {
+            "points": 15,
+            "reason": "Price is missing, invalid, or uses the wrong market currency.",
+            "rule_id": "GMC-H-012"
+          },
+          {
+            "points": 15,
+            "reason": "The prior fact gate is blocked or prohibited misleading claims were detected.",
+            "rule_id": "GMC-H-013"
+          },
+          {
+            "points": 4,
+            "reason": "Landing-page commercial disclosures are unconfirmed: payment_conditions, purchasable, return_and_refund_policy, shipping_information, terms_and_conditions, total_price_and_currency.",
+            "rule_id": "GMC-H-014"
+          },
+          {
+            "points": 15,
+            "reason": "Internal listing structure is incomplete.",
+            "rule_id": "INT-LST-001"
+          }
+        ],
+        "explanation": "Based on platform and project-structure results; unresolved checks remain visible."
+      },
+      "language_naturalness": {
+        "weight": 15,
+        "hard_gate": false,
+        "assessment_mode": "heuristic_precheck",
+        "score": 100,
+        "weighted_points": 15.0,
+        "deductions": [],
+        "explanation": "Heuristic language and editorial precheck; native-speaker review is still required."
+      },
+      "brand_consistency": {
+        "weight": 15,
+        "hard_gate": false,
+        "assessment_mode": "deterministic_and_heuristic",
+        "score": 0,
+        "weighted_points": 0.0,
+        "deductions": [
+          {
+            "points": 20,
+            "reason": "Medical/structure-function prohibited expression(s) detected: ['R-P001', 'R-P006'].",
+            "rule_id": "BRAND-H-001"
+          },
+          {
+            "points": 20,
+            "reason": "Prohibited brand expression(s) detected: ['R-P001', 'R-P006', 'R-P019'].",
+            "rule_id": "BRAND-H-002"
+          },
+          {
+            "points": 20,
+            "reason": "基础化妆品不得宣称治愈疾病。",
+            "rule_id": "R-P001"
+          },
+          {
+            "points": 20,
+            "reason": "没有临床研究资料。",
+            "rule_id": "R-P006"
+          },
+          {
+            "points": 20,
+            "reason": "没有持续时间测试。",
+            "rule_id": "R-P019"
+          },
+          {
+            "points": 20,
+            "reason": "Non-preferred or avoided terminology detected in 1 location(s).",
+            "rule_id": "TERM-CONSISTENCY"
+          }
+        ],
+        "explanation": "Brand, terminology, tone, and CTA results are scored separately from platform hard rules."
+      },
+      "localization_quality": {
+        "weight": 10,
+        "hard_gate": false,
+        "assessment_mode": "deterministic_and_heuristic",
+        "score": 100,
+        "weighted_points": 10.0,
+        "deductions": [],
+        "explanation": "Checks market-language profile, currency, and selected regional-language indicators."
+      },
+      "marketing_persuasiveness": {
+        "weight": 10,
+        "hard_gate": false,
+        "assessment_mode": "heuristic_precheck",
+        "score": 100,
+        "weighted_points": 10.0,
+        "deductions": [],
+        "explanation": "Checks presence of an opening, cautious benefit, and content-appropriate CTA."
+      }
+    },
+    "weighted_score": 35.0,
+    "hard_gate_independent": true,
+    "quality_score_can_override_hard_gate": false,
+    "interpretation": "Auxiliary precheck score only; not a compliance or publication score."
+  },
+  "modification_suggestions": [
+    {
+      "priority": "P0",
+      "rule_id": "BRAND-H-001",
+      "location": "content.bullet_points[0]",
+      "reason": "Medical/structure-function prohibited expression(s) detected: ['R-P001', 'R-P006'].",
+      "suggested_action": "Remove the medicalized claim and use a supported cosmetic experience statement."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "BRAND-H-002",
+      "location": "content.bullet_points[0]",
+      "reason": "Prohibited brand expression(s) detected: ['R-P001', 'R-P006', 'R-P019'].",
+      "suggested_action": "Replace prohibited wording with the approved cautious alternative."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-001",
+      "location": "platform_context.feed_fields.id",
+      "reason": "Google feed id is missing or exceeds 50 characters.",
+      "suggested_action": "Provide a unique, stable feed id of no more than 50 characters."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-004",
+      "location": "platform_context.landing_page.title_matches_content",
+      "reason": "Title-to-landing-page consistency is not confirmed.",
+      "suggested_action": "Confirm that the feed title accurately matches the landing page."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-005",
+      "location": "content.description",
+      "reason": "A description is required and must not exceed 5000 characters.",
+      "suggested_action": "Add or shorten the description to 5000 characters or fewer."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-007",
+      "location": "platform_context.landing_page.description_matches_content",
+      "reason": "Description-to-landing-page consistency is not confirmed.",
+      "suggested_action": "Confirm that the description matches the landing page."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-008",
+      "location": "platform_context.feed_fields.link",
+      "reason": "A valid http/https landing-page link is required.",
+      "suggested_action": "Provide a valid product landing-page URL."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-009",
+      "location": "platform_context.feed_fields.image_link",
+      "reason": "A valid main-image URL is required.",
+      "suggested_action": "Provide a crawlable product image URL."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-011",
+      "location": "platform_context.feed_fields.availability",
+      "reason": "Availability is missing or not an allowed value.",
+      "suggested_action": "Use an allowed availability value."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-012",
+      "location": "platform_context.feed_fields.price",
+      "reason": "Price is missing, invalid, or uses the wrong market currency.",
+      "suggested_action": "Provide a non-negative price in USD."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-013",
+      "location": "hard_gate_snapshot.fact_gate",
+      "reason": "The prior fact gate is blocked or prohibited misleading claims were detected.",
+      "suggested_action": "Resolve fact-check failures and remove unsupported or misleading claims."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "GMC-H-014",
+      "location": "platform_context.landing_page.required_information",
+      "reason": "Landing-page commercial disclosures are unconfirmed: payment_conditions, purchasable, return_and_refund_policy, shipping_information, terms_and_conditions, total_price_and_currency.",
+      "suggested_action": "Confirm all required disclosures and product purchase availability."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "INT-LST-001",
+      "location": "content",
+      "reason": "Internal listing structure is incomplete.",
+      "suggested_action": "Provide exactly one title, five bullet points, and one description."
+    },
+    {
+      "priority": "P0",
+      "rule_id": "R-P001",
+      "location": "content.bullet_points[0]",
+      "reason": "基础化妆品不得宣称治愈疾病。",
+      "suggested_action": "helps skin feel comfortable"
+    },
+    {
+      "priority": "P0",
+      "rule_id": "R-P006",
+      "location": "content.title",
+      "reason": "没有临床研究资料。",
+      "suggested_action": "based on the project product specification"
+    },
+    {
+      "priority": "P0",
+      "rule_id": "R-P019",
+      "location": "content.bullet_points[0]",
+      "reason": "没有持续时间测试。",
+      "suggested_action": "helps skin feel hydrated"
+    },
+    {
+      "priority": "P0",
+      "rule_id": "TERM-CONSISTENCY",
+      "location": "content.bullet_points[0]",
+      "reason": "Non-preferred or avoided terminology detected in 1 location(s).",
+      "suggested_action": "Use the preferred term: hydrating."
+    }
+  ],
+  "export_gate": {
+    "status": "blocked",
+    "export_allowed": false,
+    "blocking_priority": "fact_error",
+    "reason": "Upstream fact errors have the highest blocking priority and must be resolved before any score or rule result can allow export.",
+    "fact_error_has_highest_priority": true,
+    "quality_score": 35.0,
+    "quality_score_can_override": false,
+    "human_final_review_required": true
+  },
+  "human_review_items": [
+    {
+      "rule_id": "GMC-H-004",
+      "content_location": "platform_context.landing_page.title_matches_content",
+      "reason": "Title-to-landing-page consistency is not confirmed.",
+      "suggested_action": "Confirm that the feed title accurately matches the landing page."
+    },
+    {
+      "rule_id": "GMC-H-007",
+      "content_location": "platform_context.landing_page.description_matches_content",
+      "reason": "Description-to-landing-page consistency is not confirmed.",
+      "suggested_action": "Confirm that the description matches the landing page."
+    },
+    {
+      "rule_id": "GMC-H-014",
+      "content_location": "platform_context.landing_page.required_information",
+      "reason": "Landing-page commercial disclosures are unconfirmed: payment_conditions, purchasable, return_and_refund_policy, shipping_information, terms_and_conditions, total_price_and_currency.",
+      "suggested_action": "Confirm all required disclosures and product purchase availability."
+    }
+  ],
+  "content_version_record": {
+    "content_id": "content_MV-SERUM-001_US_high_risk_fixture",
+    "current_version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+    "parent_version_id": null,
+    "previous_snapshot_version_id": null,
+    "chain_valid": true,
+    "created_by": "human",
+    "change_reason": "fact_checker_negative_test_fixture",
+    "snapshots_are_immutable_copies": true,
+    "current_content_snapshot": {
+      "status": "success",
+      "sku": "MV-SERUM-001",
+      "market": "US",
+      "language": "en-US",
+      "platform": "google_merchant_center",
+      "content_type": "product_listing",
+      "content_version": {
+        "content_id": "content_MV-SERUM-001_US_high_risk_fixture",
+        "version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+        "parent_version_id": null,
+        "created_by": "human",
+        "change_reason": "fact_checker_negative_test_fixture"
+      },
+      "content": {
+        "title": "Clinically Proven Hydrating Serum, 50 mL",
+        "bullet_points": [
+          "Cures dry skin with guaranteed 72-hour hydration."
+        ],
+        "description": null,
+        "scenes": [],
+        "caption": null,
+        "hook": null,
+        "body": null,
+        "cta": null
+      },
+      "claims": [
+        {
+          "claim_id": "risk_claim_001",
+          "text": "Clinically Proven Hydrating Serum, 50 mL",
+          "location": "content.title",
+          "fact_ids": [
+            "MV-SERUM-001-F002",
+            "MV-SERUM-001-F003"
+          ],
+          "evidence_level": "A"
+        },
+        {
+          "claim_id": "risk_claim_002",
+          "text": "Cures dry skin with guaranteed 72-hour hydration.",
+          "location": "content.bullet_points[0]",
+          "fact_ids": [
+            "MV-SERUM-001-F022"
+          ],
+          "evidence_level": "B"
+        }
+      ],
+      "platform_fields": {
+        "title_field_name": "structured_title",
+        "description_field_name": "structured_description",
+        "digital_source_type": "trained_algorithmic_media",
+        "duration_seconds": null,
+        "aspect_ratio": null
+      },
+      "ai_disclosure": {
+        "aigc_status": "generative_ai_text",
+        "label_required": true,
+        "method": "structured_title_and_structured_description",
+        "disclosure_text": null
+      },
+      "warnings": [
+        "Deliberately invalid stage 9 test fixture."
+      ],
+      "insufficient_information": [],
+      "human_review": {
+        "required": true,
+        "status": "pending"
+      }
+    },
+    "previous_content_snapshot": null
+  },
+  "limitations": [
+    "Automated checks are prechecks, not platform approval or legal compliance.",
+    "Live landing-page and media checks rely on supplied verification fields.",
+    "Tone, naturalness, localization, and persuasion scores are heuristic and require human review.",
+    "A quality score cannot override fact or platform hard-rule failures."
+  ]
+}

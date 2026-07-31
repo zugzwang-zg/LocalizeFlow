@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "prompt_set_id": "LF-PROMPTS-2026-07-28",
+  "version": "1.0.0",
+  "updated_at": "2026-07-28",
+  "status": "stage_8_pending_acceptance",
+  "execution_status": "offline_structure_validation_only",
+  "api_calls_made_in_stage_8": 0,
+  "provider_configuration": {
+    "provider": "OpenAI",
+    "api": "Responses API",
+    "model_source": "OPENAI_MODEL environment variable",
+    "model_value_during_stage_8": null,
+    "model_selection_status": "not_fixed_until_representative_evaluation",
+    "structured_output": {
+      "mode": "text.format",
+      "type": "json_schema",
+      "strict": true,
+      "additional_properties": false
+    },
+    "planned_parameters": {
+      "temperature": 0.2,
+      "seed": null,
+      "seed_note": "若所选模型/API不支持 seed，则记录模型快照、完整输入、提示词版本和原始响应，并以重复评测衡量稳定性。",
+      "text_verbosity": "low",
+      "store": false
+    }
+  },
+  "design_principles": [
+    "每条指令只出现一次，减少重复和冲突。",
+    "每个节点只接收完成本任务所需的上下文。",
+    "目标、事实边界、禁止项、成功条件和输出格式显式给出。",
+    "采用 Structured Outputs 保证 Schema 约束，而不只依赖 JSON mode。",
+    "所有对象设置 additionalProperties=false，并为字段使用清晰名称。",
+    "拒绝、输出截断、非法 JSON 和 Schema 错误由应用层检测并记录。",
+    "模型和参数必须随每次运行记录，未完成评测前不把某个模型宣称为最佳。"
+  ],
+  "prompts": [
+    {
+      "prompt_id": "LF-PROMPT-BASELINE-1.0",
+      "path": "prompts/baseline_prompt.md",
+      "node_id": null,
+      "version": "1.0.0",
+      "schema_path": null
+    },
+    {
+      "prompt_id": "LF-PROMPT-FACT-EXTRACTOR-1.0",
+      "path": "prompts/fact_extraction_prompt.md",
+      "node_id": "N01_FACT_EXTRACTOR",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/fact_extraction_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-CAMPAIGN-PLANNER-1.0",
+      "path": "prompts/campaign_planner_prompt.md",
+      "node_id": "N02_CAMPAIGN_PLANNER",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/campaign_strategy_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-LOCALIZER-EN-US-1.0",
+      "path": "prompts/localization_prompt_en.md",
+      "node_id": "N03_LOCALIZER",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/localization_plan_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-LOCALIZER-ES-MX-1.0",
+      "path": "prompts/localization_prompt_es.md",
+      "node_id": "N03_LOCALIZER",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/localization_plan_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-GENERATOR-LISTING-1.0",
+      "path": "prompts/listing_prompt.md",
+      "node_id": "N04_CONTENT_GENERATOR",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/content_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-GENERATOR-TIKTOK-1.0",
+      "path": "prompts/tiktok_script_prompt.md",
+      "node_id": "N04_CONTENT_GENERATOR",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/content_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-GENERATOR-SOCIAL-1.0",
+      "path": "prompts/social_copy_prompt.md",
+      "node_id": "N04_CONTENT_GENERATOR",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/content_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-QUALITY-EVALUATOR-1.0",
+      "path": "prompts/evaluator_prompt.md",
+      "node_id": "N07_QUALITY_EVALUATOR",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/evaluation_output.schema.json"
+    }
+  ],
+  "official_design_sources": [
+    {
+      "title": "Structured model outputs",
+      "url": "https://developers.openai.com/api/docs/guides/structured-outputs",
+      "verified_date": "2026-07-28",
+      "used_for": [
+        "Structured Outputs over JSON mode",
+        "strict=true",
+        "additionalProperties=false",
+        "schema edge-case handling"
+      ]
+    },
+    {
+      "title": "Model guidance",
+      "url": "https://developers.openai.com/api/docs/guides/latest-model",
+      "verified_date": "2026-07-28",
+      "used_for": [
+        "lean prompt design",
+        "explicit goal, constraints, evidence and success criteria",
+        "representative evaluation before configuration claims"
+      ]
+    }
+  ]
+}

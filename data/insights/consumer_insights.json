@@ -1,0 +1,565 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "LF-INSIGHTS-DEV-V1",
+  "created_date": "2026-07-28",
+  "purpose": "为LocalizeFlow选择可测试的本地化内容角度；消费者洞察不得创造或扩大商品事实。",
+  "source": {
+    "project": "CrossBorder Voice",
+    "dataset": "Multilingual Amazon Reviews Corpus (MARC)",
+    "source_period": "2015-11-01至2019-11-01",
+    "source_category": "beauty",
+    "development_sample_file": "CrossBorder Voice/work/step3/manual_read_sample.jsonl",
+    "development_sample_size": 100,
+    "language_counts": {
+      "en": 50,
+      "es": 50
+    },
+    "sampling_note": "人工通读样本按语言和星级平衡，用于探索性标签与内容方向，不用于估计市场发生率。",
+    "gold_set_excluded": true,
+    "gold_overlap_count": 0,
+    "gold_exclusion_reason": "CrossBorder Voice金标集是冻结的最终评测集，不得用于提示词开发、洞察生成或模型选择。"
+  },
+  "market_scope": {
+    "US": {
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "limitation": "源数据没有可验证的评论者国家字段，不能将英语样本直接解释为美国总体消费者趋势。"
+    },
+    "MX": {
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "limitation": "源数据只有西班牙语字段，没有墨西哥地域标签；所有墨西哥结论均需后续使用墨西哥本地样本复核。"
+    }
+  },
+  "method": {
+    "minimum_support_count": 2,
+    "support_definition": "同一语言人工通读样本中至少2条不同评论提供明确文本证据。",
+    "confidence_ceiling": "medium",
+    "frequency_policy": "support_sample_count是本探索样本中的显式证据数，不是市场占比或流行度。",
+    "use_policy": [
+      "洞察只用于选择卖点、内容结构和测试角度。",
+      "只有同时存在商品事实和品牌规则支持时，洞察才可进入生成提示词。",
+      "缺少商品事实的角度必须标为blocked，不得改写成商品功效。",
+      "价格、认证、时效、无刺激、无黏腻、快速吸收等信息不得由评论反推。",
+      "所有生成内容仍需经过事实、品牌和平台规则检查。"
+    ]
+  },
+  "insights": [
+    {
+      "insight_id": "IN-US-001",
+      "market": "US",
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "insight_type": "positive_attribute",
+      "theme": "comfortable_skin_feel",
+      "signal_zh": "消费者会用柔软、顺滑、舒适等可感知结果评价护肤体验。",
+      "support_sample_count": 3,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["en_0530771", "en_0603388", "en_0095696"],
+      "representative_quotes": [
+        {
+          "review_id": "en_0530771",
+          "quote": "They leave my face feeling nice and smooth."
+        },
+        {
+          "review_id": "en_0603388",
+          "quote": "good moisturizers aids with the softness of my skin"
+        }
+      ],
+      "confidence": "medium",
+      "confidence_reason": "三条英语探索样本出现明确的肤感表述，但样本用于探索而非频率估计。",
+      "recommended_content_direction": "优先测试helps skin feel soft/hydrated等感受型卖点，并保持helps限定。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-SERUM-001", "MV-CREAM-001", "MV-HAND-001"],
+      "linked_fact_ids": ["MV-SERUM-001-F022", "MV-SERUM-001-F024", "MV-CREAM-001-F021", "MV-HAND-001-F020"],
+      "brand_rule_refs": ["voice.trustworthy", "claim_language.B.en"],
+      "prohibited_inference": "不得改写为修复皮肤结构、临床证明或保证结果。"
+    },
+    {
+      "insight_id": "IN-US-002",
+      "market": "US",
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "insight_type": "negative_concern",
+      "theme": "texture_and_finish",
+      "signal_zh": "黏、厚重、难干与顺滑、不油腻等具体质地体验会影响评价。",
+      "support_sample_count": 3,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["en_0242056", "en_0880555", "en_0095696"],
+      "representative_quotes": [
+        {
+          "review_id": "en_0242056",
+          "quote": "Too thick and sticky."
+        },
+        {
+          "review_id": "en_0880555",
+          "quote": "The consistency of the cream is pretty gelatinous."
+        }
+      ],
+      "confidence": "medium",
+      "confidence_reason": "存在重复的具体质地证据，但Mirevane当前事实库没有无黏腻或快速吸收测试。",
+      "recommended_content_direction": "将轻盈、不黏腻和吸收速度列为后续产品测试与消费者验证问题。",
+      "mapping_status": "blocked",
+      "linked_skus": ["MV-SERUM-001"],
+      "linked_fact_ids": ["MV-SERUM-001-F038"],
+      "brand_rule_refs": ["voice.clear", "evidence_level.C"],
+      "block_reason": "仅有C级内容假设，没有可用于宣称的产品事实。",
+      "prohibited_inference": "不得生成non-sticky、fast-absorbing或weightless等产品结论。"
+    },
+    {
+      "insight_id": "IN-US-003",
+      "market": "US",
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "insight_type": "negative_pain_point",
+      "theme": "packaging_function",
+      "signal_zh": "漏液、泵头损坏和喷头失效会覆盖消费者对产品本身的正面评价。",
+      "support_sample_count": 4,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["en_0251319", "en_0637699", "en_0853400", "en_0095696"],
+      "representative_quotes": [
+        {
+          "review_id": "en_0251319",
+          "quote": "All leaked out!!!!"
+        },
+        {
+          "review_id": "en_0095696",
+          "quote": "the pump was broken in every single bottle I received."
+        }
+      ],
+      "confidence": "medium",
+      "confidence_reason": "四条英语探索样本包含明确包装功能问题。",
+      "recommended_content_direction": "准确说明包装形式、容量和用量；把可靠性作为运营质检项，而不是未经验证的卖点。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-CLEAN-001", "MV-SERUM-001", "MV-CREAM-001", "MV-HAND-001", "MV-KIT-001"],
+      "linked_fact_ids": ["MV-CLEAN-001-F034", "MV-SERUM-001-F031", "MV-CREAM-001-F030", "MV-HAND-001-F030", "MV-KIT-001-F024"],
+      "brand_rule_refs": ["voice.clear", "voice.trustworthy"],
+      "prohibited_inference": "不得宣称leak-proof、damage-free或零故障。"
+    },
+    {
+      "insight_id": "IN-US-004",
+      "market": "US",
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "insight_type": "purchase_motivation",
+      "theme": "ease_of_use",
+      "signal_zh": "消费者会把易用、易操作和步骤清楚作为正面购买理由。",
+      "support_sample_count": 3,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["en_0397958", "en_0165851", "en_0925778"],
+      "representative_quotes": [
+        {
+          "review_id": "en_0397958",
+          "quote": "Very easy to use"
+        },
+        {
+          "review_id": "en_0925778",
+          "quote": "it makes it easy to dry my hair."
+        }
+      ],
+      "confidence": "medium",
+      "confidence_reason": "三条英语探索样本明确将易用性与正面体验联系起来。",
+      "recommended_content_direction": "使用简短步骤、准确用量和顺序说明，突出可理解性而非保证便利。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-CLEAN-001", "MV-SERUM-001", "MV-CREAM-001", "MV-HAND-001", "MV-KIT-001"],
+      "linked_fact_ids": ["MV-CLEAN-001-F015", "MV-SERUM-001-F015", "MV-CREAM-001-F017", "MV-HAND-001-F016", "MV-KIT-001-F010"],
+      "brand_rule_refs": ["voice.clear", "voice.concise", "US.style.direct"],
+      "prohibited_inference": "不得把步骤清楚扩大为适合所有人或零学习成本。"
+    },
+    {
+      "insight_id": "IN-US-005",
+      "market": "US",
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "insight_type": "usage_scenario",
+      "theme": "travel_and_portability",
+      "signal_zh": "旅行、减少液体携带和便于收纳是可观察的内容场景。",
+      "support_sample_count": 3,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["en_0453126", "en_0261593", "en_0945240"],
+      "representative_quotes": [
+        {
+          "review_id": "en_0453126",
+          "quote": "I bought these to use while traveling"
+        },
+        {
+          "review_id": "en_0261593",
+          "quote": "Small enough to take with you or store in a drawer."
+        }
+      ],
+      "confidence": "medium",
+      "confidence_reason": "三条英语探索样本明确出现旅行、携带或收纳场景。",
+      "recommended_content_direction": "测试three mini sizes和simple travel routine角度，并完整列出每件容量。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-KIT-001"],
+      "linked_fact_ids": ["MV-KIT-001-F003", "MV-KIT-001-F004", "MV-KIT-001-F005", "MV-KIT-001-F015", "MV-KIT-001-F024"],
+      "brand_rule_refs": ["voice.clear", "US.style.direct"],
+      "prohibited_inference": "不得宣称TSA approved、airline certified或guaranteed for carry-on。"
+    },
+    {
+      "insight_id": "IN-US-006",
+      "market": "US",
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "insight_type": "negative_concern",
+      "theme": "expectation_match",
+      "signal_zh": "图片、颜色、数量和实物不匹配会直接触发失望和低分。",
+      "support_sample_count": 4,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["en_0225811", "en_0206087", "en_0450841", "en_0136582"],
+      "representative_quotes": [
+        {
+          "review_id": "en_0225811",
+          "quote": "nothing like what’s is shown on the photo."
+        },
+        {
+          "review_id": "en_0206087",
+          "quote": "I got sent the wrong colors."
+        }
+      ],
+      "confidence": "medium",
+      "confidence_reason": "四条英语探索样本明确描述预期落差。",
+      "recommended_content_direction": "标题和卖点优先写清商品类型、件数、容量和包装形态。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-CLEAN-001", "MV-SERUM-001", "MV-CREAM-001", "MV-HAND-001", "MV-KIT-001"],
+      "linked_fact_ids": ["MV-CLEAN-001-F002", "MV-CLEAN-001-F003", "MV-SERUM-001-F002", "MV-SERUM-001-F003", "MV-CREAM-001-F002", "MV-CREAM-001-F003", "MV-HAND-001-F002", "MV-HAND-001-F003", "MV-KIT-001-F002", "MV-KIT-001-F003", "MV-KIT-001-F004", "MV-KIT-001-F005"],
+      "brand_rule_refs": ["voice.clear", "voice.trustworthy"],
+      "prohibited_inference": "不得省略关键规格或用模糊图片替代文字事实。"
+    },
+    {
+      "insight_id": "IN-US-007",
+      "market": "US",
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "insight_type": "purchase_motivation",
+      "theme": "value_for_money",
+      "signal_zh": "价格与体验是否匹配会影响推荐和复购判断。",
+      "support_sample_count": 5,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["en_0397958", "en_0642525", "en_0095696", "en_0530771", "en_0136582"],
+      "representative_quotes": [
+        {
+          "review_id": "en_0397958",
+          "quote": "Decent price for the quality"
+        },
+        {
+          "review_id": "en_0530771",
+          "quote": "Great deal as well!"
+        }
+      ],
+      "confidence": "medium",
+      "confidence_reason": "五条英语探索样本明确评价价格或价值，但Mirevane项目未设置可用价格事实。",
+      "recommended_content_direction": "保留为未来定价验证问题，不进入当前生成提示词。",
+      "mapping_status": "blocked",
+      "linked_skus": [],
+      "linked_fact_ids": [],
+      "brand_rule_refs": ["voice.trustworthy"],
+      "block_reason": "项目事实库没有价格、折扣或竞品价格数据。",
+      "prohibited_inference": "不得生成affordable、great value、best price、discount或虚构稀缺性。"
+    },
+    {
+      "insight_id": "IN-US-008",
+      "market": "US",
+      "language": "en-US",
+      "evidence_scope": "English-language proxy for US content",
+      "insight_type": "language_pattern",
+      "theme": "direct_experience_wording",
+      "signal_zh": "英语样本常使用短句直接说明使用体验、问题和推荐理由。",
+      "support_sample_count": 3,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["en_0397958", "en_0242056", "en_0225811"],
+      "representative_quotes": [
+        {
+          "review_id": "en_0397958",
+          "quote": "Very easy to use"
+        },
+        {
+          "review_id": "en_0242056",
+          "quote": "Too thick and sticky."
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "可作为语料中的表达模式观察，但不能据此宣称美国消费者普遍更直接。",
+      "recommended_content_direction": "英语内容采用短句和feature plus experience结构，避免文化本质化。",
+      "mapping_status": "strategy_only",
+      "linked_skus": [],
+      "linked_fact_ids": [],
+      "brand_rule_refs": ["US.style.direct", "voice.concise"],
+      "prohibited_inference": "不得将表达差异概括为固定民族或文化性格。"
+    },
+    {
+      "insight_id": "IN-MX-001",
+      "market": "MX",
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "insight_type": "attribute_salience",
+      "theme": "scent_information",
+      "signal_zh": "西语样本会明确评价气味是否令人愉悦，气味信息是可见的决策线索。",
+      "support_sample_count": 4,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["es_0258082", "es_0701698", "es_0790511", "es_0027587"],
+      "representative_quotes": [
+        {
+          "review_id": "es_0258082",
+          "quote": "el olor es muy agradable"
+        },
+        {
+          "review_id": "es_0027587",
+          "quote": "el olor a crema hidratante no me gusta nada."
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "四条西语探索样本出现明确气味评价，但不是墨西哥地域样本。",
+      "recommended_content_direction": "明确写sin fragancia añadida，使消费者知道配方未添加香精；不承诺完全无气味。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-CLEAN-001", "MV-SERUM-001", "MV-CREAM-001", "MV-HAND-001", "MV-KIT-001"],
+      "linked_fact_ids": ["MV-CLEAN-001-F019", "MV-SERUM-001-F018", "MV-CREAM-001-F018", "MV-HAND-001-F017", "MV-KIT-001-F012"],
+      "brand_rule_refs": ["MX.preferred.sin_fragancia_añadida", "voice.clear"],
+      "prohibited_inference": "不得改写为sin olor、hipoalergénico或libre de alergias。"
+    },
+    {
+      "insight_id": "IN-MX-002",
+      "market": "MX",
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "insight_type": "negative_concern",
+      "theme": "greasy_and_absorption",
+      "signal_zh": "油腻和吸收不佳会削弱消费者对效果的评价。",
+      "support_sample_count": 3,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["es_0433673", "es_0027587", "es_0557725"],
+      "representative_quotes": [
+        {
+          "review_id": "es_0433673",
+          "quote": "me deja el pelo grasoso"
+        },
+        {
+          "review_id": "es_0027587",
+          "quote": "No se absorbe bien"
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "三条西语探索样本有明确证据，但不是墨西哥地域样本，且当前产品事实缺少相应测试。",
+      "recommended_content_direction": "作为墨西哥用户测试问题保留，当前不生成no grasoso或de rápida absorción。",
+      "mapping_status": "blocked",
+      "linked_skus": ["MV-SERUM-001"],
+      "linked_fact_ids": ["MV-SERUM-001-F038"],
+      "brand_rule_refs": ["voice.trustworthy", "evidence_level.C"],
+      "block_reason": "只有C级内容假设，没有产品体验测试。",
+      "prohibited_inference": "不得生成no grasoso、no pegajoso或de rápida absorción。"
+    },
+    {
+      "insight_id": "IN-MX-003",
+      "market": "MX",
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "insight_type": "negative_pain_point",
+      "theme": "packaging_and_arrival_condition",
+      "signal_zh": "破损、开封和内容物外漏会破坏商品体验。",
+      "support_sample_count": 3,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["es_0735767", "es_0593285", "es_0647661"],
+      "representative_quotes": [
+        {
+          "review_id": "es_0735767",
+          "quote": "ha llegado abierta"
+        },
+        {
+          "review_id": "es_0647661",
+          "quote": "Ha llegado con el embalaje machacado y el producto roto."
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "三条西语探索样本明确描述包装或到货问题，但不是墨西哥地域样本。",
+      "recommended_content_direction": "准确说明envase、容量和套装组成；将防漏和到货完整性放入运营质检。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-CLEAN-001", "MV-SERUM-001", "MV-CREAM-001", "MV-HAND-001", "MV-KIT-001"],
+      "linked_fact_ids": ["MV-CLEAN-001-F034", "MV-SERUM-001-F031", "MV-CREAM-001-F030", "MV-HAND-001-F030", "MV-KIT-001-F024"],
+      "brand_rule_refs": ["voice.clear", "voice.trustworthy"],
+      "prohibited_inference": "不得宣称a prueba de fugas、sin daños garantizados或包装零故障。"
+    },
+    {
+      "insight_id": "IN-MX-004",
+      "market": "MX",
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "insight_type": "purchase_motivation",
+      "theme": "practical_and_easy_use",
+      "signal_zh": "práctico、manejable和sencillo de usar等表达对应正面易用体验。",
+      "support_sample_count": 4,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["es_0799498", "es_0144429", "es_0401886", "es_0263596"],
+      "representative_quotes": [
+        {
+          "review_id": "es_0799498",
+          "quote": "todo recogido en el mismo sitio"
+        },
+        {
+          "review_id": "es_0144429",
+          "quote": "es muy sencillo de usar."
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "四条西语探索样本明确提及实用或易用，但尚未进行墨西哥本地验证。",
+      "recommended_content_direction": "使用简短的tú式步骤说明，如aplica、continúa、úsalo según sea necesario。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-CLEAN-001", "MV-SERUM-001", "MV-CREAM-001", "MV-HAND-001", "MV-KIT-001"],
+      "linked_fact_ids": ["MV-CLEAN-001-F015", "MV-SERUM-001-F015", "MV-CREAM-001-F017", "MV-HAND-001-F016", "MV-KIT-001-F010"],
+      "brand_rule_refs": ["MX.pronoun.tú", "voice.clear", "voice.concise"],
+      "prohibited_inference": "不得把步骤清楚扩大为适合所有人或无需任何注意事项。"
+    },
+    {
+      "insight_id": "IN-MX-005",
+      "market": "MX",
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "insight_type": "usage_scenario",
+      "theme": "compact_and_manageable",
+      "signal_zh": "小巧、容易拿取和不重可支持精简携带的内容测试。",
+      "support_sample_count": 2,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["es_0144429", "es_0263596"],
+      "representative_quotes": [
+        {
+          "review_id": "es_0144429",
+          "quote": "muy pequeñito y manejable"
+        },
+        {
+          "review_id": "es_0263596",
+          "quote": "no pesa mucho"
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "仅达到最低支持门槛，且证据是便携代理而非墨西哥旅行场景。",
+      "recommended_content_direction": "测试set compacto con tres tamaños mini，并列出准确容量；标记需要墨西哥本地复核。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-KIT-001"],
+      "linked_fact_ids": ["MV-KIT-001-F003", "MV-KIT-001-F004", "MV-KIT-001-F005", "MV-KIT-001-F015", "MV-KIT-001-F024"],
+      "brand_rule_refs": ["MX.style.natural_clear", "voice.clear"],
+      "prohibited_inference": "不得宣称aprobado por la TSA、garantizado para viajar或墨西哥消费者已验证。"
+    },
+    {
+      "insight_id": "IN-MX-006",
+      "market": "MX",
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "insight_type": "negative_concern",
+      "theme": "expectation_match",
+      "signal_zh": "西语样本会明确指出品类、颜色、尺寸、图片和质量与预期不符。",
+      "support_sample_count": 5,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["es_0104546", "es_0888683", "es_0304518", "es_0113008", "es_0539976"],
+      "representative_quotes": [
+        {
+          "review_id": "es_0104546",
+          "quote": "El producto no se corresponde con la descripción"
+        },
+        {
+          "review_id": "es_0888683",
+          "quote": "el color es más claro de lo esperado"
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "五条西语探索样本提供明确预期落差证据，但不是墨西哥地域样本。",
+      "recommended_content_direction": "明确写品类、件数、容量和包装形态，避免名词堆叠和模糊描述。",
+      "mapping_status": "eligible",
+      "linked_skus": ["MV-CLEAN-001", "MV-SERUM-001", "MV-CREAM-001", "MV-HAND-001", "MV-KIT-001"],
+      "linked_fact_ids": ["MV-CLEAN-001-F002", "MV-CLEAN-001-F003", "MV-SERUM-001-F002", "MV-SERUM-001-F003", "MV-CREAM-001-F002", "MV-CREAM-001-F003", "MV-HAND-001-F002", "MV-HAND-001-F003", "MV-KIT-001-F002", "MV-KIT-001-F003", "MV-KIT-001-F004", "MV-KIT-001-F005"],
+      "brand_rule_refs": ["voice.clear", "voice.trustworthy", "MX.style.natural_clear"],
+      "prohibited_inference": "不得用比喻或省略关键规格造成品类和数量误解。"
+    },
+    {
+      "insight_id": "IN-MX-007",
+      "market": "MX",
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "insight_type": "purchase_motivation",
+      "theme": "value_for_money",
+      "signal_zh": "价格与质量、功能是否匹配是西语样本中的明确评价框架。",
+      "support_sample_count": 4,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["es_0168710", "es_0122227", "es_0790511", "es_0263596"],
+      "representative_quotes": [
+        {
+          "review_id": "es_0122227",
+          "quote": "estupenda relación con calidad precio."
+        },
+        {
+          "review_id": "es_0263596",
+          "quote": "por su precio cumple bien su función"
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "四条西语探索样本包含明确价格—质量判断，但当前项目无价格事实且未进行墨西哥本地验证。",
+      "recommended_content_direction": "保留为未来价格测试问题，不进入当前内容生成。",
+      "mapping_status": "blocked",
+      "linked_skus": [],
+      "linked_fact_ids": [],
+      "brand_rule_refs": ["voice.trustworthy"],
+      "block_reason": "项目事实库没有价格、折扣或竞品价格数据。",
+      "prohibited_inference": "不得生成económico、mejor precio、gran relación calidad-precio或虚构折扣。"
+    },
+    {
+      "insight_id": "IN-MX-008",
+      "market": "MX",
+      "language": "es-MX",
+      "evidence_scope": "Spanish-language proxy for Mexico content",
+      "insight_type": "language_pattern",
+      "theme": "evaluative_constructions",
+      "signal_zh": "西语样本通过esperaba más、no me gusta和relación calidad-precio等结构表达评价。",
+      "support_sample_count": 4,
+      "reviewed_language_sample_count": 50,
+      "minimum_support_count": 2,
+      "threshold_met": true,
+      "evidence_review_ids": ["es_0122227", "es_0539976", "es_0027587", "es_0104546"],
+      "representative_quotes": [
+        {
+          "review_id": "es_0539976",
+          "quote": "Esperaba más calidad del producto."
+        },
+        {
+          "review_id": "es_0027587",
+          "quote": "no me gusta nada."
+        }
+      ],
+      "confidence": "low",
+      "confidence_reason": "可作为西语表达模式观察，但不能直接外推为墨西哥文化差异。",
+      "recommended_content_direction": "墨西哥文案保持自然评价结构和tú称呼，避免西班牙本土化词形及文化本质化。",
+      "mapping_status": "strategy_only",
+      "linked_skus": [],
+      "linked_fact_ids": [],
+      "brand_rule_refs": ["MX.pronoun.tú", "MX.style.natural_clear"],
+      "prohibited_inference": "不得将语言差异概括为固定民族或文化性格。"
+    }
+  ]
+}

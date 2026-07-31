@@ -1,0 +1,178 @@
+{
+  "fixture_id": "LF-STAGE8-MV-SERUM-001-US-LISTING",
+  "test_type": "offline_structure_and_constraint_validation",
+  "model_api_called": false,
+  "task": {
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "language": "en-US",
+    "platform": "google_merchant_center",
+    "content_type": "product_listing",
+    "marketing_goal": "consideration"
+  },
+  "selected_insights": [
+    {
+      "insight_id": "IN-US-001",
+      "mapping_status": "eligible",
+      "use": "cautious skin-feel message",
+      "prohibited_inference": "不得改写为修复皮肤结构、临床证明或保证结果。"
+    },
+    {
+      "insight_id": "IN-US-003",
+      "mapping_status": "eligible",
+      "use": "state packaging form and capacity accurately",
+      "prohibited_inference": "不得宣称 leak-proof、damage-free 或零故障。"
+    },
+    {
+      "insight_id": "IN-US-004",
+      "mapping_status": "eligible",
+      "use": "clear usage steps",
+      "prohibited_inference": "不得扩大为适合所有人或零学习成本。"
+    },
+    {
+      "insight_id": "IN-US-006",
+      "mapping_status": "eligible",
+      "use": "state product type and size early",
+      "prohibited_inference": "不得省略关键规格或用模糊图片替代文字事实。"
+    }
+  ],
+  "facts": [
+    {
+      "fact_id": "MV-SERUM-001-F002",
+      "attribute": "category",
+      "value": "保湿精华",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F003",
+      "attribute": "net_volume",
+      "value": 30,
+      "unit": "mL",
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F005",
+      "attribute": "ingredient",
+      "value": "甘油",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F007",
+      "attribute": "ingredient",
+      "value": "透明质酸钠",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F008",
+      "attribute": "ingredient",
+      "value": "泛醇",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F015",
+      "attribute": "usage_instruction",
+      "value": "洁面后取1—2泵涂抹于面部和颈部，再使用面霜；避开眼周",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F016",
+      "attribute": "usage_amount_min",
+      "value": 1,
+      "unit": "pump",
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F017",
+      "attribute": "usage_amount_max",
+      "value": 2,
+      "unit": "pump",
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F018",
+      "attribute": "verified_feature",
+      "value": "无添加香精",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F019",
+      "attribute": "verified_feature",
+      "value": "水基凝露质地",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F020",
+      "attribute": "verified_feature",
+      "value": "透明质酸钠与泛醇列于模拟配方",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F021",
+      "attribute": "verified_feature",
+      "value": "按压泵包装",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F022",
+      "attribute": "allowed_benefit",
+      "value": "帮助肌肤感觉水润",
+      "unit": null,
+      "evidence_level": "B",
+      "generation_policy": "cautious"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F024",
+      "attribute": "allowed_benefit",
+      "value": "使用后肌肤感觉柔软",
+      "unit": null,
+      "evidence_level": "B",
+      "generation_policy": "cautious"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F031",
+      "attribute": "packaging_feature",
+      "value": "30 mL不透明PP按压泵瓶",
+      "unit": null,
+      "evidence_level": "A",
+      "generation_policy": "direct"
+    },
+    {
+      "fact_id": "MV-SERUM-001-F038",
+      "attribute": "content_hypothesis",
+      "value": "测试轻盈质地与不黏腻诉求的内容角度",
+      "unit": null,
+      "evidence_level": "C",
+      "generation_policy": "not_directly_usable"
+    }
+  ],
+  "blocked_claim_examples": [
+    "24-hour hydration",
+    "72-hour hydration",
+    "repairs the skin barrier",
+    "clinically proven",
+    "non-sticky",
+    "fast-absorbing"
+  ],
+  "schema": "prompts/schemas/content_output.schema.json"
+}

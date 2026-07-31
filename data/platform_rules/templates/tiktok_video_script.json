@@ -1,0 +1,139 @@
+{
+  "template_id": "LF-TPL-TIKTOK-VIDEO-1.0",
+  "version": "1.0.0",
+  "updated_at": "2026-07-28",
+  "platform": "TikTok Ads",
+  "content_type": "short_video_script",
+  "markets": [
+    "US",
+    "MX"
+  ],
+  "applied_rule_ids": [
+    "TTA-H-001",
+    "TTA-H-002",
+    "TTA-H-003",
+    "TTA-H-004",
+    "TTA-H-005",
+    "TTA-H-006",
+    "TTA-H-007",
+    "TTA-H-008",
+    "TTA-H-009",
+    "TTA-H-010",
+    "TTA-H-011",
+    "TTA-H-012",
+    "TTA-B-001",
+    "TTA-B-002",
+    "INT-VID-001",
+    "INT-VID-002",
+    "INT-VID-003",
+    "BRAND-H-001",
+    "BRAND-H-002",
+    "INT-MKT-001",
+    "INT-REV-001"
+  ],
+  "input_contract": {
+    "required": [
+      "sku",
+      "market",
+      "language",
+      "duration_seconds",
+      "marketing_goal",
+      "matched_insight_ids",
+      "product_fact_ids",
+      "landing_page_url",
+      "aigc_status"
+    ],
+    "duration_seconds_allowed": [
+      15,
+      30
+    ]
+  },
+  "output_contract": {
+    "sku": "",
+    "market": "",
+    "language": "",
+    "platform": "tiktok_ads",
+    "duration_seconds": 15,
+    "format": {
+      "ad_type": "non_spark_in_feed",
+      "aspect_ratio": "9:16",
+      "resolution": "540x960_or_higher",
+      "audio_required": true,
+      "caption_character_limit": null,
+      "caption_limit_note": "截至核验日，所用官方规格页未给出统一字符上限。"
+    },
+    "strategy": {
+      "marketing_goal": "",
+      "insight_ids": [],
+      "angle": ""
+    },
+    "scenes": [
+      {
+        "timecode": "00:00-00:03",
+        "role": "hook",
+        "visual": "",
+        "voiceover": "",
+        "on_screen_text": "",
+        "fact_ids": []
+      },
+      {
+        "timecode": "00:03-00:08",
+        "role": "usage_context_and_verified_fact",
+        "visual": "",
+        "voiceover": "",
+        "on_screen_text": "",
+        "fact_ids": []
+      },
+      {
+        "timecode": "00:08-00:13",
+        "role": "usage_or_cautious_experience",
+        "visual": "",
+        "voiceover": "",
+        "on_screen_text": "",
+        "fact_ids": []
+      },
+      {
+        "timecode": "00:13-00:15",
+        "role": "cta",
+        "visual": "",
+        "voiceover": "",
+        "on_screen_text": "",
+        "fact_ids": []
+      }
+    ],
+    "caption": "",
+    "cta": "",
+    "ai_disclosure": {
+      "aigc_status": "unknown",
+      "label_required": "pending",
+      "method": null,
+      "disclosure_text": null
+    },
+    "landing_page_consistency": {
+      "product": "pending",
+      "price": "pending",
+      "promotion": "pending",
+      "disclaimers": "pending",
+      "terms": "pending"
+    },
+    "checks": {
+      "hard_rules": "pending",
+      "best_practices": "pending",
+      "brand_rules": "pending",
+      "internal_rules": "pending"
+    },
+    "warnings": [],
+    "human_review": {
+      "required": true,
+      "status": "pending",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  },
+  "generation_notes": [
+    "15 秒模板可扩展为 30 秒，但必须重新分配 timecode，不得只堆叠文案。",
+    "洞察只选择表达角度；口播、字幕和画面中的商品事实仍须绑定 fact_id。",
+    "10 分钟是 Non-Spark 上传规格上限；广告政策的 60 秒上限更严格，本项目仅输出 15/30 秒。",
+    "平台规则预检通过不等于 TikTok 最终批准。"
+  ]
+}

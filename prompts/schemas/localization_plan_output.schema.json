@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localizeflow.example/schemas/localization-plan-output-v1.json",
+  "title": "LocalizeFlow Localization Plan Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "localization_plan_id",
+    "sku",
+    "market",
+    "language",
+    "message_map",
+    "terminology_decisions",
+    "tone_decisions",
+    "immutable_values",
+    "avoid_list",
+    "review_flags",
+    "insufficient_information"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "insufficient_information"
+      ]
+    },
+    "localization_plan_id": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "market": {
+      "type": "string",
+      "enum": [
+        "US",
+        "MX"
+      ]
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "en-US",
+        "es-MX"
+      ]
+    },
+    "message_map": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "message_role",
+          "source_fact_ids",
+          "source_insight_ids",
+          "localized_intent",
+          "allowed_phrasing",
+          "required_qualifiers"
+        ],
+        "properties": {
+          "message_role": {
+            "type": "string"
+          },
+          "source_fact_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_insight_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "localized_intent": {
+            "type": "string"
+          },
+          "allowed_phrasing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "required_qualifiers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "terminology_decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "concept",
+          "preferred_term",
+          "rejected_variants",
+          "source_rule"
+        ],
+        "properties": {
+          "concept": {
+            "type": "string"
+          },
+          "preferred_term": {
+            "type": "string"
+          },
+          "rejected_variants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_rule": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tone_decisions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "immutable_values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "fact_id",
+          "value",
+          "unit"
+        ],
+        "properties": {
+          "fact_id": {
+            "type": "string"
+          },
+          "value": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "avoid_list": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "review_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "insufficient_information": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

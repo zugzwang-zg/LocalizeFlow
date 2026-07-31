@@ -1,0 +1,273 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "LF-AI-WORKFLOW-V1",
+  "version": "1.0.0",
+  "updated_at": "2026-07-28",
+  "status": "stage_7_pending_acceptance",
+  "severity_definitions": {
+    "block": {
+      "export_allowed": false,
+      "automatic_downstream_allowed": false,
+      "human_action_required": true
+    },
+    "review": {
+      "export_allowed": false,
+      "automatic_downstream_allowed": true,
+      "human_action_required": true
+    },
+    "warning": {
+      "export_allowed": false,
+      "automatic_downstream_allowed": true,
+      "human_action_required": true
+    },
+    "info": {
+      "export_allowed": false,
+      "automatic_downstream_allowed": true,
+      "human_action_required": false
+    }
+  },
+  "retry_policy": {
+    "max_attempts_per_node": 2,
+    "retryable_categories": [
+      "transient_api_error",
+      "timeout",
+      "rate_limit",
+      "invalid_json_once",
+      "schema_validation_failure_once"
+    ],
+    "non_retryable_categories": [
+      "contradicted_fact",
+      "unsupported_high_risk_claim",
+      "blocked_evidence_used",
+      "platform_hard_rule_failure",
+      "missing_required_source_asset",
+      "asset_version_mismatch",
+      "human_rejection"
+    ],
+    "retry_requirement": "每次重试必须增加 attempt，保存前次原始输出和错误，不得覆盖。"
+  },
+  "error_catalog": [
+    {
+      "code": "E-ASSET-001",
+      "origin_nodes": [
+        "N01_FACT_EXTRACTOR",
+        "N02_CAMPAIGN_PLANNER",
+        "N03_LOCALIZER",
+        "N04_CONTENT_GENERATOR",
+        "N05_FACT_CHECKER",
+        "N06_RULE_CHECKER",
+        "N07_QUALITY_EVALUATOR"
+      ],
+      "severity": "block",
+      "trigger": "必需资产不存在、无法读取或 SHA-256 与输入引用不一致。",
+      "action": "终止当前节点；修复资产引用后创建新 attempt。",
+      "retryable": false
+    },
+    {
+      "code": "E-ASSET-002",
+      "origin_nodes": [
+        "N01_FACT_EXTRACTOR",
+        "N02_CAMPAIGN_PLANNER",
+        "N03_LOCALIZER",
+        "N04_CONTENT_GENERATOR",
+        "N05_FACT_CHECKER",
+        "N06_RULE_CHECKER"
+      ],
+      "severity": "block",
+      "trigger": "事实库、洞察库、术语库或平台规则版本与工作流要求不一致。",
+      "action": "冻结运行；由维护者确认迁移或重新开始。",
+      "retryable": false
+    },
+    {
+      "code": "E-FACT-001",
+      "origin_nodes": [
+        "N01_FACT_EXTRACTOR"
+      ],
+      "severity": "block",
+      "trigger": "fact_id 重复、SKU 不匹配、证据等级未知或必填来源缺失。",
+      "action": "拒绝事实输出；修复事实库后重新运行。",
+      "retryable": false
+    },
+    {
+      "code": "E-FACT-002",
+      "origin_nodes": [
+        "N02_CAMPAIGN_PLANNER",
+        "N03_LOCALIZER",
+        "N04_CONTENT_GENERATOR"
+      ],
+      "severity": "block",
+      "trigger": "C 级或 D 级事实被选作可输出卖点。",
+      "action": "终止生成链；回退到发生选择的节点并记录违规 fact_id。",
+      "retryable": false
+    },
+    {
+      "code": "E-INSIGHT-001",
+      "origin_nodes": [
+        "N02_CAMPAIGN_PLANNER"
+      ],
+      "severity": "block",
+      "trigger": "mapping_status=blocked 的洞察被选中，或 insight 的 market/language/SKU 不匹配。",
+      "action": "拒绝策略；重新选择符合条件的洞察。",
+      "retryable": false
+    },
+    {
+      "code": "E-INSIGHT-002",
+      "origin_nodes": [
+        "N02_CAMPAIGN_PLANNER",
+        "N03_LOCALIZER",
+        "N04_CONTENT_GENERATOR"
+      ],
+      "severity": "block",
+      "trigger": "把洞察、评论语言或代表性引文当成商品事实。",
+      "action": "终止当前内容版本；移除无事实支持的陈述并重新运行事实检查。",
+      "retryable": false
+    },
+    {
+      "code": "E-LOCALIZE-001",
+      "origin_nodes": [
+        "N03_LOCALIZER"
+      ],
+      "severity": "block",
+      "trigger": "本地化方案改变数字、单位、价格、成分、用法或功效边界。",
+      "action": "拒绝本地化方案；以 N01 事实快照恢复不可变字段。",
+      "retryable": false
+    },
+    {
+      "code": "E-LOCALIZE-002",
+      "origin_nodes": [
+        "N03_LOCALIZER"
+      ],
+      "severity": "review",
+      "trigger": "表达自然度、称谓、语域或文化适配存在疑问，但未改变事实。",
+      "action": "允许进入检查节点，但加入目标语言人工复核队列。",
+      "retryable": false
+    },
+    {
+      "code": "E-GEN-001",
+      "origin_nodes": [
+        "N04_CONTENT_GENERATOR"
+      ],
+      "severity": "block",
+      "trigger": "模型输出不是合法 JSON 或不符合模板 Schema。",
+      "action": "保留原始响应；最多自动重试一次，第二次失败后转人工诊断。",
+      "retryable": true
+    },
+    {
+      "code": "E-GEN-002",
+      "origin_nodes": [
+        "N04_CONTENT_GENERATOR"
+      ],
+      "severity": "block",
+      "trigger": "事实性陈述缺少 claim_id 或 fact_ids。",
+      "action": "拒绝内容版本；重新生成或人工补充映射后再进入 N05。",
+      "retryable": true
+    },
+    {
+      "code": "E-CHECK-001",
+      "origin_nodes": [
+        "N05_FACT_CHECKER"
+      ],
+      "severity": "block",
+      "trigger": "陈述状态为 contradicted，或高风险陈述状态为 unsupported。",
+      "action": "立即阻断导出；不得进入仅靠评分放行的路径；人工删除或按事实重写后重跑 N05、N06。",
+      "retryable": false
+    },
+    {
+      "code": "E-CHECK-002",
+      "origin_nodes": [
+        "N05_FACT_CHECKER"
+      ],
+      "severity": "block",
+      "trigger": "fact_id 不存在、属于其他 SKU，或事实状态不是 active。",
+      "action": "阻断导出；修复 claim 映射或内容后重新检查。",
+      "retryable": false
+    },
+    {
+      "code": "E-CHECK-003",
+      "origin_nodes": [
+        "N05_FACT_CHECKER"
+      ],
+      "severity": "review",
+      "trigger": "陈述为 supported_with_qualification 或 insufficient_information，且不属于高风险事实错误。",
+      "action": "进入人工复核；保留限定语或删除陈述，不允许自动放行。",
+      "retryable": false
+    },
+    {
+      "code": "E-RULE-001",
+      "origin_nodes": [
+        "N06_RULE_CHECKER"
+      ],
+      "severity": "block",
+      "trigger": "任一 platform_hard_rule 或 block 级 brand_rule/project_internal_rule 失败。",
+      "action": "阻断导出；按 rule_id 定位并修改内容，新版本重跑 N05、N06。",
+      "retryable": false
+    },
+    {
+      "code": "E-RULE-002",
+      "origin_nodes": [
+        "N06_RULE_CHECKER"
+      ],
+      "severity": "review",
+      "trigger": "平台最佳实践失败、一般语气问题或语义检测不确定。",
+      "action": "不自动修改；进入人工编辑队列，记录建议与内容位置。",
+      "retryable": false
+    },
+    {
+      "code": "E-EVAL-001",
+      "origin_nodes": [
+        "N07_QUALITY_EVALUATOR"
+      ],
+      "severity": "block",
+      "trigger": "评分结果试图覆盖 N05/N06 的阻断状态，或权重不等于 100。",
+      "action": "评测无效；保持原阻断状态并重新运行评测。",
+      "retryable": true
+    },
+    {
+      "code": "E-HUMAN-001",
+      "origin_nodes": [
+        "HUMAN_EDIT_OR_TERMINATE",
+        "HUMAN_FINAL_REVIEW"
+      ],
+      "severity": "block",
+      "trigger": "人工修改未创建新版本、缺少修改理由，或修改后未重跑事实和规则检查。",
+      "action": "禁止导出；补齐审计记录并重新检查。",
+      "retryable": false
+    },
+    {
+      "code": "E-HUMAN-002",
+      "origin_nodes": [
+        "HUMAN_FINAL_REVIEW"
+      ],
+      "severity": "block",
+      "trigger": "人工最终确认状态不是 approved。",
+      "action": "保持 pending 或 rejected，禁止导出。",
+      "retryable": false
+    }
+  ],
+  "content_version_policy": {
+    "immutable_history": true,
+    "overwrite_previous_version": false,
+    "required_on_every_change": [
+      "new_version_id",
+      "parent_version_id",
+      "created_by",
+      "created_at",
+      "change_reason",
+      "changed_locations",
+      "content_sha256"
+    ],
+    "recheck_after_change": [
+      "N05_FACT_CHECKER",
+      "N06_RULE_CHECKER"
+    ],
+    "quality_evaluation_after_recheck": "rerun_if_content_changed"
+  },
+  "release_gate": {
+    "expression": "fact_check.export_gate == 'pass' AND rule_check.export_gate == 'pass' AND high_risk_error_count == 0 AND human_final_review.status == 'approved'",
+    "quality_score_can_override": false,
+    "automatic_platform_approval_claim_allowed": false,
+    "automatic_legal_compliance_claim_allowed": false,
+    "on_pass": "export_candidate",
+    "on_fail": "blocked_or_pending_human_review"
+  }
+}

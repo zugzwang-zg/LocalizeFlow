@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "LF-STAGE9-FACT-RISK-CASES",
+  "version": "1.0.0",
+  "updated_at": "2026-07-28",
+  "purpose": "事实核验模块的代表性错误、风险与预期处理案例。",
+  "cases": [
+    {
+      "case_id": "FC-RISK-001",
+      "category": "numeric_contradiction",
+      "sku": "MV-SERUM-001",
+      "claim": "Mirevane Botanics Hydrating Serum, 50 mL",
+      "fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F003"
+      ],
+      "expected_status": "contradicted",
+      "expected_risk_level": "high",
+      "expected_gate": "blocked",
+      "expected_suggestion": "Replace 50 mL with the verified 30 mL value."
+    },
+    {
+      "case_id": "FC-RISK-002",
+      "category": "medical_and_clinical_claim",
+      "sku": "MV-SERUM-001",
+      "claim": "Clinically proven to cure dry skin.",
+      "fact_ids": [
+        "MV-SERUM-001-F022"
+      ],
+      "expected_status": "unsupported",
+      "expected_risk_level": "high",
+      "expected_gate": "blocked",
+      "expected_suggestion": "Helps skin feel hydrated."
+    },
+    {
+      "case_id": "FC-RISK-003",
+      "category": "missing_b_level_qualifier",
+      "sku": "MV-SERUM-001",
+      "claim": "Hydrates skin.",
+      "fact_ids": [
+        "MV-SERUM-001-F022"
+      ],
+      "expected_status": "partially_supported",
+      "expected_risk_level": "medium",
+      "expected_gate": "needs_human_review",
+      "expected_suggestion": "Rewrite with helps or skin feels."
+    },
+    {
+      "case_id": "FC-RISK-004",
+      "category": "non_fact_hypothesis_used",
+      "sku": "MV-SERUM-001",
+      "claim": "A non-sticky hydrating serum.",
+      "fact_ids": [
+        "MV-SERUM-001-F038"
+      ],
+      "expected_status": "unsupported",
+      "expected_risk_level": "high",
+      "expected_gate": "blocked",
+      "expected_suggestion": "Remove non-sticky until product testing provides an active fact."
+    },
+    {
+      "case_id": "FC-RISK-005",
+      "category": "unverified_certification",
+      "sku": "MV-SERUM-001",
+      "claim": "FDA-approved and dermatologist-tested.",
+      "fact_ids": [
+        "MV-SERUM-001-F037"
+      ],
+      "expected_status": "unsupported",
+      "expected_risk_level": "high",
+      "expected_gate": "blocked",
+      "expected_suggestion": "Remove the approval and testing claims."
+    },
+    {
+      "case_id": "FC-RISK-006",
+      "category": "unsupported_ingredient",
+      "sku": "MV-SERUM-001",
+      "claim": "Contains gold flakes.",
+      "fact_ids": [],
+      "expected_status": "unsupported",
+      "expected_risk_level": "high",
+      "expected_gate": "blocked",
+      "expected_suggestion": "Remove the ingredient or cite an active ingredient fact."
+    },
+    {
+      "case_id": "FC-RISK-007",
+      "category": "subjective",
+      "sku": "MV-SERUM-001",
+      "claim": "A calm step for your routine.",
+      "fact_ids": [],
+      "expected_status": "subjective",
+      "expected_risk_level": "none",
+      "expected_gate": "pass",
+      "expected_suggestion": "No factual correction; retain human review."
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localizeflow.example/schemas/evaluation-output-v1.json",
+  "title": "LocalizeFlow Quality Evaluation Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "evaluation_id",
+    "content_version_id",
+    "hard_gate_snapshot",
+    "dimension_scores",
+    "weighted_score",
+    "strengths",
+    "improvement_items",
+    "limitations",
+    "final_workflow_status"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "invalid_input"
+      ]
+    },
+    "evaluation_id": {
+      "type": "string"
+    },
+    "content_version_id": {
+      "type": "string"
+    },
+    "hard_gate_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_gate",
+        "rule_gate",
+        "high_risk_error_count"
+      ],
+      "properties": {
+        "fact_gate": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "blocked",
+            "pending"
+          ]
+        },
+        "rule_gate": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "blocked",
+            "pending"
+          ]
+        },
+        "high_risk_error_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "dimension_scores": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dimension",
+          "weight",
+          "score",
+          "reason"
+        ],
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "fact_accuracy",
+              "platform_fit",
+              "language_naturalness",
+              "brand_consistency",
+              "localization_quality",
+              "marketing_persuasiveness"
+            ]
+          },
+          "weight": {
+            "type": "integer"
+          },
+          "score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "weighted_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "strengths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "improvement_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "final_workflow_status": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "needs_human_review",
+        "pending_human_final_review"
+      ]
+    }
+  }
+}

@@ -1,0 +1,993 @@
+{
+  "schema_version": "1.0",
+  "rule_set_id": "LF-PLATFORM-RULES-2026-07-28",
+  "version": "1.0.0",
+  "updated_at": "2026-07-28",
+  "verified_date": "2026-07-28",
+  "status": "stage_6_pending_acceptance",
+  "scope": {
+    "markets": [
+      {
+        "market": "US",
+        "language": "en-US",
+        "currency": "USD"
+      },
+      {
+        "market": "MX",
+        "language": "es-MX",
+        "currency": "MXN"
+      }
+    ],
+    "platforms": [
+      "Google Merchant Center",
+      "TikTok Ads",
+      "Generic Social"
+    ],
+    "content_types": [
+      "product_listing",
+      "short_video_script",
+      "social_ad_copy"
+    ],
+    "final_review_disclaimer": "本规则库只用于生成前约束和自动预检，不替代平台、法务、品牌方或目标语言专业人员的最终审核，也不保证内容一定获批。"
+  },
+  "rule_type_definitions": {
+    "platform_hard_rule": "官方页面明确要求或禁止；未通过时阻断导出。",
+    "platform_best_practice": "官方推荐但不是单独的放行条件；未通过时提示优化。",
+    "brand_rule": "Mirevane Botanics 项目品牌规范；未通过时按风险等级阻断或人工复核。",
+    "project_internal_rule": "为保证工作流结构化、可追溯和便于评测而设置；不宣称是平台官方要求。"
+  },
+  "sources": [
+    {
+      "source_id": "GMC-PDS",
+      "platform": "Google Merchant Center",
+      "title": "Product data specification",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "publisher_last_updated": null,
+      "publisher_date_status": "not_displayed",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "source_id": "GMC-MISREP",
+      "platform": "Google Merchant Center",
+      "title": "Misrepresentation",
+      "source_url": "https://support.google.com/merchants/answer/6150127?hl=en",
+      "publisher_last_updated": null,
+      "publisher_date_status": "not_displayed",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "source_id": "GMC-EDITORIAL",
+      "platform": "Google Merchant Center",
+      "title": "Editorial & professional requirements",
+      "source_url": "https://support.google.com/merchants/answer/6150244?hl=en",
+      "publisher_last_updated": null,
+      "publisher_date_status": "not_displayed",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "source_id": "GMC-AI-2024",
+      "platform": "Google Merchant Center",
+      "title": "2024 Merchant Center product data specification update",
+      "source_url": "https://support.google.com/merchants/answer/14784710?hl=en",
+      "publisher_last_updated": "2024-04-09",
+      "publisher_date_status": "displayed",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "source_id": "TTA-FORMAT",
+      "platform": "TikTok Ads",
+      "title": "Ad format and functionality",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en",
+      "publisher_last_updated": "2026-04",
+      "publisher_date_status": "displayed",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "source_id": "TTA-INFEED",
+      "platform": "TikTok Ads",
+      "title": "TikTok Auction In-Feed Ads",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-auction-in-feed-ads?lang=en&redirected=2",
+      "publisher_last_updated": "2026-06",
+      "publisher_date_status": "displayed",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "source_id": "TTA-MISLEADING",
+      "platform": "TikTok Ads",
+      "title": "Misleading and false content",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-misleading-and-false-content?lang=en",
+      "publisher_last_updated": "2026-04",
+      "publisher_date_status": "displayed",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "source_id": "BRAND-GUIDE",
+      "platform": "Cross-platform",
+      "title": "Mirevane Botanics 品牌语调与本地化指南",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "publisher_last_updated": "2026-07-28",
+      "publisher_date_status": "local_project_document",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "source_id": "PROJECT-BRIEF",
+      "platform": "Cross-platform",
+      "title": "LocalizeFlow 项目简报",
+      "source_url": "project_brief.md",
+      "publisher_last_updated": "2026-07-28",
+      "publisher_date_status": "local_project_document",
+      "verified_date": "2026-07-28"
+    }
+  ],
+  "rules": [
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-001",
+      "rule_type": "platform_hard_rule",
+      "description": "每个商品必须提交唯一且稳定的 id。",
+      "limit": {
+        "field": "id",
+        "required": true,
+        "max": 50,
+        "unit": "characters"
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-002",
+      "rule_type": "platform_hard_rule",
+      "description": "必须提交 title 或 structured_title；标题不得超过 150 个字符。",
+      "limit": {
+        "field": "title_or_structured_title",
+        "required": true,
+        "max": 150,
+        "unit": "characters"
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-003",
+      "rule_type": "platform_hard_rule",
+      "description": "使用生成式 AI 创建标题时必须使用 structured_title，并将 digital_source_type 设为 trained_algorithmic_media。",
+      "limit": {
+        "field": "structured_title.digital_source_type",
+        "required_when": "title_is_generative_ai",
+        "allowed_values": [
+          "trained_algorithmic_media"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-AI-2024",
+      "source_url": "https://support.google.com/merchants/answer/14784710?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-004",
+      "rule_type": "platform_hard_rule",
+      "description": "标题必须准确描述商品并与落地页标题相匹配；不得加入免邮等促销文本、全大写或花哨字符。",
+      "limit": {
+        "field": "title",
+        "must_match_landing_page": true,
+        "prohibited_patterns": [
+          "promotional_text",
+          "all_caps",
+          "gimmicky_characters"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-005",
+      "rule_type": "platform_hard_rule",
+      "description": "必须提交 description 或 structured_description；描述不得超过 5000 个字符。",
+      "limit": {
+        "field": "description_or_structured_description",
+        "required": true,
+        "max": 5000,
+        "unit": "characters"
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-006",
+      "rule_type": "platform_hard_rule",
+      "description": "使用生成式 AI 创建描述时必须使用 structured_description，并将 digital_source_type 设为 trained_algorithmic_media。",
+      "limit": {
+        "field": "structured_description.digital_source_type",
+        "required_when": "description_is_generative_ai",
+        "allowed_values": [
+          "trained_algorithmic_media"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-AI-2024",
+      "source_url": "https://support.google.com/merchants/answer/14784710?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-007",
+      "rule_type": "platform_hard_rule",
+      "description": "描述必须准确且与落地页相符，只包含商品信息；不得包含店铺链接、销售信息、竞品、其他商品或配件信息。",
+      "limit": {
+        "field": "description",
+        "must_match_landing_page": true,
+        "prohibited_content": [
+          "store_links",
+          "sales_information",
+          "competitor_details",
+          "other_products",
+          "unrelated_accessories"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-008",
+      "rule_type": "platform_hard_rule",
+      "description": "必须提供以 http 或 https 开头、属于已验证域名且可访问的商品落地页链接。",
+      "limit": {
+        "field": "link",
+        "required": true,
+        "allowed_schemes": [
+          "http",
+          "https"
+        ],
+        "verified_domain_required": true
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-009",
+      "rule_type": "platform_hard_rule",
+      "description": "必须提供可抓取且准确展示商品的主图链接；主图不得含促销文字、水印、边框、占位图或通用图。",
+      "limit": {
+        "field": "image_link",
+        "required": true,
+        "prohibited_content": [
+          "promotional_text",
+          "watermark",
+          "border",
+          "placeholder",
+          "generic_image"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-010",
+      "rule_type": "platform_hard_rule",
+      "description": "生成式 AI 创建的商品图片必须保留标识数字来源的 IPTC 元数据。",
+      "limit": {
+        "field": "image_metadata.IPTC.DigitalSourceType",
+        "required_when": "image_is_generative_ai",
+        "accepted_examples": [
+          "TrainedAlgorithmicMedia",
+          "CompositeSynthetic",
+          "AlgorithmicMedia"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-011",
+      "rule_type": "platform_hard_rule",
+      "description": "必须提交受支持的库存状态，并与落地页、结账页及结构化数据一致。",
+      "limit": {
+        "field": "availability",
+        "required": true,
+        "allowed_values": [
+          "in_stock",
+          "out_of_stock",
+          "preorder",
+          "backorder"
+        ],
+        "must_match_landing_and_checkout": true
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-012",
+      "rule_type": "platform_hard_rule",
+      "description": "必须以 ISO 4217 货币代码提交准确价格，并与落地页、结构化数据和结账页一致。",
+      "limit": {
+        "field": "price",
+        "required": true,
+        "currency_standard": "ISO_4217",
+        "must_match_landing_and_checkout": true
+      },
+      "severity": "block",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-013",
+      "rule_type": "platform_hard_rule",
+      "description": "不得使用虚假、无法支持或把极不可能结果包装为预期结果的宣称，也不得虚构关联或背书。",
+      "limit": {
+        "field": "all_content",
+        "prohibited_content": [
+          "false_claims",
+          "improbable_results_as_expected",
+          "false_affiliation",
+          "false_endorsement",
+          "harmful_health_claims"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-MISREP",
+      "source_url": "https://support.google.com/merchants/answer/6150127?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-014",
+      "rule_type": "platform_hard_rule",
+      "description": "落地页必须清楚披露完整费用、付款条件、条款、配送及退换退款政策，且商品实际可购买。",
+      "limit": {
+        "field": "landing_page",
+        "required_information": [
+          "total_price_and_currency",
+          "payment_conditions",
+          "terms_and_conditions",
+          "shipping_information",
+          "return_and_refund_policy"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-MISREP",
+      "source_url": "https://support.google.com/merchants/answer/6150127?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-H-015",
+      "rule_type": "platform_hard_rule",
+      "description": "商品内容和网站须使用规范拼写与语法，避免异常标点、符号、大小写、空格和重复。",
+      "limit": {
+        "field": "all_content",
+        "prohibited_patterns": [
+          "spelling_errors",
+          "grammar_errors",
+          "gimmicky_punctuation",
+          "excessive_capitalization",
+          "abnormal_spacing",
+          "keyword_repetition"
+        ]
+      },
+      "severity": "block",
+      "source_id": "GMC-EDITORIAL",
+      "source_url": "https://support.google.com/merchants/answer/6150244?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "GMC-B-001",
+      "rule_type": "platform_best_practice",
+      "description": "标题按“品牌/商品类型—关键可验证特征—规格或变体”的顺序组织，并把最重要信息放前面。",
+      "limit": {
+        "field": "title",
+        "recommended_structure": [
+          "brand_or_product_type",
+          "verified_key_feature",
+          "size_or_variant"
+        ]
+      },
+      "severity": "info",
+      "source_id": "GMC-PDS",
+      "source_url": "https://support.google.com/merchants/answer/7052112?hl=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "INT-LST-001",
+      "rule_type": "project_internal_rule",
+      "description": "项目 Listing 输出固定包含 1 个标题、5 个卖点和 1 个描述；五点卖点是内部结构，不冒充 Google 必填字段。",
+      "limit": {
+        "field": "content",
+        "required_sections": {
+          "title": 1,
+          "bullet_points": 5,
+          "description": 1
+        }
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Google Merchant Center",
+      "content_type": "product_listing",
+      "rule_id": "INT-LST-002",
+      "rule_type": "project_internal_rule",
+      "description": "每个关键商品陈述至少绑定一个 fact_id；信息不足时不得补写。",
+      "limit": {
+        "field": "claims[].fact_ids",
+        "min_items": 1,
+        "fallback": "insufficient_information"
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-001",
+      "rule_type": "platform_hard_rule",
+      "description": "广告内容和落地页不得承诺或夸大商品效果，也不得使用与时间、地区或品牌相关的绝对化用语。",
+      "limit": {
+        "field": "script_and_landing_page",
+        "prohibited_content": [
+          "promised_results",
+          "exaggerated_effects",
+          "absolute_time_claims",
+          "absolute_region_claims",
+          "absolute_brand_claims"
+        ]
+      },
+      "severity": "block",
+      "source_id": "TTA-MISLEADING",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-misleading-and-false-content?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-002",
+      "rule_type": "platform_hard_rule",
+      "description": "广告与落地页的商品、促销、价格、折扣、免责声明和条款必须一致。",
+      "limit": {
+        "field": "ad_to_landing_page",
+        "must_match": [
+          "product",
+          "promotion",
+          "price",
+          "discount",
+          "disclaimers",
+          "terms_and_conditions"
+        ]
+      },
+      "severity": "block",
+      "source_id": "TTA-MISLEADING",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-misleading-and-false-content?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-003",
+      "rule_type": "platform_hard_rule",
+      "description": "不得使用造成商品效果虚假或扭曲印象的前后对比，也不得使用虚假交互按钮、播放键、关闭键或轮播提示。",
+      "limit": {
+        "field": "creative",
+        "prohibited_content": [
+          "distorted_before_after",
+          "fake_play_button",
+          "fake_close_button",
+          "fake_carousel_indicator",
+          "fake_cta"
+        ]
+      },
+      "severity": "block",
+      "source_id": "TTA-MISLEADING",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-misleading-and-false-content?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-004",
+      "rule_type": "platform_hard_rule",
+      "description": "显著编辑媒体或 AIGC 必须使用 TikTok AIGC 标签，或添加清晰的免责声明、说明文字、水印或贴纸；未披露内容可能被拒绝或限制。",
+      "limit": {
+        "field": "ai_disclosure",
+        "required_when": "significantly_edited_or_aigc",
+        "accepted_methods": [
+          "tiktok_aigc_label",
+          "clear_disclaimer",
+          "caption",
+          "watermark",
+          "sticker"
+        ]
+      },
+      "severity": "block",
+      "source_id": "TTA-MISLEADING",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-misleading-and-false-content?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-005",
+      "rule_type": "platform_hard_rule",
+      "description": "广告时长必须在 5–60 秒之间；本项目的 15 秒和 30 秒模板均在此范围内。",
+      "limit": {
+        "field": "duration_seconds",
+        "min": 5,
+        "max": 60,
+        "unit": "seconds"
+      },
+      "severity": "block",
+      "source_id": "TTA-FORMAT",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-006",
+      "rule_type": "platform_hard_rule",
+      "description": "广告视频须为 9:16、1:1 或 16:9，必须含清晰音频，动态内容应占主要部分，静态画面不得超过视频的 50%。",
+      "limit": {
+        "field": "video",
+        "allowed_aspect_ratios": [
+          "9:16",
+          "1:1",
+          "16:9"
+        ],
+        "audio_required": true,
+        "max_static_share_percent": 50
+      },
+      "severity": "block",
+      "source_id": "TTA-FORMAT",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-007",
+      "rule_type": "platform_hard_rule",
+      "description": "Non-Spark In-Feed 素材须满足平台上传规格；其 10 分钟仅是上传上限，仍需同时遵守广告政策的 60 秒时长上限。",
+      "limit": {
+        "field": "non_spark_video_file",
+        "formats": [
+          ".mp4",
+          ".mov",
+          ".mpeg",
+          ".3gp",
+          ".avi"
+        ],
+        "upload_duration_max_minutes": 10,
+        "effective_policy_duration_max_seconds": 60,
+        "file_size_max_mb": 500,
+        "bitrate_min_kbps": 516
+      },
+      "severity": "block",
+      "source_id": "TTA-INFEED",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-auction-in-feed-ads?lang=en&redirected=2",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-008",
+      "rule_type": "platform_hard_rule",
+      "description": "Non-Spark 广告说明文字不支持可点击链接、@ 符号或话题标签；当前官方规格未给出统一字符上限。",
+      "limit": {
+        "field": "caption",
+        "prohibited_content": [
+          "clickable_links",
+          "at_symbol",
+          "hashtags"
+        ],
+        "character_limit": null,
+        "character_limit_status": "not_specified_on_verified_official_page"
+      },
+      "severity": "block",
+      "source_id": "TTA-INFEED",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-auction-in-feed-ads?lang=en&redirected=2",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-009",
+      "rule_type": "platform_hard_rule",
+      "description": "落地页必须在目标市场网络环境中可用、内容完整且适合移动端，不得自动下载文件或强制输入个人信息后才能查看主要内容。",
+      "limit": {
+        "field": "landing_page",
+        "required_properties": [
+          "functional_in_target_market",
+          "complete",
+          "mobile_friendly"
+        ],
+        "prohibited_behaviors": [
+          "automatic_download",
+          "forced_software_download",
+          "forced_personal_information_for_main_content"
+        ]
+      },
+      "severity": "block",
+      "source_id": "TTA-FORMAT",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-010",
+      "rule_type": "platform_hard_rule",
+      "description": "电商广告落地页必须展示完整、准确并符合当地法律的信息，包括本地货币价格、配送、退换退款、条款和隐私政策等。",
+      "limit": {
+        "field": "ecommerce_landing_page",
+        "required_information": [
+          "contact_details",
+          "company_name",
+          "company_address",
+          "business_license_when_applicable",
+          "price_in_local_currency",
+          "shipping_information",
+          "return_and_refund_policy",
+          "terms_and_conditions",
+          "privacy_policy"
+        ],
+        "local_law_overlay_required": true
+      },
+      "severity": "block",
+      "source_id": "TTA-FORMAT",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-011",
+      "rule_type": "platform_hard_rule",
+      "description": "广告及落地页的语言、货币和其他相关元素必须与目标市场设置一致或适合当地语境。",
+      "limit": {
+        "field": "market_localization",
+        "must_match_target_market": [
+          "language",
+          "currency",
+          "content_context"
+        ]
+      },
+      "severity": "block",
+      "source_id": "TTA-FORMAT",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-H-012",
+      "rule_type": "platform_hard_rule",
+      "description": "广告文字必须无拼写和语法错误，不得异常使用大小写、空格、数字、符号或标点。",
+      "limit": {
+        "field": "caption_and_on_screen_text",
+        "prohibited_patterns": [
+          "spelling_errors",
+          "grammar_errors",
+          "excessive_capitalization",
+          "abnormal_spacing",
+          "symbol_substitution",
+          "excessive_punctuation"
+        ]
+      },
+      "severity": "block",
+      "source_id": "TTA-FORMAT",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-B-001",
+      "rule_type": "platform_best_practice",
+      "description": "Non-Spark In-Feed 广告优先使用平台推荐的竖版 9:16，且分辨率不低于 540×960。",
+      "limit": {
+        "field": "video",
+        "recommended_aspect_ratio": "9:16",
+        "recommended_min_resolution": "540x960"
+      },
+      "severity": "info",
+      "source_id": "TTA-INFEED",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-auction-in-feed-ads?lang=en&redirected=2",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "TTA-B-002",
+      "rule_type": "platform_best_practice",
+      "description": "口播语言应清晰、易懂、自然，并符合目标市场的语言习惯。",
+      "limit": {
+        "field": "voiceover",
+        "recommended_properties": [
+          "clear",
+          "comprehensible",
+          "natural_for_target_market"
+        ]
+      },
+      "severity": "info",
+      "source_id": "TTA-FORMAT",
+      "source_url": "https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "INT-VID-001",
+      "rule_type": "project_internal_rule",
+      "description": "脚本模板仅生成 15 秒或 30 秒版本，并采用可检查的镜头分段。",
+      "limit": {
+        "field": "duration_seconds",
+        "allowed_values": [
+          15,
+          30
+        ],
+        "required_scene_fields": [
+          "timecode",
+          "visual",
+          "voiceover",
+          "on_screen_text",
+          "fact_ids"
+        ]
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "INT-VID-002",
+      "rule_type": "project_internal_rule",
+      "description": "脚本按 Hook—使用场景—可验证商品事实—使用方法或体验—单一 CTA 组织；结构是项目规则，不是 TikTok 强制脚本公式。",
+      "limit": {
+        "field": "script_structure",
+        "recommended_sequence": [
+          "hook",
+          "usage_context",
+          "verified_product_fact",
+          "usage_or_cautious_experience",
+          "single_cta"
+        ],
+        "cta_count": 1
+      },
+      "severity": "review",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "TikTok Ads",
+      "content_type": "short_video_script",
+      "rule_id": "INT-VID-003",
+      "rule_type": "project_internal_rule",
+      "description": "每条事实性口播和画面文字必须绑定 fact_id；消费者洞察只能决定表达角度，不能创造商品事实。",
+      "limit": {
+        "field": "scenes[].fact_ids",
+        "min_items_when_factual_claim": 1,
+        "insight_as_fact": false
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Generic Social",
+      "content_type": "social_ad_copy",
+      "rule_id": "INT-SOC-001",
+      "rule_type": "project_internal_rule",
+      "description": "通用社媒模板不是任何单个平台的发布规格；目标平台未指定时不得声称已满足该平台字符限制或审核要求。",
+      "limit": {
+        "field": "platform_scope",
+        "allowed_value": "generic_social",
+        "platform_approval_claim": false
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Generic Social",
+      "content_type": "social_ad_copy",
+      "rule_id": "INT-SOC-002",
+      "rule_type": "project_internal_rule",
+      "description": "社媒输出包含 1 个 Hook、1–2 个有事实支持的卖点、1 个正文、1 个 CTA 和 AI 使用声明字段。",
+      "limit": {
+        "field": "content",
+        "required_sections": [
+          "hook",
+          "body",
+          "cta",
+          "claims",
+          "ai_disclosure"
+        ],
+        "verified_benefit_count_min": 1,
+        "verified_benefit_count_max": 2,
+        "cta_count": 1
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Generic Social",
+      "content_type": "social_ad_copy",
+      "rule_id": "INT-SOC-003",
+      "rule_type": "project_internal_rule",
+      "description": "价格、折扣、免邮、库存紧迫性、评论、认证和背书只能在事实库存在对应依据时使用。",
+      "limit": {
+        "field": "conditional_commercial_claims",
+        "fact_support_required": [
+          "price",
+          "discount",
+          "free_shipping",
+          "scarcity",
+          "reviews",
+          "certifications",
+          "endorsements"
+        ]
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Cross-platform",
+      "content_type": "all_supported_content",
+      "rule_id": "BRAND-H-001",
+      "rule_type": "brand_rule",
+      "description": "不得把化妆品写成药品、医疗器械或临床方案；不得添加治疗、预防疾病或改变身体结构/功能的宣称。",
+      "limit": {
+        "field": "all_content",
+        "prohibited_content": [
+          "drug_claim",
+          "medical_device_claim",
+          "clinical_treatment_claim",
+          "disease_treatment_or_prevention",
+          "body_structure_or_function_change"
+        ]
+      },
+      "severity": "block",
+      "source_id": "BRAND-GUIDE",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Cross-platform",
+      "content_type": "all_supported_content",
+      "rule_id": "BRAND-H-002",
+      "rule_type": "brand_rule",
+      "description": "品牌语气保持温和、清晰、可信、简洁；禁止奇迹式、保证式、完美化及未经验证的认证和安全宣称。",
+      "limit": {
+        "field": "all_content",
+        "required_tone": [
+          "gentle",
+          "clear",
+          "trustworthy",
+          "concise"
+        ],
+        "prohibited_claim_classes": [
+          "miracle",
+          "guaranteed",
+          "perfect",
+          "unverified_certification",
+          "unverified_safety_claim"
+        ]
+      },
+      "severity": "block",
+      "source_id": "BRAND-GUIDE",
+      "source_url": "data/brand/brand_voice_guide.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Cross-platform",
+      "content_type": "all_supported_content",
+      "rule_id": "INT-MKT-001",
+      "rule_type": "project_internal_rule",
+      "description": "US 输出使用 en-US 与 USD；MX 输出使用 es-MX 与 MXN。价格、容量、成分、用法和功效边界不得因本地化而改变。",
+      "limit": {
+        "field": "market_profile",
+        "market_map": {
+          "US": {
+            "language": "en-US",
+            "currency": "USD"
+          },
+          "MX": {
+            "language": "es-MX",
+            "currency": "MXN"
+          }
+        },
+        "immutable_fact_fields": [
+          "price_for_market",
+          "volume",
+          "ingredients",
+          "usage",
+          "benefit_boundaries"
+        ]
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    },
+    {
+      "platform": "Cross-platform",
+      "content_type": "all_supported_content",
+      "rule_id": "INT-REV-001",
+      "rule_type": "project_internal_rule",
+      "description": "所有输出必须保留人工最终审核状态；自动规则通过不得写成平台批准、法律合规或发布保证。",
+      "limit": {
+        "field": "review",
+        "human_final_review_required": true,
+        "prohibited_status_claims": [
+          "platform_approved",
+          "legally_compliant",
+          "guaranteed_to_publish"
+        ]
+      },
+      "severity": "block",
+      "source_id": "PROJECT-BRIEF",
+      "source_url": "project_brief.md",
+      "verified_date": "2026-07-28"
+    }
+  ]
+}

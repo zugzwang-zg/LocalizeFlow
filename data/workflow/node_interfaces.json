@@ -1,0 +1,629 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "LF-AI-WORKFLOW-V1",
+  "workflow_version": "1.0.0",
+  "updated_at": "2026-07-28",
+  "status": "stage_7_pending_acceptance",
+  "purpose": "定义 LocalizeFlow 七个 AI/检查节点的单一职责、输入输出契约、数据传递格式和可追踪执行信息。",
+  "asset_dependencies": {
+    "product_facts": {
+      "path": "data/products/product_facts.json",
+      "required_version": "1.0.0",
+      "identity_field": "fact_id"
+    },
+    "consumer_insights": {
+      "path": "data/insights/consumer_insights.json",
+      "required_schema_version": "1.0",
+      "identity_field": "insight_id"
+    },
+    "brand_voice": {
+      "path": "data/brand/brand_voice_guide.md",
+      "required_version": "1.0"
+    },
+    "terminology": {
+      "path": "data/brand/terminology.xlsx",
+      "required_version": "1.0"
+    },
+    "prohibited_terms": {
+      "path": "data/brand/prohibited_terms.csv",
+      "required_version": "1.0"
+    },
+    "platform_rules": {
+      "path": "data/platform_rules/platform_rules.json",
+      "required_rule_set_id": "LF-PLATFORM-RULES-2026-07-28",
+      "required_version": "1.0.0",
+      "identity_field": "rule_id"
+    }
+  },
+  "execution_order": [
+    "N01_FACT_EXTRACTOR",
+    "N02_CAMPAIGN_PLANNER",
+    "N03_LOCALIZER",
+    "N04_CONTENT_GENERATOR",
+    "N05_FACT_CHECKER",
+    "N06_RULE_CHECKER",
+    "N07_QUALITY_EVALUATOR"
+  ],
+  "shared_envelope": {
+    "required_fields": [
+      "schema_version",
+      "workflow_id",
+      "workflow_version",
+      "run_id",
+      "trace_id",
+      "node_run_id",
+      "node_id",
+      "attempt",
+      "status",
+      "started_at",
+      "completed_at",
+      "input_refs",
+      "asset_versions",
+      "output",
+      "errors",
+      "warnings",
+      "execution_metadata"
+    ],
+    "field_definitions": {
+      "run_id": "一次端到端任务的稳定标识，例如 run_20260728_0001。",
+      "trace_id": "贯穿所有节点与人工编辑版本的追踪标识。",
+      "node_run_id": "节点执行实例标识，例如 run_20260728_0001.N04.a01。",
+      "attempt": "同一节点的执行次数，从 1 开始。",
+      "status": "success、failed、blocked、needs_human_review 或 skipped。",
+      "input_refs": "上游输出文件、记录 ID、版本号及 SHA-256 摘要。",
+      "asset_versions": "事实库、洞察库、品牌资产、术语库和平台规则版本快照。",
+      "errors": "结构化错误对象数组；阻断错误不得只写入自由文本。",
+      "warnings": "不阻断但必须保留的提示数组。",
+      "execution_metadata": "模型、提示词、参数、程序版本、耗时和成本；纯规则节点记录 checker_version。"
+    }
+  },
+  "shared_types": {
+    "asset_ref": {
+      "required": [
+        "asset_type",
+        "path",
+        "version",
+        "sha256"
+      ]
+    },
+    "record_ref": {
+      "required": [
+        "record_type",
+        "record_id",
+        "source_path",
+        "source_version"
+      ]
+    },
+    "claim_ref": {
+      "required": [
+        "claim_id",
+        "text",
+        "location",
+        "fact_ids"
+      ]
+    },
+    "error": {
+      "required": [
+        "error_id",
+        "code",
+        "severity",
+        "node_id",
+        "message",
+        "evidence_refs",
+        "action"
+      ]
+    },
+    "content_version": {
+      "required": [
+        "content_id",
+        "version_id",
+        "parent_version_id",
+        "created_by",
+        "created_at",
+        "change_reason",
+        "content_sha256"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "node_id": "N01_FACT_EXTRACTOR",
+      "name": "Fact Extractor",
+      "execution_kind": "hybrid_model_and_deterministic_validation",
+      "single_responsibility": "把指定 SKU 的中文商品资料规范化为可追溯事实记录，或从既有事实库加载并验证该记录集。",
+      "must_not": [
+        "选择营销角度",
+        "生成面向消费者的文案",
+        "推断资料中不存在的成分、价格、认证、功效或评价",
+        "把消费者洞察写入商品事实"
+      ],
+      "inputs": {
+        "required": [
+          "sku",
+          "mode",
+          "source_product_ref",
+          "target_markets"
+        ],
+        "fields": {
+          "sku": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "enum",
+            "allowed": [
+              "extract_from_source",
+              "load_existing_facts"
+            ],
+            "current_mvp_default": "load_existing_facts"
+          },
+          "source_product_ref": {
+            "type": "asset_ref",
+            "current_mvp": "data/products/product_facts.json"
+          },
+          "target_markets": {
+            "type": "array",
+            "allowed": [
+              "US",
+              "MX"
+            ]
+          }
+        }
+      },
+      "outputs": {
+        "required": [
+          "sku",
+          "fact_dataset_version",
+          "facts",
+          "fact_summary",
+          "validation"
+        ],
+        "fact_record_required_fields": [
+          "fact_id",
+          "sku",
+          "fact_category",
+          "attribute",
+          "value",
+          "value_type",
+          "unit",
+          "evidence_level",
+          "source",
+          "source_type",
+          "allowed_expression",
+          "prohibited_expression",
+          "generation_policy",
+          "market_scope",
+          "language_scope",
+          "status"
+        ],
+        "validation": {
+          "required": [
+            "schema_valid",
+            "duplicate_fact_ids",
+            "unknown_evidence_levels",
+            "unsupported_market_facts",
+            "blocked_fact_count"
+          ]
+        }
+      },
+      "success_criteria": [
+        "所有 fact_id 唯一",
+        "所有事实均属于请求 SKU",
+        "证据等级仅为 A、B、C、D",
+        "A=direct、B=cautious、C=not_directly_usable、D=blocked 的生成门控未被改变",
+        "输出记录可以追溯到 source 与数据集版本"
+      ],
+      "output_path_pattern": "runs/{run_id}/01_fact_extractor/attempt_{attempt}/output.json",
+      "next_on_success": "N02_CAMPAIGN_PLANNER"
+    },
+    {
+      "node_id": "N02_CAMPAIGN_PLANNER",
+      "name": "Campaign Planner",
+      "execution_kind": "model_with_deterministic_eligibility_filter",
+      "single_responsibility": "在商品事实支持范围内，把营销目标与符合条件的消费者洞察转化为内容策略。",
+      "must_not": [
+        "撰写最终英语或西班牙语文案",
+        "把 blocked 洞察作为策略依据",
+        "把消费者评论或洞察当成商品事实",
+        "改写商品事实、平台规则或品牌规则"
+      ],
+      "inputs": {
+        "required": [
+          "sku",
+          "market",
+          "language",
+          "content_type",
+          "marketing_goal",
+          "fact_output_ref",
+          "insight_dataset_ref"
+        ],
+        "fields": {
+          "market": {
+            "type": "enum",
+            "allowed": [
+              "US",
+              "MX"
+            ]
+          },
+          "language": {
+            "type": "enum",
+            "allowed": [
+              "en-US",
+              "es-MX"
+            ]
+          },
+          "content_type": {
+            "type": "enum",
+            "allowed": [
+              "product_listing",
+              "short_video_script",
+              "social_ad_copy"
+            ]
+          },
+          "marketing_goal": {
+            "type": "enum",
+            "allowed": [
+              "awareness",
+              "usage_experience",
+              "consideration"
+            ]
+          }
+        }
+      },
+      "outputs": {
+        "required": [
+          "strategy_id",
+          "sku",
+          "market",
+          "language",
+          "content_type",
+          "marketing_goal",
+          "selected_insights",
+          "selected_fact_ids",
+          "message_priority",
+          "prohibited_inferences",
+          "planning_rationale"
+        ],
+        "selected_insight_fields": [
+          "insight_id",
+          "mapping_status",
+          "confidence",
+          "linked_fact_ids",
+          "use_mode"
+        ],
+        "use_mode_allowed": [
+          "message_angle",
+          "language_pattern",
+          "usage_scenario"
+        ]
+      },
+      "success_criteria": [
+        "仅使用 market 与 language 匹配的洞察",
+        "mapping_status=eligible 才能连接商品卖点",
+        "mapping_status=strategy_only 只能影响表达策略",
+        "mapping_status=blocked 不进入选定洞察",
+        "所有 selected_fact_ids 均存在于 N01 输出",
+        "完整保留 prohibited_inference"
+      ],
+      "output_path_pattern": "runs/{run_id}/02_campaign_planner/attempt_{attempt}/output.json",
+      "next_on_success": "N03_LOCALIZER"
+    },
+    {
+      "node_id": "N03_LOCALIZER",
+      "name": "Localizer",
+      "execution_kind": "model_with_terminology_constraints",
+      "single_responsibility": "根据内容策略、目标市场、品牌语气和术语库制定目标语言表达方案。",
+      "must_not": [
+        "生成完整平台成品",
+        "更改数字、单位、价格、成分、用法和功效边界",
+        "新增事实、评价、认证、折扣或稀缺性",
+        "自行决定平台硬规则"
+      ],
+      "inputs": {
+        "required": [
+          "strategy_output_ref",
+          "target_market",
+          "target_language",
+          "terminology_ref",
+          "brand_voice_ref",
+          "prohibited_terms_ref"
+        ]
+      },
+      "outputs": {
+        "required": [
+          "localization_plan_id",
+          "target_market",
+          "target_language",
+          "message_map",
+          "terminology_decisions",
+          "tone_decisions",
+          "immutable_values",
+          "avoid_list",
+          "review_flags"
+        ],
+        "message_map_fields": [
+          "message_role",
+          "source_fact_ids",
+          "source_insight_ids",
+          "localized_intent",
+          "allowed_phrasing",
+          "required_qualifiers"
+        ],
+        "terminology_decision_fields": [
+          "concept",
+          "preferred_term",
+          "language",
+          "source_rule",
+          "rejected_variants"
+        ]
+      },
+      "success_criteria": [
+        "US 使用 en-US，MX 使用 es-MX",
+        "墨西哥西语采用 tú 体系且不使用 vosotros",
+        "所有数值和单位进入 immutable_values",
+        "B 级功效保留 helps/ayuda a 等限定方式",
+        "C、D 级事实不形成可输出表达",
+        "术语决定可追溯至术语库或品牌指南"
+      ],
+      "output_path_pattern": "runs/{run_id}/03_localizer/attempt_{attempt}/output.json",
+      "next_on_success": "N04_CONTENT_GENERATOR"
+    },
+    {
+      "node_id": "N04_CONTENT_GENERATOR",
+      "name": "Content Generator",
+      "execution_kind": "model_with_json_schema",
+      "single_responsibility": "按本地化表达方案和指定平台模板生成一个结构化内容版本。",
+      "must_not": [
+        "执行事实是否正确的最终判定",
+        "执行平台是否通过的最终判定",
+        "修改上游策略、事实或规则",
+        "输出模板之外的隐藏字段或未声明内容"
+      ],
+      "inputs": {
+        "required": [
+          "localization_plan_ref",
+          "platform",
+          "content_type",
+          "platform_rule_set_ref",
+          "template_ref",
+          "generation_config"
+        ],
+        "generation_config_required": [
+          "model",
+          "prompt_version",
+          "temperature",
+          "seed_or_reproducibility_note",
+          "response_schema_version"
+        ]
+      },
+      "outputs": {
+        "required": [
+          "content_version",
+          "sku",
+          "market",
+          "language",
+          "platform",
+          "content_type",
+          "content",
+          "claims",
+          "ai_disclosure",
+          "generation_warnings"
+        ],
+        "claim_fields": [
+          "claim_id",
+          "text",
+          "location",
+          "fact_ids"
+        ],
+        "content_contract_by_type": {
+          "product_listing": "data/platform_rules/templates/google_merchant_listing.json",
+          "short_video_script": "data/platform_rules/templates/tiktok_video_script.json",
+          "social_ad_copy": "data/platform_rules/templates/social_ad_copy.json"
+        }
+      },
+      "success_criteria": [
+        "JSON 可解析且符合指定模板",
+        "每个事实性陈述都有 claim_id 与 fact_ids",
+        "平台、市场、语言和内容类型与请求一致",
+        "AI 来源与披露状态字段存在",
+        "内容版本含父版本、摘要和生成配置"
+      ],
+      "output_path_pattern": "runs/{run_id}/04_content_generator/attempt_{attempt}/output.json",
+      "next_on_success": "N05_FACT_CHECKER"
+    },
+    {
+      "node_id": "N05_FACT_CHECKER",
+      "name": "Fact Checker",
+      "execution_kind": "deterministic_first_with_semantic_fallback",
+      "single_responsibility": "逐条判断生成内容中的陈述是否被事实库支持、矛盾或缺少依据。",
+      "must_not": [
+        "直接修改内容",
+        "用语言自然度或营销效果抵消事实错误",
+        "把消费者洞察、平台规则或品牌偏好作为商品事实证据",
+        "降低 C、D 级事实的生成门控"
+      ],
+      "inputs": {
+        "required": [
+          "content_output_ref",
+          "fact_output_ref",
+          "product_fact_dataset_ref"
+        ]
+      },
+      "outputs": {
+        "required": [
+          "fact_check_id",
+          "content_version_id",
+          "claim_results",
+          "summary",
+          "export_gate"
+        ],
+        "claim_result_fields": [
+          "claim_id",
+          "text",
+          "location",
+          "submitted_fact_ids",
+          "resolved_fact_ids",
+          "status",
+          "severity",
+          "reason",
+          "evidence_snapshot",
+          "suggested_action"
+        ],
+        "status_allowed": [
+          "supported",
+          "supported_with_qualification",
+          "unsupported",
+          "contradicted",
+          "insufficient_information",
+          "not_a_factual_claim"
+        ]
+      },
+      "success_criteria": [
+        "所有 claim_id 都有检查结果",
+        "不存在未解析的 fact_id",
+        "数值、单位、成分、用法和价格执行精确比对",
+        "unsupported 或 contradicted 的高风险陈述令 export_gate=blocked",
+        "检查结果保存所用事实快照和版本"
+      ],
+      "output_path_pattern": "runs/{run_id}/05_fact_checker/attempt_{attempt}/output.json",
+      "next_on_success": "N06_RULE_CHECKER",
+      "next_on_block": "HUMAN_EDIT_OR_TERMINATE"
+    },
+    {
+      "node_id": "N06_RULE_CHECKER",
+      "name": "Rule Checker",
+      "execution_kind": "deterministic_rules_with_semantic_checks",
+      "single_responsibility": "检查内容对平台、品牌、术语和项目内部规则的符合情况，并给出结构化违规项与修改建议。",
+      "must_not": [
+        "直接修改内容",
+        "重新判定商品事实真伪",
+        "把最佳实践失败升级为平台硬规则失败",
+        "宣称自动检查等于平台批准或法律合规"
+      ],
+      "inputs": {
+        "required": [
+          "content_output_ref",
+          "fact_check_output_ref",
+          "platform_rule_set_ref",
+          "brand_voice_ref",
+          "terminology_ref",
+          "prohibited_terms_ref"
+        ]
+      },
+      "outputs": {
+        "required": [
+          "rule_check_id",
+          "content_version_id",
+          "rule_results",
+          "summary_by_rule_type",
+          "export_gate",
+          "human_review_items"
+        ],
+        "rule_result_fields": [
+          "rule_id",
+          "rule_type",
+          "severity",
+          "status",
+          "content_location",
+          "matched_text",
+          "reason",
+          "source_url",
+          "suggested_action"
+        ],
+        "status_allowed": [
+          "pass",
+          "fail",
+          "not_applicable",
+          "needs_human_review"
+        ]
+      },
+      "success_criteria": [
+        "所有适用 platform_hard_rule 均有结果",
+        "硬规则与最佳实践分别统计",
+        "品牌、术语和项目内部规则分别统计",
+        "block 级失败令 export_gate=blocked",
+        "review 级问题进入 human_review_items",
+        "每个失败项可定位到 rule_id 和内容位置"
+      ],
+      "output_path_pattern": "runs/{run_id}/06_rule_checker/attempt_{attempt}/output.json",
+      "next_on_success": "N07_QUALITY_EVALUATOR",
+      "next_on_block": "HUMAN_EDIT_OR_TERMINATE"
+    },
+    {
+      "node_id": "N07_QUALITY_EVALUATOR",
+      "name": "Quality Evaluator",
+      "execution_kind": "rubric_based_model_and_metrics",
+      "single_responsibility": "在硬门槛结果保持独立的前提下，对内容质量进行多维辅助评分并生成评测解释。",
+      "must_not": [
+        "修改内容",
+        "覆盖 N05 或 N06 的阻断决定",
+        "把高总分写成事实正确、平台批准或法律合规",
+        "隐藏样本量、模型版本或评分依据"
+      ],
+      "inputs": {
+        "required": [
+          "content_output_ref",
+          "fact_check_output_ref",
+          "rule_check_output_ref",
+          "evaluation_rubric_ref"
+        ]
+      },
+      "outputs": {
+        "required": [
+          "evaluation_id",
+          "content_version_id",
+          "hard_gate_snapshot",
+          "dimension_scores",
+          "weighted_score",
+          "score_explanation",
+          "limitations",
+          "final_workflow_status"
+        ],
+        "dimension_scores": {
+          "fact_accuracy": {
+            "weight": 30,
+            "hard_gate": true
+          },
+          "platform_fit": {
+            "weight": 20,
+            "hard_gate": false
+          },
+          "language_naturalness": {
+            "weight": 15,
+            "hard_gate": false
+          },
+          "brand_consistency": {
+            "weight": 15,
+            "hard_gate": false
+          },
+          "localization_quality": {
+            "weight": 10,
+            "hard_gate": false
+          },
+          "marketing_persuasiveness": {
+            "weight": 10,
+            "hard_gate": false
+          }
+        }
+      },
+      "success_criteria": [
+        "各维度分数在 0–100 范围内且包含理由",
+        "权重总和为 100",
+        "hard_gate_snapshot 与 N05、N06 一致",
+        "任一阻断项存在时 final_workflow_status 不得为 export_ready",
+        "无阻断项也必须等待人工最终确认"
+      ],
+      "output_path_pattern": "runs/{run_id}/07_quality_evaluator/attempt_{attempt}/output.json",
+      "next_on_success": "HUMAN_FINAL_REVIEW"
+    }
+  ],
+  "human_steps": [
+    {
+      "step_id": "HUMAN_EDIT_OR_TERMINATE",
+      "purpose": "处理阻断错误或一般表达问题；任何修改创建新 content_version，并重新运行 N05 与 N06。"
+    },
+    {
+      "step_id": "HUMAN_FINAL_REVIEW",
+      "purpose": "确认事实、风险、语言、平台适配与发布上下文；只有明确签字后才能导出。"
+    }
+  ]
+}

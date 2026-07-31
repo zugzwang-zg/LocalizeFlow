@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localizeflow.example/schemas/campaign-strategy-output-v1.json",
+  "title": "LocalizeFlow Campaign Strategy Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "strategy_id",
+    "sku",
+    "market",
+    "language",
+    "content_type",
+    "marketing_goal",
+    "selected_insight_ids",
+    "selected_fact_ids",
+    "message_priority",
+    "prohibited_inferences",
+    "rationale",
+    "insufficient_information",
+    "warnings"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "insufficient_information"
+      ]
+    },
+    "strategy_id": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "market": {
+      "type": "string",
+      "enum": [
+        "US",
+        "MX"
+      ]
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "en-US",
+        "es-MX"
+      ]
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "product_listing",
+        "short_video_script",
+        "social_ad_copy"
+      ]
+    },
+    "marketing_goal": {
+      "type": "string",
+      "enum": [
+        "awareness",
+        "usage_experience",
+        "consideration"
+      ]
+    },
+    "selected_insight_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "selected_fact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "message_priority": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "prohibited_inferences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "insufficient_information": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

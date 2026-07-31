@@ -1,0 +1,347 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localizeflow.example/schemas/content-output-v1.json",
+  "title": "LocalizeFlow Structured Content Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "sku",
+    "market",
+    "language",
+    "platform",
+    "content_type",
+    "content_version",
+    "content",
+    "claims",
+    "platform_fields",
+    "ai_disclosure",
+    "warnings",
+    "insufficient_information",
+    "human_review"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "insufficient_information"
+      ]
+    },
+    "sku": {
+      "type": "string"
+    },
+    "market": {
+      "type": "string",
+      "enum": [
+        "US",
+        "MX"
+      ]
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "en-US",
+        "es-MX"
+      ]
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "google_merchant_center",
+        "tiktok_ads",
+        "generic_social"
+      ]
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "product_listing",
+        "short_video_script",
+        "social_ad_copy"
+      ]
+    },
+    "content_version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_id",
+        "version_id",
+        "parent_version_id",
+        "created_by",
+        "change_reason"
+      ],
+      "properties": {
+        "content_id": {
+          "type": "string"
+        },
+        "version_id": {
+          "type": "string"
+        },
+        "parent_version_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "created_by": {
+          "type": "string",
+          "enum": [
+            "model",
+            "human"
+          ]
+        },
+        "change_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "bullet_points",
+        "description",
+        "scenes",
+        "caption",
+        "hook",
+        "body",
+        "cta"
+      ],
+      "properties": {
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bullet_points": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scenes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "timecode",
+              "role",
+              "visual",
+              "voiceover",
+              "on_screen_text",
+              "fact_ids"
+            ],
+            "properties": {
+              "timecode": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "visual": {
+                "type": "string"
+              },
+              "voiceover": {
+                "type": "string"
+              },
+              "on_screen_text": {
+                "type": "string"
+              },
+              "fact_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "caption": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hook": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "body": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cta": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "claim_id",
+          "text",
+          "location",
+          "fact_ids",
+          "evidence_level"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "fact_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B"
+            ]
+          }
+        }
+      }
+    },
+    "platform_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title_field_name",
+        "description_field_name",
+        "digital_source_type",
+        "duration_seconds",
+        "aspect_ratio"
+      ],
+      "properties": {
+        "title_field_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description_field_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "digital_source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "duration_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "aspect_ratio": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "ai_disclosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aigc_status",
+        "label_required",
+        "method",
+        "disclosure_text"
+      ],
+      "properties": {
+        "aigc_status": {
+          "type": "string",
+          "enum": [
+            "generative_ai_text",
+            "significantly_edited_or_aigc_media",
+            "not_applicable",
+            "unknown"
+          ]
+        },
+        "label_required": {
+          "type": "boolean"
+        },
+        "method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "disclosure_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "insufficient_information": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "human_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "status"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,761 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "1.0.0",
+  "fact_check_id": "factcheck_content_MV-SERUM-001_US_listing_v02",
+  "checked_at": "2026-07-28T09:31:14.522505+00:00",
+  "sku": "MV-SERUM-001",
+  "market": "US",
+  "language": "en-US",
+  "content_version_id": "content_MV-SERUM-001_US_listing_v02",
+  "fact_dataset": {
+    "path": "data\\products\\product_facts.json",
+    "version": "1.0.0"
+  },
+  "claim_results": [
+    {
+      "claim_id": "claim_v02_001",
+      "text": "Hydrating Serum",
+      "location": "content.title",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F002"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F002"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [],
+          "cited_numeric_facts": [],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_002",
+      "text": "Fragrance-Free",
+      "location": "content.title",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F018"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F018"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [],
+          "cited_numeric_facts": [],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_003",
+      "text": "30 mL",
+      "location": "content.title",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F003"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F003"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [
+            {
+              "value": 30.0,
+              "unit": "ml"
+            }
+          ],
+          "cited_numeric_facts": [
+            {
+              "fact_id": "MV-SERUM-001-F003",
+              "value": 30.0,
+              "unit": "ml"
+            }
+          ],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_004",
+      "text": "A water-based gel serum made without added fragrance.",
+      "location": "content.bullet_points[0]",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F018",
+        "MV-SERUM-001-F019"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F018",
+        "MV-SERUM-001-F019"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [],
+          "cited_numeric_facts": [],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_005",
+      "text": "Made with glycerin, sodium hyaluronate and panthenol.",
+      "location": "content.bullet_points[1]",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F005",
+        "MV-SERUM-001-F007",
+        "MV-SERUM-001-F008",
+        "MV-SERUM-001-F020"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F005",
+        "MV-SERUM-001-F007",
+        "MV-SERUM-001-F008",
+        "MV-SERUM-001-F020"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [],
+          "cited_numeric_facts": [],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_006",
+      "text": "Helps skin feel hydrated and soft.",
+      "location": "content.bullet_points[2]",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F022",
+        "MV-SERUM-001-F024"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F022",
+        "MV-SERUM-001-F024"
+      ],
+      "resolved_evidence_levels": [
+        "B"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-CLAIM-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [],
+          "cited_numeric_facts": [],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [
+            "MV-SERUM-001-F022",
+            "MV-SERUM-001-F024"
+          ],
+          "cautious_language_present": true
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_007",
+      "text": "Apply 1–2 pumps to the face and neck after cleansing, then follow with moisturizer; avoid the eye area.",
+      "location": "content.bullet_points[3]",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F015",
+        "MV-SERUM-001-F016",
+        "MV-SERUM-001-F017"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F015",
+        "MV-SERUM-001-F016",
+        "MV-SERUM-001-F017"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [
+            {
+              "value": 1.0,
+              "unit": null
+            },
+            {
+              "value": 2.0,
+              "unit": "pump"
+            }
+          ],
+          "cited_numeric_facts": [
+            {
+              "fact_id": "MV-SERUM-001-F016",
+              "value": 1.0,
+              "unit": "pump"
+            },
+            {
+              "fact_id": "MV-SERUM-001-F017",
+              "value": 2.0,
+              "unit": "pump"
+            }
+          ],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_008",
+      "text": "Presented in an opaque 30 mL PP pump bottle.",
+      "location": "content.bullet_points[4]",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F003",
+        "MV-SERUM-001-F021",
+        "MV-SERUM-001-F031"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F003",
+        "MV-SERUM-001-F021",
+        "MV-SERUM-001-F031"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [
+            {
+              "value": 30.0,
+              "unit": "ml"
+            }
+          ],
+          "cited_numeric_facts": [
+            {
+              "fact_id": "MV-SERUM-001-F003",
+              "value": 30.0,
+              "unit": "ml"
+            }
+          ],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_009",
+      "text": "A water-based gel hydrating serum made without added fragrance.",
+      "location": "content.description",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F018",
+        "MV-SERUM-001-F019"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F018",
+        "MV-SERUM-001-F019"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [],
+          "cited_numeric_facts": [],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_010",
+      "text": "The simulated formula lists glycerin, sodium hyaluronate and panthenol.",
+      "location": "content.description",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F005",
+        "MV-SERUM-001-F007",
+        "MV-SERUM-001-F008",
+        "MV-SERUM-001-F020"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F005",
+        "MV-SERUM-001-F007",
+        "MV-SERUM-001-F008",
+        "MV-SERUM-001-F020"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [],
+          "cited_numeric_facts": [],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_011",
+      "text": "It helps skin feel hydrated and soft.",
+      "location": "content.description",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F022",
+        "MV-SERUM-001-F024"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F022",
+        "MV-SERUM-001-F024"
+      ],
+      "resolved_evidence_levels": [
+        "B"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-CLAIM-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [],
+          "cited_numeric_facts": [],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [
+            "MV-SERUM-001-F022",
+            "MV-SERUM-001-F024"
+          ],
+          "cautious_language_present": true
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_012",
+      "text": "After cleansing, apply 1–2 pumps to the face and neck, follow with moisturizer and avoid the eye area.",
+      "location": "content.description",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F015",
+        "MV-SERUM-001-F016",
+        "MV-SERUM-001-F017"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F015",
+        "MV-SERUM-001-F016",
+        "MV-SERUM-001-F017"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [
+            {
+              "value": 1.0,
+              "unit": null
+            },
+            {
+              "value": 2.0,
+              "unit": "pump"
+            }
+          ],
+          "cited_numeric_facts": [
+            {
+              "fact_id": "MV-SERUM-001-F016",
+              "value": 1.0,
+              "unit": "pump"
+            },
+            {
+              "fact_id": "MV-SERUM-001-F017",
+              "value": 2.0,
+              "unit": "pump"
+            }
+          ],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "claim_v02_013",
+      "text": "Presented in an opaque 30 mL PP pump bottle.",
+      "location": "content.description",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F003",
+        "MV-SERUM-001-F021",
+        "MV-SERUM-001-F031"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F003",
+        "MV-SERUM-001-F021",
+        "MV-SERUM-001-F031"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "supported",
+      "risk_level": "none",
+      "reason": "All submitted fact IDs resolved to active A/B-level records and deterministic checks found no contradiction.",
+      "suggestion": "No factual correction required; retain human review.",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [
+            {
+              "value": 30.0,
+              "unit": "ml"
+            }
+          ],
+          "cited_numeric_facts": [
+            {
+              "fact_id": "MV-SERUM-001-F003",
+              "value": 30.0,
+              "unit": "ml"
+            }
+          ],
+          "status": "pass",
+          "reasons": []
+        },
+        "high_risk_language": {
+          "detected": false,
+          "categories": []
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    }
+  ],
+  "summary": {
+    "declared_claim_count": 13,
+    "auto_extracted_claim_count": 0,
+    "total_claim_count": 13,
+    "factual_claim_count": 13,
+    "subjective_claim_count": 0,
+    "supported_count": 13,
+    "partially_supported_count": 0,
+    "unsupported_count": 0,
+    "contradicted_count": 0,
+    "high_risk_count": 0,
+    "numeric_claim_count": 5,
+    "numeric_claims_checked": 5,
+    "fact_error_rate": 0.0,
+    "fact_error_rate_formula": "(unsupported + contradicted) / factual_claim_count"
+  },
+  "export_gate": {
+    "status": "pass",
+    "export_allowed": false,
+    "reason": "Automated fact checks passed; export remains disabled until rule checks and human final review also pass.",
+    "human_final_review_required": true,
+    "quality_score_can_override": false
+  },
+  "review_queue": [],
+  "limitations": [
+    "Deterministic checks cannot prove every semantic paraphrase is equivalent.",
+    "A pass does not replace target-language, legal, brand, or platform review."
+  ]
+}

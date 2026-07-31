@@ -1,0 +1,139 @@
+{
+  "template_id": "LF-TPL-GMC-LISTING-1.0",
+  "version": "1.0.0",
+  "updated_at": "2026-07-28",
+  "platform": "Google Merchant Center",
+  "content_type": "product_listing",
+  "markets": [
+    "US",
+    "MX"
+  ],
+  "applied_rule_ids": [
+    "GMC-H-001",
+    "GMC-H-002",
+    "GMC-H-003",
+    "GMC-H-004",
+    "GMC-H-005",
+    "GMC-H-006",
+    "GMC-H-007",
+    "GMC-H-008",
+    "GMC-H-009",
+    "GMC-H-010",
+    "GMC-H-011",
+    "GMC-H-012",
+    "GMC-H-013",
+    "GMC-H-014",
+    "GMC-H-015",
+    "GMC-B-001",
+    "INT-LST-001",
+    "INT-LST-002",
+    "BRAND-H-001",
+    "BRAND-H-002",
+    "INT-MKT-001",
+    "INT-REV-001"
+  ],
+  "input_contract": {
+    "required": [
+      "sku",
+      "market",
+      "language",
+      "currency",
+      "product_fact_ids",
+      "landing_page_url",
+      "image_url",
+      "availability",
+      "price",
+      "text_ai_origin",
+      "image_ai_origin"
+    ],
+    "market_profiles": {
+      "US": {
+        "language": "en-US",
+        "currency": "USD"
+      },
+      "MX": {
+        "language": "es-MX",
+        "currency": "MXN"
+      }
+    }
+  },
+  "output_contract": {
+    "sku": "",
+    "market": "",
+    "language": "",
+    "platform": "google_merchant_center",
+    "feed_fields": {
+      "id": "",
+      "title": null,
+      "structured_title": {
+        "digital_source_type": "trained_algorithmic_media",
+        "content": ""
+      },
+      "description": null,
+      "structured_description": {
+        "digital_source_type": "trained_algorithmic_media",
+        "content": ""
+      },
+      "link": "",
+      "image_link": "",
+      "image_ai_metadata_status": "not_applicable_or_pending",
+      "availability": "",
+      "price": {
+        "amount": null,
+        "currency": ""
+      }
+    },
+    "project_content": {
+      "title": "",
+      "bullet_points": [
+        {
+          "text": "",
+          "fact_ids": []
+        },
+        {
+          "text": "",
+          "fact_ids": []
+        },
+        {
+          "text": "",
+          "fact_ids": []
+        },
+        {
+          "text": "",
+          "fact_ids": []
+        },
+        {
+          "text": "",
+          "fact_ids": []
+        }
+      ],
+      "description": ""
+    },
+    "claims": [
+      {
+        "text": "",
+        "fact_ids": [],
+        "evidence_level": "",
+        "support_status": "pending"
+      }
+    ],
+    "checks": {
+      "hard_rules": "pending",
+      "best_practices": "pending",
+      "brand_rules": "pending",
+      "internal_rules": "pending"
+    },
+    "warnings": [],
+    "human_review": {
+      "required": true,
+      "status": "pending",
+      "reviewer": null,
+      "reviewed_at": null
+    }
+  },
+  "generation_notes": [
+    "AI 生成标题和描述时使用 structured_title 与 structured_description；非 AI 文本才使用普通 title 与 description。",
+    "五点卖点属于项目内部展示结构，不是 Google Merchant Center 的统一必填字段。",
+    "平台规则预检通过不等于 Google 最终批准。"
+  ]
+}

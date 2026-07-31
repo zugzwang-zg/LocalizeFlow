@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "1.0.0",
+  "fact_check_id": "factcheck_content_MV-SERUM-001_US_high_risk_fixture_v01",
+  "checked_at": "2026-07-28T09:13:41.388952+00:00",
+  "sku": "MV-SERUM-001",
+  "market": "US",
+  "language": "en-US",
+  "content_version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+  "fact_dataset": {
+    "path": "data\\products\\product_facts.json",
+    "version": "1.0.0"
+  },
+  "claim_results": [
+    {
+      "claim_id": "risk_claim_001",
+      "text": "Clinically Proven Hydrating Serum, 50 mL",
+      "location": "content.title",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F003"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F003"
+      ],
+      "resolved_evidence_levels": [
+        "A"
+      ],
+      "status": "contradicted",
+      "risk_level": "high",
+      "reason": "High-risk absolute, medical, clinical, certification, structure/function, anti-aging, or unsupported-duration language was detected: clinical_claim. Value 50 does not match cited numeric facts.",
+      "suggestion": "Remove the high-risk language and replace the numeric statement with verified value(s): ['30 ml'].",
+      "evidence_sources": [
+        "SIM-SPEC-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [
+            {
+              "value": 50.0,
+              "unit": "ml"
+            }
+          ],
+          "cited_numeric_facts": [
+            {
+              "fact_id": "MV-SERUM-001-F003",
+              "value": 30.0,
+              "unit": "ml"
+            }
+          ],
+          "status": "contradicted",
+          "reasons": [
+            "Value 50 does not match cited numeric facts."
+          ]
+        },
+        "high_risk_language": {
+          "detected": true,
+          "categories": [
+            "clinical_claim"
+          ]
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    },
+    {
+      "claim_id": "risk_claim_002",
+      "text": "Cures dry skin with guaranteed 72-hour hydration.",
+      "location": "content.bullet_points[0]",
+      "extraction_source": "declared",
+      "submitted_fact_ids": [
+        "MV-SERUM-001-F022"
+      ],
+      "resolved_fact_ids": [
+        "MV-SERUM-001-F022"
+      ],
+      "resolved_evidence_levels": [
+        "B"
+      ],
+      "status": "unsupported",
+      "risk_level": "high",
+      "reason": "High-risk absolute, medical, clinical, certification, structure/function, anti-aging, or unsupported-duration language was detected: medical_claim, guarantee_or_absolute_claim, unsupported_duration_claim. Numeric information is present but no numeric fact record was cited.",
+      "suggestion": "Remove the high-risk claim. Use a supported cautious expression such as 'Helps skin feel hydrated.'",
+      "evidence_sources": [
+        "SIM-CLAIM-SERUM-V1"
+      ],
+      "checks": {
+        "numbers": {
+          "detected": [
+            {
+              "value": 72.0,
+              "unit": null
+            }
+          ],
+          "cited_numeric_facts": [],
+          "status": "unsupported",
+          "reasons": [
+            "Numeric information is present but no numeric fact record was cited."
+          ]
+        },
+        "high_risk_language": {
+          "detected": true,
+          "categories": [
+            "medical_claim",
+            "guarantee_or_absolute_claim",
+            "unsupported_duration_claim"
+          ]
+        },
+        "evidence_gate": {
+          "prohibited_fact_ids": [],
+          "b_level_fact_ids": [
+            "MV-SERUM-001-F022"
+          ],
+          "cautious_language_present": false
+        },
+        "identity_and_scope": {
+          "unknown_fact_ids": [],
+          "wrong_sku_fact_ids": [],
+          "inactive_fact_ids": [],
+          "market_mismatch_fact_ids": [],
+          "language_mismatch_fact_ids": []
+        }
+      }
+    }
+  ],
+  "summary": {
+    "declared_claim_count": 2,
+    "auto_extracted_claim_count": 0,
+    "total_claim_count": 2,
+    "factual_claim_count": 2,
+    "subjective_claim_count": 0,
+    "supported_count": 0,
+    "partially_supported_count": 0,
+    "unsupported_count": 1,
+    "contradicted_count": 1,
+    "high_risk_count": 2,
+    "numeric_claim_count": 2,
+    "numeric_claims_checked": 2,
+    "fact_error_rate": 1.0,
+    "fact_error_rate_formula": "(unsupported + contradicted) / factual_claim_count"
+  },
+  "export_gate": {
+    "status": "blocked",
+    "export_allowed": false,
+    "reason": "2 high-risk claim(s) require removal or correction before export.",
+    "human_final_review_required": true,
+    "quality_score_can_override": false
+  },
+  "review_queue": [
+    {
+      "claim_id": "risk_claim_001",
+      "risk_level": "high",
+      "reason": "High-risk absolute, medical, clinical, certification, structure/function, anti-aging, or unsupported-duration language was detected: clinical_claim. Value 50 does not match cited numeric facts.",
+      "suggestion": "Remove the high-risk language and replace the numeric statement with verified value(s): ['30 ml']."
+    },
+    {
+      "claim_id": "risk_claim_002",
+      "risk_level": "high",
+      "reason": "High-risk absolute, medical, clinical, certification, structure/function, anti-aging, or unsupported-duration language was detected: medical_claim, guarantee_or_absolute_claim, unsupported_duration_claim. Numeric information is present but no numeric fact record was cited.",
+      "suggestion": "Remove the high-risk claim. Use a supported cautious expression such as 'Helps skin feel hydrated.'"
+    }
+  ],
+  "limitations": [
+    "Deterministic checks cannot prove every semantic paraphrase is equivalent.",
+    "A pass does not replace target-language, legal, brand, or platform review."
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "LF-AI-WORKFLOW-V1",
+  "workflow_version": "1.0.0",
+  "run_id": "run_20260728_example_0001",
+  "trace_id": "trace_example_0001",
+  "created_at": "2026-07-28T00:00:00+08:00",
+  "task": {
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "language": "en-US",
+    "platform": "Google Merchant Center",
+    "content_type": "product_listing",
+    "marketing_goal": "consideration"
+  },
+  "asset_versions": {
+    "product_facts": {
+      "version": "1.0.0",
+      "path": "data/products/product_facts.json",
+      "sha256": "<calculated_at_runtime>"
+    },
+    "consumer_insights": {
+      "version": "1.0",
+      "path": "data/insights/consumer_insights.json",
+      "sha256": "<calculated_at_runtime>"
+    },
+    "brand_voice": {
+      "version": "1.0",
+      "path": "data/brand/brand_voice_guide.md",
+      "sha256": "<calculated_at_runtime>"
+    },
+    "terminology": {
+      "version": "1.0",
+      "path": "data/brand/terminology.xlsx",
+      "sha256": "<calculated_at_runtime>"
+    },
+    "platform_rules": {
+      "rule_set_id": "LF-PLATFORM-RULES-2026-07-28",
+      "version": "1.0.0",
+      "path": "data/platform_rules/platform_rules.json",
+      "sha256": "<calculated_at_runtime>"
+    }
+  },
+  "node_runs": [
+    {
+      "node_id": "N01_FACT_EXTRACTOR",
+      "node_run_id": "run_20260728_example_0001.N01.a01",
+      "attempt": 1,
+      "status": "pending",
+      "input_refs": [],
+      "output_ref": "runs/run_20260728_example_0001/01_fact_extractor/attempt_01/output.json"
+    },
+    {
+      "node_id": "N02_CAMPAIGN_PLANNER",
+      "node_run_id": "run_20260728_example_0001.N02.a01",
+      "attempt": 1,
+      "status": "pending",
+      "input_refs": [
+        "run_20260728_example_0001.N01.a01"
+      ],
+      "output_ref": "runs/run_20260728_example_0001/02_campaign_planner/attempt_01/output.json"
+    },
+    {
+      "node_id": "N03_LOCALIZER",
+      "node_run_id": "run_20260728_example_0001.N03.a01",
+      "attempt": 1,
+      "status": "pending",
+      "input_refs": [
+        "run_20260728_example_0001.N02.a01"
+      ],
+      "output_ref": "runs/run_20260728_example_0001/03_localizer/attempt_01/output.json"
+    },
+    {
+      "node_id": "N04_CONTENT_GENERATOR",
+      "node_run_id": "run_20260728_example_0001.N04.a01",
+      "attempt": 1,
+      "status": "pending",
+      "input_refs": [
+        "run_20260728_example_0001.N03.a01"
+      ],
+      "output_ref": "runs/run_20260728_example_0001/04_content_generator/attempt_01/output.json"
+    },
+    {
+      "node_id": "N05_FACT_CHECKER",
+      "node_run_id": "run_20260728_example_0001.N05.a01",
+      "attempt": 1,
+      "status": "pending",
+      "input_refs": [
+        "run_20260728_example_0001.N04.a01",
+        "run_20260728_example_0001.N01.a01"
+      ],
+      "output_ref": "runs/run_20260728_example_0001/05_fact_checker/attempt_01/output.json"
+    },
+    {
+      "node_id": "N06_RULE_CHECKER",
+      "node_run_id": "run_20260728_example_0001.N06.a01",
+      "attempt": 1,
+      "status": "pending",
+      "input_refs": [
+        "run_20260728_example_0001.N04.a01",
+        "run_20260728_example_0001.N05.a01"
+      ],
+      "output_ref": "runs/run_20260728_example_0001/06_rule_checker/attempt_01/output.json"
+    },
+    {
+      "node_id": "N07_QUALITY_EVALUATOR",
+      "node_run_id": "run_20260728_example_0001.N07.a01",
+      "attempt": 1,
+      "status": "pending",
+      "input_refs": [
+        "run_20260728_example_0001.N04.a01",
+        "run_20260728_example_0001.N05.a01",
+        "run_20260728_example_0001.N06.a01"
+      ],
+      "output_ref": "runs/run_20260728_example_0001/07_quality_evaluator/attempt_01/output.json"
+    }
+  ],
+  "content_versions": [],
+  "human_final_review": {
+    "required": true,
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "notes": null
+  },
+  "release_gate": {
+    "status": "pending",
+    "reason": "示例清单尚未执行；不得据此导出或发布。"
+  }
+}

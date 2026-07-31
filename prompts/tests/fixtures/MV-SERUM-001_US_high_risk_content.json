@@ -1,0 +1,69 @@
+{
+  "status": "success",
+  "sku": "MV-SERUM-001",
+  "market": "US",
+  "language": "en-US",
+  "platform": "google_merchant_center",
+  "content_type": "product_listing",
+  "content_version": {
+    "content_id": "content_MV-SERUM-001_US_high_risk_fixture",
+    "version_id": "content_MV-SERUM-001_US_high_risk_fixture_v01",
+    "parent_version_id": null,
+    "created_by": "human",
+    "change_reason": "fact_checker_negative_test_fixture"
+  },
+  "content": {
+    "title": "Clinically Proven Hydrating Serum, 50 mL",
+    "bullet_points": [
+      "Cures dry skin with guaranteed 72-hour hydration."
+    ],
+    "description": null,
+    "scenes": [],
+    "caption": null,
+    "hook": null,
+    "body": null,
+    "cta": null
+  },
+  "claims": [
+    {
+      "claim_id": "risk_claim_001",
+      "text": "Clinically Proven Hydrating Serum, 50 mL",
+      "location": "content.title",
+      "fact_ids": [
+        "MV-SERUM-001-F002",
+        "MV-SERUM-001-F003"
+      ],
+      "evidence_level": "A"
+    },
+    {
+      "claim_id": "risk_claim_002",
+      "text": "Cures dry skin with guaranteed 72-hour hydration.",
+      "location": "content.bullet_points[0]",
+      "fact_ids": [
+        "MV-SERUM-001-F022"
+      ],
+      "evidence_level": "B"
+    }
+  ],
+  "platform_fields": {
+    "title_field_name": "structured_title",
+    "description_field_name": "structured_description",
+    "digital_source_type": "trained_algorithmic_media",
+    "duration_seconds": null,
+    "aspect_ratio": null
+  },
+  "ai_disclosure": {
+    "aigc_status": "generative_ai_text",
+    "label_required": true,
+    "method": "structured_title_and_structured_description",
+    "disclosure_text": null
+  },
+  "warnings": [
+    "Deliberately invalid stage 9 test fixture."
+  ],
+  "insufficient_information": [],
+  "human_review": {
+    "required": true,
+    "status": "pending"
+  }
+}
