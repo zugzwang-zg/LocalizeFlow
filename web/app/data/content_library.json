@@ -1,0 +1,401 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "LF-STAGE11-SOURCE-CONTENT",
+  "generated_at": "2026-07-28T09:52:43.112Z",
+  "generation_method": {
+    "baseline": "offline fact-only literal template; no model API call",
+    "localizeflow": "offline fact/brand/terminology/platform-aware template; no model API call"
+  },
+  "groups": [
+    {
+      "source_group_id": "MV-CLEAN-001_en-US_product_listing",
+      "sku": "MV-CLEAN-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TITLE: Mirevane Botanics Amino Acid Facial Cleanser, 120 mL\nBULLET 1: made without added fragrance or sulfate surfactants.\nBULLET 2: Contains glycerin, sodium cocoyl glycinate and panthenol.\nBULLET 3: Removes dirt and excess oil from skin.\nDESCRIPTION: Use 1–2 pumps on the wet face, massage for 30 seconds and wash with water. Package: 120 mL PET pump bottle.",
+        "localizeflow": "TITLE: Mirevane Botanics Facial Cleanser, 120 mL\nBULLET 1: Made without added fragrance or sulfate surfactants.\nBULLET 2: Made with glycerin, sodium cocoyl glycinate and panthenol.\nBULLET 3: Helps remove surface dirt and excess oil while leaving skin feeling comfortable.\nBULLET 4: Massage 1–2 pumps over a wet face for about 30 seconds, rinse, and avoid the eye area.\nBULLET 5: Presented in a 120 mL PET pump bottle.\nDESCRIPTION: A clear, fragrance-free start to your routine. Made without added fragrance or sulfate surfactants, this cleanser helps remove surface dirt and excess oil. Massage 1–2 pumps over a wet face for about 30 seconds, rinse, and avoid the eye area."
+      }
+    },
+    {
+      "source_group_id": "MV-CLEAN-001_en-US_short_video_script",
+      "sku": "MV-CLEAN-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3s: Show Amino Acid Facial Cleanser. Voice: Removes dirt and excess oil from skin.\n3–10s: Show use. Voice: Use 1–2 pumps on the wet face, massage for 30 seconds and wash with water.\n10–15s: Show package. Text: 120 mL. Buy now.\nCAPTION: Amino Acid Facial Cleanser for daily skin care.",
+        "localizeflow": "00:00–00:03 HOOK — Visual: Product in a simple routine. Voice: A clear, fragrance-free start to your routine.\n00:03–00:08 VERIFIED FEATURE — Visual: Texture and package. Voice: Made without added fragrance or sulfate surfactants.\n00:08–00:13 USE + EXPERIENCE — Visual: Demonstrate use. Voice: Helps remove surface dirt and excess oil while leaving skin feeling comfortable. Massage 1–2 pumps over a wet face for about 30 seconds, rinse, and avoid the eye area.\n00:13–00:15 CTA — On-screen: See product details.\nCAPTION: Made without added fragrance or sulfate surfactants, this cleanser helps remove surface dirt and excess oil."
+      }
+    },
+    {
+      "source_group_id": "MV-CLEAN-001_en-US_social_ad_copy",
+      "sku": "MV-CLEAN-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "HOOK: Removes dirt and excess oil from skin.\nBODY: made without added fragrance or sulfate surfactants. Contains glycerin, sodium cocoyl glycinate and panthenol. Use 1–2 pumps on the wet face, massage for 30 seconds and wash with water.\nCTA: Buy now.",
+        "localizeflow": "HOOK: A clear, fragrance-free start to your routine.\nBODY: Made without added fragrance or sulfate surfactants, this cleanser helps remove surface dirt and excess oil. Massage 1–2 pumps over a wet face for about 30 seconds, rinse, and avoid the eye area.\nCTA: See product details."
+      }
+    },
+    {
+      "source_group_id": "MV-CLEAN-001_es-MX_product_listing",
+      "sku": "MV-CLEAN-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TÍTULO: Mirevane Botanics Limpiador facial de aminoácidos, 120 mL\nPUNTO 1: Sin fragancia añadida ni tensioactivos con sulfatos.\nPUNTO 2: Contiene glicerina, glicinato de cocoilo de sodio y pantenol.\nPUNTO 3: Elimina la suciedad y el exceso de grasa de la piel.\nDESCRIPCIÓN: Usa 1–2 bombas en la cara mojada, masajea 30 segundos y lava con agua. Empaque: envase PET con bomba de 120 mL.",
+        "localizeflow": "TÍTULO: Mirevane Botanics Limpiador facial, 120 mL\nPUNTO 1: Sin fragancia añadida ni tensioactivos con sulfatos.\nPUNTO 2: Formulado con glicerina, glicinato de cocoilo de sodio y pantenol.\nPUNTO 3: Ayuda a retirar la suciedad superficial y el exceso de grasa, dejando una sensación cómoda.\nPUNTO 4: Masajea de 1 a 2 dosis sobre el rostro húmedo durante unos 30 segundos, enjuaga y evita el contorno de ojos.\nPUNTO 5: Presentado en envase PET con bomba de 120 mL.\nDESCRIPCIÓN: Un inicio claro y sin fragancia añadida para tu rutina. Sin fragancia añadida ni tensioactivos con sulfatos; ayuda a retirar la suciedad superficial y el exceso de grasa. Masajea de 1 a 2 dosis sobre el rostro húmedo durante unos 30 segundos, enjuaga y evita el contorno de ojos."
+      }
+    },
+    {
+      "source_group_id": "MV-CLEAN-001_es-MX_short_video_script",
+      "sku": "MV-CLEAN-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3 s: Muestra Limpiador facial de aminoácidos. Voz: Elimina la suciedad y el exceso de grasa de la piel.\n3–10 s: Muestra uso. Voz: Usa 1–2 bombas en la cara mojada, masajea 30 segundos y lava con agua.\n10–15 s: Muestra empaque. Texto: 120 mL. Compra ahora.\nTEXTO: Limpiador facial de aminoácidos para el cuidado diario de piel.",
+        "localizeflow": "00:00–00:03 GANCHO — Visual: Producto en una rutina sencilla. Voz: Un inicio claro y sin fragancia añadida para tu rutina.\n00:03–00:08 CARACTERÍSTICA — Visual: Textura y envase. Voz: Sin fragancia añadida ni tensioactivos con sulfatos.\n00:08–00:13 USO + EXPERIENCIA — Visual: Demostración de uso. Voz: Ayuda a retirar la suciedad superficial y el exceso de grasa, dejando una sensación cómoda. Masajea de 1 a 2 dosis sobre el rostro húmedo durante unos 30 segundos, enjuaga y evita el contorno de ojos.\n00:13–00:15 CTA — Texto en pantalla: Consulta los detalles.\nTEXTO: Sin fragancia añadida ni tensioactivos con sulfatos; ayuda a retirar la suciedad superficial y el exceso de grasa."
+      }
+    },
+    {
+      "source_group_id": "MV-CLEAN-001_es-MX_social_ad_copy",
+      "sku": "MV-CLEAN-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "GANCHO: Elimina la suciedad y el exceso de grasa de la piel.\nTEXTO: Sin fragancia añadida ni tensioactivos con sulfatos. Contiene glicerina, glicinato de cocoilo de sodio y pantenol. Usa 1–2 bombas en la cara mojada, masajea 30 segundos y lava con agua.\nCTA: Compra ahora.",
+        "localizeflow": "GANCHO: Un inicio claro y sin fragancia añadida para tu rutina.\nTEXTO: Sin fragancia añadida ni tensioactivos con sulfatos; ayuda a retirar la suciedad superficial y el exceso de grasa. Masajea de 1 a 2 dosis sobre el rostro húmedo durante unos 30 segundos, enjuaga y evita el contorno de ojos.\nCTA: Consulta los detalles."
+      }
+    },
+    {
+      "source_group_id": "MV-SERUM-001_en-US_product_listing",
+      "sku": "MV-SERUM-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TITLE: Mirevane Botanics Moisturizing Serum, 30 mL\nBULLET 1: a water-based gel made without added fragrance.\nBULLET 2: Contains glycerin, sodium hyaluronate and panthenol.\nBULLET 3: Hydrates and softens the skin.\nDESCRIPTION: After washing, pump 1–2 times on face and neck, then use cream. Package: opaque 30 mL PP pump bottle.",
+        "localizeflow": "TITLE: Mirevane Botanics Hydrating Serum, 30 mL\nBULLET 1: A water-based gel made without added fragrance.\nBULLET 2: Made with glycerin, sodium hyaluronate and panthenol.\nBULLET 3: Helps skin feel hydrated and soft.\nBULLET 4: Apply 1–2 pumps to the face and neck after cleansing, follow with moisturizer, and avoid the eye area.\nBULLET 5: Presented in a opaque 30 mL PP pump bottle.\nDESCRIPTION: Light hydration before moisturizer. A water-based gel with glycerin, sodium hyaluronate and panthenol that helps skin feel hydrated. Apply 1–2 pumps to the face and neck after cleansing, follow with moisturizer, and avoid the eye area."
+      }
+    },
+    {
+      "source_group_id": "MV-SERUM-001_en-US_short_video_script",
+      "sku": "MV-SERUM-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3s: Show Moisturizing Serum. Voice: Hydrates and softens the skin.\n3–10s: Show use. Voice: After washing, pump 1–2 times on face and neck, then use cream.\n10–15s: Show package. Text: 30 mL. Buy now.\nCAPTION: Moisturizing Serum for daily skin care.",
+        "localizeflow": "00:00–00:03 HOOK — Visual: Product in a simple routine. Voice: Light hydration before moisturizer.\n00:03–00:08 VERIFIED FEATURE — Visual: Texture and package. Voice: A water-based gel made without added fragrance.\n00:08–00:13 USE + EXPERIENCE — Visual: Demonstrate use. Voice: Helps skin feel hydrated and soft. Apply 1–2 pumps to the face and neck after cleansing, follow with moisturizer, and avoid the eye area.\n00:13–00:15 CTA — On-screen: See product details.\nCAPTION: A water-based gel with glycerin, sodium hyaluronate and panthenol that helps skin feel hydrated."
+      }
+    },
+    {
+      "source_group_id": "MV-SERUM-001_en-US_social_ad_copy",
+      "sku": "MV-SERUM-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "HOOK: Hydrates and softens the skin.\nBODY: a water-based gel made without added fragrance. Contains glycerin, sodium hyaluronate and panthenol. After washing, pump 1–2 times on face and neck, then use cream.\nCTA: Buy now.",
+        "localizeflow": "HOOK: Light hydration before moisturizer.\nBODY: A water-based gel with glycerin, sodium hyaluronate and panthenol that helps skin feel hydrated. Apply 1–2 pumps to the face and neck after cleansing, follow with moisturizer, and avoid the eye area.\nCTA: See product details."
+      }
+    },
+    {
+      "source_group_id": "MV-SERUM-001_es-MX_product_listing",
+      "sku": "MV-SERUM-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TÍTULO: Mirevane Botanics Serum humectante, 30 mL\nPUNTO 1: Gel de base acuosa sin fragancia añadida.\nPUNTO 2: Contiene glicerina, hialuronato de sodio y pantenol.\nPUNTO 3: Hidrata y suaviza la piel.\nDESCRIPCIÓN: Después de lavar, bombea 1–2 veces en cara y cuello y luego usa crema. Empaque: envase opaco de PP con bomba de 30 mL.",
+        "localizeflow": "TÍTULO: Mirevane Botanics Sérum hidratante, 30 mL\nPUNTO 1: Gel de base acuosa sin fragancia añadida.\nPUNTO 2: Formulado con glicerina, hialuronato de sodio y pantenol.\nPUNTO 3: Ayuda a que la piel se sienta hidratada y suave.\nPUNTO 4: Después de limpiar el rostro, aplica de 1 a 2 dosis en cara y cuello, continúa con tu crema hidratante y evita el contorno de ojos.\nPUNTO 5: Presentado en envase opaco de PP con bomba de 30 mL.\nDESCRIPCIÓN: Hidratación ligera antes de tu crema. Un gel de base acuosa con glicerina, hialuronato de sodio y pantenol que ayuda a que la piel se sienta hidratada. Después de limpiar el rostro, aplica de 1 a 2 dosis en cara y cuello, continúa con tu crema hidratante y evita el contorno de ojos."
+      }
+    },
+    {
+      "source_group_id": "MV-SERUM-001_es-MX_short_video_script",
+      "sku": "MV-SERUM-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3 s: Muestra Serum humectante. Voz: Hidrata y suaviza la piel.\n3–10 s: Muestra uso. Voz: Después de lavar, bombea 1–2 veces en cara y cuello y luego usa crema.\n10–15 s: Muestra empaque. Texto: 30 mL. Compra ahora.\nTEXTO: Serum humectante para el cuidado diario de piel.",
+        "localizeflow": "00:00–00:03 GANCHO — Visual: Producto en una rutina sencilla. Voz: Hidratación ligera antes de tu crema.\n00:03–00:08 CARACTERÍSTICA — Visual: Textura y envase. Voz: Gel de base acuosa sin fragancia añadida.\n00:08–00:13 USO + EXPERIENCIA — Visual: Demostración de uso. Voz: Ayuda a que la piel se sienta hidratada y suave. Después de limpiar el rostro, aplica de 1 a 2 dosis en cara y cuello, continúa con tu crema hidratante y evita el contorno de ojos.\n00:13–00:15 CTA — Texto en pantalla: Consulta los detalles.\nTEXTO: Un gel de base acuosa con glicerina, hialuronato de sodio y pantenol que ayuda a que la piel se sienta hidratada."
+      }
+    },
+    {
+      "source_group_id": "MV-SERUM-001_es-MX_social_ad_copy",
+      "sku": "MV-SERUM-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "GANCHO: Hidrata y suaviza la piel.\nTEXTO: Gel de base acuosa sin fragancia añadida. Contiene glicerina, hialuronato de sodio y pantenol. Después de lavar, bombea 1–2 veces en cara y cuello y luego usa crema.\nCTA: Compra ahora.",
+        "localizeflow": "GANCHO: Hidratación ligera antes de tu crema.\nTEXTO: Un gel de base acuosa con glicerina, hialuronato de sodio y pantenol que ayuda a que la piel se sienta hidratada. Después de limpiar el rostro, aplica de 1 a 2 dosis en cara y cuello, continúa con tu crema hidratante y evita el contorno de ojos.\nCTA: Consulta los detalles."
+      }
+    },
+    {
+      "source_group_id": "MV-CREAM-001_en-US_product_listing",
+      "sku": "MV-CREAM-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TITLE: Mirevane Botanics Fragrance-Free Face Cream, 50 mL\nBULLET 1: a cream texture made without added fragrance.\nBULLET 2: Contains glycerin, squalane, panthenol and beta-glucan.\nBULLET 3: Moisturizes dry skin.\nDESCRIPTION: Put a suitable amount on clean face and neck and use sunscreen in daytime. Package: 50 mL PP jar with an inner lid.",
+        "localizeflow": "TITLE: Mirevane Botanics Fragrance-Free Facial Moisturizer, 50 mL\nBULLET 1: A cream texture made without added fragrance.\nBULLET 2: Made with glycerin, squalane, panthenol and beta-glucan.\nBULLET 3: Helps skin feel soft and moisturized.\nBULLET 4: Apply to a clean face and neck; follow with sunscreen during the day.\nBULLET 5: Presented in a 50 mL PP jar with an inner lid.\nDESCRIPTION: A fragrance-free moisturizing step. Made with squalane, panthenol and beta-glucan to help skin feel soft and moisturized. Apply to a clean face and neck; follow with sunscreen during the day."
+      }
+    },
+    {
+      "source_group_id": "MV-CREAM-001_en-US_short_video_script",
+      "sku": "MV-CREAM-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3s: Show Fragrance-Free Face Cream. Voice: Moisturizes dry skin.\n3–10s: Show use. Voice: Put a suitable amount on clean face and neck and use sunscreen in daytime.\n10–15s: Show package. Text: 50 mL. Buy now.\nCAPTION: Fragrance-Free Face Cream for daily skin care.",
+        "localizeflow": "00:00–00:03 HOOK — Visual: Product in a simple routine. Voice: A fragrance-free moisturizing step.\n00:03–00:08 VERIFIED FEATURE — Visual: Texture and package. Voice: A cream texture made without added fragrance.\n00:08–00:13 USE + EXPERIENCE — Visual: Demonstrate use. Voice: Helps skin feel soft and moisturized. Apply to a clean face and neck; follow with sunscreen during the day.\n00:13–00:15 CTA — On-screen: See product details.\nCAPTION: Made with squalane, panthenol and beta-glucan to help skin feel soft and moisturized."
+      }
+    },
+    {
+      "source_group_id": "MV-CREAM-001_en-US_social_ad_copy",
+      "sku": "MV-CREAM-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "HOOK: Moisturizes dry skin.\nBODY: a cream texture made without added fragrance. Contains glycerin, squalane, panthenol and beta-glucan. Put a suitable amount on clean face and neck and use sunscreen in daytime.\nCTA: Buy now.",
+        "localizeflow": "HOOK: A fragrance-free moisturizing step.\nBODY: Made with squalane, panthenol and beta-glucan to help skin feel soft and moisturized. Apply to a clean face and neck; follow with sunscreen during the day.\nCTA: See product details."
+      }
+    },
+    {
+      "source_group_id": "MV-CREAM-001_es-MX_product_listing",
+      "sku": "MV-CREAM-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TÍTULO: Mirevane Botanics Crema de cara libre de fragancia, 50 mL\nPUNTO 1: Textura en crema sin fragancia añadida.\nPUNTO 2: Contiene glicerina, escualano, pantenol y beta-glucano.\nPUNTO 3: Hidrata la piel seca.\nDESCRIPCIÓN: Pon una cantidad adecuada en cara y cuello limpios y usa bloqueador en el día. Empaque: tarro de PP de 50 mL con tapa interior.",
+        "localizeflow": "TÍTULO: Mirevane Botanics Crema hidratante facial sin fragancia añadida, 50 mL\nPUNTO 1: Textura en crema sin fragancia añadida.\nPUNTO 2: Formulado con glicerina, escualano, pantenol y beta-glucano.\nPUNTO 3: Ayuda a que la piel se sienta suave e hidratada.\nPUNTO 4: Aplícala en el rostro y cuello limpios; durante el día, continúa con protector solar.\nPUNTO 5: Presentado en tarro de PP de 50 mL con tapa interior.\nDESCRIPCIÓN: Un paso hidratante sin fragancia añadida. Con escualano, pantenol y beta-glucano para ayudar a que la piel se sienta suave e hidratada. Aplícala en el rostro y cuello limpios; durante el día, continúa con protector solar."
+      }
+    },
+    {
+      "source_group_id": "MV-CREAM-001_es-MX_short_video_script",
+      "sku": "MV-CREAM-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3 s: Muestra Crema de cara libre de fragancia. Voz: Hidrata la piel seca.\n3–10 s: Muestra uso. Voz: Pon una cantidad adecuada en cara y cuello limpios y usa bloqueador en el día.\n10–15 s: Muestra empaque. Texto: 50 mL. Compra ahora.\nTEXTO: Crema de cara libre de fragancia para el cuidado diario de piel.",
+        "localizeflow": "00:00–00:03 GANCHO — Visual: Producto en una rutina sencilla. Voz: Un paso hidratante sin fragancia añadida.\n00:03–00:08 CARACTERÍSTICA — Visual: Textura y envase. Voz: Textura en crema sin fragancia añadida.\n00:08–00:13 USO + EXPERIENCIA — Visual: Demostración de uso. Voz: Ayuda a que la piel se sienta suave e hidratada. Aplícala en el rostro y cuello limpios; durante el día, continúa con protector solar.\n00:13–00:15 CTA — Texto en pantalla: Consulta los detalles.\nTEXTO: Con escualano, pantenol y beta-glucano para ayudar a que la piel se sienta suave e hidratada."
+      }
+    },
+    {
+      "source_group_id": "MV-CREAM-001_es-MX_social_ad_copy",
+      "sku": "MV-CREAM-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "GANCHO: Hidrata la piel seca.\nTEXTO: Textura en crema sin fragancia añadida. Contiene glicerina, escualano, pantenol y beta-glucano. Pon una cantidad adecuada en cara y cuello limpios y usa bloqueador en el día.\nCTA: Compra ahora.",
+        "localizeflow": "GANCHO: Un paso hidratante sin fragancia añadida.\nTEXTO: Con escualano, pantenol y beta-glucano para ayudar a que la piel se sienta suave e hidratada. Aplícala en el rostro y cuello limpios; durante el día, continúa con protector solar.\nCTA: Consulta los detalles."
+      }
+    },
+    {
+      "source_group_id": "MV-HAND-001_en-US_product_listing",
+      "sku": "MV-HAND-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TITLE: Mirevane Botanics Hand Moisturizing Cream, 60 mL\nBULLET 1: made without added fragrance in an aluminum tube.\nBULLET 2: Contains glycerin, shea butter, panthenol and allantoin.\nBULLET 3: Repairs dry hands after washing.\nDESCRIPTION: Apply to hands and nail edges repeatedly when needed. Package: 60 mL aluminum tube with a PP cap.",
+        "localizeflow": "TITLE: Mirevane Botanics Fragrance-Free Hand Cream, 60 mL\nBULLET 1: Made without added fragrance in an aluminum tube.\nBULLET 2: Made with glycerin, shea butter, panthenol and allantoin.\nBULLET 3: Helps hands feel soft and moisturized after everyday washing.\nBULLET 4: Massage into hands and around the nails as needed; for external use only.\nBULLET 5: Presented in a 60 mL aluminum tube with a PP cap.\nDESCRIPTION: A simple hand-care step after washing. Made with glycerin, shea butter, panthenol and allantoin to help hands feel soft and moisturized. Massage into hands and around the nails as needed; for external use only."
+      }
+    },
+    {
+      "source_group_id": "MV-HAND-001_en-US_short_video_script",
+      "sku": "MV-HAND-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3s: Show Hand Moisturizing Cream. Voice: Repairs dry hands after washing.\n3–10s: Show use. Voice: Apply to hands and nail edges repeatedly when needed.\n10–15s: Show package. Text: 60 mL. Buy now.\nCAPTION: Hand Moisturizing Cream for daily skin care.",
+        "localizeflow": "00:00–00:03 HOOK — Visual: Product in a simple routine. Voice: A simple hand-care step after washing.\n00:03–00:08 VERIFIED FEATURE — Visual: Texture and package. Voice: Made without added fragrance in an aluminum tube.\n00:08–00:13 USE + EXPERIENCE — Visual: Demonstrate use. Voice: Helps hands feel soft and moisturized after everyday washing. Massage into hands and around the nails as needed; for external use only.\n00:13–00:15 CTA — On-screen: See product details.\nCAPTION: Made with glycerin, shea butter, panthenol and allantoin to help hands feel soft and moisturized."
+      }
+    },
+    {
+      "source_group_id": "MV-HAND-001_en-US_social_ad_copy",
+      "sku": "MV-HAND-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "HOOK: Repairs dry hands after washing.\nBODY: made without added fragrance in an aluminum tube. Contains glycerin, shea butter, panthenol and allantoin. Apply to hands and nail edges repeatedly when needed.\nCTA: Buy now.",
+        "localizeflow": "HOOK: A simple hand-care step after washing.\nBODY: Made with glycerin, shea butter, panthenol and allantoin to help hands feel soft and moisturized. Massage into hands and around the nails as needed; for external use only.\nCTA: See product details."
+      }
+    },
+    {
+      "source_group_id": "MV-HAND-001_es-MX_product_listing",
+      "sku": "MV-HAND-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TÍTULO: Mirevane Botanics Crema humectante de mano, 60 mL\nPUNTO 1: Sin fragancia añadida y en tubo de aluminio.\nPUNTO 2: Contiene glicerina, manteca de karité, pantenol y alantoína.\nPUNTO 3: Repara las manos secas después de lavarlas.\nDESCRIPCIÓN: Aplica en manos y bordes de uñas repetidamente cuando sea necesario. Empaque: tubo de aluminio de 60 mL con tapa de PP.",
+        "localizeflow": "TÍTULO: Mirevane Botanics Crema para manos sin fragancia añadida, 60 mL\nPUNTO 1: Sin fragancia añadida y en tubo de aluminio.\nPUNTO 2: Formulado con glicerina, manteca de karité, pantenol y alantoína.\nPUNTO 3: Ayuda a que las manos se sientan suaves e hidratadas después del lavado diario.\nPUNTO 4: Masajea las manos y el contorno de las uñas según sea necesario; solo para uso externo.\nPUNTO 5: Presentado en tubo de aluminio de 60 mL con tapa de PP.\nDESCRIPCIÓN: Un paso sencillo para las manos después del lavado. Con glicerina, manteca de karité, pantenol y alantoína para ayudar a que las manos se sientan suaves e hidratadas. Masajea las manos y el contorno de las uñas según sea necesario; solo para uso externo."
+      }
+    },
+    {
+      "source_group_id": "MV-HAND-001_es-MX_short_video_script",
+      "sku": "MV-HAND-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3 s: Muestra Crema humectante de mano. Voz: Repara las manos secas después de lavarlas.\n3–10 s: Muestra uso. Voz: Aplica en manos y bordes de uñas repetidamente cuando sea necesario.\n10–15 s: Muestra empaque. Texto: 60 mL. Compra ahora.\nTEXTO: Crema humectante de mano para el cuidado diario de piel.",
+        "localizeflow": "00:00–00:03 GANCHO — Visual: Producto en una rutina sencilla. Voz: Un paso sencillo para las manos después del lavado.\n00:03–00:08 CARACTERÍSTICA — Visual: Textura y envase. Voz: Sin fragancia añadida y en tubo de aluminio.\n00:08–00:13 USO + EXPERIENCIA — Visual: Demostración de uso. Voz: Ayuda a que las manos se sientan suaves e hidratadas después del lavado diario. Masajea las manos y el contorno de las uñas según sea necesario; solo para uso externo.\n00:13–00:15 CTA — Texto en pantalla: Consulta los detalles.\nTEXTO: Con glicerina, manteca de karité, pantenol y alantoína para ayudar a que las manos se sientan suaves e hidratadas."
+      }
+    },
+    {
+      "source_group_id": "MV-HAND-001_es-MX_social_ad_copy",
+      "sku": "MV-HAND-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "GANCHO: Repara las manos secas después de lavarlas.\nTEXTO: Sin fragancia añadida y en tubo de aluminio. Contiene glicerina, manteca de karité, pantenol y alantoína. Aplica en manos y bordes de uñas repetidamente cuando sea necesario.\nCTA: Compra ahora.",
+        "localizeflow": "GANCHO: Un paso sencillo para las manos después del lavado.\nTEXTO: Con glicerina, manteca de karité, pantenol y alantoína para ayudar a que las manos se sientan suaves e hidratadas. Masajea las manos y el contorno de las uñas según sea necesario; solo para uso externo.\nCTA: Consulta los detalles."
+      }
+    },
+    {
+      "source_group_id": "MV-KIT-001_en-US_product_listing",
+      "sku": "MV-KIT-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TITLE: Mirevane Botanics Travel Skin Care Kit, 3 pieces / 55 mL total\nBULLET 1: three fragrance-free mini products in one paper box.\nBULLET 2: Contains a 30 mL cleanser, 10 mL serum and 15 mL moisturizer.\nBULLET 3: Covers all of your skincare needs while traveling.\nDESCRIPTION: Use cleanser first, serum second and cream third. Package: paper box with three mini products totaling 55 mL.",
+        "localizeflow": "TITLE: Mirevane Botanics Travel Skincare Set, 3 pieces / 55 mL total\nBULLET 1: Three fragrance-free mini products in one paper box.\nBULLET 2: Made with a 30 mL cleanser, 10 mL serum and 15 mL moisturizer.\nBULLET 3: Combines basic cleansing, hydration and moisturizing steps for simpler packing.\nBULLET 4: Use the cleanser, serum and moisturizer in that order, following each product's directions.\nBULLET 5: Presented in a paper box with three mini products totaling 55 mL.\nDESCRIPTION: Three simple steps in a travel-size set. A fragrance-free cleanser, serum and moisturizer organized in one compact paper box. Use the cleanser, serum and moisturizer in that order, following each product's directions."
+      }
+    },
+    {
+      "source_group_id": "MV-KIT-001_en-US_short_video_script",
+      "sku": "MV-KIT-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3s: Show Travel Skin Care Kit. Voice: Covers all of your skincare needs while traveling.\n3–10s: Show use. Voice: Use cleanser first, serum second and cream third.\n10–15s: Show package. Text: 3 pieces / 55 mL total. Buy now.\nCAPTION: Travel Skin Care Kit for daily skin care.",
+        "localizeflow": "00:00–00:03 HOOK — Visual: Product in a simple routine. Voice: Three simple steps in a travel-size set.\n00:03–00:08 VERIFIED FEATURE — Visual: Texture and package. Voice: Three fragrance-free mini products in one paper box.\n00:08–00:13 USE + EXPERIENCE — Visual: Demonstrate use. Voice: Combines basic cleansing, hydration and moisturizing steps for simpler packing. Use the cleanser, serum and moisturizer in that order, following each product's directions.\n00:13–00:15 CTA — On-screen: See product details.\nCAPTION: A fragrance-free cleanser, serum and moisturizer organized in one compact paper box."
+      }
+    },
+    {
+      "source_group_id": "MV-KIT-001_en-US_social_ad_copy",
+      "sku": "MV-KIT-001",
+      "market": "US",
+      "language": "en-US",
+      "language_label": "English (US)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "HOOK: Covers all of your skincare needs while traveling.\nBODY: three fragrance-free mini products in one paper box. Contains a 30 mL cleanser, 10 mL serum and 15 mL moisturizer. Use cleanser first, serum second and cream third.\nCTA: Buy now.",
+        "localizeflow": "HOOK: Three simple steps in a travel-size set.\nBODY: A fragrance-free cleanser, serum and moisturizer organized in one compact paper box. Use the cleanser, serum and moisturizer in that order, following each product's directions.\nCTA: See product details."
+      }
+    },
+    {
+      "source_group_id": "MV-KIT-001_es-MX_product_listing",
+      "sku": "MV-KIT-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "product_listing",
+      "content_type_label": "Product Listing",
+      "versions": {
+        "baseline": "TÍTULO: Mirevane Botanics Kit de cuidado de piel para viaje, 3 pieces / 55 mL total\nPUNTO 1: Tres productos mini sin fragancia añadida en una caja de cartón.\nPUNTO 2: Contiene limpiador de 30 mL, sérum de 10 mL y crema hidratante de 15 mL.\nPUNTO 3: Cubre todas tus necesidades de piel cuando viajas.\nDESCRIPCIÓN: Usa primero limpiador, segundo serum y tercero crema. Empaque: caja de cartón con tres productos mini que suman 55 mL.",
+        "localizeflow": "TÍTULO: Mirevane Botanics Set básico de cuidado facial para viaje, 3 pieces / 55 mL total\nPUNTO 1: Tres productos mini sin fragancia añadida en una caja de cartón.\nPUNTO 2: Formulado con limpiador de 30 mL, sérum de 10 mL y crema hidratante de 15 mL.\nPUNTO 3: Combina pasos básicos de limpieza, hidratación y humectación para llevar menos.\nPUNTO 4: Usa el limpiador, el sérum y la crema hidratante en ese orden, siguiendo las indicaciones de cada producto.\nPUNTO 5: Presentado en caja de cartón con tres productos mini que suman 55 mL.\nDESCRIPCIÓN: Tres pasos sencillos en un set para viaje. Limpiador, sérum y crema hidratante sin fragancia añadida, reunidos en una caja compacta. Usa el limpiador, el sérum y la crema hidratante en ese orden, siguiendo las indicaciones de cada producto."
+      }
+    },
+    {
+      "source_group_id": "MV-KIT-001_es-MX_short_video_script",
+      "sku": "MV-KIT-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "short_video_script",
+      "content_type_label": "15-second Video Script",
+      "versions": {
+        "baseline": "0–3 s: Muestra Kit de cuidado de piel para viaje. Voz: Cubre todas tus necesidades de piel cuando viajas.\n3–10 s: Muestra uso. Voz: Usa primero limpiador, segundo serum y tercero crema.\n10–15 s: Muestra empaque. Texto: 3 pieces / 55 mL total. Compra ahora.\nTEXTO: Kit de cuidado de piel para viaje para el cuidado diario de piel.",
+        "localizeflow": "00:00–00:03 GANCHO — Visual: Producto en una rutina sencilla. Voz: Tres pasos sencillos en un set para viaje.\n00:03–00:08 CARACTERÍSTICA — Visual: Textura y envase. Voz: Tres productos mini sin fragancia añadida en una caja de cartón.\n00:08–00:13 USO + EXPERIENCIA — Visual: Demostración de uso. Voz: Combina pasos básicos de limpieza, hidratación y humectación para llevar menos. Usa el limpiador, el sérum y la crema hidratante en ese orden, siguiendo las indicaciones de cada producto.\n00:13–00:15 CTA — Texto en pantalla: Consulta los detalles.\nTEXTO: Limpiador, sérum y crema hidratante sin fragancia añadida, reunidos en una caja compacta."
+      }
+    },
+    {
+      "source_group_id": "MV-KIT-001_es-MX_social_ad_copy",
+      "sku": "MV-KIT-001",
+      "market": "MX",
+      "language": "es-MX",
+      "language_label": "Español (México)",
+      "content_type": "social_ad_copy",
+      "content_type_label": "Social Ad Copy",
+      "versions": {
+        "baseline": "GANCHO: Cubre todas tus necesidades de piel cuando viajas.\nTEXTO: Tres productos mini sin fragancia añadida en una caja de cartón. Contiene limpiador de 30 mL, sérum de 10 mL y crema hidratante de 15 mL. Usa primero limpiador, segundo serum y tercero crema.\nCTA: Compra ahora.",
+        "localizeflow": "GANCHO: Tres pasos sencillos en un set para viaje.\nTEXTO: Limpiador, sérum y crema hidratante sin fragancia añadida, reunidos en una caja compacta. Usa el limpiador, el sérum y la crema hidratante en ese orden, siguiendo las indicaciones de cada producto.\nCTA: Consulta los detalles."
+      }
+    }
+  ]
+}

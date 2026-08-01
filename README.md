@@ -6,6 +6,8 @@
 
 GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
 
+在线试用：<https://localizeflow-demo-86182.reidmozzie.chatgpt.site>
+
 ![LocalizeFlow Demo 首页](assets/streamlit_demo_home.png)
 
 ## 项目概览
