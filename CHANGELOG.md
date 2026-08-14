@@ -23,7 +23,7 @@ interfaces remain experimental.
   known production dependency advisories found during the release audit.
 - Corrected four screenshot extensions so file names match their JPEG format.
 
-## [0.1.0-preview.1] - TBD
+## [0.1.0-preview.1] - 2026-08-14
 
 First open-source preview. The release date will be set only after the release
 candidate passes the clean-environment checklist.

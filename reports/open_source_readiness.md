@@ -2,8 +2,8 @@
 
 **Candidate:** `v0.1.0-preview.1`
 **Audit date:** 2026-08-14
-**Status:** local release candidate passed; GitHub activation and publication
-remain pending maintainer approval.
+**Status:** local and GitHub-hosted release gates passed; approved for
+publication.
 
 ## Completed locally
 
@@ -57,21 +57,19 @@ remain pending maintainer approval.
 - Contributor Covenant attribution is preserved in `CODE_OF_CONDUCT.md` and
   `THIRD_PARTY_NOTICES.md`.
 
-## Pending GitHub-side activation
+## GitHub publication record
 
-The source repository is already public, but its current `main` branch does
-not yet contain this candidate and GitHub reports no recognized license or
-security policy. After maintainer acceptance:
+- Review pull request: <https://github.com/zugzwang-zg/LocalizeFlow/pull/1>
+- Release record: <https://github.com/zugzwang-zg/LocalizeFlow/releases/tag/v0.1.0-preview.1>
+- GitHub-hosted CI and CodeQL passed for the release candidate.
+- Dependabot alerts/security updates, secret scanning, push protection, and
+  Private vulnerability reporting were enabled before merge.
+- The documented labels were configured before accepting public issues.
 
-1. push the candidate through a pull request;
-2. observe CI and CodeQL on GitHub-hosted runners;
-3. enable Private vulnerability reporting, Dependabot alerts/security updates,
-   secret scanning and push protection;
-4. create the documented labels and protect `main`;
-5. set the changelog date, tag the reviewed commit, and publish the prerelease;
-6. re-download and smoke-test the public source archive.
-
-Exact operator steps are in `docs/maintainer_release_checklist.md`.
+The maintainer must protect `main`, merge only the reviewed commit, create the
+annotated tag, publish the prerelease, and re-download/smoke-test the public
+source archive. Exact operator steps are in
+`docs/maintainer_release_checklist.md`.
 
 ## Product risks carried into Stage B
 
