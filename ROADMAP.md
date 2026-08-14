@@ -18,8 +18,8 @@ committed until an issue has an owner and an accepted implementation plan.
 
 ## Closed Beta — local candidate, external validation pending
 
-- Completed locally: controlled CSV/XLSX/JSON import, confirmation gate, schema-validated model adapter, request budget, audit record, post-model fact/packaging gate, and evaluation templates.
-- Pending before launch: authenticated allowlist, hosted tenant isolation and deletion rehearsal, relay/provider disclosure, and one approved synthetic live-call smoke test.
+- Completed locally: controlled CSV/XLSX/JSON import, confirmation gate, dual-protocol model adapter, request budget, audit record, post-model fact/packaging gate, evaluation templates, and an approved synthetic live-call smoke test.
+- Pending before launch: authenticated allowlist, hosted tenant isolation and deletion rehearsal, and relay/provider disclosure.
 - Pending real-world evidence: 5–10 invited operators, at least 10 authorized SKUs, two independent target-language reviews per task, and adoption/blocker interviews.
 
 ## Free trial — future

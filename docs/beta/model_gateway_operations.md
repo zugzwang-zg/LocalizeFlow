@@ -34,9 +34,13 @@ group name.
 
 The 2026-08-14 first live attempt confirmed that the Claude credential rejects
 `/v1/chat/completions` with HTTP 403. The gateway then added Anthropic Messages
-support. The follow-up received retryable provider errors and no response body;
-therefore the live smoke gate remains pending and no successful generation is
-recorded.
+support, but that channel returned retryable provider errors and no response
+body. The owner subsequently approved the existing Chat Completions credential
+and `gpt-5.4-mini`. The synthetic smoke passed in one provider attempt: 4,209
+input tokens, 599 output tokens, 12,204 ms, estimated cost `$0.00585225`, four
+quality checks passed, the gate stopped at `human_review`, and the duplicate
+application request hit the in-memory idempotency cache without a second model
+call. No raw response body was persisted in the audit record.
 
 ## Request policy
 
