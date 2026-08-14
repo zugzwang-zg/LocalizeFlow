@@ -1,0 +1,2 @@
+sku,attribute,value,unit,evidence_level,source,source_type,market_scope,allowed_expression,prohibited_expression,generation_policy
+BETA-SKU-001,product_name,DELETE THIS EXAMPLE ROW,,A,EXAMPLE-SOURCE,primary_spec,US;MX,,,direct

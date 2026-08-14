@@ -9,19 +9,18 @@ committed until an issue has an owner and an accepted implementation plan.
 - Reproducible local setup and automated CI.
 - Versioned preview release with explicit limitations.
 
-## Public interactive Demo — next
+## Public interactive Demo — complete
 
 - Structured packaging facts and hard export gates.
 - Inline issue highlighting and deterministic safe fixes.
 - Short guided onboarding, privacy notice, feedback, and minimal analytics.
 - Accessibility, responsive layout, and browser compatibility checks.
 
-## Closed Beta — planned
+## Closed Beta — local candidate, external validation pending
 
-- Controlled import of real product records.
-- Model-backed structured generation with schema validation, budgets, and logs.
-- At least two independent target-language reviewers.
-- Real-user time, edit, fact-error, and adoption measurements.
+- Completed locally: controlled CSV/XLSX/JSON import, confirmation gate, schema-validated model adapter, request budget, audit record, post-model fact/packaging gate, and evaluation templates.
+- Pending before launch: authenticated allowlist, hosted tenant isolation and deletion rehearsal, relay/provider disclosure, and one approved synthetic live-call smoke test.
+- Pending real-world evidence: 5–10 invited operators, at least 10 authorized SKUs, two independent target-language reviews per task, and adoption/blocker interviews.
 
 ## Free trial — future
 

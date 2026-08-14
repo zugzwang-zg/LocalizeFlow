@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "facts": [
+    {
+      "sku": "BETA-SKU-001",
+      "attribute": "product_name",
+      "value": "DELETE THIS EXAMPLE ROW",
+      "unit": null,
+      "evidence_level": "A",
+      "source": "EXAMPLE-SOURCE",
+      "source_type": "primary_spec",
+      "market_scope": "US;MX",
+      "allowed_expression": null,
+      "prohibited_expression": null,
+      "generation_policy": "direct"
+    }
+  ]
+}

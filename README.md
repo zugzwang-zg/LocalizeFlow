@@ -149,6 +149,15 @@ Web 与 Streamlit Demo 将完整链路压缩成五步，公开 Web Demo 提供�
 
 当前 Demo 采用冻结评测内容与确定性模板，不调用模型 API，也不连接真实发布平台；因此可在没有密钥的环境中稳定复现端到端流程。
 
+### Closed Beta 本地候选（默认关闭）
+
+仓库包含一条尚未对外开放的 Closed Beta 候选链路：CSV/XLSX/JSON 安全导入、缺失/冲突/低证据提示、人工事实确认、OpenAI-compatible 中转站模型调用、JSON Schema 校验、事实与包装复检、人工终审和审计包导出。模型开关默认关闭；未完成身份、项目隔离、删除、模型提供方披露与成本保护验证前，不得用托管环境接收真实资料。
+
+- [`templates/LocalizeFlow_Beta_SKU_Import_Template.xlsx`](templates/LocalizeFlow_Beta_SKU_Import_Template.xlsx)：受控 SKU 导入模板；
+- [`templates/LocalizeFlow_Closed_Beta_Evaluation.xlsx`](templates/LocalizeFlow_Closed_Beta_Evaluation.xlsx)：真实任务、双评审和采用意愿记录；
+- [`docs/beta/closed_beta_protocol.md`](docs/beta/closed_beta_protocol.md)：范围、招募、退出与停止条件；
+- [`docs/beta/model_gateway_operations.md`](docs/beta/model_gateway_operations.md)：模型网关、数据最小化、成本与审计要求。
+
 ## 内容案例与事实检查
 
 代表性 US Listing 使用 `fact_id` 引用容量、配方、肤感和使用方法。事实核验模块输出：

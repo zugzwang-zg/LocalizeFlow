@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "prompt_set_id": "LF-PROMPTS-2026-07-28",
-  "version": "1.0.0",
-  "updated_at": "2026-07-28",
-  "status": "stage_8_pending_acceptance",
-  "execution_status": "offline_structure_validation_only",
+  "version": "1.1.0",
+  "updated_at": "2026-08-14",
+  "status": "closed_beta_candidate",
+  "execution_status": "live_gateway_implemented_not_called",
   "api_calls_made_in_stage_8": 0,
   "provider_configuration": {
-    "provider": "OpenAI",
-    "api": "Responses API",
-    "model_source": "OPENAI_MODEL environment variable",
+      "provider": "OpenAI-compatible relay; provider must be disclosed before real-data use",
+      "api": "Chat Completions-compatible API with application JSON Schema validation",
+      "model_source": "LOCALIZEFLOW_MODEL_NAME environment variable",
     "model_value_during_stage_8": null,
     "model_selection_status": "not_fixed_until_representative_evaluation",
     "structured_output": {
@@ -88,6 +88,13 @@
     {
       "prompt_id": "LF-PROMPT-GENERATOR-SOCIAL-1.0",
       "path": "prompts/social_copy_prompt.md",
+      "node_id": "N04_CONTENT_GENERATOR",
+      "version": "1.0.0",
+      "schema_path": "prompts/schemas/content_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-BETA-GENERATOR-1.0",
+      "path": "prompts/beta_generation_prompt.md",
       "node_id": "N04_CONTENT_GENERATOR",
       "version": "1.0.0",
       "schema_path": "prompts/schemas/content_output.schema.json"
