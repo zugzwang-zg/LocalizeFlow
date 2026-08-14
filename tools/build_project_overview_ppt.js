@@ -65,9 +65,9 @@ const C = {
 
 const root = path.resolve(__dirname, "..").replace(/\\/g, "/");
 const img = {
-  home: `${root}/assets/streamlit_demo_home.png`,
-  quality: `${root}/assets/streamlit_demo_quality.png`,
-  export: `${root}/assets/streamlit_demo_export.png`,
+  home: `${root}/assets/streamlit_demo_home.jpg`,
+  quality: `${root}/assets/streamlit_demo_quality.jpg`,
+  export: `${root}/assets/streamlit_demo_export.jpg`,
   eval: `${root}/assets/evaluation_ab_comparison.png`,
   value: `${root}/assets/business_value_cost_efficiency.png`,
 };

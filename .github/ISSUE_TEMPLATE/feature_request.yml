@@ -1,0 +1,43 @@
+name: Feature request
+description: Propose a scoped product, rule, localization, or contributor improvement.
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: Describe the user and the job that is currently difficult.
+    validations:
+      required: true
+  - type: input
+    id: scope
+    attributes:
+      label: Market, language, platform, or content type
+      placeholder: MX / es-MX / TikTok / 15-second script
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed outcome
+      description: Explain the desired behavior without prescribing unnecessary implementation details.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or official source
+      description: Add an official link and verification date for platform-rule requests.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: State how maintainers can verify the change.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety boundary
+      options:
+        - label: The proposal does not weaken fact, prohibited-claim, or platform hard gates.
+          required: true

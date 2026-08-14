@@ -17,7 +17,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
-
 CHECKER_VERSION = "1.0.0"
 SUPPORTED_STATUSES = {
     "supported",

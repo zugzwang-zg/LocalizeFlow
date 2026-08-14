@@ -14,8 +14,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Iterable
-
+from typing import Any, Iterable, TypedDict
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 FACT_PATH = PROJECT_ROOT / "data" / "products" / "product_facts.json"
@@ -27,7 +26,7 @@ CONTENT_LIBRARY_PATH = (
     / "evaluation_source_content.json"
 )
 
-CONTENT_TYPES = (
+CONTENT_TYPES: tuple[str, ...] = (
     "product_listing",
     "short_video_script",
     "social_ad_copy",
@@ -41,7 +40,15 @@ PRODUCT_LABELS = {
     "MV-KIT-001": "轻行基础护肤套装 · Travel Skincare Set",
 }
 
-MARKET_CONFIG = {
+
+class MarketConfig(TypedDict):
+    language: str
+    label: str
+    currency: str
+    platforms: dict[str, str]
+
+
+MARKET_CONFIG: dict[str, MarketConfig] = {
     "US": {
         "language": "en-US",
         "label": "美国 · English (US)",

@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "localizeflow"
+version = "0.1.0"
+description = "Evidence-first cross-border product localization Copilot"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [
+  { name = "LocalizeFlow contributors" }
+]
+keywords = ["localization", "ecommerce", "content-quality", "fact-checking"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+  "jsonschema>=4.23,<5",
+  "openai>=1.50,<3",
+  "openpyxl>=3.1,<4",
+  "pandas>=2.2,<3",
+  "pydantic>=2.9,<3",
+  "python-dotenv>=1.0,<2",
+  "streamlit>=1.40,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "imageio-ffmpeg>=0.6,<1",
+  "mypy>=1.14,<2",
+  "pytest>=9.0.3,<10",
+  "pytest-cov>=6,<7",
+  "ruff>=0.9,<1",
+  "uv==0.12.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/zugzwang-zg/LocalizeFlow"
+Issues = "https://github.com/zugzwang-zg/LocalizeFlow/issues"
+
+[tool.setuptools.packages.find]
+include = ["app*", "src*"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = ["web", ".venv"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src", "app"]
+ignore_missing_imports = true
+follow_imports = "skip"
+check_untyped_defs = true
+warn_unused_ignores = true
+show_error_codes = true

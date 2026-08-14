@@ -22,7 +22,6 @@ from urllib.parse import urlparse
 
 from openpyxl import load_workbook
 
-
 CHECKER_VERSION = "1.0.0"
 ALLOWED_STATUSES = {"pass", "fail", "not_applicable", "needs_human_review"}
 PLATFORM_NAMES = {
@@ -261,7 +260,6 @@ class RuleChecker:
         payload = deepcopy(content_output)
         fact_report = deepcopy(fact_check_output)
         segments = _content_segments(payload)
-        text = "\n".join(segment["text"] for segment in segments)
         platform_code = str(payload.get("platform") or "")
         platform = PLATFORM_NAMES.get(platform_code, platform_code)
         content_type = str(payload.get("content_type") or "")
@@ -431,7 +429,6 @@ class RuleChecker:
         feed = platform_context.get("feed_fields") or {}
         landing = platform_context.get("landing_page") or {}
         image = platform_context.get("image") or {}
-        video = platform_context.get("video") or {}
         text = "\n".join(item["text"] for item in segments)
         title = str(content.get("title") or "")
         description = str(content.get("description") or "")
@@ -784,10 +781,9 @@ class RuleChecker:
             )
 
         if rule_id == "GMC-H-014":
-            required = (
-                landing.get("required_information")
-                if isinstance(landing.get("required_information"), dict)
-                else {}
+            required_value = landing.get("required_information")
+            required: dict[str, Any] = (
+                required_value if isinstance(required_value, dict) else {}
             )
             fields = {
                 "total_price_and_currency",
@@ -937,17 +933,21 @@ class RuleChecker:
             )
 
         if rule_id == "INT-MKT-001":
-            expected = MARKET_PROFILES.get(str(payload.get("market") or ""))
-            currency = _get_path(payload, "platform_context.feed_fields.price.currency")
-            if currency is None:
-                currency = _get_path(payload, "platform_context.currency")
+            market_expected: dict[str, str] | None = MARKET_PROFILES.get(
+                str(payload.get("market") or "")
+            )
+            market_currency: Any = _get_path(
+                payload, "platform_context.feed_fields.price.currency"
+            )
+            if market_currency is None:
+                market_currency = _get_path(payload, "platform_context.currency")
             issues = []
-            if not expected:
+            if not market_expected:
                 issues.append("unsupported_market")
             else:
-                if payload.get("language") != expected["language"]:
+                if payload.get("language") != market_expected["language"]:
                     issues.append("language_mismatch")
-                if currency and currency != expected["currency"]:
+                if market_currency and market_currency != market_expected["currency"]:
                     issues.append("currency_mismatch")
             return result(
                 "fail" if issues else "pass",
@@ -959,7 +959,7 @@ class RuleChecker:
                 else "No action required.",
                 "market/language/platform_context",
                 issues,
-                {"expected": expected, "currency": currency},
+                {"expected": market_expected, "currency": market_currency},
             )
 
         if rule_id == "INT-REV-001":
@@ -1094,11 +1094,12 @@ class RuleChecker:
             )
 
         if rule_id == "TTA-H-006":
+            static_share = video.get("static_share_percent")
             checks = {
                 "aspect_ratio": video.get("aspect_ratio") in {"9:16", "1:1", "16:9"},
                 "audio": video.get("audio_clear") is True,
-                "static_share": isinstance(video.get("static_share_percent"), (int, float))
-                and video.get("static_share_percent") <= 50,
+                "static_share": isinstance(static_share, (int, float))
+                and static_share <= 50,
             }
             failed = [key for key, value in checks.items() if not value]
             return result(
@@ -1115,12 +1116,12 @@ class RuleChecker:
 
         if rule_id == "TTA-H-007":
             file_format = str(video.get("file_format") or "").casefold()
+            file_size = video.get("file_size_mb")
+            bitrate = video.get("bitrate_kbps")
             checks = {
                 "format": file_format in {".mp4", ".mov", ".mpeg", ".3gp", ".avi"},
-                "size": isinstance(video.get("file_size_mb"), (int, float))
-                and video.get("file_size_mb") <= 500,
-                "bitrate": isinstance(video.get("bitrate_kbps"), (int, float))
-                and video.get("bitrate_kbps") >= 516,
+                "size": isinstance(file_size, (int, float)) and file_size <= 500,
+                "bitrate": isinstance(bitrate, (int, float)) and bitrate >= 516,
                 "duration": isinstance(duration, (int, float)) and duration <= 60,
             }
             failed = [key for key, value in checks.items() if not value]
@@ -1151,7 +1152,7 @@ class RuleChecker:
             )
 
         if rule_id == "TTA-H-009":
-            checks = {
+            landing_checks: dict[str, Any] = {
                 "functional_in_target_market": landing.get(
                     "functional_in_target_market"
                 ),
@@ -1162,7 +1163,9 @@ class RuleChecker:
                     "no_forced_personal_information"
                 ),
             }
-            missing = [key for key, value in checks.items() if value is not True]
+            missing = [
+                key for key, value in landing_checks.items() if value is not True
+            ]
             return result(
                 "needs_human_review" if missing else "pass",
                 f"Landing-page functionality is unconfirmed for: {', '.join(missing)}."
@@ -1309,7 +1312,7 @@ class RuleChecker:
             )
 
         if rule_id == "INT-VID-003":
-            missing = []
+            missing_scenes: list[int] = []
             for index, scene in enumerate(content.get("scenes") or []):
                 if not isinstance(scene, dict):
                     continue
@@ -1318,17 +1321,17 @@ class RuleChecker:
                     for key in ("voiceover", "on_screen_text")
                 )
                 if self._looks_factual(factual_text) and not (scene.get("fact_ids") or []):
-                    missing.append(index)
+                    missing_scenes.append(index)
             return result(
-                "fail" if missing else "pass",
-                f"Factual scene text lacks fact_ids in scene(s): {missing}."
-                if missing
+                "fail" if missing_scenes else "pass",
+                f"Factual scene text lacks fact_ids in scene(s): {missing_scenes}."
+                if missing_scenes
                 else "Factual scene text has fact bindings.",
                 "Add fact_ids or remove unsupported scene claims."
-                if missing
+                if missing_scenes
                 else "No action required.",
                 "content.scenes",
-                missing,
+                missing_scenes,
             )
 
         return result(

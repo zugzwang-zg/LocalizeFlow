@@ -7,7 +7,6 @@ from pathlib import Path
 
 from src.rule_checker import QUALITY_WEIGHTS, RuleChecker
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
