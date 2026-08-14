@@ -4,12 +4,14 @@
   "version": "1.1.0",
   "updated_at": "2026-08-14",
   "status": "closed_beta_candidate",
-  "execution_status": "live_gateway_implemented_not_called",
+  "execution_status": "live_gateway_called_provider_error_no_generation",
   "api_calls_made_in_stage_8": 0,
+  "closed_beta_api_attempts": 3,
+  "closed_beta_generation_successes": 0,
   "provider_configuration": {
-      "provider": "OpenAI-compatible relay; provider must be disclosed before real-data use",
-      "api": "Chat Completions-compatible API with application JSON Schema validation",
-      "model_source": "LOCALIZEFLOW_MODEL_NAME environment variable",
+    "provider": "Relay supporting OpenAI Chat Completions and Anthropic Messages; provider must be disclosed before real-data use",
+    "api": "API style selected by LOCALIZEFLOW_MODEL_API_STYLE with application JSON Schema validation",
+    "model_source": "LOCALIZEFLOW_MODEL_NAME environment variable",
     "model_value_during_stage_8": null,
     "model_selection_status": "not_fixed_until_representative_evaluation",
     "structured_output": {

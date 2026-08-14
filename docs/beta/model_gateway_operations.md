@@ -5,16 +5,18 @@ The gateway is disabled by default. Configuration is supplied through local or h
 ## Required configuration
 
 - Explicit enable switch.
-- HTTPS OpenAI-compatible relay base URL.
+- HTTPS relay base URL and explicit API style (`openai_chat_completions` or `anthropic_messages`).
 - API key stored as a secret.
 - Exact model name.
 - Input and output prices per million tokens.
 - Per-request cost ceiling.
 - Timeout, retry count, maximum output tokens, and JSON Schema support flag.
 
-For the owner's current relay, the read-only setup check confirmed the
-OpenAI-compatible base URL `https://api.aijws.com`. Keep the exact model name,
-pricing, and key in the local `.env`; do not infer them from a key group name.
+For the owner's current relay, the read-only setup check confirmed the base URL
+`https://api.aijws.com`. The existing Claude credential is restricted to
+`/v1/messages`, so its API style must be `anthropic_messages`. Keep the exact
+model name, pricing, and key in the local `.env`; do not infer them from a key
+group name.
 
 ## First live-call checklist
 
@@ -29,6 +31,12 @@ pricing, and key in the local `.env`; do not infer them from a key group name.
    token counts, latency, cost, and that no raw body appears in logs.
 6. Return the enable switch to `false` after the run until participant onboarding
    and the hosted tenant-isolation preflight are approved.
+
+The 2026-08-14 first live attempt confirmed that the Claude credential rejects
+`/v1/chat/completions` with HTTP 403. The gateway then added Anthropic Messages
+support. The follow-up received retryable provider errors and no response body;
+therefore the live smoke gate remains pending and no successful generation is
+recorded.
 
 ## Request policy
 

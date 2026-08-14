@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable, Protocol
 from urllib.parse import urlparse
 
+import httpx
 from jsonschema import ValidationError, validate
 from openai import OpenAI
 
@@ -51,6 +52,7 @@ class BetaModelSettings:
     base_url: str
     api_key: str
     model: str
+    api_style: str = "openai_chat_completions"
     timeout_seconds: float = 45.0
     max_retries: int = 1
     max_output_tokens: int = 3000
@@ -66,6 +68,7 @@ class BetaModelSettings:
             base_url=os.getenv("LOCALIZEFLOW_MODEL_BASE_URL", ""),
             api_key=os.getenv("LOCALIZEFLOW_MODEL_API_KEY", ""),
             model=os.getenv("LOCALIZEFLOW_MODEL_NAME", ""),
+            api_style=os.getenv("LOCALIZEFLOW_MODEL_API_STYLE", "openai_chat_completions"),
             timeout_seconds=float(os.getenv("LOCALIZEFLOW_MODEL_TIMEOUT_SECONDS", "45")),
             max_retries=int(os.getenv("LOCALIZEFLOW_MODEL_MAX_RETRIES", "1")),
             max_output_tokens=int(os.getenv("LOCALIZEFLOW_MODEL_MAX_OUTPUT_TOKENS", "3000")),
@@ -80,6 +83,8 @@ class BetaModelSettings:
             raise BetaModelError("Closed Beta model calls are disabled.")
         if not self.api_key or not self.model or not self.base_url:
             raise BetaModelError("Model base URL, API key, and model name are required.")
+        if self.api_style not in {"openai_chat_completions", "anthropic_messages"}:
+            raise BetaModelError("Unsupported model API style.")
         parsed = urlparse(self.base_url)
         if parsed.scheme != "https" and parsed.hostname not in {"127.0.0.1", "localhost"}:
             raise BetaModelError("Model base URL must use HTTPS, except for localhost testing.")
@@ -181,7 +186,9 @@ def build_beta_request(
         "brand_tone": brand_tone,
     }
     return {
-        "system": PROMPT_PATH.read_text(encoding="utf-8"),
+        "system": PROMPT_PATH.read_text(encoding="utf-8")
+        + "\n\nOUTPUT_SCHEMA_JSON\n"
+        + SCHEMA_PATH.read_text(encoding="utf-8"),
         "user": "PRODUCT_FACTS_JSON\n"
         + json.dumps({"eligible_facts": facts_payload, "blocked_constraints": constraints}, ensure_ascii=False, separators=(",", ":"))
         + "\nTASK_JSON\n"
@@ -224,6 +231,8 @@ def _is_retryable_provider_error(error: Exception) -> bool:
     preferred and a small class-name allowlist is used as a compatibility fallback.
     """
     status_code = getattr(error, "status_code", None)
+    if status_code is None:
+        status_code = getattr(getattr(error, "response", None), "status_code", None)
     if status_code == 429 or (isinstance(status_code, int) and status_code >= 500):
         return True
     return type(error).__name__ in {
@@ -234,12 +243,21 @@ def _is_retryable_provider_error(error: Exception) -> bool:
     }
 
 
+def _provider_error_label(error: Exception) -> str:
+    status_code = getattr(error, "status_code", None)
+    if status_code is None:
+        status_code = getattr(getattr(error, "response", None), "status_code", None)
+    suffix = f" (HTTP {status_code})" if isinstance(status_code, int) else ""
+    return f"{type(error).__name__}{suffix}"
+
+
 def run_beta_generation(
     request: dict[str, Any],
     *,
     settings: BetaModelSettings,
     run_store: RunStore,
     client_factory: Callable[..., Any] = OpenAI,
+    http_requester: Callable[..., Any] = httpx.post,
 ) -> dict[str, Any]:
     settings.validate()
     request_digest = hashlib.sha256((request["system"] + request["user"]).encode()).hexdigest()
@@ -254,38 +272,88 @@ def run_beta_generation(
     if estimated_max_cost > settings.max_request_cost_usd:
         raise BetaModelError("Estimated request cost exceeds the configured per-request limit.")
 
-    client = client_factory(base_url=settings.base_url, api_key=settings.api_key, timeout=settings.timeout_seconds, max_retries=0)
     schema = _read_json(SCHEMA_PATH)
-    response_format: dict[str, Any]
-    if settings.supports_json_schema:
-        response_format = {"type": "json_schema", "json_schema": {"name": "localizeflow_content", "strict": True, "schema": schema}}
-    else:
-        response_format = {"type": "json_object"}
+    client: Any = None
+    response_format: dict[str, Any] | None = None
+    if settings.api_style == "openai_chat_completions":
+        client = client_factory(
+            base_url=settings.base_url,
+            api_key=settings.api_key,
+            timeout=settings.timeout_seconds,
+            max_retries=0,
+        )
+        if settings.supports_json_schema:
+            response_format = {
+                "type": "json_schema",
+                "json_schema": {"name": "localizeflow_content", "strict": True, "schema": schema},
+            }
+        else:
+            response_format = {"type": "json_object"}
     started = time.perf_counter()
     last_error: Exception | None = None
     response: Any = None
     for attempt in range(settings.max_retries + 1):
         try:
-            response = client.chat.completions.create(
-                model=settings.model,
-                messages=[
-                    {"role": "system", "content": request["system"]},
-                    {"role": "user", "content": request["user"]},
-                ],
-                response_format=response_format,
-                temperature=0.2,
-                max_tokens=settings.max_output_tokens,
-                extra_headers={"Idempotency-Key": idempotency_key},
-            )
+            if settings.api_style == "openai_chat_completions":
+                response = client.chat.completions.create(
+                    model=settings.model,
+                    messages=[
+                        {"role": "system", "content": request["system"]},
+                        {"role": "user", "content": request["user"]},
+                    ],
+                    response_format=response_format,
+                    temperature=0.2,
+                    max_tokens=settings.max_output_tokens,
+                    extra_headers={"Idempotency-Key": idempotency_key},
+                )
+            else:
+                response = http_requester(
+                    f"{settings.base_url.rstrip('/')}/messages",
+                    headers={
+                        "Authorization": f"Bearer {settings.api_key}",
+                        "anthropic-version": "2023-06-01",
+                        "content-type": "application/json",
+                        "Idempotency-Key": idempotency_key,
+                    },
+                    json={
+                        "model": settings.model,
+                        "system": request["system"],
+                        "messages": [{"role": "user", "content": request["user"]}],
+                        "temperature": 0.2,
+                        "max_tokens": settings.max_output_tokens,
+                    },
+                    timeout=settings.timeout_seconds,
+                )
+                response.raise_for_status()
             break
         except Exception as error:  # provider SDK exceptions vary by relay
             last_error = error
             if not _is_retryable_provider_error(error) or attempt >= settings.max_retries:
-                raise BetaModelError(f"Model request failed after {attempt + 1} attempt(s): {type(error).__name__}") from error
+                raise BetaModelError(
+                    f"Model request failed after {attempt + 1} attempt(s): {_provider_error_label(error)}"
+                ) from error
     if response is None:
-        raise BetaModelError(f"Model request failed: {type(last_error).__name__ if last_error else 'unknown'}")
+        label = _provider_error_label(last_error) if last_error else "unknown"
+        raise BetaModelError(f"Model request failed: {label}")
     latency_ms = round((time.perf_counter() - started) * 1000)
-    content = response.choices[0].message.content
+    if settings.api_style == "openai_chat_completions":
+        content = response.choices[0].message.content
+        usage = getattr(response, "usage", None)
+        input_tokens = int(getattr(usage, "prompt_tokens", estimated_input_tokens) or estimated_input_tokens)
+        output_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
+    else:
+        try:
+            payload = response.json()
+        except (ValueError, json.JSONDecodeError) as error:
+            raise BetaModelError("Model returned invalid provider JSON; response body was not stored.") from error
+        content = "".join(
+            block.get("text", "")
+            for block in payload.get("content", [])
+            if isinstance(block, dict) and block.get("type") == "text"
+        )
+        usage = payload.get("usage", {})
+        input_tokens = int(usage.get("input_tokens", estimated_input_tokens) or estimated_input_tokens)
+        output_tokens = int(usage.get("output_tokens", 0) or 0)
     if not content:
         raise BetaModelError("Model returned an empty response.")
     try:
@@ -293,9 +361,6 @@ def run_beta_generation(
     except json.JSONDecodeError as error:
         raise BetaModelError("Model returned invalid JSON; response body was not stored.") from error
     _validate_output(output, request)
-    usage = getattr(response, "usage", None)
-    input_tokens = int(getattr(usage, "prompt_tokens", estimated_input_tokens) or estimated_input_tokens)
-    output_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
     actual_cost = _estimate_cost(settings, input_tokens, output_tokens)
     record = {
         "run_id": f"BETA-RUN-{idempotency_key[:16].upper()}",
@@ -306,6 +371,7 @@ def run_beta_generation(
         "content_type": request["task"]["content_type"],
         "provider_base_host": urlparse(settings.base_url).hostname,
         "model": settings.model,
+        "api_style": settings.api_style,
         "prompt_id": PROMPT_ID,
         "prompt_version": PROMPT_VERSION,
         "schema_version": SCHEMA_VERSION,

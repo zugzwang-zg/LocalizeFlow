@@ -151,7 +151,7 @@ Web 与 Streamlit Demo 将完整链路压缩成五步，公开 Web Demo 提供�
 
 ### Closed Beta 本地候选（默认关闭）
 
-仓库包含一条尚未对外开放的 Closed Beta 候选链路：CSV/XLSX/JSON 安全导入、缺失/冲突/低证据提示、人工事实确认、OpenAI-compatible 中转站模型调用、JSON Schema 校验、事实与包装复检、人工终审和审计包导出。模型开关默认关闭；未完成身份、项目隔离、删除、模型提供方披露与成本保护验证前，不得用托管环境接收真实资料。
+仓库包含一条尚未对外开放的 Closed Beta 候选链路：CSV/XLSX/JSON 安全导入、缺失/冲突/低证据提示、人工事实确认、OpenAI Chat Completions 或 Anthropic Messages 中转站调用、JSON Schema 校验、事实与包装复检、人工终审和审计包导出。模型开关默认关闭；未完成身份、项目隔离、删除、模型提供方披露与成本保护验证前，不得用托管环境接收真实资料。
 
 - [`templates/LocalizeFlow_Beta_SKU_Import_Template.xlsx`](templates/LocalizeFlow_Beta_SKU_Import_Template.xlsx)：受控 SKU 导入模板；
 - [`templates/LocalizeFlow_Closed_Beta_Evaluation.xlsx`](templates/LocalizeFlow_Closed_Beta_Evaluation.xlsx)：真实任务、双评审和采用意愿记录；

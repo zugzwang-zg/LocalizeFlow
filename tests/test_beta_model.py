@@ -128,6 +128,22 @@ class AuthenticationError(Exception):
     status_code = 401
 
 
+class FakeAnthropicResponse:
+    status_code = 200
+
+    def __init__(self, output: dict) -> None:
+        self.output = output
+
+    def raise_for_status(self) -> None:
+        return None
+
+    def json(self) -> dict:
+        return {
+            "content": [{"type": "text", "text": json.dumps(self.output)}],
+            "usage": {"input_tokens": 600, "output_tokens": 250},
+        }
+
+
 def settings(**overrides: object) -> BetaModelSettings:
     values = {
         "enabled": True,
@@ -154,6 +170,7 @@ class BetaModelTests(unittest.TestCase):
         self.assertIn("PRODUCT_FACTS_JSON", req["user"])
         self.assertIn("untrusted data", req["system"])
         self.assertNotIn("AUTHORIZED-SPEC-001", req["user"])
+        self.assertIn("OUTPUT_SCHEMA_JSON", req["system"])
         self.assertLess(len(req["input_fact_ids"]), 20)
 
     def test_prompt_injection_text_remains_inside_user_json(self) -> None:
@@ -190,6 +207,25 @@ class BetaModelTests(unittest.TestCase):
         self.assertEqual(result["input_tokens"], 500)
         self.assertEqual(result["estimated_cost_usd"], 0.0011)
         self.assertEqual(result["body_logging"], "disabled")
+
+    def test_anthropic_messages_style_uses_messages_endpoint(self) -> None:
+        req = request()
+        calls: list[dict] = []
+
+        def requester(url: str, **kwargs: object) -> FakeAnthropicResponse:
+            calls.append({"url": url, **kwargs})
+            return FakeAnthropicResponse(valid_output(req))
+
+        result = run_beta_generation(
+            req,
+            settings=settings(api_style="anthropic_messages"),
+            run_store=InMemoryRunStore(),
+            http_requester=requester,
+        )
+        self.assertEqual(calls[0]["url"], "https://relay.example.invalid/v1/messages")
+        self.assertEqual(result["api_style"], "anthropic_messages")
+        self.assertEqual(result["input_tokens"], 600)
+        self.assertEqual(result["output_tokens"], 250)
 
     def test_same_request_is_idempotent_in_application_store(self) -> None:
         req = request()
@@ -234,7 +270,7 @@ class BetaModelTests(unittest.TestCase):
     def test_authentication_error_is_not_retried(self) -> None:
         req = request()
         completions = FlakyCompletions(valid_output(req), [AuthenticationError("bad key")])
-        with self.assertRaisesRegex(BetaModelError, "1 attempt"):
+        with self.assertRaisesRegex(BetaModelError, r"1 attempt.*HTTP 401"):
             run_beta_generation(
                 req,
                 settings=settings(max_retries=2),

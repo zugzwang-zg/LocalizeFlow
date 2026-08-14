@@ -744,6 +744,7 @@ name = "localizeflow"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "httpx" },
     { name = "jsonschema" },
     { name = "openai" },
     { name = "openpyxl" },
@@ -765,6 +766,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "httpx", specifier = ">=0.27,<1" },
     { name = "imageio-ffmpeg", marker = "extra == 'dev'", specifier = ">=0.6,<1" },
     { name = "jsonschema", specifier = ">=4.23,<5" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.14,<2" },
