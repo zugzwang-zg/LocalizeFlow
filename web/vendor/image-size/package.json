@@ -1,0 +1,13 @@
+{
+  "name": "image-size",
+  "version": "2.0.3-local.1",
+  "description": "LocalizeFlow safe metadata-image dimension reader",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    }
+  },
+  "license": "Apache-2.0"
+}

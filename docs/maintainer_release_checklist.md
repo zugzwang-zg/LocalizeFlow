@@ -69,7 +69,7 @@ pnpm install --frozen-lockfile
 pnpm lint
 pnpm test
 pnpm build
-pnpm audit --prod --audit-level high
+pnpm security:audit
 ```
 
 - [ ] Run a Python dependency audit against the installed clean environment.

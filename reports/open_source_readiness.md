@@ -30,10 +30,10 @@ publication.
 | mypy | Passed across `src/` and `app/` |
 | Offline prompt/schema validation | 5 schemas, 9 prompts, 0 API calls; passed |
 | Web lint | Passed with zero warnings |
-| Web tests | 2 passed |
+| Web tests | 5 passed, including safe metadata-image rejection cases |
 | Web production build | Passed |
 | Python dependency audit | No known vulnerabilities after upgrading pytest |
-| Web production dependency audit | No known vulnerabilities after upgrades and overrides |
+| Complete Web dependency audit | No known vulnerabilities after upgrades, overrides, and a restricted local metadata-image compatibility package |
 | Worktree and full-history credential pattern scan | No candidate secrets |
 | PPTX validation | Passed; notes reviewed; no private content found |
 | PDF validation | 8 pages rendered and visually reviewed; no attachments, forms, JavaScript, encryption, or private author value found |
@@ -52,6 +52,11 @@ publication.
   set because the latest `pptxgenjs` release resolves an `image-size` version
   with unresolved high-severity advisories. The validated PPTX remains
   directly editable; the source script must not process untrusted images.
+- `vinext` 0.0.50 imports an unmaintained `image-size` release for build-time
+  metadata dimensions. The supported dependency tree replaces it with a small
+  local compatibility package that accepts only PNG, JPEG, GIF, WebP, ICO, BMP,
+  and SVG; the vulnerable ICNS/JXL/HEIF parsers are absent. Dedicated tests,
+  the complete dependency audit, and a production build run in CI.
 - External Google and TikTok pages are linked, not copied. Names are used only
   to identify rule sources; no endorsement is claimed.
 - Contributor Covenant attribution is preserved in `CODE_OF_CONDUCT.md` and
