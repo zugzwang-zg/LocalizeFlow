@@ -10,13 +10,14 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "vinext start",
-    "test": "pnpm run build && node --test tests/rendered-html.test.mjs",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --max-warnings=0"
+    "test": "pnpm run build && node --test tests/rendered-html.test.mjs tests/safe-image-size.test.mjs",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --max-warnings=0",
+    "security:audit": "pnpm audit --audit-level high"
   },
   "dependencies": {
     "next": "16.2.12",
-    "react": "19.2.6",
-    "react-dom": "19.2.6"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.37.1",
@@ -28,11 +29,12 @@
     "@vitejs/plugin-rsc": "0.5.26",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.12",
-    "react-server-dom-webpack": "19.2.6",
+    "image-size": "link:vendor/image-size",
+    "react-server-dom-webpack": "19.2.8",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
     "vinext": "0.0.50",
-    "vite": "8.0.13",
+    "vite": "8.2.1",
     "wrangler": "4.92.0"
   },
   "type": "module"

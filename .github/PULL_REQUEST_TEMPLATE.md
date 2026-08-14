@@ -23,6 +23,7 @@ Describe the user problem and the smallest change that addresses it.
 - [ ] `mypy`
 - [ ] `pnpm lint`
 - [ ] `pnpm test`
+- [ ] `pnpm security:audit`
 - [ ] Manual workflow or visual check, if applicable
 
 ## Screenshots or output

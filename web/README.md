@@ -11,5 +11,9 @@ confidential customer material.
 - Runs quality checks and CSV/JSON exports in the browser.
 - Does not call a model API or require an API key.
 
-Run locally with `pnpm dev`; validate with `pnpm lint`, `pnpm test`, and
-`pnpm build`.
+Run locally with `pnpm dev`; validate with `pnpm lint`, `pnpm test`,
+`pnpm build`, and `pnpm security:audit`.
+
+The build uses a project-owned, restricted `image-size` compatibility package
+for static metadata. It supports PNG, JPEG, GIF, WebP, ICO, BMP, and SVG and
+rejects ICNS, JXL, HEIF, and unknown formats before parsing.

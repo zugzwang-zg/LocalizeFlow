@@ -28,6 +28,7 @@ cd web
 pnpm install --frozen-lockfile
 pnpm lint
 pnpm test
+pnpm security:audit
 ```
 
 Run the Streamlit Demo with:
@@ -43,7 +44,8 @@ Run the Streamlit Demo with:
 - Record the source URL and verification date for platform-rule changes.
 - Preserve old rule versions used by published evaluations.
 - Explain any data, schema, prompt, or release-note impact.
-- Run Python tests, Ruff, mypy, Web lint, Web tests, and Web build.
+- Run Python tests, Ruff, mypy, Web lint, Web tests/build, and the complete Web
+  dependency audit.
 - Do not replace a hard fact gate with an aggregate quality score.
 
 ## Commit and review guidance

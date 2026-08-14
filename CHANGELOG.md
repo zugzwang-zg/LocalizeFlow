@@ -21,6 +21,8 @@ interfaces remain experimental.
   not a production free trial.
 - Upgraded Web dependencies and constrained transitive packages to remove
   known production dependency advisories found during the release audit.
+- Expanded the Web release gate to audit development/build dependencies and
+  removed all known high-severity advisories from the supported dependency tree.
 - Corrected four screenshot extensions so file names match their JPEG format.
 
 ## [0.1.0-preview.1] - 2026-08-14

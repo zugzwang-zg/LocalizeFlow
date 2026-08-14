@@ -256,6 +256,7 @@ Web 验证命令：
 pnpm lint
 pnpm test
 pnpm build
+pnpm security:audit
 ```
 
 Python Demo 与 Web Demo 使用同一组冻结的虚拟事实和评测内容。Python 版本用于展示完整服务与检查逻辑；Web 版本用于无需 API 的公开交互体验。
