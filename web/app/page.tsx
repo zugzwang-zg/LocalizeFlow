@@ -72,7 +72,6 @@ function parseContent(text: string, type: ContentType) {
 }
 
 function inspectContent(text: string, type: ContentType, market: Market, sku: string) {
-  const normalized = text.toLowerCase();
   const checks: QualityCheck[] = [];
   const prohibited = /\b(cure|cures|clinically proven|guaranteed|miracle|repair|repairs)\b|repara(?:r|n|s)?|all of your skincare needs|todas tus necesidades/i.test(text);
   checks.push({

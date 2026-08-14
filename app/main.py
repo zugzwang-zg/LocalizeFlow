@@ -7,7 +7,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -27,7 +26,6 @@ from src.demo_service import (  # noqa: E402
     selling_point_options,
     update_pack_with_manual_text,
 )
-
 
 STEP_LABELS = {
     1: "商品资料",
@@ -577,7 +575,6 @@ def _render_page_task(st: Any) -> None:
         "把“翻译”变成一份营销任务。",
         "市场、平台、目标用户和卖点会共同决定内容结构。语言由目标市场锁定，避免市场与语言错配。",
     )
-    profile = product_profile(st.session_state.product_sku, st.session_state.market)
     left, right = st.columns(2)
     with left:
         market = st.selectbox(

@@ -42,7 +42,7 @@
 
 ## 截图
 
-- `assets/streamlit_demo_home.png`
-- `assets/streamlit_demo_quality.png`
-- `assets/streamlit_demo_export.png`
-- `assets/streamlit_demo_mobile.png`
+- `assets/streamlit_demo_home.jpg`
+- `assets/streamlit_demo_quality.jpg`
+- `assets/streamlit_demo_export.jpg`
+- `assets/streamlit_demo_mobile.jpg`

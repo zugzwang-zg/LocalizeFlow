@@ -1,0 +1,77 @@
+name: Bug report
+description: Report a reproducible LocalizeFlow problem without private data.
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not submit secrets, customer data, unpublished product information,
+        or security vulnerabilities. Use the private process in SECURITY.md for security reports.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v0.1.0-preview.1 or commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - Web interactive Demo
+        - Streamlit Demo
+        - Fact checker
+        - Rule checker
+        - Data or prompt assets
+        - Documentation
+    validations:
+      required: true
+  - type: input
+    id: task
+    attributes:
+      label: Market, language, SKU, and content type
+      placeholder: US / en-US / MV-SERUM-001 / product listing
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Use fictional or redacted data only.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk category
+      options:
+        - Fact or packaging safety
+        - Prohibited or medical claim
+        - Platform hard rule
+        - Terminology or localization
+        - Export or version tracking
+        - User interface
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I removed secrets, personal data, and confidential product material.
+          required: true
+        - label: This is not a security vulnerability requiring private disclosure.
+          required: true

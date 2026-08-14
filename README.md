@@ -2,13 +2,22 @@
 
 > 把中文商品资料转化为面向美国英语与墨西哥西班牙语市场的可追溯营销内容，并在导出前完成事实、术语、品牌和平台规则预检。
 
+[![CI](https://github.com/zugzwang-zg/LocalizeFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/zugzwang-zg/LocalizeFlow/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/zugzwang-zg/LocalizeFlow/actions/workflows/codeql.yml/badge.svg)](https://github.com/zugzwang-zg/LocalizeFlow/actions/workflows/codeql.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11--3.13-3776AB.svg)](pyproject.toml)
+
 [演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [业务价值报告](reports/business_value_report.md)
 
 GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
 
-在线试用：<https://localizeflow-demo-86182.reidmozzie.chatgpt.site>
+在线交互式 Demo：<https://localizeflow-demo-86182.reidmozzie.chatgpt.site>
 
-![LocalizeFlow Demo 首页](assets/streamlit_demo_home.png)
+> 当前在线版本使用冻结的虚拟 SKU 和确定性内容，不调用模型 API，也不接收真实客户数据。它用于体验产品工作流，不是生产环境或真实免费试用。
+
+> **合成内容声明：** 虚拟品牌、虚拟 SKU、价格、产品事实、营销候选和评测材料均为 AI 生成的合成内容；其余代码、文档、测量、图表与演示资产由项目方原创。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
+
+![LocalizeFlow Demo 首页](assets/streamlit_demo_home.jpg)
 
 ## 项目概览
 
@@ -133,9 +142,9 @@ Streamlit Demo 将完整链路压缩成五步：
 4. **质量检查**：定位事实、包装、术语、语法和平台规则问题；
 5. **版本与导出**：比较 Baseline 与增强版，人工修订、复检、确认并导出。
 
-![质量检查页面](assets/streamlit_demo_quality.png)
+![质量检查页面](assets/streamlit_demo_quality.jpg)
 
-![版本与导出页面](assets/streamlit_demo_export.png)
+![版本与导出页面](assets/streamlit_demo_export.jpg)
 
 当前 Demo 采用冻结评测内容与确定性模板，不调用模型 API，也不连接真实发布平台；因此可在没有密钥的环境中稳定复现端到端流程。
 
@@ -201,20 +210,55 @@ Streamlit Demo 将完整链路压缩成五步：
 
 ## 本地运行
 
-在项目根目录执行：
+### Python / Streamlit Demo
+
+支持 Python 3.11–3.13。在项目根目录执行：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m streamlit run app\main.py
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install uv==0.12.4
+.\.venv\Scripts\uv.exe sync --locked --extra dev
+.\.venv\Scripts\uv.exe run streamlit run app\main.py
 ```
 
-浏览器打开 `http://localhost:8501`。推荐演示路径见 [`docs/streamlit_demo.md`](docs/streamlit_demo.md)。
+macOS 或 Linux：
+
+```bash
+python3 -m venv .venv
+./.venv/bin/python -m pip install uv==0.12.4
+./.venv/bin/uv sync --locked --extra dev
+./.venv/bin/uv run streamlit run app/main.py
+```
+
+浏览器打开 `http://localhost:8501`。推荐路径见 [`docs/streamlit_demo.md`](docs/streamlit_demo.md)。
 
 运行测试：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\uv.exe run pytest -q
+.\.venv\Scripts\uv.exe run ruff check .
+.\.venv\Scripts\uv.exe run mypy
 ```
+
+### 浏览器原生 Web Demo
+
+支持 Node.js 22.13 或更高版本与 pnpm 11：
+
+```bash
+cd web
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Web 验证命令：
+
+```bash
+pnpm lint
+pnpm test
+pnpm build
+```
+
+Python Demo 与 Web Demo 使用同一组冻结的虚拟事实和评测内容。Python 版本用于展示完整服务与检查逻辑；Web 版本用于无需 API 的公开交互体验。
 
 ## API 配置
 
@@ -243,3 +287,18 @@ localizeflow/
 ## 复现与验证
 
 项目保留事实来源、规则命中、人工修订、版本追踪和评测记录。运行自动化测试可验证核心事实检查、规则检查、状态门控与导出逻辑；演示包提供可编辑概览、PDF 预览和离线视频。
+
+## 贡献、安全与路线图
+
+- 贡献流程：[`CONTRIBUTING.md`](CONTRIBUTING.md)
+- 安全漏洞报告：[`SECURITY.md`](SECURITY.md)
+- 产品路线图：[`ROADMAP.md`](ROADMAP.md)
+- 版本变更：[`CHANGELOG.md`](CHANGELOG.md)
+- 数据与评测材料：[`DATA_LICENSE.md`](DATA_LICENSE.md)
+- 第三方声明：[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
+
+请勿在 Issue、PR、截图、测试夹具或日志中提交密钥、真实客户数据或未公开的商品资料。
+
+## 开源许可证
+
+LocalizeFlow 采用 [Apache License 2.0](LICENSE)。虚拟品牌、商品、价格、营销候选和评测材料为 AI 生成的合成内容，仅用于演示与研究，不代表真实品牌、平台批准、法律意见或医疗证据。
