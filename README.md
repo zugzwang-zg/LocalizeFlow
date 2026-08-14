@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11--3.13-3776AB.svg)](pyproject.toml)
 
-[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [业务价值报告](reports/business_value_report.md)
+[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [隐私说明](PRIVACY.md) · [预览条款](TERMS.md) · [免责声明](DISCLAIMER.md)
 
 GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
 
@@ -31,7 +31,7 @@ LocalizeFlow 是一个面向跨境电商内容运营人员的离线可运行原�
 | 事实资产 | 结构化事实库、来源、证据等级、允许/禁止宣称 |
 | 语言资产 | 品牌语气指南、英西双语术语表、禁用词与谨慎词 |
 | 质量门槛 | 事实核验、品牌/术语/平台规则检查、人工终审 |
-| 交互与导出 | Streamlit 五步 Demo、版本对比、CSV/JSON 导出 |
+| 交互与导出 | Web / Streamlit 五步 Demo、问题定位与确定性修复、版本对比、带人工处置记录的 CSV/JSON 导出 |
 | 评测规模 | 30 组 A/B、60 条匿名候选、5 SKU × 2 市场 × 3 内容类型 |
 
 ## 业务痛点
@@ -103,6 +103,7 @@ AND 人工终审已批准
 
 - [`data/products/product_master.xlsx`](data/products/product_master.xlsx)：商品主表；
 - [`data/products/product_facts.json`](data/products/product_facts.json)：机器可读事实库；
+- [`data/products/packaging_facts.json`](data/products/packaging_facts.json)：字段级包装事实与生成前/生成后硬门禁；
 - [`data/products/product_cards/`](data/products/product_cards/)：便于人工阅读的商品卡；
 - [`data/products/data_dictionary.md`](data/products/data_dictionary.md)：字段与证据等级说明。
 
@@ -134,13 +135,13 @@ AND 人工终审已批准
 
 ## Demo：从商品到可导出版本
 
-Streamlit Demo 将完整链路压缩成五步：
+Web 与 Streamlit Demo 将完整链路压缩成五步，公开 Web Demo 提供推荐的约 3 分钟体验路径：
 
 1. **商品资料**：选择 SKU，查看结构化事实、允许和禁止表达；
 2. **营销任务**：选择市场、平台、内容类型、目标人群和营销目标；
 3. **生成结果**：查看三类内容及每条事实声明的来源；
-4. **质量检查**：定位事实、包装、术语、语法和平台规则问题；
-5. **版本与导出**：比较 Baseline 与增强版，人工修订、复检、确认并导出。
+4. **质量检查**：定位命中文本、一键执行确定性修复、自动复检，并记录警告保留原因；
+5. **版本与导出**：比较 Baseline 与增强版，人工修订、复检、确认并导出处理动作与时间戳。
 
 ![质量检查页面](assets/streamlit_demo_quality.jpg)
 
@@ -158,7 +159,7 @@ Streamlit Demo 将完整链路压缩成五步：
 - `contradicted`：与已知事实矛盾；
 - `subjective`：主观表达，不能作为事实证明。
 
-高风险 `unsupported` 或任何 `contradicted` 会阻断导出。项目保留了包装材质被错误补全、医学化功效、绝对化承诺、目标市场范围错误等真实失败案例，详见 [`reports/evaluation_failure_cases.md`](reports/evaluation_failure_cases.md) 与 [`reports/fact_check/`](reports/fact_check/)。
+高风险 `unsupported` 或任何 `contradicted` 会阻断导出。包装已拆分为容量、容器、材质、泵、旋盖、内盖、透明度和套装组件等字段；缺失字段一律为 `unknown`，不得推断。门禁在生成前、生成后和人工编辑后运行。30/30 个冻结增强输出通过当前包装门禁，错误材质、错误容器、未知字段声明和混用 SKU 回归用例均被阻断，详见 [`reports/packaging_gate_validation.md`](reports/packaging_gate_validation.md)。
 
 ## A/B 评测
 
@@ -201,12 +202,12 @@ Streamlit Demo 将完整链路压缩成五步：
 - 仅测试 1 个虚拟品牌、5 个虚拟 SKU，不能直接外推到其他品类；
 - 盲评只有一位评审者，无法计算评审者间一致性；
 - 洞察样本缺少评论者国家字段，只作为语言代理，不代表美国或墨西哥总体趋势；
-- 增强版仍存在包装事实错误，说明事实库字段和生成约束需要继续加强；
+- 字段级包装门禁已覆盖当前 5 个 SKU，但词典式文本识别仍不是通用语义验证器，新品类和新语言必须补充字段与回归样本；
 - 当前 Demo 为离线确定性原型，API 成本为 0 不代表未来在线模型成本；
 - 规则预检不代表 Google、TikTok 或其他平台实际批准；
 - 任何高风险功效、医疗、认证或法律判断仍需专业人员终审。
 
-下一步应优先增加包装字段硬约束、多评审者复核、目标国家本地样本，以及在配置 API 后记录真实模型响应、延迟、成本与结构化输出成功率。
+下一步应优先增加多评审者复核、目标国家本地样本，以及在配置 API 后记录真实模型响应、延迟、成本与结构化输出成功率。
 
 ## 本地运行
 

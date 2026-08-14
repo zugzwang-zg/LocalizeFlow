@@ -1,0 +1,35 @@
+name: Beta 试用申请
+description: 申请参与 LocalizeFlow 免费 Beta 试用
+title: "[Beta] "
+body:
+  - type: markdown
+    attributes:
+      value: 请勿提交客户正文、个人信息、API 密钥或其他敏感资料。
+  - type: dropdown
+    id: role
+    attributes:
+      label: 你的角色
+      options: [品牌方, 跨境电商运营, 本地化/翻译, 合规/审核, 开发者, 研究者]
+    validations:
+      required: true
+  - type: dropdown
+    id: use_case
+    attributes:
+      label: 主要使用场景
+      options: [商品 Listing, 广告与社媒文案, 短视频脚本, 事实与合规审核, 产品评估]
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: 你希望验证什么
+      description: 只描述目标和工作流，不要粘贴真实业务内容。
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 试用确认
+      options:
+        - label: 我理解这是预览版本，输出必须人工复核，且不应输入敏感资料。
+          required: true

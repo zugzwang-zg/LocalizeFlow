@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "updated_at": "2026-08-14",
+  "unknown_policy": "A packaging field without verified evidence is unknown and must not be inferred.",
+  "products": {
+    "MV-CLEAN-001": {
+      "facts": [
+        {"field": "capacity", "value": 120, "unit": "mL", "fact_id": "MV-CLEAN-001-F034", "source": "SIM-SPEC-CLEAN-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "container_type", "value": "bottle", "fact_id": "MV-CLEAN-001-F034", "source": "SIM-SPEC-CLEAN-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "material", "value": "PET", "fact_id": "MV-CLEAN-001-F034", "source": "SIM-SPEC-CLEAN-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "dispenser", "value": "pump", "fact_id": "MV-CLEAN-001-F034", "source": "SIM-SPEC-CLEAN-V1", "evidence_level": "A", "market_scope": ["US", "MX"]}
+      ]
+    },
+    "MV-SERUM-001": {
+      "facts": [
+        {"field": "capacity", "value": 30, "unit": "mL", "fact_id": "MV-SERUM-001-F031", "source": "SIM-SPEC-SERUM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "container_type", "value": "bottle", "fact_id": "MV-SERUM-001-F031", "source": "SIM-SPEC-SERUM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "material", "value": "PP", "fact_id": "MV-SERUM-001-F031", "source": "SIM-SPEC-SERUM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "dispenser", "value": "pump", "fact_id": "MV-SERUM-001-F031", "source": "SIM-SPEC-SERUM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "transparency", "value": "opaque", "fact_id": "MV-SERUM-001-F031", "source": "SIM-SPEC-SERUM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]}
+      ]
+    },
+    "MV-CREAM-001": {
+      "facts": [
+        {"field": "capacity", "value": 50, "unit": "mL", "fact_id": "MV-CREAM-001-F030", "source": "SIM-SPEC-CREAM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "container_type", "value": "jar", "fact_id": "MV-CREAM-001-F030", "source": "SIM-SPEC-CREAM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "material", "value": "PP", "fact_id": "MV-CREAM-001-F030", "source": "SIM-SPEC-CREAM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "inner_lid", "value": "present", "fact_id": "MV-CREAM-001-F030", "source": "SIM-SPEC-CREAM-V1", "evidence_level": "A", "market_scope": ["US", "MX"]}
+      ]
+    },
+    "MV-HAND-001": {
+      "facts": [
+        {"field": "capacity", "value": 60, "unit": "mL", "fact_id": "MV-HAND-001-F030", "source": "SIM-SPEC-HAND-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "container_type", "value": "tube", "fact_id": "MV-HAND-001-F030", "source": "SIM-SPEC-HAND-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "material", "value": "aluminum", "fact_id": "MV-HAND-001-F030", "source": "SIM-SPEC-HAND-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "closure", "value": "screw cap", "fact_id": "MV-HAND-001-F030", "source": "SIM-SPEC-HAND-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "cap_material", "value": "PP", "fact_id": "MV-HAND-001-F030", "source": "SIM-SPEC-HAND-V1", "evidence_level": "A", "market_scope": ["US", "MX"]}
+      ]
+    },
+    "MV-KIT-001": {
+      "facts": [
+        {"field": "outer_container", "value": "paper box", "fact_id": "MV-KIT-001-F023", "source": "SIM-SPEC-KIT-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "total_capacity", "value": 55, "unit": "mL", "fact_id": "MV-KIT-001-F024", "source": "SIM-SPEC-KIT-V1", "evidence_level": "A", "market_scope": ["US", "MX"]},
+        {"field": "components", "value": [{"capacity": 30, "unit": "mL", "container_type": "bottle", "dispenser": "pump"}, {"capacity": 10, "unit": "mL", "container_type": "bottle", "dispenser": "pump"}, {"capacity": 15, "unit": "mL", "container_type": "jar"}], "fact_id": "MV-KIT-001-F024", "source": "SIM-SPEC-KIT-V1", "evidence_level": "A", "market_scope": ["US", "MX"]}
+      ]
+    }
+  }
+}

@@ -16,6 +16,8 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Iterable, TypedDict
 
+from src.packaging_checker import check_packaging_text, pre_generation_gate
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 FACT_PATH = PROJECT_ROOT / "data" / "products" / "product_facts.json"
 CONTENT_LIBRARY_PATH = (
@@ -313,6 +315,11 @@ def generate_content_pack(
         "brand_tone": brand_tone,
         "source_note": source_note,
         "versions": versions,
+        "pre_generation_packaging_gate": pre_generation_gate(
+            sku,
+            ["capacity" if sku != "MV-KIT-001" else "components"],
+            market,
+        ),
     }
     pack["claims"] = build_claim_evidence(pack)
     pack["primary_quality"] = evaluate_text(
@@ -516,16 +523,20 @@ def evaluate_text(
             category="fact",
         )
 
-    packaging_issue = False
-    if sku == "MV-HAND-001" and (
-        "aluminum tube" in normalized or "tubo de aluminio" in normalized
-    ):
-        packaging_issue = True
+    packaging_report = check_packaging_text(sku, text, market)
+    packaging_issue = packaging_report["status"] == "blocked"
+    if packaging_issue:
+        first_finding = packaging_report["findings"][0]
+        expected = first_finding["expected"]
         add_check(
             "包装事实",
             "fail",
-            "内容写为铝管，但事实库仅支持软管包装。",
-            "删除材质推断，改为 tube / tubo，或补充经核验的包装材质事实。",
+            f"“{first_finding['matched_text']}”无证据或与 {first_finding['field']} 事实冲突；已核实值：{expected}。",
+            (
+                f"替换为 {first_finding['replacement']} 后重新检查。"
+                if first_finding["replacement"]
+                else "删除无证据表述，或先补充经核验的包装字段。"
+            ),
             "fact",
         )
     else:
@@ -671,6 +682,7 @@ def evaluate_text(
             "fail": len(failed),
         },
         "packaging_issue": packaging_issue,
+        "packaging_gate": packaging_report,
     }
 
 

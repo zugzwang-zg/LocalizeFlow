@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "products": {
+    "MV-CLEAN-001": {"fact_id":"MV-CLEAN-001-F034","source":"SIM-SPEC-CLEAN-V1","capacity":[120],"container_type":["bottle"],"material":["PET"],"dispenser":["pump"]},
+    "MV-SERUM-001": {"fact_id":"MV-SERUM-001-F031","source":"SIM-SPEC-SERUM-V1","capacity":[30],"container_type":["bottle"],"material":["PP"],"dispenser":["pump"],"transparency":["opaque"]},
+    "MV-CREAM-001": {"fact_id":"MV-CREAM-001-F030","source":"SIM-SPEC-CREAM-V1","capacity":[50],"container_type":["jar"],"material":["PP"],"inner_lid":["present"]},
+    "MV-HAND-001": {"fact_id":"MV-HAND-001-F030","source":"SIM-SPEC-HAND-V1","capacity":[60],"container_type":["tube"],"material":["aluminum"],"closure":["screw cap"],"cap_material":["PP"]},
+    "MV-KIT-001": {"fact_id":"MV-KIT-001-F024","source":"SIM-SPEC-KIT-V1","capacity":[10,15,30,55],"container_type":["bottle","jar"],"dispenser":["pump"],"outer_container":["paper box"]}
+  }
+}
