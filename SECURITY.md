@@ -47,3 +47,10 @@ HMAC-SHA256 digests. These controls are a testable safety primitive, not a
 production security boundary: the local client key is session-generated, the
 store resets on process restart, and no trusted reverse-proxy IP adapter or
 external alert destination exists. See `docs/trial_limits.md`.
+
+The optional local tenant store adds scrypt password hashing, expiring
+in-memory sessions, encrypted account/project content, server-side tenant
+filters, self-service export, and destructive project/account deletion. It does
+not provide hosted HTTPS, email verification, MFA, password recovery, managed
+KMS, encrypted backups, or multi-instance authorization. See
+`docs/tenant_isolation.md` before evaluating this code for hosted use.

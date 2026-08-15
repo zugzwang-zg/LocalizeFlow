@@ -16,6 +16,9 @@ interfaces remain experimental.
 - A process-local trial guard with account/project/client quotas, sliding-window
   rate limits, conservative cost reservations, HMAC-pseudonymous usage events,
   and repeated-rejection alerts.
+- An optional local encrypted tenant store with scrypt authentication,
+  tenant-scoped project persistence, self-service export/deletion, expiring
+  sessions, and body-free audit events.
 
 ### Changed
 

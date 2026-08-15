@@ -289,6 +289,11 @@ Python Demo 与 Web Demo 使用同一组冻结的虚拟事实和评测内容。P
 [`docs/trial_limits.md`](docs/trial_limits.md)。当前计数只保存在本机进程，不能替代
 生产环境的登录、可信 IP、持久化原子计数和外部告警。
 
+Closed Beta 还提供一个默认关闭的本地加密租户仓库，用于验证登录、项目隔离、
+数据导出与永久删除。密码使用 scrypt，租户正文写入 SQLite 前使用 Fernet 加密；
+这不替代托管环境的身份服务、HTTPS、KMS、备份和多实例授权。配置与限制见
+[`docs/tenant_isolation.md`](docs/tenant_isolation.md)。
+
 ## 项目结构
 
 ```text

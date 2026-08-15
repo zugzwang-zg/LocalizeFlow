@@ -11,3 +11,11 @@ Feedback is only shared when a visitor explicitly opens and submits a GitHub iss
 GitHub applies its own privacy terms when a visitor follows a GitHub link or submits an issue. Do not enter personal, confidential, customer, or production data in the demo or issue forms.
 
 This notice describes the repository's public deterministic demo. A hosted service with accounts, server-side storage, or third-party analytics will require a new notice and consent review before launch.
+
+An optional local Closed Beta mode can store a test account and project content
+in an encrypted SQLite database under `.private/`. It is disabled by default,
+does not transmit account data by itself, and supports local export and
+deletion. This local mechanism is not the privacy notice for a hosted service;
+do not enter real personal or confidential product data until a deployment-
+specific notice, retention schedule, processor disclosure, and request channel
+are approved.
