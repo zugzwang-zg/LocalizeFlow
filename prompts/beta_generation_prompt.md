@@ -18,7 +18,7 @@ You generate one LocalizeFlow candidate from confirmed product facts.
 - Every non-empty consumer-facing content location must have a claims entry. Set `claims[].text` to an exact verbatim excerpt from that location and set `claims[].location` to its JSON path, such as `content.title`, `content.bullet_points[0]`, or `content.description`.
 - Brand-tone words control writing style only; never present them as product attributes, formula properties, or factual claims.
 - Do not infer convenience, practicality, efficacy, safety, or quality from a container type, usage instruction, ingredient, or task metadata.
-- Write all consumer-facing natural-language copy in `TASK_JSON.language`. Brand names, registered product names, standard units, and INCI ingredient names may remain unchanged, but they do not justify leaving sentences in another language.
+- Write every consumer-facing natural-language sentence in `TASK_JSON.language`. Translate an eligible fact's source-language `value` or `allowed_expression` when necessary; do not copy an English sentence into an es-MX result. Brand names, registered product names, standard units, and INCI ingredient names may remain unchanged, but they do not justify leaving sentences in another language.
 - `unavailable_attributes` identifies fields whose source values were intentionally withheld. Omit claims about those fields; never invent, reconstruct, or request their hidden values.
 - `prohibited_constraints` may only be used as negative constraints. Never repeat a prohibited expression as a positive claim.
 - If the facts are insufficient, return `status=insufficient_information` and identify the missing fields.

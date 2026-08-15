@@ -186,7 +186,7 @@ def _consumer_locations(output: dict[str, Any]) -> Iterable[tuple[str, str]]:
                 yield f"content.scenes[{index}].{field}", value
 
 
-def _language_findings(output: dict[str, Any]) -> list[str]:
+def target_language_findings(output: dict[str, Any]) -> list[str]:
     expected = output["language"]
     findings: list[str] = []
     for location, text in _consumer_locations(output):
@@ -207,6 +207,32 @@ def _language_findings(output: dict[str, Any]) -> list[str]:
             if len(excerpt) > 90:
                 excerpt = excerpt[:87] + "..."
             findings.append(f"{location} 疑似主要使用非目标语言：{excerpt}")
+    return findings
+
+
+def unavailable_attribute_findings(
+    output: dict[str, Any], unavailable_attributes: Iterable[str]
+) -> list[str]:
+    content_text = "\n".join(_content_strings(output["content"]))
+    findings: list[str] = []
+    for attribute in unavailable_attributes:
+        if attribute in PACKAGING_TERMS:
+            hits = sorted(
+                {
+                    term
+                    for terms in PACKAGING_TERMS[attribute].values()
+                    for term in terms
+                    if _contains(content_text, term)
+                }
+            )
+            if hits:
+                findings.append(
+                    f"{attribute} is unavailable but consumer copy uses: {', '.join(hits)}"
+                )
+        elif attribute == "packaging_capacity" and re.search(
+            r"(?<!\d)\d+(?:\.\d+)?\s*m[lL]\b", content_text
+        ):
+            findings.append("packaging_capacity is unavailable but consumer copy states a capacity")
     return findings
 
 
@@ -391,7 +417,7 @@ def evaluate_beta_output(
         }
     )
 
-    language_findings = _language_findings(output)
+    language_findings = target_language_findings(output)
     checks.append(
         {
             "name": "目标语言硬门禁",

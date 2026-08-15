@@ -15,17 +15,27 @@ import httpx
 from jsonschema import ValidationError, validate
 from openai import OpenAI
 
+from src.beta_quality import target_language_findings, unavailable_attribute_findings
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROMPT_PATH = PROJECT_ROOT / "prompts" / "beta_generation_prompt.md"
 SCHEMA_PATH = PROJECT_ROOT / "prompts" / "schemas" / "content_output.schema.json"
-PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.3"
-PROMPT_VERSION = "1.3.0"
+PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.4"
+PROMPT_VERSION = "1.4.0"
 SCHEMA_VERSION = "content-output-v1.2"
-RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.3"
+RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.4"
 
 
 class BetaModelError(RuntimeError):
     """Raised for a blocked or failed model run."""
+
+
+class BetaOutputRepairableError(BetaModelError):
+    """Raised when one constrained semantic repair may make an output releasable."""
+
+    def __init__(self, reasons: list[str]) -> None:
+        self.reasons = reasons
+        super().__init__("; ".join(reasons))
 
 
 class RunStore(Protocol):
@@ -217,6 +227,7 @@ def build_beta_request(
         "task": task,
         "eligible_fact_ids": [fact["fact_id"] for fact in allowed],
         "input_fact_ids": [fact["fact_id"] for fact in selected],
+        "unavailable_attributes": sorted(unavailable_attributes),
     }
 
 
@@ -231,10 +242,25 @@ def _validate_output(output: dict[str, Any], request: dict[str, Any]) -> None:
     for field in ("sku", "market", "language", "content_type", "platform"):
         if output[field] != task[field]:
             raise BetaModelError(f"Model changed immutable task field: {field}.")
+    repair_reasons: list[str] = []
     eligible = set(request["eligible_fact_ids"])
     for claim in output["claims"]:
         if not claim["fact_ids"] or set(claim["fact_ids"]) - eligible:
-            raise BetaModelError("Model claim cites missing or ineligible fact IDs.")
+            repair_reasons.append("claims cite missing or ineligible fact IDs")
+            break
+    language_issues = target_language_findings(output)
+    if language_issues:
+        repair_reasons.append(
+            f"consumer copy is not consistently in {task['language']}: "
+            + " | ".join(language_issues[:3])
+        )
+    unavailable_issues = unavailable_attribute_findings(
+        output, request.get("unavailable_attributes", [])
+    )
+    if unavailable_issues:
+        repair_reasons.append(" | ".join(unavailable_issues))
+    if repair_reasons:
+        raise BetaOutputRepairableError(repair_reasons)
     if output["human_review"] != {"required": True, "status": "pending"}:
         raise BetaModelError("Model output attempted to bypass human review.")
 
@@ -450,13 +476,19 @@ def run_beta_generation(
         ) from error
     try:
         _validate_output(output, request)
-    except BetaModelError as error:
-        if str(error) != "Model claim cites missing or ineligible fact IDs.":
-            raise
+    except BetaOutputRepairableError as error:
         semantic_repair_count = 1
         repair_instruction = (
             "APPLICATION_VALIDATION_ERROR\n"
             "One repair is allowed. Return one complete corrected JSON object. "
+            "Correct every listed validation reason: "
+            + json.dumps(error.reasons, ensure_ascii=False)
+            + ". Write every natural-language consumer sentence in "
+            + request["task"]["language"]
+            + "; translate supported source expressions instead of copying source-language sentences. "
+            "Remove every mention of unavailable attributes: "
+            + json.dumps(request.get("unavailable_attributes", []), ensure_ascii=False)
+            + ". "
             "Every claims[].fact_ids value must be selected only from this eligible list: "
             + json.dumps(request["eligible_fact_ids"], ensure_ascii=False)
             + ". Never cite unavailable, omitted, or invented IDs. If an exact claim cannot be supported, "
@@ -481,9 +513,7 @@ def run_beta_generation(
             ) from repair_error
         try:
             _validate_output(output, request)
-        except BetaModelError as repair_error:
-            if str(repair_error) != "Model claim cites missing or ineligible fact IDs.":
-                raise
+        except BetaOutputRepairableError:
             output = _insufficient_information_output(request)
             _validate_output(output, request)
             degraded_to_insufficient_information = True

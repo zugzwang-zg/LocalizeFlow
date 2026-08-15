@@ -266,9 +266,9 @@ class BetaModelTests(unittest.TestCase):
             client_factory=lambda **_: FakeClient(completions),
         )
         self.assertEqual(result["model"], "deepseek-test")
-        self.assertEqual(result["prompt_version"], "1.3.0")
+        self.assertEqual(result["prompt_version"], "1.4.0")
         self.assertEqual(result["schema_version"], "content-output-v1.2")
-        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.3")
+        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.4")
         self.assertEqual(result["input_tokens"], 500)
         self.assertEqual(result["estimated_cost_usd"], 0.0011)
         self.assertEqual(result["body_logging"], "disabled")
@@ -355,6 +355,73 @@ class BetaModelTests(unittest.TestCase):
         self.assertEqual(result["attempt_count"], 2)
         self.assertTrue(result["degraded_to_insufficient_information"])
         self.assertEqual(completions.calls, 2)
+
+    def test_unavailable_packaging_attribute_gets_one_targeted_repair(self) -> None:
+        payload = confirmed_import()
+        container = next(
+            fact for fact in payload["facts"] if fact["attribute"] == "packaging_container"
+        )
+        container["generation_policy"] = "not_directly_usable"
+        req = build_beta_request(
+            payload,
+            sku="REAL-SKU-001",
+            market="US",
+            content_type="product_listing",
+            target_user="daily skincare user",
+            marketing_goal="consideration",
+            brand_tone=["clear"],
+        )
+        invalid = valid_output(req)
+        invalid["content"]["title"] = "Authorized face serum bottle"
+        invalid["content"]["bullet_points"] = ["Authorized face serum"] * 4 + ["30 mL bottle"]
+        invalid["content"]["description"] = "Authorized face serum in a bottle."
+        sync_claim_inventory(invalid, [req["eligible_fact_ids"][0]])
+        repaired = valid_output(req)
+        repaired["content"]["title"] = "Authorized face serum"
+        repaired["content"]["bullet_points"] = ["Authorized face serum"] * 5
+        repaired["content"]["description"] = "Authorized face serum for daily skincare."
+        sync_claim_inventory(repaired, [req["eligible_fact_ids"][0]])
+        completions = SequencedCompletions([invalid, repaired])
+        result = run_beta_generation(
+            req,
+            settings=settings(max_retries=0),
+            run_store=InMemoryRunStore(),
+            client_factory=lambda **_: FakeClient(completions),
+        )
+        self.assertEqual(result["output"]["status"], "success")
+        self.assertEqual(result["semantic_repair_count"], 1)
+        self.assertNotIn("bottle", json.dumps(result["output"]["content"]).lower())
+
+    def test_wrong_target_language_gets_one_targeted_repair(self) -> None:
+        req = build_beta_request(
+            confirmed_import(),
+            sku="REAL-SKU-001",
+            market="MX",
+            content_type="product_listing",
+            target_user="persona con piel sensible",
+            marketing_goal="consideration",
+            brand_tone=["claro"],
+        )
+        invalid = valid_output(req)
+        invalid["content"]["title"] = "Daily face serum for sensitive skin"
+        invalid["content"]["bullet_points"] = ["Formulated for daily skin use"] * 5
+        invalid["content"]["description"] = "Apply the face serum daily for sensitive skin."
+        sync_claim_inventory(invalid, [req["eligible_fact_ids"][0]])
+        repaired = valid_output(req)
+        repaired["content"]["title"] = "Sérum facial para piel sensible"
+        repaired["content"]["bullet_points"] = ["Fórmula para uso diario en la piel"] * 5
+        repaired["content"]["description"] = "Aplicar el sérum facial a diario sobre la piel."
+        sync_claim_inventory(repaired, [req["eligible_fact_ids"][0]])
+        completions = SequencedCompletions([invalid, repaired])
+        result = run_beta_generation(
+            req,
+            settings=settings(max_retries=0),
+            run_store=InMemoryRunStore(),
+            client_factory=lambda **_: FakeClient(completions),
+        )
+        self.assertEqual(result["output"]["status"], "success")
+        self.assertEqual(result["semantic_repair_count"], 1)
+        self.assertIn("piel", result["output"]["content"]["description"])
 
     def test_product_listing_requires_exactly_five_bullets(self) -> None:
         req = request()
