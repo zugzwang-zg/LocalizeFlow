@@ -18,7 +18,8 @@ class BetaQualityTests(unittest.TestCase):
         packaging_ids = [
             fact["fact_id"]
             for fact in imported["facts"]
-            if fact["attribute"].startswith("packaging_") or fact["attribute"] == "specification"
+            if fact["attribute"].startswith("packaging_")
+            or fact["attribute"] in {"specification", "product_name"}
         ]
         sync_claim_inventory(output, packaging_ids)
         report = evaluate_beta_output(imported, output)
@@ -87,6 +88,34 @@ class BetaQualityTests(unittest.TestCase):
             check["detail"] for check in report["checks"] if check["name"] == "声明证据绑定"
         )
         self.assertIn("不是 location 中的原文片段", detail)
+
+    def test_product_type_requires_supporting_fact_in_same_claim(self) -> None:
+        imported = confirmed_import()
+        output = valid_output(request())
+        output["content"]["title"] = "Authorized face serum"
+        output["claims"][0]["text"] = "Authorized face serum"
+        specification = next(
+            fact["fact_id"] for fact in imported["facts"] if fact["attribute"] == "specification"
+        )
+        output["claims"][0]["fact_ids"] = [specification]
+        report = evaluate_beta_output(imported, output)
+        self.assertEqual(report["export_gate"], "blocked")
+        detail = next(
+            check["detail"] for check in report["checks"] if check["name"] == "声明证据绑定"
+        )
+        self.assertIn("serum", detail)
+
+    def test_capacity_must_be_covered_by_claim_text_at_location(self) -> None:
+        imported = confirmed_import()
+        output = valid_output(request())
+        output["content"]["title"] = "Authorized face serum 30 mL"
+        output["claims"][0]["text"] = "Authorized face serum"
+        report = evaluate_beta_output(imported, output)
+        self.assertEqual(report["export_gate"], "blocked")
+        detail = next(
+            check["detail"] for check in report["checks"] if check["name"] == "声明证据绑定"
+        )
+        self.assertIn("30 mL", detail)
 
     def test_every_listing_location_requires_claim_coverage(self) -> None:
         imported = confirmed_import()

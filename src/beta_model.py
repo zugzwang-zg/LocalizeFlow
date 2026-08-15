@@ -16,6 +16,7 @@ from jsonschema import ValidationError, validate
 from openai import OpenAI
 
 from src.beta_quality import (
+    claim_semantic_support_findings,
     claim_traceability_findings,
     target_language_findings,
     unavailable_attribute_findings,
@@ -24,10 +25,10 @@ from src.beta_quality import (
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROMPT_PATH = PROJECT_ROOT / "prompts" / "beta_generation_prompt.md"
 SCHEMA_PATH = PROJECT_ROOT / "prompts" / "schemas" / "content_output.schema.json"
-PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.5"
-PROMPT_VERSION = "1.5.0"
+PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.6"
+PROMPT_VERSION = "1.6.0"
 SCHEMA_VERSION = "content-output-v1.2"
-RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.5"
+RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.6"
 
 
 class BetaModelError(RuntimeError):
@@ -230,6 +231,14 @@ def build_beta_request(
         + json.dumps(task, ensure_ascii=False, separators=(",", ":")),
         "task": task,
         "eligible_fact_ids": [fact["fact_id"] for fact in allowed],
+        "eligible_fact_support": {
+            fact["fact_id"]: {
+                "value": fact["value"],
+                "unit": fact["unit"] or None,
+                "allowed_expression": fact["allowed_expression"] or None,
+            }
+            for fact in allowed
+        },
         "input_fact_ids": [fact["fact_id"] for fact in selected],
         "unavailable_attributes": sorted(unavailable_attributes),
     }
@@ -260,6 +269,14 @@ def _validate_output(output: dict[str, Any], request: dict[str, Any]) -> None:
     if traceability_issues:
         repair_reasons.append(
             "claim text/location traceability is invalid: " + " | ".join(traceability_issues[:3])
+        )
+    semantic_support_issues = claim_semantic_support_findings(
+        output, request["eligible_fact_support"]
+    )
+    if semantic_support_issues:
+        repair_reasons.append(
+            "claim citations omit facts needed for product type or capacity: "
+            + " | ".join(semantic_support_issues[:3])
         )
     language_issues = target_language_findings(output)
     if language_issues:

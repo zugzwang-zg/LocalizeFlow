@@ -39,6 +39,7 @@ ENGLISH_LANGUAGE_MARKERS = {
     "bottle",
     "cleanse",
     "cleanser",
+    "container",
     "cotton",
     "daily",
     "do",
@@ -121,6 +122,14 @@ ENGLISH_GRAMMAR_MARKERS = {
     "without",
 }
 
+PRODUCT_CONCEPTS: dict[str, tuple[str, ...]] = {
+    "serum": ("serum", "sérum"),
+    "cleanser": ("cleanser", "limpiador", "limpiadora"),
+    "micellar": ("micellar", "micelar"),
+    "lotion": ("lotion", "loción"),
+    "refill": ("refill", "recarga"),
+}
+
 
 def _content_strings(value: Any) -> Iterable[str]:
     if isinstance(value, str):
@@ -167,6 +176,7 @@ def claim_traceability_findings(
 ) -> list[str]:
     findings: list[str] = []
     covered_locations: set[str] = set()
+    claims_by_location: dict[str, list[str]] = defaultdict(list)
     for claim in output["claims"]:
         if eligible_ids is not None and (
             not claim["fact_ids"]
@@ -178,6 +188,7 @@ def claim_traceability_findings(
             findings.append(f"{claim['claim_id']} 的 location 无效或为空")
             continue
         covered_locations.add(claim["location"])
+        claims_by_location[claim["location"]].append(claim["text"])
         if _normalized_excerpt(claim["text"]) not in _normalized_excerpt(location_text):
             findings.append(f"{claim['claim_id']} 的 text 不是 location 中的原文片段")
     if output["content_type"] == "product_listing":
@@ -188,6 +199,48 @@ def claim_traceability_findings(
         missing_locations = sorted(required_locations - covered_locations)
         if missing_locations:
             findings.append(f"缺少 claim 覆盖：{', '.join(missing_locations)}")
+        for location in sorted(required_locations & covered_locations):
+            location_text = _claim_location_text(output, location) or ""
+            claimed_text = " ".join(claims_by_location[location])
+            critical_expressions = re.findall(r"(?<!\d)\d+(?:\.\d+)?\s*m[lL]\b", location_text)
+            for aliases in PRODUCT_CONCEPTS.values():
+                critical_expressions.extend(
+                    alias for alias in aliases if _contains(location_text, alias)
+                )
+            missing = [
+                expression
+                for expression in critical_expressions
+                if not _contains(claimed_text, expression)
+            ]
+            if missing:
+                findings.append(
+                    f"{location} 的关键表达未被 claim text 覆盖：{', '.join(sorted(set(missing)))}"
+                )
+    return findings
+
+
+def claim_semantic_support_findings(
+    output: dict[str, Any], fact_by_id: dict[str, dict[str, Any]]
+) -> list[str]:
+    findings: list[str] = []
+    for claim in output["claims"]:
+        cited_facts = [
+            fact_by_id[fact_id] for fact_id in claim["fact_ids"] if fact_id in fact_by_id
+        ]
+        cited_text = " ".join(
+            " ".join(
+                str(fact.get(field) or "") for field in ("value", "unit", "allowed_expression")
+            )
+            for fact in cited_facts
+        )
+        for concept, aliases in PRODUCT_CONCEPTS.items():
+            if any(_contains(claim["text"], alias) for alias in aliases) and not any(
+                _contains(cited_text, alias) for alias in aliases
+            ):
+                findings.append(f"{claim['claim_id']} 的 {concept} 表达未由所引事实支持")
+        for capacity in re.findall(r"(?<!\d)\d+(?:\.\d+)?\s*m[lL]\b", claim["text"]):
+            if _normalized_excerpt(capacity) not in _normalized_excerpt(cited_text):
+                findings.append(f"{claim['claim_id']} 的容量 {capacity} 未由所引事实支持")
     return findings
 
 
@@ -231,6 +284,8 @@ def target_language_findings(output: dict[str, Any]) -> list[str]:
         unexpected = (expected == "es-MX" and english >= 2 and english >= spanish + 2) or (
             expected == "en-US" and spanish >= 2 and spanish >= english + 2
         )
+        if expected == "es-MX" and re.search(r"\brefill\s+container\b", text, flags=re.I):
+            unexpected = True
         if unexpected:
             excerpt = re.sub(r"\s+", " ", text).strip()
             if len(excerpt) > 90:
@@ -303,6 +358,7 @@ def evaluate_beta_output(
         }
 
     claim_findings = claim_traceability_findings(output, eligible_ids)
+    claim_findings.extend(claim_semantic_support_findings(output, by_id))
     checks.append(
         {
             "name": "声明证据绑定",
