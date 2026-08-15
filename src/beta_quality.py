@@ -130,6 +130,19 @@ PRODUCT_CONCEPTS: dict[str, tuple[str, ...]] = {
     "refill": ("refill", "recarga"),
 }
 
+SPANISH_LOCALIZATION_PATTERNS: tuple[tuple[str, str], ...] = (
+    (
+        r"\b(?:envase|formato|presentación)\s+refill\b",
+        "untranslated generic refill construction",
+    ),
+    (r"\brefill\s+de\b", "untranslated refill construction"),
+    (
+        r"\b(?:posicionado|posicionada)\s+para\s+apoyar\b",
+        "literal positioned-to-support calque",
+    ),
+    (r"\bapoyar\s+la\s+barrera\s+cutánea\b", "literal skin-barrier calque"),
+)
+
 
 def _content_strings(value: Any) -> Iterable[str]:
     if isinstance(value, str):
@@ -286,11 +299,22 @@ def target_language_findings(output: dict[str, Any]) -> list[str]:
         )
         if expected == "es-MX" and re.search(r"\brefill\s+container\b", text, flags=re.I):
             unexpected = True
+        matched_pattern = next(
+            (
+                label
+                for pattern, label in SPANISH_LOCALIZATION_PATTERNS
+                if expected == "es-MX" and re.search(pattern, text, flags=re.I)
+            ),
+            None,
+        )
+        if matched_pattern:
+            unexpected = True
         if unexpected:
             excerpt = re.sub(r"\s+", " ", text).strip()
             if len(excerpt) > 90:
                 excerpt = excerpt[:87] + "..."
-            findings.append(f"{location} 疑似主要使用非目标语言：{excerpt}")
+            reason = f"（{matched_pattern}）" if matched_pattern else ""
+            findings.append(f"{location} 疑似主要使用非目标语言{reason}：{excerpt}")
     return findings
 
 

@@ -181,6 +181,28 @@ class BetaQualityTests(unittest.TestCase):
         language = next(check for check in report["checks"] if check["name"] == "目标语言硬门禁")
         self.assertEqual(language["status"], "pass")
 
+    def test_spanish_refill_mix_and_literal_barrier_calque_block(self) -> None:
+        imported = confirmed_import()
+        output = valid_output(request())
+        output.update(market="MX", language="es-MX")
+        output["content"]["title"] = "Producto Potenciador Refill 30 mL"
+        output["content"]["bullet_points"] = [
+            "Envase refill",
+            "Refill de sérum hidratante",
+            "Posicionado para apoyar la barrera cutánea",
+            "Presentación de 30 mL",
+            "Uso diario para la piel",
+        ]
+        output["content"]["description"] = (
+            "Producto en envase refill, posicionado para apoyar la barrera cutánea."
+        )
+        sync_claim_inventory(output, request()["eligible_fact_ids"])
+        report = evaluate_beta_output(imported, output)
+        language = next(check for check in report["checks"] if check["name"] == "目标语言硬门禁")
+        self.assertEqual(language["status"], "fail")
+        self.assertIn("refill", language["detail"])
+        self.assertIn("calque", language["detail"])
+
     def test_insufficient_information_is_blocked_without_scoring_empty_copy(self) -> None:
         imported = confirmed_import()
         output = valid_output(request())

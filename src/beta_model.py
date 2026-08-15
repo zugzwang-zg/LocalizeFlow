@@ -25,10 +25,10 @@ from src.beta_quality import (
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROMPT_PATH = PROJECT_ROOT / "prompts" / "beta_generation_prompt.md"
 SCHEMA_PATH = PROJECT_ROOT / "prompts" / "schemas" / "content_output.schema.json"
-PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.6"
-PROMPT_VERSION = "1.6.0"
+PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.7"
+PROMPT_VERSION = "1.7.0"
 SCHEMA_VERSION = "content-output-v1.2"
-RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.6"
+RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.7"
 
 
 class BetaModelError(RuntimeError):

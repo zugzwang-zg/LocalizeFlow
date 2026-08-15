@@ -266,9 +266,9 @@ class BetaModelTests(unittest.TestCase):
             client_factory=lambda **_: FakeClient(completions),
         )
         self.assertEqual(result["model"], "deepseek-test")
-        self.assertEqual(result["prompt_version"], "1.6.0")
+        self.assertEqual(result["prompt_version"], "1.7.0")
         self.assertEqual(result["schema_version"], "content-output-v1.2")
-        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.6")
+        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.7")
         self.assertEqual(result["input_tokens"], 500)
         self.assertEqual(result["estimated_cost_usd"], 0.0011)
         self.assertEqual(result["body_logging"], "disabled")
