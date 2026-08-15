@@ -1,21 +1,68 @@
-# LocalizeFlow Demo Privacy Notice
+# LocalizeFlow Public Demo Privacy Notice
 
-Last updated: 2026-08-14
+Last updated: 2026-08-15
 
-The public deterministic demo does not call a model API and does not automatically transmit product selections, generated samples, edits, feedback, or usage events to the project maintainer.
+## Scope
 
-The demo may store up to 100 experience events for no more than 30 days in the visitor's browser `localStorage`: an anonymous run identifier, event name, timestamp, elapsed time, market, content type, and workflow step. These events are available only for the visitor to inspect their own experience path. Content bodies, names, email addresses, IP addresses, and API credentials are not included. Visitors can disable, export, or delete this local data in the demo. The demo does not use third-party analytics or advertising cookies.
+This notice applies only to the repository's public deterministic Web Demo. The
+Demo uses frozen fictional examples, runs in the visitor's browser, does not
+call a model API, and does not provide a hosted account or production service.
 
-Feedback is only shared when a visitor explicitly opens and submits a GitHub issue. The default feedback payload excludes the edited content. A separately downloaded local feedback file includes the full edited content only after the visitor explicitly opts in; downloading the file does not send it to the project.
+The optional local Closed Beta code path is described separately below. A
+future hosted free trial will require a deployment-specific privacy notice
+before it is activated; the draft in `docs/legal/` is not an active policy.
 
-GitHub applies its own privacy terms when a visitor follows a GitHub link or submits an issue. Do not enter personal, confidential, customer, or production data in the demo or issue forms.
+## Public Demo data
 
-This notice describes the repository's public deterministic demo. A hosted service with accounts, server-side storage, or third-party analytics will require a new notice and consent review before launch.
+The Demo does not automatically transmit product selections, generated
+samples, edits, feedback, or usage events to the project maintainer. It does
+not use third-party analytics, advertising cookies, or browser fingerprinting.
 
-An optional local Closed Beta mode can store a test account and project content
-in an encrypted SQLite database under `.private/`. It is disabled by default,
-does not transmit account data by itself, and supports local export and
-deletion. This local mechanism is not the privacy notice for a hosted service;
-do not enter real personal or confidential product data until a deployment-
-specific notice, retention schedule, processor disclosure, and request channel
-are approved.
+If local experience metrics are enabled, the Demo stores at most 100 events for
+no more than 30 days in the visitor's browser `localStorage`. Each event may
+contain an anonymous run identifier, event name, timestamp, elapsed time,
+market, content type, and workflow step. It does not contain content bodies,
+names, email addresses, IP addresses, or API credentials. Visitors can disable,
+export, or delete these metrics in the Demo.
+
+## Feedback and third-party links
+
+Feedback leaves the browser only when a visitor deliberately opens and submits
+a GitHub issue. The proposed issue body excludes edited content by default. A
+separately downloaded local feedback file contains full edited content only
+after an explicit opt-in; downloading it does not send it to the project.
+
+GitHub and other external sites apply their own privacy terms when a visitor
+follows a link. Do not put personal, confidential, customer, or production data
+in the Demo, GitHub issue forms, or public repository discussions.
+
+## Optional local Closed Beta mode
+
+When explicitly enabled on a user's own computer, the local Closed Beta mode
+can store test-account metadata and project content in an encrypted SQLite
+database under `.private/`. The user controls that local installation and can
+export or delete the local project from the application. Local records remain
+until the user deletes them; this repository does not operate a remote backup
+or receive those records by itself.
+
+This local mechanism is not a privacy notice for a hosted service. Do not use
+real personal, confidential, customer, or production data until the applicable
+organization has approved a deployment-specific notice, retention schedule,
+processor disclosure, request channel, and backup deletion process.
+
+## Requests and contact
+
+For browser metrics, use the Demo's export and clear controls. For a local
+Closed Beta project, use the in-app export and deletion controls. Do not submit
+private data in a public GitHub issue. Security reports should use the private
+channel described in `SECURITY.md`.
+
+No hosted privacy-request channel is active because no hosted trial is active.
+A dedicated privacy contact and verified request workflow are release blockers
+for any future hosted trial.
+
+## Changes
+
+Material changes to what the public Demo collects or transmits require this
+notice and the in-product disclosure to be updated before the change is
+released.

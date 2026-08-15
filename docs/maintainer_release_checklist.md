@@ -57,6 +57,11 @@ After the first pull request has produced check names, configure a ruleset for
 
 ## 5. Run the final local gate
 
+Before a hosted trial (as distinct from the deterministic public preview), run
+every gate in [`legal/LEGAL_RELEASE_CHECKLIST.md`](legal/LEGAL_RELEASE_CHECKLIST.md).
+Unresolved `[REQUIRED]` provider, region, retention, contact, or governing-term
+fields block registrations, uploads, and model processing of user data.
+
 ```powershell
 .\.venv\Scripts\uv.exe sync --locked --extra dev
 .\.venv\Scripts\uv.exe run ruff check .

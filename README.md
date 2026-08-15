@@ -7,13 +7,15 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11--3.13-3776AB.svg)](pyproject.toml)
 
-[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [隐私说明](PRIVACY.md) · [预览条款](TERMS.md) · [免责声明](DISCLAIMER.md)
+[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [隐私说明](PRIVACY.md) · [预览条款](TERMS.md) · [可接受使用政策](ACCEPTABLE_USE_POLICY.md) · [免责声明](DISCLAIMER.md)
 
 GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
 
 在线交互式 Demo：<https://localizeflow-demo-86182.reidmozzie.chatgpt.site>
 
 > 当前在线版本使用冻结的虚拟 SKU 和确定性内容，不调用模型 API，也不接收真实客户数据。它用于体验产品工作流，不是生产环境或真实免费试用。
+
+> 托管免费试用仍未开放。模型数据政策要求用户上传内容默认不得用于训练；在模型/中转服务的法律实体、数据区域、保留期、跨境路径及无训练设置完成核验前，用户数据的模型调用必须保持关闭。参见 [`docs/legal/`](docs/legal/)。
 
 > **合成内容声明：** 虚拟品牌、虚拟 SKU、价格、产品事实、营销候选和评测材料均为 AI 生成的合成内容；其余代码、文档、测量、图表与演示资产由项目方原创。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
 
