@@ -24,6 +24,10 @@ interfaces remain experimental.
 - Expanded the Web release gate to audit development/build dependencies and
   removed all known high-severity advisories from the supported dependency tree.
 - Corrected four screenshot extensions so file names match their JPEG format.
+- Tightened Closed Beta product-listing output to require exactly five bullets,
+  prevent internal fact-ID leakage, and keep brand-tone metadata out of claims.
+- Corrected Mexican Spanish pump-bottle matching so `frasco con bomba` is not
+  misclassified as a jar, with prompt/schema/rule versions advanced for auditability.
 
 ## [0.1.0-preview.1] - 2026-08-14
 

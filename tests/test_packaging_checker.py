@@ -37,6 +37,10 @@ class PackagingCheckerTests(unittest.TestCase):
         report = check_packaging_text("MV-KIT-001", "30 mL pump bottle, 10 mL pump bottle and 15 mL jar", "US")
         self.assertEqual(report["status"], "pass")
 
+    def test_spanish_pump_bottle_phrase_is_not_classified_as_jar(self) -> None:
+        report = check_packaging_text("MV-KIT-001", "frasco con bomba de 30 mL, frasco con bomba de 10 mL y tarro de 15 mL", "MX")
+        self.assertEqual(report["status"], "pass")
+
 
 if __name__ == "__main__":
     unittest.main()

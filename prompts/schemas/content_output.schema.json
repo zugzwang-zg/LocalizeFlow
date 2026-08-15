@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localizeflow.example/schemas/content-output-v1.json",
+  "$id": "https://localizeflow.example/schemas/content-output-v1.1.json",
   "title": "LocalizeFlow Structured Content Output",
   "type": "object",
   "additionalProperties": false,
@@ -343,5 +343,60 @@
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "content_type": {
+            "const": "product_listing"
+          }
+        },
+        "required": [
+          "content_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bullet_points": {
+                "type": "array",
+                "minItems": 5,
+                "maxItems": 5,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scenes": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "caption": {
+                "type": "null"
+              },
+              "hook": {
+                "type": "null"
+              },
+              "body": {
+                "type": "null"
+              },
+              "cta": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

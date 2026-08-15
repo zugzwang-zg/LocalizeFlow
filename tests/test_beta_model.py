@@ -203,7 +203,9 @@ class BetaModelTests(unittest.TestCase):
         completions = FakeCompletions(valid_output(req))
         result = run_beta_generation(req, settings=settings(), run_store=InMemoryRunStore(), client_factory=lambda **_: FakeClient(completions))
         self.assertEqual(result["model"], "deepseek-test")
-        self.assertEqual(result["prompt_version"], "1.0.0")
+        self.assertEqual(result["prompt_version"], "1.1.0")
+        self.assertEqual(result["schema_version"], "content-output-v1.1")
+        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15")
         self.assertEqual(result["input_tokens"], 500)
         self.assertEqual(result["estimated_cost_usd"], 0.0011)
         self.assertEqual(result["body_logging"], "disabled")
@@ -247,6 +249,18 @@ class BetaModelTests(unittest.TestCase):
         output["claims"][0]["fact_ids"] = ["OTHER-PROJECT-FACT"]
         with self.assertRaises(BetaModelError):
             run_beta_generation(req, settings=settings(), run_store=InMemoryRunStore(), client_factory=lambda **_: FakeClient(FakeCompletions(output)))
+
+    def test_product_listing_requires_exactly_five_bullets(self) -> None:
+        req = request()
+        output = valid_output(req)
+        output["content"]["bullet_points"] = output["content"]["bullet_points"][:4]
+        with self.assertRaisesRegex(BetaModelError, "JSON Schema"):
+            run_beta_generation(
+                req,
+                settings=settings(),
+                run_store=InMemoryRunStore(),
+                client_factory=lambda **_: FakeClient(FakeCompletions(output)),
+            )
 
     def test_disabled_or_over_budget_requests_are_blocked_before_call(self) -> None:
         req = request()

@@ -13,8 +13,8 @@ PACKAGING_FACTS_PATH = PROJECT_ROOT / "data" / "products" / "packaging_facts.jso
 
 TERM_FIELDS: dict[str, dict[str, tuple[str, ...]]] = {
     "container_type": {
-        "bottle": ("bottle", "botella", "envase pet", "envase opaco de pp", "envase de pp"),
-        "jar": ("jar", "tarro", "frasco"),
+        "bottle": ("bottle", "botella", "frasco con bomba", "envase con bomba", "envase pet", "envase opaco de pp", "envase de pp"),
+        "jar": ("jar", "tarro"),
         "tube": ("tube", "tubo"),
     },
     "material": {

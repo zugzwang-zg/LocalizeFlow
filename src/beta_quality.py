@@ -11,7 +11,8 @@ from typing import Any, Iterable
 PACKAGING_TERMS: dict[str, dict[str, tuple[str, ...]]] = {
     "packaging_container": {
         "bottle": ("bottle", "botella", "envase pet", "envase de pp"),
-        "jar": ("jar", "tarro", "frasco"),
+        "pump bottle": ("pump bottle", "bottle with pump", "botella con bomba", "frasco con bomba", "envase con bomba"),
+        "jar": ("jar", "tarro"),
         "tube": ("tube", "tubo"),
     },
     "packaging_material": {
@@ -88,15 +89,20 @@ def evaluate_beta_output(confirmed_import: dict[str, Any], output: dict[str, Any
         facts_by_attribute[fact["attribute"]].append(fact)
     packaging_findings: list[str] = []
     for attribute, candidates in PACKAGING_TERMS.items():
-        supported = {
-            fact["value"].casefold(): fact
-            for fact in facts_by_attribute.get(attribute, [])
-            if fact["fact_id"] in eligible_ids
+        supported_facts = [fact for fact in facts_by_attribute.get(attribute, []) if fact["fact_id"] in eligible_ids]
+        supported_candidates = {
+            candidate.casefold()
+            for candidate, terms in candidates.items()
+            if any(
+                fact["value"].casefold() == candidate.casefold()
+                or any(_contains(fact["value"], term) for term in terms)
+                for fact in supported_facts
+            )
         }
         for candidate, terms in candidates.items():
             hit = next((term for term in terms if _contains(content_text, term)), None)
-            if hit and candidate.casefold() not in supported:
-                expected = " / ".join(fact["value"] for fact in supported.values()) or "unknown"
+            if hit and candidate.casefold() not in supported_candidates:
+                expected = " / ".join(fact["value"] for fact in supported_facts) or "unknown"
                 packaging_findings.append(f"{attribute}: “{hit}” 与已确认值 {expected} 不一致")
 
     capacity_facts = [
@@ -134,19 +140,24 @@ def evaluate_beta_output(confirmed_import: dict[str, Any], output: dict[str, Any
         }
     )
 
-    structure_fail = False
+    structure_findings: list[str] = []
     content = output["content"]
     if output["content_type"] == "product_listing":
-        structure_fail = not content["title"] or len(content["bullet_points"]) != 5 or not content["description"]
+        if not content["title"] or len(content["bullet_points"]) != 5 or not content["description"]:
+            structure_findings.append("目标内容类型的必填结构不完整。")
     elif output["content_type"] == "short_video_script":
-        structure_fail = not content["scenes"] or not content["caption"]
+        if not content["scenes"] or not content["caption"]:
+            structure_findings.append("目标内容类型的必填结构不完整。")
     else:
-        structure_fail = not content["hook"] or not content["body"] or not content["cta"]
+        if not content["hook"] or not content["body"] or not content["cta"]:
+            structure_findings.append("目标内容类型的必填结构不完整。")
+    if re.search(r"\bBETA-[A-Z0-9-]+\b", content_text, flags=re.I):
+        structure_findings.append("消费者可见内容泄漏了内部事实 ID。")
     checks.append(
         {
             "name": "内容结构",
-            "status": "fail" if structure_fail else "pass",
-            "detail": "目标内容类型的必填结构不完整。" if structure_fail else "目标内容结构完整。",
+            "status": "fail" if structure_findings else "pass",
+            "detail": "；".join(structure_findings) if structure_findings else "目标内容结构完整，且未泄漏内部事实 ID。",
             "category": "platform",
         }
     )
