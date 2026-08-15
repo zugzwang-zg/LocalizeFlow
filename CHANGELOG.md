@@ -30,6 +30,9 @@ interfaces remain experimental.
   misclassified as a jar, with prompt/schema/rule versions advanced for auditability.
 - Added deterministic claim-location coverage and verbatim-excerpt checks so
   claim inventories cannot point to missing or unrelated consumer copy.
+- Added target-language blocking for consumer copy, withheld unusable fact
+  values from generation inputs, and limited invalid fact-ID recovery to one
+  targeted repair before a structured `insufficient_information` fallback.
 
 ## [0.1.0-preview.1] - 2026-08-14
 

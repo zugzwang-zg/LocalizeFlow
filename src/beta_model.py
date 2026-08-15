@@ -18,10 +18,10 @@ from openai import OpenAI
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROMPT_PATH = PROJECT_ROOT / "prompts" / "beta_generation_prompt.md"
 SCHEMA_PATH = PROJECT_ROOT / "prompts" / "schemas" / "content_output.schema.json"
-PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.2"
-PROMPT_VERSION = "1.2.0"
-SCHEMA_VERSION = "content-output-v1.1"
-RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.2"
+PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.3"
+PROMPT_VERSION = "1.3.0"
+SCHEMA_VERSION = "content-output-v1.2"
+RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.3"
 
 
 class BetaModelError(RuntimeError):
@@ -73,9 +73,16 @@ class BetaModelSettings:
             max_retries=int(os.getenv("LOCALIZEFLOW_MODEL_MAX_RETRIES", "1")),
             max_output_tokens=int(os.getenv("LOCALIZEFLOW_MODEL_MAX_OUTPUT_TOKENS", "3000")),
             input_usd_per_million=float(os.getenv("LOCALIZEFLOW_MODEL_INPUT_USD_PER_MILLION", "0")),
-            output_usd_per_million=float(os.getenv("LOCALIZEFLOW_MODEL_OUTPUT_USD_PER_MILLION", "0")),
-            max_request_cost_usd=float(os.getenv("LOCALIZEFLOW_MODEL_MAX_REQUEST_COST_USD", "0.10")),
-            supports_json_schema=os.getenv("LOCALIZEFLOW_MODEL_SUPPORTS_JSON_SCHEMA", "false").lower() == "true",
+            output_usd_per_million=float(
+                os.getenv("LOCALIZEFLOW_MODEL_OUTPUT_USD_PER_MILLION", "0")
+            ),
+            max_request_cost_usd=float(
+                os.getenv("LOCALIZEFLOW_MODEL_MAX_REQUEST_COST_USD", "0.10")
+            ),
+            supports_json_schema=os.getenv(
+                "LOCALIZEFLOW_MODEL_SUPPORTS_JSON_SCHEMA", "false"
+            ).lower()
+            == "true",
         )
 
     def validate(self) -> None:
@@ -135,7 +142,11 @@ def build_beta_request(
     if len(brand_tone) > 6:
         raise BetaModelError("Brand tone supports at most 6 entries.")
     brand_tone = [_bounded_text(value, field="Brand tone", limit=80) for value in brand_tone]
-    selected = [fact for fact in confirmed_import["facts"] if fact["sku"] == sku and market in fact["markets"]]
+    selected = [
+        fact
+        for fact in confirmed_import["facts"]
+        if fact["sku"] == sku and market in fact["markets"]
+    ]
     if not selected:
         raise BetaModelError("No confirmed facts match this SKU and market.")
     allowed = [
@@ -160,16 +171,18 @@ def build_beta_request(
         }
         for fact in allowed
     ]
-    constraints = [
-        {
-            "fact_id": fact["fact_id"],
-            "attribute": fact["attribute"],
-            "value": fact["value"],
-            "generation_policy": fact["generation_policy"],
-            "prohibited_expression": fact["prohibited_expression"] or None,
-        }
-        for fact in blocked
-    ]
+    prohibited_constraints: list[dict[str, str]] = []
+    unavailable_attributes: set[str] = set()
+    for fact in blocked:
+        expression = fact["prohibited_expression"]
+        if not expression and fact["attribute"] == "prohibited_claim":
+            expression = fact["value"]
+        if expression and expression.lower() != "unknown":
+            prohibited_constraints.append(
+                {"attribute": fact["attribute"], "prohibited_expression": expression}
+            )
+        else:
+            unavailable_attributes.add(fact["attribute"])
     task = {
         "project_id": confirmed_import["project_id"],
         "sku": sku,
@@ -190,7 +203,15 @@ def build_beta_request(
         + "\n\nOUTPUT_SCHEMA_JSON\n"
         + SCHEMA_PATH.read_text(encoding="utf-8"),
         "user": "PRODUCT_FACTS_JSON\n"
-        + json.dumps({"eligible_facts": facts_payload, "blocked_constraints": constraints}, ensure_ascii=False, separators=(",", ":"))
+        + json.dumps(
+            {
+                "eligible_facts": facts_payload,
+                "prohibited_constraints": prohibited_constraints,
+                "unavailable_attributes": sorted(unavailable_attributes),
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+        )
         + "\nTASK_JSON\n"
         + json.dumps(task, ensure_ascii=False, separators=(",", ":")),
         "task": task,
@@ -203,7 +224,9 @@ def _validate_output(output: dict[str, Any], request: dict[str, Any]) -> None:
     try:
         validate(output, _read_json(SCHEMA_PATH))
     except ValidationError as error:
-        raise BetaModelError(f"Model output failed JSON Schema validation: {error.message}") from error
+        raise BetaModelError(
+            f"Model output failed JSON Schema validation: {error.message}"
+        ) from error
     task = request["task"]
     for field in ("sku", "market", "language", "content_type", "platform"):
         if output[field] != task[field]:
@@ -214,6 +237,54 @@ def _validate_output(output: dict[str, Any], request: dict[str, Any]) -> None:
             raise BetaModelError("Model claim cites missing or ineligible fact IDs.")
     if output["human_review"] != {"required": True, "status": "pending"}:
         raise BetaModelError("Model output attempted to bypass human review.")
+
+
+def _insufficient_information_output(request: dict[str, Any]) -> dict[str, Any]:
+    task = request["task"]
+    return {
+        "status": "insufficient_information",
+        "sku": task["sku"],
+        "market": task["market"],
+        "language": task["language"],
+        "platform": task["platform"],
+        "content_type": task["content_type"],
+        "content_version": {
+            "content_id": f"{task['sku']}-{task['market']}-insufficient",
+            "version_id": "application-fallback-v1",
+            "parent_version_id": None,
+            "created_by": "model",
+            "change_reason": "Application fallback after one targeted fact-ID repair.",
+        },
+        "content": {
+            "title": None,
+            "bullet_points": [],
+            "description": None,
+            "scenes": [],
+            "caption": None,
+            "hook": None,
+            "body": None,
+            "cta": None,
+        },
+        "claims": [],
+        "platform_fields": {
+            "title_field_name": None,
+            "description_field_name": None,
+            "digital_source_type": None,
+            "duration_seconds": None,
+            "aspect_ratio": None,
+        },
+        "ai_disclosure": {
+            "aigc_status": "not_applicable",
+            "label_required": False,
+            "method": None,
+            "disclosure_text": None,
+        },
+        "warnings": ["No candidate was released after application validation failed twice."],
+        "insufficient_information": [
+            "A valid claim-to-fact binding could not be produced from the eligible facts."
+        ],
+        "human_review": {"required": True, "status": "pending"},
+    }
 
 
 def _estimate_cost(settings: BetaModelSettings, input_tokens: int, output_tokens: int) -> float:
@@ -268,7 +339,9 @@ def run_beta_generation(
     if cached:
         return {**cached, "cache_hit": True}
     estimated_input_tokens = max(1, (len(request["system"]) + len(request["user"])) // 4)
-    estimated_max_cost = _estimate_cost(settings, estimated_input_tokens, settings.max_output_tokens)
+    estimated_max_cost = _estimate_cost(
+        settings, estimated_input_tokens, settings.max_output_tokens
+    )
     if estimated_max_cost > settings.max_request_cost_usd:
         raise BetaModelError("Estimated request cost exceeds the configured per-request limit.")
 
@@ -290,77 +363,132 @@ def run_beta_generation(
         else:
             response_format = {"type": "json_object"}
     started = time.perf_counter()
-    last_error: Exception | None = None
-    response: Any = None
-    for attempt in range(settings.max_retries + 1):
-        try:
-            if settings.api_style == "openai_chat_completions":
-                response = client.chat.completions.create(
-                    model=settings.model,
-                    messages=[
-                        {"role": "system", "content": request["system"]},
-                        {"role": "user", "content": request["user"]},
-                    ],
-                    response_format=response_format,
-                    temperature=0.2,
-                    max_tokens=settings.max_output_tokens,
-                    extra_headers={"Idempotency-Key": idempotency_key},
-                )
-            else:
-                response = http_requester(
-                    f"{settings.base_url.rstrip('/')}/messages",
-                    headers={
-                        "Authorization": f"Bearer {settings.api_key}",
-                        "anthropic-version": "2023-06-01",
-                        "content-type": "application/json",
-                        "Idempotency-Key": idempotency_key,
-                    },
-                    json={
-                        "model": settings.model,
-                        "system": request["system"],
-                        "messages": [{"role": "user", "content": request["user"]}],
-                        "temperature": 0.2,
-                        "max_tokens": settings.max_output_tokens,
-                    },
-                    timeout=settings.timeout_seconds,
-                )
-                response.raise_for_status()
-            break
-        except Exception as error:  # provider SDK exceptions vary by relay
-            last_error = error
-            if not _is_retryable_provider_error(error) or attempt >= settings.max_retries:
+    provider_attempt_count = 0
+
+    def invoke(messages: list[dict[str, str]], call_key: str) -> tuple[str, int, int]:
+        nonlocal provider_attempt_count
+        last_error: Exception | None = None
+        response: Any = None
+        for retry_index in range(settings.max_retries + 1):
+            provider_attempt_count += 1
+            try:
+                if settings.api_style == "openai_chat_completions":
+                    response = client.chat.completions.create(
+                        model=settings.model,
+                        messages=[{"role": "system", "content": request["system"]}, *messages],
+                        response_format=response_format,
+                        temperature=0.2,
+                        max_tokens=settings.max_output_tokens,
+                        extra_headers={"Idempotency-Key": call_key},
+                    )
+                else:
+                    response = http_requester(
+                        f"{settings.base_url.rstrip('/')}/messages",
+                        headers={
+                            "Authorization": f"Bearer {settings.api_key}",
+                            "anthropic-version": "2023-06-01",
+                            "content-type": "application/json",
+                            "Idempotency-Key": call_key,
+                        },
+                        json={
+                            "model": settings.model,
+                            "system": request["system"],
+                            "messages": messages,
+                            "temperature": 0.2,
+                            "max_tokens": settings.max_output_tokens,
+                        },
+                        timeout=settings.timeout_seconds,
+                    )
+                    response.raise_for_status()
+                break
+            except Exception as error:  # provider SDK exceptions vary by relay
+                last_error = error
+                if not _is_retryable_provider_error(error) or retry_index >= settings.max_retries:
+                    raise BetaModelError(
+                        f"Model request failed after {retry_index + 1} attempt(s): {_provider_error_label(error)}"
+                    ) from error
+        if response is None:
+            label = _provider_error_label(last_error) if last_error else "unknown"
+            raise BetaModelError(f"Model request failed: {label}")
+        if settings.api_style == "openai_chat_completions":
+            response_content = response.choices[0].message.content
+            usage = getattr(response, "usage", None)
+            response_input_tokens = int(
+                getattr(usage, "prompt_tokens", estimated_input_tokens) or estimated_input_tokens
+            )
+            response_output_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
+        else:
+            try:
+                payload = response.json()
+            except (ValueError, json.JSONDecodeError) as error:
                 raise BetaModelError(
-                    f"Model request failed after {attempt + 1} attempt(s): {_provider_error_label(error)}"
+                    "Model returned invalid provider JSON; response body was not stored."
                 ) from error
-    if response is None:
-        label = _provider_error_label(last_error) if last_error else "unknown"
-        raise BetaModelError(f"Model request failed: {label}")
-    latency_ms = round((time.perf_counter() - started) * 1000)
-    if settings.api_style == "openai_chat_completions":
-        content = response.choices[0].message.content
-        usage = getattr(response, "usage", None)
-        input_tokens = int(getattr(usage, "prompt_tokens", estimated_input_tokens) or estimated_input_tokens)
-        output_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
-    else:
-        try:
-            payload = response.json()
-        except (ValueError, json.JSONDecodeError) as error:
-            raise BetaModelError("Model returned invalid provider JSON; response body was not stored.") from error
-        content = "".join(
-            block.get("text", "")
-            for block in payload.get("content", [])
-            if isinstance(block, dict) and block.get("type") == "text"
-        )
-        usage = payload.get("usage", {})
-        input_tokens = int(usage.get("input_tokens", estimated_input_tokens) or estimated_input_tokens)
-        output_tokens = int(usage.get("output_tokens", 0) or 0)
-    if not content:
-        raise BetaModelError("Model returned an empty response.")
+            response_content = "".join(
+                block.get("text", "")
+                for block in payload.get("content", [])
+                if isinstance(block, dict) and block.get("type") == "text"
+            )
+            usage = payload.get("usage", {})
+            response_input_tokens = int(
+                usage.get("input_tokens", estimated_input_tokens) or estimated_input_tokens
+            )
+            response_output_tokens = int(usage.get("output_tokens", 0) or 0)
+        if not response_content:
+            raise BetaModelError("Model returned an empty response.")
+        return response_content, response_input_tokens, response_output_tokens
+
+    messages = [{"role": "user", "content": request["user"]}]
+    content, input_tokens, output_tokens = invoke(messages, idempotency_key)
+    semantic_repair_count = 0
+    degraded_to_insufficient_information = False
     try:
         output = json.loads(content)
     except json.JSONDecodeError as error:
-        raise BetaModelError("Model returned invalid JSON; response body was not stored.") from error
-    _validate_output(output, request)
+        raise BetaModelError(
+            "Model returned invalid JSON; response body was not stored."
+        ) from error
+    try:
+        _validate_output(output, request)
+    except BetaModelError as error:
+        if str(error) != "Model claim cites missing or ineligible fact IDs.":
+            raise
+        semantic_repair_count = 1
+        repair_instruction = (
+            "APPLICATION_VALIDATION_ERROR\n"
+            "One repair is allowed. Return one complete corrected JSON object. "
+            "Every claims[].fact_ids value must be selected only from this eligible list: "
+            + json.dumps(request["eligible_fact_ids"], ensure_ascii=False)
+            + ". Never cite unavailable, omitted, or invented IDs. If an exact claim cannot be supported, "
+            "remove it or return status=insufficient_information. Preserve immutable task fields and keep human review pending."
+        )
+        messages.extend(
+            [
+                {"role": "assistant", "content": content},
+                {"role": "user", "content": repair_instruction},
+            ]
+        )
+        repair_key = hashlib.sha256(f"{idempotency_key}|semantic-repair-1".encode()).hexdigest()
+        repaired_content, repair_input_tokens, repair_output_tokens = invoke(messages, repair_key)
+        input_tokens += repair_input_tokens
+        output_tokens += repair_output_tokens
+        content = repaired_content
+        try:
+            output = json.loads(content)
+        except json.JSONDecodeError as repair_error:
+            raise BetaModelError(
+                "Model returned invalid JSON during fact-ID repair; response body was not stored."
+            ) from repair_error
+        try:
+            _validate_output(output, request)
+        except BetaModelError as repair_error:
+            if str(repair_error) != "Model claim cites missing or ineligible fact IDs.":
+                raise
+            output = _insufficient_information_output(request)
+            _validate_output(output, request)
+            degraded_to_insufficient_information = True
+
+    latency_ms = round((time.perf_counter() - started) * 1000)
     actual_cost = _estimate_cost(settings, input_tokens, output_tokens)
     record = {
         "run_id": f"BETA-RUN-{idempotency_key[:16].upper()}",
@@ -383,7 +511,9 @@ def run_beta_generation(
         "output_tokens": output_tokens,
         "latency_ms": latency_ms,
         "estimated_cost_usd": actual_cost,
-        "attempt_count": attempt + 1,
+        "attempt_count": provider_attempt_count,
+        "semantic_repair_count": semantic_repair_count,
+        "degraded_to_insufficient_information": degraded_to_insufficient_information,
         "output": output,
         "cache_hit": False,
         "body_logging": "disabled",

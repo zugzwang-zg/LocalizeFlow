@@ -90,7 +90,11 @@ def sync_claim_inventory(output: dict, fact_ids: list[str]) -> None:
 
 
 def valid_output(req: dict) -> dict:
-    output = json.loads((ROOT / "prompts" / "tests" / "expected" / "MV-SERUM-001_US_listing_expected.json").read_text(encoding="utf-8"))
+    output = json.loads(
+        (
+            ROOT / "prompts" / "tests" / "expected" / "MV-SERUM-001_US_listing_expected.json"
+        ).read_text(encoding="utf-8")
+    )
     output.update(
         sku=req["task"]["sku"],
         market=req["task"]["market"],
@@ -118,6 +122,20 @@ class FakeCompletions:
 class FakeClient:
     def __init__(self, completions: FakeCompletions) -> None:
         self.chat = SimpleNamespace(completions=completions)
+
+
+class SequencedCompletions(FakeCompletions):
+    def __init__(self, outputs: list[dict]) -> None:
+        super().__init__(outputs[0])
+        self.outputs = outputs
+
+    def create(self, **_: object) -> SimpleNamespace:
+        output = self.outputs[min(self.calls, len(self.outputs) - 1)]
+        self.calls += 1
+        return SimpleNamespace(
+            choices=[SimpleNamespace(message=SimpleNamespace(content=json.dumps(output)))],
+            usage=SimpleNamespace(prompt_tokens=500, completion_tokens=300),
+        )
 
 
 class FlakyCompletions(FakeCompletions):
@@ -175,7 +193,15 @@ class BetaModelTests(unittest.TestCase):
         payload = confirmed_import()
         payload["generation_enabled"] = False
         with self.assertRaises(BetaModelError):
-            build_beta_request(payload, sku="REAL-SKU-001", market="US", content_type="product_listing", target_user="user", marketing_goal="goal", brand_tone=[])
+            build_beta_request(
+                payload,
+                sku="REAL-SKU-001",
+                market="US",
+                content_type="product_listing",
+                target_user="user",
+                marketing_goal="goal",
+                brand_tone=[],
+            )
 
     def test_request_minimizes_and_separates_untrusted_data(self) -> None:
         req = request()
@@ -184,6 +210,26 @@ class BetaModelTests(unittest.TestCase):
         self.assertNotIn("AUTHORIZED-SPEC-001", req["user"])
         self.assertIn("OUTPUT_SCHEMA_JSON", req["system"])
         self.assertLess(len(req["input_fact_ids"]), 20)
+
+    def test_not_directly_usable_fact_value_and_id_are_withheld_from_model(self) -> None:
+        payload = confirmed_import()
+        container = next(
+            fact for fact in payload["facts"] if fact["attribute"] == "packaging_container"
+        )
+        container["generation_policy"] = "not_directly_usable"
+        req = build_beta_request(
+            payload,
+            sku="REAL-SKU-001",
+            market="US",
+            content_type="product_listing",
+            target_user="daily skincare user",
+            marketing_goal="consideration",
+            brand_tone=["clear"],
+        )
+        self.assertNotIn(container["fact_id"], req["user"])
+        self.assertNotIn('"value":"bottle"', req["user"])
+        self.assertIn('"unavailable_attributes":["packaging_container"]', req["user"])
+        self.assertIn("clinically proven", req["user"])
 
     def test_prompt_injection_text_remains_inside_user_json(self) -> None:
         req = build_beta_request(
@@ -213,11 +259,16 @@ class BetaModelTests(unittest.TestCase):
     def test_valid_run_records_versions_usage_cost_and_no_body_log(self) -> None:
         req = request()
         completions = FakeCompletions(valid_output(req))
-        result = run_beta_generation(req, settings=settings(), run_store=InMemoryRunStore(), client_factory=lambda **_: FakeClient(completions))
+        result = run_beta_generation(
+            req,
+            settings=settings(),
+            run_store=InMemoryRunStore(),
+            client_factory=lambda **_: FakeClient(completions),
+        )
         self.assertEqual(result["model"], "deepseek-test")
-        self.assertEqual(result["prompt_version"], "1.2.0")
-        self.assertEqual(result["schema_version"], "content-output-v1.1")
-        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.2")
+        self.assertEqual(result["prompt_version"], "1.3.0")
+        self.assertEqual(result["schema_version"], "content-output-v1.2")
+        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.3")
         self.assertEqual(result["input_tokens"], 500)
         self.assertEqual(result["estimated_cost_usd"], 0.0011)
         self.assertEqual(result["body_logging"], "disabled")
@@ -249,18 +300,61 @@ class BetaModelTests(unittest.TestCase):
         def factory(**_: object) -> FakeClient:
             return FakeClient(completions)
 
-        first = run_beta_generation(req, settings=settings(), run_store=store, client_factory=factory)
-        second = run_beta_generation(req, settings=settings(), run_store=store, client_factory=factory)
+        first = run_beta_generation(
+            req, settings=settings(), run_store=store, client_factory=factory
+        )
+        second = run_beta_generation(
+            req, settings=settings(), run_store=store, client_factory=factory
+        )
         self.assertEqual(first["run_id"], second["run_id"])
         self.assertTrue(second["cache_hit"])
         self.assertEqual(completions.calls, 1)
 
-    def test_ineligible_fact_reference_is_blocked(self) -> None:
+    def test_ineligible_fact_reference_is_never_released(self) -> None:
         req = request()
         output = valid_output(req)
         output["claims"][0]["fact_ids"] = ["OTHER-PROJECT-FACT"]
-        with self.assertRaises(BetaModelError):
-            run_beta_generation(req, settings=settings(), run_store=InMemoryRunStore(), client_factory=lambda **_: FakeClient(FakeCompletions(output)))
+        result = run_beta_generation(
+            req,
+            settings=settings(max_retries=0),
+            run_store=InMemoryRunStore(),
+            client_factory=lambda **_: FakeClient(FakeCompletions(output)),
+        )
+        self.assertEqual(result["output"]["status"], "insufficient_information")
+
+    def test_ineligible_fact_id_gets_one_targeted_repair(self) -> None:
+        req = request()
+        invalid = valid_output(req)
+        invalid["claims"][0]["fact_ids"] = ["OTHER-PROJECT-FACT"]
+        repaired = valid_output(req)
+        completions = SequencedCompletions([invalid, repaired])
+        result = run_beta_generation(
+            req,
+            settings=settings(max_retries=0),
+            run_store=InMemoryRunStore(),
+            client_factory=lambda **_: FakeClient(completions),
+        )
+        self.assertEqual(result["output"]["status"], "success")
+        self.assertEqual(result["semantic_repair_count"], 1)
+        self.assertEqual(result["attempt_count"], 2)
+        self.assertFalse(result["degraded_to_insufficient_information"])
+
+    def test_second_ineligible_fact_id_degrades_without_third_call(self) -> None:
+        req = request()
+        invalid = valid_output(req)
+        invalid["claims"][0]["fact_ids"] = ["OTHER-PROJECT-FACT"]
+        completions = SequencedCompletions([invalid, invalid])
+        result = run_beta_generation(
+            req,
+            settings=settings(max_retries=0),
+            run_store=InMemoryRunStore(),
+            client_factory=lambda **_: FakeClient(completions),
+        )
+        self.assertEqual(result["output"]["status"], "insufficient_information")
+        self.assertEqual(result["semantic_repair_count"], 1)
+        self.assertEqual(result["attempt_count"], 2)
+        self.assertTrue(result["degraded_to_insufficient_information"])
+        self.assertEqual(completions.calls, 2)
 
     def test_product_listing_requires_exactly_five_bullets(self) -> None:
         req = request()
@@ -279,7 +373,9 @@ class BetaModelTests(unittest.TestCase):
         with self.assertRaises(BetaModelError):
             run_beta_generation(req, settings=settings(enabled=False), run_store=InMemoryRunStore())
         with self.assertRaises(BetaModelError):
-            run_beta_generation(req, settings=settings(max_request_cost_usd=0.000001), run_store=InMemoryRunStore())
+            run_beta_generation(
+                req, settings=settings(max_request_cost_usd=0.000001), run_store=InMemoryRunStore()
+            )
 
     def test_transient_error_retries_once(self) -> None:
         req = request()
