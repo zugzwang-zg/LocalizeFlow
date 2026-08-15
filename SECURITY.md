@@ -40,3 +40,10 @@ not approved for confidential customer data. A future model-backed or hosted
 version must add authentication, tenant isolation, retention controls, rate
 limits, abuse prevention, and production monitoring before accepting real
 product material.
+
+The local Closed Beta gateway includes process-local account, project, and
+client quotas plus daily/monthly cost reservations. Identifiers are stored as
+HMAC-SHA256 digests. These controls are a testable safety primitive, not a
+production security boundary: the local client key is session-generated, the
+store resets on process restart, and no trusted reverse-proxy IP adapter or
+external alert destination exists. See `docs/trial_limits.md`.

@@ -27,7 +27,7 @@ from src.beta_model import (  # noqa: E402
     BetaModelSettings,
     InMemoryRunStore,
     build_beta_request,
-    run_beta_generation,
+    run_limited_beta_generation,
 )
 from src.beta_quality import evaluate_beta_output  # noqa: E402
 from src.demo_service import (  # noqa: E402
@@ -44,6 +44,13 @@ from src.demo_service import (  # noqa: E402
     product_profile,
     selling_point_options,
     update_pack_with_manual_text,
+)
+from src.trial_limits import (  # noqa: E402
+    DEFAULT_TRIAL_USAGE_STORE,
+    TrialLimitError,
+    TrialLimitSettings,
+    TrialUsageGuard,
+    TrialUsageSubject,
 )
 
 BETA_TEMPLATE_PATH = PROJECT_ROOT / "templates" / "LocalizeFlow_Beta_SKU_Import_Template.xlsx"
@@ -359,6 +366,7 @@ def _initialize_state(st: Any) -> None:
         "confirmed": False,
         "beta_project_id": "local-beta-project",
         "beta_actor_id": f"local-{uuid.uuid4()}",
+        "beta_client_id": f"session-{uuid.uuid4()}",
         "beta_preview": None,
         "beta_confirmed_import": None,
         "beta_upload_nonce": 0,
@@ -657,11 +665,28 @@ def _render_page_product(st: Any) -> None:
         st.info(f"已确认 · {confirmation['confirmed_at']} · 当前仅保存在本机 Streamlit 会话中。")
         st.markdown("#### 真实模型生成链路")
         settings = BetaModelSettings.from_env()
+        trial_settings = TrialLimitSettings.from_env()
+        trial_guard = None
         try:
             settings.validate()
+            trial_settings.validate()
+            if not trial_settings.enabled:
+                raise TrialLimitError(
+                    "limits_disabled",
+                    "试用配额保护未启用；为避免无上限调用，模型入口保持关闭。",
+                )
+            trial_guard = TrialUsageGuard(trial_settings, DEFAULT_TRIAL_USAGE_STORE)
             model_ready = True
-            st.success(f"模型网关已启用 · {settings.model} · 单次成本上限 ${settings.max_request_cost_usd:.4f}")
-        except BetaModelError as error:
+            st.success(
+                f"模型网关已启用 · {settings.model} · "
+                f"单次 ${settings.max_request_cost_usd:.4f} · "
+                f"账户每月 {trial_settings.monthly_generations_per_account} 次"
+            )
+            st.caption(
+                "额度来源：项目方小额赠送额度并严格封顶；当前计数存于本机进程，"
+                "不代表生产级账户或 IP 防滥用。"
+            )
+        except (BetaModelError, TrialLimitError) as error:
             model_ready = False
             st.info(f"模型网关未开放：{error}")
         confirmed_import = st.session_state.beta_confirmed_import
@@ -706,10 +731,19 @@ def _render_page_product(st: Any) -> None:
                     brand_tone=beta_tones,
                 )
                 with st.spinner("正在调用受控模型链路并验证结构、事实与包装……"):
-                    result = run_beta_generation(
+                    assert trial_guard is not None
+                    trial_subject = TrialUsageSubject(
+                        account_id=st.session_state.beta_actor_id,
+                        project_id=confirmed_import["project_id"],
+                        client_id=st.session_state.beta_client_id,
+                        language="en-US" if beta_market == "US" else "es-MX",
+                    )
+                    result = run_limited_beta_generation(
                         beta_request,
                         settings=settings,
                         run_store=st.session_state.beta_run_store,
+                        trial_guard=trial_guard,
+                        trial_subject=trial_subject,
                     )
                 result["quality"] = evaluate_beta_output(confirmed_import, result["output"])
                 st.session_state.beta_model_result = result
@@ -730,6 +764,17 @@ def _render_page_product(st: Any) -> None:
                 f"{beta_result['run_id']} · prompt {beta_result['prompt_version']} · "
                 f"schema {beta_result['schema_version']} · rules {beta_result['rule_set_id']}"
             )
+            trial_usage = beta_result.get("trial_usage")
+            if trial_usage:
+                st.caption(
+                    "试用额度：账户本月 "
+                    f"{trial_usage['account_monthly_generations_used']}/"
+                    f"{trial_usage['account_monthly_generations_limit']} 次 · "
+                    f"账户今日 ${trial_usage['account_daily_cost_used_usd']:.4f}/"
+                    f"${trial_usage['account_daily_cost_limit_usd']:.4f} · "
+                    f"全局本月 ${trial_usage['global_monthly_cost_used_usd']:.4f}/"
+                    f"${trial_usage['global_monthly_cost_limit_usd']:.2f}"
+                )
             st.json(beta_result["output"], expanded=False)
             for check in beta_quality["checks"]:
                 if check["status"] == "fail":

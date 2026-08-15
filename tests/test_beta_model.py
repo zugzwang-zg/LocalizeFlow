@@ -14,6 +14,13 @@ from src.beta_model import (
     InMemoryRunStore,
     build_beta_request,
     run_beta_generation,
+    run_limited_beta_generation,
+)
+from src.trial_limits import (
+    InMemoryTrialUsageStore,
+    TrialLimitSettings,
+    TrialUsageGuard,
+    TrialUsageSubject,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -271,6 +278,7 @@ class BetaModelTests(unittest.TestCase):
         self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.7")
         self.assertEqual(result["input_tokens"], 500)
         self.assertEqual(result["estimated_cost_usd"], 0.0011)
+        self.assertGreater(result["estimated_request_ceiling_usd"], result["estimated_cost_usd"])
         self.assertEqual(result["body_logging"], "disabled")
 
     def test_anthropic_messages_style_uses_messages_endpoint(self) -> None:
@@ -308,6 +316,72 @@ class BetaModelTests(unittest.TestCase):
         )
         self.assertEqual(first["run_id"], second["run_id"])
         self.assertTrue(second["cache_hit"])
+        self.assertEqual(completions.calls, 1)
+
+    def test_limited_gateway_counts_once_and_cache_hit_is_free(self) -> None:
+        req = request()
+        completions = FakeCompletions(valid_output(req))
+        run_store = InMemoryRunStore()
+        usage_store = InMemoryTrialUsageStore()
+        guard = TrialUsageGuard(
+            TrialLimitSettings(
+                enabled=True,
+                identifier_hmac_secret="test-only-hmac-secret-with-at-least-32-characters",
+                monthly_generations_per_account=1,
+                monthly_generations_per_project=1,
+                max_requests_per_account_window=10,
+                max_requests_per_project_window=10,
+                max_requests_per_client_window=10,
+                max_cost_per_account_day_usd=1.0,
+                max_cost_global_day_usd=2.0,
+                max_cost_global_month_usd=10.0,
+            ),
+            usage_store,
+        )
+        trial_subject = TrialUsageSubject(
+            account_id="account-1",
+            project_id="project-001",
+            client_id="client-1",
+            language="en-US",
+        )
+
+        def factory(**_: object) -> FakeClient:
+            return FakeClient(completions)
+
+        first = run_limited_beta_generation(
+            req,
+            settings=settings(),
+            run_store=run_store,
+            trial_guard=guard,
+            trial_subject=trial_subject,
+            client_factory=factory,
+        )
+        second = run_limited_beta_generation(
+            req,
+            settings=settings(),
+            run_store=run_store,
+            trial_guard=guard,
+            trial_subject=trial_subject,
+            client_factory=factory,
+        )
+        self.assertFalse(first["cache_hit"])
+        self.assertTrue(second["cache_hit"])
+        self.assertEqual(completions.calls, 1)
+        self.assertEqual(len(usage_store.events), 1)
+        self.assertEqual(
+            second["trial_usage"]["account_monthly_generations_used"], 1
+        )
+        another_request = request()
+        another_request["user"] += "\nREQUEST_VARIANT\n2"
+        with self.assertRaisesRegex(BetaModelError, "quota_account_month"):
+            run_limited_beta_generation(
+                another_request,
+                settings=settings(),
+                run_store=run_store,
+                trial_guard=guard,
+                trial_subject=trial_subject,
+                client_factory=factory,
+            )
         self.assertEqual(completions.calls, 1)
 
     def test_ineligible_fact_reference_is_never_released(self) -> None:

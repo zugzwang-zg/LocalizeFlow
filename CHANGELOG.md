@@ -13,6 +13,9 @@ interfaces remain experimental.
 - Continuous integration, CodeQL, and Dependabot configuration.
 - Security, contribution, conduct, roadmap, issue, and pull request guidance.
 - Data provenance and open-source asset inventory documentation.
+- A process-local trial guard with account/project/client quotas, sliding-window
+  rate limits, conservative cost reservations, HMAC-pseudonymous usage events,
+  and repeated-rejection alerts.
 
 ### Changed
 
@@ -33,6 +36,9 @@ interfaces remain experimental.
 - Added target-language blocking for consumer copy, withheld unusable fact
   values from generation inputs, and limited invalid fact-ID recovery to one
   targeted repair before a structured `insufficient_information` fallback.
+- Expanded request-cost estimation to cover the initial generation, one
+  semantic repair, and configured provider retries; cached results do not
+  consume additional trial quota.
 
 ## [0.1.0-preview.1] - 2026-08-14
 

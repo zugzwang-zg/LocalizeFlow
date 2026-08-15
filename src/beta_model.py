@@ -21,6 +21,7 @@ from src.beta_quality import (
     target_language_findings,
     unavailable_attribute_findings,
 )
+from src.trial_limits import TrialLimitError, TrialUsageGuard, TrialUsageSubject
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROMPT_PATH = PROJECT_ROOT / "prompts" / "beta_generation_prompt.md"
@@ -351,6 +352,25 @@ def _estimate_cost(settings: BetaModelSettings, input_tokens: int, output_tokens
     )
 
 
+def _request_identity(
+    request: dict[str, Any], settings: BetaModelSettings
+) -> tuple[str, str, int, float]:
+    request_digest = hashlib.sha256((request["system"] + request["user"]).encode()).hexdigest()
+    idempotency_key = hashlib.sha256(
+        f"{request['task']['project_id']}|{request['task']['sku']}|{request_digest}|{settings.model}".encode()
+    ).hexdigest()
+    estimated_input_tokens = max(1, (len(request["system"]) + len(request["user"])) // 4)
+    provider_call_ceiling = 2 * (settings.max_retries + 1)
+    conservative_input_tokens = (
+        estimated_input_tokens + settings.max_output_tokens
+    ) * provider_call_ceiling
+    conservative_output_tokens = settings.max_output_tokens * provider_call_ceiling
+    estimated_max_cost = _estimate_cost(
+        settings, conservative_input_tokens, conservative_output_tokens
+    )
+    return request_digest, idempotency_key, estimated_input_tokens, estimated_max_cost
+
+
 def _is_retryable_provider_error(error: Exception) -> bool:
     """Retry only transport, throttling, and server failures.
 
@@ -387,17 +407,12 @@ def run_beta_generation(
     http_requester: Callable[..., Any] = httpx.post,
 ) -> dict[str, Any]:
     settings.validate()
-    request_digest = hashlib.sha256((request["system"] + request["user"]).encode()).hexdigest()
-    idempotency_key = hashlib.sha256(
-        f"{request['task']['project_id']}|{request['task']['sku']}|{request_digest}|{settings.model}".encode()
-    ).hexdigest()
+    request_digest, idempotency_key, estimated_input_tokens, estimated_max_cost = (
+        _request_identity(request, settings)
+    )
     cached = run_store.get(idempotency_key)
     if cached:
         return {**cached, "cache_hit": True}
-    estimated_input_tokens = max(1, (len(request["system"]) + len(request["user"])) // 4)
-    estimated_max_cost = _estimate_cost(
-        settings, estimated_input_tokens, settings.max_output_tokens
-    )
     if estimated_max_cost > settings.max_request_cost_usd:
         raise BetaModelError("Estimated request cost exceeds the configured per-request limit.")
 
@@ -571,6 +586,7 @@ def run_beta_generation(
         "output_tokens": output_tokens,
         "latency_ms": latency_ms,
         "estimated_cost_usd": actual_cost,
+        "estimated_request_ceiling_usd": estimated_max_cost,
         "attempt_count": provider_attempt_count,
         "semantic_repair_count": semantic_repair_count,
         "degraded_to_insufficient_information": degraded_to_insufficient_information,
@@ -580,3 +596,54 @@ def run_beta_generation(
     }
     run_store.put(idempotency_key, record)
     return record
+
+
+def run_limited_beta_generation(
+    request: dict[str, Any],
+    *,
+    settings: BetaModelSettings,
+    run_store: RunStore,
+    trial_guard: TrialUsageGuard,
+    trial_subject: TrialUsageSubject,
+    client_factory: Callable[..., Any] = OpenAI,
+    http_requester: Callable[..., Any] = httpx.post,
+) -> dict[str, Any]:
+    """Run one generation behind cumulative trial quotas and cost reservations."""
+
+    settings.validate()
+    _, idempotency_key, _, estimated_max_cost = _request_identity(request, settings)
+    cached = run_store.get(idempotency_key)
+    if cached:
+        return {
+            **cached,
+            "cache_hit": True,
+            "trial_usage": trial_guard.snapshot(trial_subject),
+        }
+    if estimated_max_cost > settings.max_request_cost_usd:
+        raise BetaModelError("Estimated request cost exceeds the configured per-request limit.")
+    try:
+        reservation = trial_guard.reserve(
+            trial_subject,
+            idempotency_key=idempotency_key,
+            estimated_cost_usd=estimated_max_cost,
+        )
+    except TrialLimitError as error:
+        retry_note = (
+            f" Retry after {error.retry_after_seconds} seconds."
+            if error.retry_after_seconds
+            else ""
+        )
+        raise BetaModelError(f"Trial limit [{error.code}]: {error}{retry_note}") from error
+    try:
+        result = run_beta_generation(
+            request,
+            settings=settings,
+            run_store=run_store,
+            client_factory=client_factory,
+            http_requester=http_requester,
+        )
+    except Exception as error:
+        trial_guard.fail(reservation, failure_code=type(error).__name__)
+        raise
+    trial_guard.complete(reservation, actual_cost_usd=result["estimated_cost_usd"])
+    return {**result, "trial_usage": trial_guard.snapshot(trial_subject)}
