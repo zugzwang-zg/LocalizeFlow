@@ -162,6 +162,35 @@ def _normalized_excerpt(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().casefold().rstrip(" .,:;!?")
 
 
+def claim_traceability_findings(
+    output: dict[str, Any], eligible_ids: set[str] | None = None
+) -> list[str]:
+    findings: list[str] = []
+    covered_locations: set[str] = set()
+    for claim in output["claims"]:
+        if eligible_ids is not None and (
+            not claim["fact_ids"]
+            or any(fact_id not in eligible_ids for fact_id in claim["fact_ids"])
+        ):
+            findings.append(f"{claim['claim_id']} 引用了缺失或不可用事实")
+        location_text = _claim_location_text(output, claim["location"])
+        if location_text is None:
+            findings.append(f"{claim['claim_id']} 的 location 无效或为空")
+            continue
+        covered_locations.add(claim["location"])
+        if _normalized_excerpt(claim["text"]) not in _normalized_excerpt(location_text):
+            findings.append(f"{claim['claim_id']} 的 text 不是 location 中的原文片段")
+    if output["content_type"] == "product_listing":
+        required_locations = {"content.title", "content.description"} | {
+            f"content.bullet_points[{index}]"
+            for index in range(len(output["content"]["bullet_points"]))
+        }
+        missing_locations = sorted(required_locations - covered_locations)
+        if missing_locations:
+            findings.append(f"缺少 claim 覆盖：{', '.join(missing_locations)}")
+    return findings
+
+
 def _fold_word(word: str) -> str:
     return "".join(
         character
@@ -273,28 +302,7 @@ def evaluate_beta_output(
             "referenced_fact_ids": [],
         }
 
-    claim_findings: list[str] = []
-    covered_locations: set[str] = set()
-    for claim in output["claims"]:
-        if not claim["fact_ids"] or any(
-            fact_id not in eligible_ids for fact_id in claim["fact_ids"]
-        ):
-            claim_findings.append(f"{claim['claim_id']} 引用了缺失或不可用事实")
-        location_text = _claim_location_text(output, claim["location"])
-        if location_text is None:
-            claim_findings.append(f"{claim['claim_id']} 的 location 无效或为空")
-            continue
-        covered_locations.add(claim["location"])
-        if _normalized_excerpt(claim["text"]) not in _normalized_excerpt(location_text):
-            claim_findings.append(f"{claim['claim_id']} 的 text 不是 location 中的原文片段")
-    if output["content_type"] == "product_listing":
-        required_locations = {"content.title", "content.description"} | {
-            f"content.bullet_points[{index}]"
-            for index in range(len(output["content"]["bullet_points"]))
-        }
-        missing_locations = sorted(required_locations - covered_locations)
-        if missing_locations:
-            claim_findings.append(f"缺少 claim 覆盖：{', '.join(missing_locations)}")
+    claim_findings = claim_traceability_findings(output, eligible_ids)
     checks.append(
         {
             "name": "声明证据绑定",

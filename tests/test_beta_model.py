@@ -266,9 +266,9 @@ class BetaModelTests(unittest.TestCase):
             client_factory=lambda **_: FakeClient(completions),
         )
         self.assertEqual(result["model"], "deepseek-test")
-        self.assertEqual(result["prompt_version"], "1.4.0")
+        self.assertEqual(result["prompt_version"], "1.5.0")
         self.assertEqual(result["schema_version"], "content-output-v1.2")
-        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.4")
+        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.5")
         self.assertEqual(result["input_tokens"], 500)
         self.assertEqual(result["estimated_cost_usd"], 0.0011)
         self.assertEqual(result["body_logging"], "disabled")
@@ -422,6 +422,22 @@ class BetaModelTests(unittest.TestCase):
         self.assertEqual(result["output"]["status"], "success")
         self.assertEqual(result["semantic_repair_count"], 1)
         self.assertIn("piel", result["output"]["content"]["description"])
+
+    def test_claim_location_mismatch_gets_one_targeted_repair(self) -> None:
+        req = request()
+        invalid = valid_output(req)
+        invalid["claims"][0]["text"] = "Text absent from the declared location"
+        repaired = valid_output(req)
+        completions = SequencedCompletions([invalid, repaired])
+        result = run_beta_generation(
+            req,
+            settings=settings(max_retries=0),
+            run_store=InMemoryRunStore(),
+            client_factory=lambda **_: FakeClient(completions),
+        )
+        self.assertEqual(result["output"]["status"], "success")
+        self.assertEqual(result["semantic_repair_count"], 1)
+        self.assertEqual(result["attempt_count"], 2)
 
     def test_product_listing_requires_exactly_five_bullets(self) -> None:
         req = request()

@@ -15,15 +15,19 @@ import httpx
 from jsonschema import ValidationError, validate
 from openai import OpenAI
 
-from src.beta_quality import target_language_findings, unavailable_attribute_findings
+from src.beta_quality import (
+    claim_traceability_findings,
+    target_language_findings,
+    unavailable_attribute_findings,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROMPT_PATH = PROJECT_ROOT / "prompts" / "beta_generation_prompt.md"
 SCHEMA_PATH = PROJECT_ROOT / "prompts" / "schemas" / "content_output.schema.json"
-PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.4"
-PROMPT_VERSION = "1.4.0"
+PROMPT_ID = "LF-PROMPT-BETA-GENERATOR-1.5"
+PROMPT_VERSION = "1.5.0"
 SCHEMA_VERSION = "content-output-v1.2"
-RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.4"
+RULE_SET_ID = "LF-PLATFORM-RULES-2026-08-15.5"
 
 
 class BetaModelError(RuntimeError):
@@ -242,12 +246,21 @@ def _validate_output(output: dict[str, Any], request: dict[str, Any]) -> None:
     for field in ("sku", "market", "language", "content_type", "platform"):
         if output[field] != task[field]:
             raise BetaModelError(f"Model changed immutable task field: {field}.")
+    if output["status"] == "insufficient_information":
+        if output["human_review"] != {"required": True, "status": "pending"}:
+            raise BetaModelError("Model output attempted to bypass human review.")
+        return
     repair_reasons: list[str] = []
     eligible = set(request["eligible_fact_ids"])
     for claim in output["claims"]:
         if not claim["fact_ids"] or set(claim["fact_ids"]) - eligible:
             repair_reasons.append("claims cite missing or ineligible fact IDs")
             break
+    traceability_issues = claim_traceability_findings(output)
+    if traceability_issues:
+        repair_reasons.append(
+            "claim text/location traceability is invalid: " + " | ".join(traceability_issues[:3])
+        )
     language_issues = target_language_findings(output)
     if language_issues:
         repair_reasons.append(
