@@ -4,7 +4,7 @@ import copy
 import unittest
 
 from src.beta_quality import evaluate_beta_output
-from tests.test_beta_model import confirmed_import, request, valid_output
+from tests.test_beta_model import confirmed_import, request, sync_claim_inventory, valid_output
 
 
 class BetaQualityTests(unittest.TestCase):
@@ -16,8 +16,7 @@ class BetaQualityTests(unittest.TestCase):
         output["content"]["bullet_points"] = ["Glycerin"] * 4 + ["30 mL PP bottle"]
         output["content"]["description"] = "Authorized face serum in a 30 mL PP bottle."
         packaging_ids = [fact["fact_id"] for fact in imported["facts"] if fact["attribute"].startswith("packaging_") or fact["attribute"] == "specification"]
-        output["claims"][0]["text"] = output["content"]["title"]
-        output["claims"][0]["fact_ids"] = packaging_ids
+        sync_claim_inventory(output, packaging_ids)
         report = evaluate_beta_output(imported, output)
         self.assertEqual(report["export_gate"], "human_review")
 
@@ -65,10 +64,27 @@ class BetaQualityTests(unittest.TestCase):
             for fact in imported["facts"]
             if fact["attribute"].startswith("packaging_") or fact["attribute"] == "specification"
         ]
-        output["claims"][0]["text"] = "Presentación de 30 mL en frasco con bomba."
-        output["claims"][0]["fact_ids"] = packaging_ids
+        sync_claim_inventory(output, packaging_ids)
         report = evaluate_beta_output(imported, output)
         self.assertEqual(report["export_gate"], "human_review")
+
+    def test_claim_text_must_exist_at_declared_location(self) -> None:
+        imported = confirmed_import()
+        output = valid_output(request())
+        output["claims"][0]["text"] = "Text that is not in the title"
+        report = evaluate_beta_output(imported, output)
+        self.assertEqual(report["export_gate"], "blocked")
+        detail = next(check["detail"] for check in report["checks"] if check["name"] == "声明证据绑定")
+        self.assertIn("不是 location 中的原文片段", detail)
+
+    def test_every_listing_location_requires_claim_coverage(self) -> None:
+        imported = confirmed_import()
+        output = valid_output(request())
+        output["claims"] = [claim for claim in output["claims"] if claim["location"] != "content.description"]
+        report = evaluate_beta_output(imported, output)
+        self.assertEqual(report["export_gate"], "blocked")
+        detail = next(check["detail"] for check in report["checks"] if check["name"] == "声明证据绑定")
+        self.assertIn("content.description", detail)
 
     def test_internal_fact_id_in_consumer_content_blocks(self) -> None:
         imported = confirmed_import()

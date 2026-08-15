@@ -39,6 +39,31 @@ def _contains(text: str, term: str) -> bool:
     return bool(re.search(rf"(?<!\w){re.escape(term)}(?!\w)", text, flags=re.I))
 
 
+def _claim_location_text(output: dict[str, Any], location: str) -> str | None:
+    content = output["content"]
+    scalar = re.fullmatch(r"content\.(title|description|caption|hook|body|cta)", location)
+    if scalar:
+        value = content.get(scalar.group(1))
+        return value if isinstance(value, str) else None
+    bullet = re.fullmatch(r"content\.bullet_points\[(\d+)]", location)
+    if bullet:
+        index = int(bullet.group(1))
+        values = content.get("bullet_points") or []
+        return values[index] if index < len(values) and isinstance(values[index], str) else None
+    scene = re.fullmatch(r"content\.scenes\[(\d+)]\.(visual|voiceover|on_screen_text)", location)
+    if scene:
+        index = int(scene.group(1))
+        values = content.get("scenes") or []
+        if index < len(values):
+            value = values[index].get(scene.group(2))
+            return value if isinstance(value, str) else None
+    return None
+
+
+def _normalized_excerpt(text: str) -> str:
+    return re.sub(r"\s+", " ", text).strip().casefold().rstrip(" .,:;!?")
+
+
 def evaluate_beta_output(confirmed_import: dict[str, Any], output: dict[str, Any]) -> dict[str, Any]:
     sku = output["sku"]
     market = output["market"]
@@ -54,16 +79,30 @@ def evaluate_beta_output(confirmed_import: dict[str, Any], output: dict[str, Any
     }
     checks: list[dict[str, Any]] = []
 
-    bad_claims = [
-        claim["claim_id"]
-        for claim in output["claims"]
-        if not claim["fact_ids"] or any(fact_id not in eligible_ids for fact_id in claim["fact_ids"])
-    ]
+    claim_findings: list[str] = []
+    covered_locations: set[str] = set()
+    for claim in output["claims"]:
+        if not claim["fact_ids"] or any(fact_id not in eligible_ids for fact_id in claim["fact_ids"]):
+            claim_findings.append(f"{claim['claim_id']} 引用了缺失或不可用事实")
+        location_text = _claim_location_text(output, claim["location"])
+        if location_text is None:
+            claim_findings.append(f"{claim['claim_id']} 的 location 无效或为空")
+            continue
+        covered_locations.add(claim["location"])
+        if _normalized_excerpt(claim["text"]) not in _normalized_excerpt(location_text):
+            claim_findings.append(f"{claim['claim_id']} 的 text 不是 location 中的原文片段")
+    if output["content_type"] == "product_listing":
+        required_locations = {"content.title", "content.description"} | {
+            f"content.bullet_points[{index}]" for index in range(len(output["content"]["bullet_points"]))
+        }
+        missing_locations = sorted(required_locations - covered_locations)
+        if missing_locations:
+            claim_findings.append(f"缺少 claim 覆盖：{', '.join(missing_locations)}")
     checks.append(
         {
             "name": "声明证据绑定",
-            "status": "fail" if bad_claims else "pass",
-            "detail": f"无效声明：{', '.join(bad_claims)}" if bad_claims else "所有可验证声明只引用当前项目的 A/B 级已确认事实。",
+            "status": "fail" if claim_findings else "pass",
+            "detail": "；".join(claim_findings) if claim_findings else "声明事实、原文片段和内容位置均可追溯。",
             "category": "fact",
         }
     )

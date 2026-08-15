@@ -69,6 +69,26 @@ def request() -> dict:
     )
 
 
+def sync_claim_inventory(output: dict, fact_ids: list[str]) -> None:
+    locations = [("content.title", output["content"]["title"])]
+    locations.extend(
+        (f"content.bullet_points[{index}]", text)
+        for index, text in enumerate(output["content"]["bullet_points"])
+    )
+    locations.append(("content.description", output["content"]["description"]))
+    output["claims"] = [
+        {
+            "claim_id": f"claim-{index:03d}",
+            "text": text,
+            "location": location,
+            "fact_ids": fact_ids,
+            "evidence_level": "A",
+        }
+        for index, (location, text) in enumerate(locations, start=1)
+        if isinstance(text, str) and text
+    ]
+
+
 def valid_output(req: dict) -> dict:
     output = json.loads((ROOT / "prompts" / "tests" / "expected" / "MV-SERUM-001_US_listing_expected.json").read_text(encoding="utf-8"))
     output.update(
@@ -78,15 +98,7 @@ def valid_output(req: dict) -> dict:
         platform=req["task"]["platform"],
         content_type=req["task"]["content_type"],
     )
-    output["claims"] = [
-        {
-            "claim_id": "claim-001",
-            "text": "Authorized face serum",
-            "location": "content.title",
-            "fact_ids": [req["eligible_fact_ids"][0]],
-            "evidence_level": "A",
-        }
-    ]
+    sync_claim_inventory(output, [req["eligible_fact_ids"][0]])
     return output
 
 
@@ -203,9 +215,9 @@ class BetaModelTests(unittest.TestCase):
         completions = FakeCompletions(valid_output(req))
         result = run_beta_generation(req, settings=settings(), run_store=InMemoryRunStore(), client_factory=lambda **_: FakeClient(completions))
         self.assertEqual(result["model"], "deepseek-test")
-        self.assertEqual(result["prompt_version"], "1.1.0")
+        self.assertEqual(result["prompt_version"], "1.2.0")
         self.assertEqual(result["schema_version"], "content-output-v1.1")
-        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15")
+        self.assertEqual(result["rule_set_id"], "LF-PLATFORM-RULES-2026-08-15.2")
         self.assertEqual(result["input_tokens"], 500)
         self.assertEqual(result["estimated_cost_usd"], 0.0011)
         self.assertEqual(result["body_logging"], "disabled")

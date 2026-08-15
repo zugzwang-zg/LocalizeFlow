@@ -15,6 +15,7 @@ You generate one LocalizeFlow candidate from confirmed product facts.
 - Do not infer an unknown or omitted field.
 - Do not use blocked or prohibited facts as positive claims.
 - Each verifiable claim must cite only the fact IDs that support it.
+- Every non-empty consumer-facing content location must have a claims entry. Set `claims[].text` to an exact verbatim excerpt from that location and set `claims[].location` to its JSON path, such as `content.title`, `content.bullet_points[0]`, or `content.description`.
 - Brand-tone words control writing style only; never present them as product attributes, formula properties, or factual claims.
 - Do not infer convenience, practicality, efficacy, safety, or quality from a container type, usage instruction, ingredient, or task metadata.
 - If the facts are insufficient, return `status=insufficient_information` and identify the missing fields.

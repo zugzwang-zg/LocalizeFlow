@@ -28,6 +28,8 @@ interfaces remain experimental.
   prevent internal fact-ID leakage, and keep brand-tone metadata out of claims.
 - Corrected Mexican Spanish pump-bottle matching so `frasco con bomba` is not
   misclassified as a jar, with prompt/schema/rule versions advanced for auditability.
+- Added deterministic claim-location coverage and verbatim-excerpt checks so
+  claim inventories cannot point to missing or unrelated consumer copy.
 
 ## [0.1.0-preview.1] - 2026-08-14
 
