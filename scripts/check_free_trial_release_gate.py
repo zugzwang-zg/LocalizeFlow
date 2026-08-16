@@ -7,6 +7,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+try:
+    from scripts.check_hosted_trial_prerequisites import evaluate_prerequisites
+except ModuleNotFoundError:  # Direct execution adds scripts/, not its parent, to sys.path.
+    from check_hosted_trial_prerequisites import evaluate_prerequisites
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = PROJECT_ROOT / "reports" / "free_trial_gate.json"
 EXPECTED_GATES = {
@@ -74,7 +79,15 @@ def evaluate_gate(manifest_path: Path = MANIFEST_PATH) -> dict[str, Any]:
             if not (PROJECT_ROOT / relative_path).exists():
                 errors.append(f"{gate_id}: missing evidence path {relative_path}.")
 
-    computed_decision = "GO" if not blocked_ids and not errors else "NO_GO"
+    prerequisite_result = evaluate_prerequisites()
+    if prerequisite_result.get("errors"):
+        errors.append("Hosted prerequisite register has validation errors.")
+    prerequisite_decision = prerequisite_result.get("computed_decision")
+    computed_decision = (
+        "GO"
+        if not blocked_ids and not errors and prerequisite_decision == "VERIFIED"
+        else "NO_GO"
+    )
     if manifest.get("decision") != computed_decision:
         errors.append("Declared decision does not match the computed gate decision.")
         computed_decision = "NO_GO"
@@ -107,6 +120,7 @@ def evaluate_gate(manifest_path: Path = MANIFEST_PATH) -> dict[str, Any]:
         "gate_count": len(gates),
         "ready_count": ready_count,
         "blocked_ids": sorted(blocked_ids),
+        "prerequisite_decision": prerequisite_decision,
         "errors": errors,
         "model_api_calls": 0,
     }

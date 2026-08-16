@@ -30,6 +30,7 @@ class StageDReleaseGateTests(unittest.TestCase):
         self.assertEqual(result["computed_decision"], "NO_GO")
         self.assertEqual(result["gate_count"], 6)
         self.assertEqual(result["ready_count"], 1)
+        self.assertEqual(result["prerequisite_decision"], "UNRESOLVED")
         self.assertEqual(result["errors"], [])
         self.assertEqual(result["model_api_calls"], 0)
 

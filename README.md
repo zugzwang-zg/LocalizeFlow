@@ -17,6 +17,8 @@ GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
 
 > **托管免费试用发布结论：NO-GO。** 模型数据政策要求用户上传内容默认不得用于训练；在真实托管身份/存储、运营主体、供应商与跨境披露、持久化配额、备份删除、外部监控告警和生产回滚完成前，注册、用户上传、用户数据模型调用与托管内容导出必须保持关闭。参见 [`reports/free_trial_readiness.md`](reports/free_trial_readiness.md) 和 [`docs/legal/`](docs/legal/)。
 
+> D5 前置决策同样为 `UNRESOLVED`。当前采用零额外托管成本的作品集策略：保留冻结数据公开 Demo，并用 [`reports/hosted_trial_prerequisites.json`](reports/hosted_trial_prerequisites.json) 与 [`docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md`](docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md) 管理未来生产选择；公开 Beta 表单只登记兴趣，不授予访问权限或接收商品资料。
+
 > 运维边界：仓库已提供不记录正文的进程内指标、阈值告警、模型/内容导出紧急开关、P0/P1/P2 响应流程和发布演练；但尚无持久化多实例指标、外部探针、告警投递或真实值守。参见 [`docs/operations/`](docs/operations/)；这些缺口继续阻断托管试用。
 
 > **合成内容声明：** 虚拟品牌、虚拟 SKU、价格、产品事实、营销候选和评测材料均为 AI 生成的合成内容；其余代码、文档、测量、图表与演示资产由项目方原创。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。

@@ -26,6 +26,9 @@ interfaces remain experimental.
   and a synthetic operations drill.
 - A machine-readable hosted free-trial release gate and `NO-GO` readiness
   report with repository-relative evidence.
+- A D5 hosted-trial prerequisite decision register, dependency-ordered
+  implementation backlog, machine validator, and interest-only Beta intake
+  boundary; the active strategy remains the deterministic portfolio Demo.
 
 ### Changed
 

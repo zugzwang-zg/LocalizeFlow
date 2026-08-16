@@ -72,6 +72,7 @@ fields block registrations, uploads, and model processing of user data.
 .\.venv\Scripts\uv.exe run python prompts\tests\validate_prompts_offline.py
 .\.venv\Scripts\uv.exe run python app\main.py --smoke-test
 .\.venv\Scripts\uv.exe run python scripts\run_operations_drill.py
+.\.venv\Scripts\uv.exe run python scripts\check_hosted_trial_prerequisites.py --expect-unresolved
 .\.venv\Scripts\uv.exe run python scripts\check_free_trial_release_gate.py --expect-no-go
 cd web
 pnpm install --frozen-lockfile

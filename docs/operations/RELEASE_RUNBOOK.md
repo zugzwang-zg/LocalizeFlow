@@ -26,6 +26,7 @@ must match the actual environment.
 .\.venv\Scripts\uv.exe run python prompts\tests\validate_prompts_offline.py
 .\.venv\Scripts\uv.exe run python app\main.py --smoke-test
 .\.venv\Scripts\uv.exe run python scripts\run_operations_drill.py
+.\.venv\Scripts\uv.exe run python scripts\check_hosted_trial_prerequisites.py --expect-unresolved
 .\.venv\Scripts\uv.exe run python scripts\check_free_trial_release_gate.py --expect-no-go
 ```
 
@@ -79,3 +80,9 @@ trial launch.
 For an actual hosted free-trial candidate, replace `--expect-no-go` with
 `--require-go`. A `NO_GO` result must stop the release rather than being waived
 by a deployment command.
+
+Before that candidate exists, replace
+`check_hosted_trial_prerequisites.py --expect-unresolved` with
+`check_hosted_trial_prerequisites.py --require-verified`. A local `.env`, vendor
+account, or successful API call is not evidence that operator, provider, tenant,
+deletion, monitoring, reviewer, or approval prerequisites are verified.

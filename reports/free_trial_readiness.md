@@ -31,6 +31,17 @@ An actual hosted free-trial candidate must change the command to
 any evidence path is missing, the declared decision differs from the computed
 decision, or the fail-closed public/configuration boundaries are absent.
 
+The owner decisions that precede implementation are tracked separately in
+`reports/hosted_trial_prerequisites.json`. The current strategy and dependency-
+ordered batches are documented in
+`docs/operations/HOSTED_TRIAL_DECISION_REGISTER.md` and
+`docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md`. Validate the current
+safe state with:
+
+```powershell
+.\.venv\Scripts\uv.exe run python scripts\check_hosted_trial_prerequisites.py --expect-unresolved
+```
+
 ## What is genuinely complete
 
 - D1: locally testable quota, rate, idempotency, and cost-reservation primitive.

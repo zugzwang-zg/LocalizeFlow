@@ -14,7 +14,10 @@ This is a manually maintained notice, not a live status page or uptime
 guarantee. No production probe or external alert destination is connected yet.
 A stale review date must not be interpreted as evidence of availability.
 The current machine-checked release decision is `NO_GO`; see
-`reports/free_trial_readiness.md`.
+`reports/free_trial_readiness.md`. The production prerequisite selections are
+also `UNRESOLVED`; see `reports/hosted_trial_prerequisites.json`. A configured
+local `.env` or a model API connection does not resolve provider, privacy,
+identity, storage, monitoring, support, reviewer, or approval requirements.
 
 ## Incident and support channels
 

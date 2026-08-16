@@ -28,6 +28,11 @@ Current release decision: **NO-GO**. D1–D4 provide locally testable safeguards
 but five of six hosted release gates remain blocked. See
 `reports/free_trial_readiness.md`.
 
+D5 tracks the owner decisions that must precede production work. Its machine-
+readable status is `UNRESOLVED`, and the active strategy remains the portfolio-
+only deterministic public Demo. See `reports/hosted_trial_prerequisites.json`
+and `docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md`.
+
 - Replace local authentication, sessions, encrypted SQLite, deletion, and
   export controls with tested hosted identity, KMS, storage, backups, and
   multi-instance authorization.

@@ -64,6 +64,7 @@ def test_release_smoke_and_support_issue_contracts_exist() -> None:
         "uv run pytest -q",
         "uv run python app/main.py --smoke-test",
         "uv run python scripts/run_operations_drill.py",
+        "uv run python scripts/check_hosted_trial_prerequisites.py --expect-unresolved",
         "uv run python scripts/check_free_trial_release_gate.py --expect-no-go",
         "pnpm security:audit",
         "pnpm test",
@@ -83,3 +84,16 @@ def test_readme_and_roadmap_expose_the_free_trial_no_go_decision() -> None:
     assert "reports/free_trial_readiness.md" in readme
     assert "Current release decision: **NO-GO**" in roadmap
     assert "Decision: **NO-GO" in readiness
+
+
+def test_hosted_prerequisite_docs_keep_portfolio_strategy_active() -> None:
+    status = normalized("STATUS.md")
+    decision = normalized("docs/operations/HOSTED_TRIAL_DECISION_REGISTER.md")
+    backlog = normalized("docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md")
+
+    assert "reports/hosted_trial_prerequisites.json" in status
+    assert "portfolio-only public Demo remains the active strategy" in decision
+    assert "Strategy A is the recommended default" in decision
+    for batch in range(7):
+        assert f"Batch {batch}" in backlog
+    assert "AI review remains supplementary evidence" in backlog
