@@ -26,6 +26,7 @@ must match the actual environment.
 .\.venv\Scripts\uv.exe run python prompts\tests\validate_prompts_offline.py
 .\.venv\Scripts\uv.exe run python app\main.py --smoke-test
 .\.venv\Scripts\uv.exe run python scripts\run_operations_drill.py
+.\.venv\Scripts\uv.exe run python scripts\check_free_trial_release_gate.py --expect-no-go
 ```
 
 Then run in `web/`:
@@ -74,3 +75,7 @@ Use fictional data only:
 The current project has no hosting platform or immutable deployment artifact
 configured, so the production rollback step remains untested and blocks hosted
 trial launch.
+
+For an actual hosted free-trial candidate, replace `--expect-no-go` with
+`--require-go`. A `NO_GO` result must stop the release rather than being waived
+by a deployment command.

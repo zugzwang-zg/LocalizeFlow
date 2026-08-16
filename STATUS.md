@@ -13,6 +13,8 @@ Last manually reviewed: 2026-08-16
 This is a manually maintained notice, not a live status page or uptime
 guarantee. No production probe or external alert destination is connected yet.
 A stale review date must not be interpreted as evidence of availability.
+The current machine-checked release decision is `NO_GO`; see
+`reports/free_trial_readiness.md`.
 
 ## Incident and support channels
 

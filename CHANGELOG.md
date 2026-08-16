@@ -19,6 +19,13 @@ interfaces remain experimental.
 - An optional local encrypted tenant store with scrypt authentication,
   tenant-scoped project persistence, self-service export/deletion, expiring
   sessions, and body-free audit events.
+- Public-preview privacy, terms, acceptable-use, disclaimer, status, and
+  support documents plus blocked hosted legal/provider templates.
+- Content-free operational metrics, deterministic P0/P1 alerts, model and
+  Closed Beta content-export emergency controls, incident/rollback runbooks,
+  and a synthetic operations drill.
+- A machine-readable hosted free-trial release gate and `NO-GO` readiness
+  report with repository-relative evidence.
 
 ### Changed
 
@@ -42,6 +49,9 @@ interfaces remain experimental.
 - Expanded request-cost estimation to cover the initial generation, one
   semantic repair, and configured provider retries; cached results do not
   consume additional trial quota.
+- Moved hard export enforcement into the deterministic JSON/CSV and Closed Beta
+  audit serializers so callers cannot bypass fact, language, packaging, human
+  review, or operational export gates by invoking a lower-level function.
 
 ## [0.1.0-preview.1] - 2026-08-14
 

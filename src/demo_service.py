@@ -43,6 +43,10 @@ PRODUCT_LABELS = {
 }
 
 
+class DemoExportError(RuntimeError):
+    """Raised when a deterministic pack has not passed review and fresh gates."""
+
+
 class MarketConfig(TypedDict):
     language: str
     label: str
@@ -709,10 +713,12 @@ def update_pack_with_manual_text(
 
 
 def pack_as_json_bytes(pack: dict[str, Any]) -> bytes:
+    _require_exportable_pack(pack)
     return json.dumps(pack, ensure_ascii=False, indent=2).encode("utf-8")
 
 
 def pack_as_csv_bytes(pack: dict[str, Any]) -> bytes:
+    _require_exportable_pack(pack)
     buffer = io.StringIO()
     writer = csv.writer(buffer)
     writer.writerow(
@@ -769,3 +775,23 @@ def pack_as_csv_bytes(pack: dict[str, Any]) -> bytes:
                 ]
             )
     return ("\ufeff" + buffer.getvalue()).encode("utf-8")
+
+
+def _require_exportable_pack(pack: dict[str, Any]) -> None:
+    content_type = pack.get("primary_content_type")
+    versions = pack.get("versions", {})
+    payload = versions.get(content_type, {}) if isinstance(versions, dict) else {}
+    final_text = payload.get("final") if isinstance(payload, dict) else None
+    if not isinstance(final_text, str) or not final_text.strip():
+        raise DemoExportError("A reviewed final version is required before export.")
+    human_review = pack.get("human_review")
+    if not isinstance(human_review, dict) or human_review.get("status") != "confirmed":
+        raise DemoExportError("Human review must be confirmed before export.")
+    fresh_quality = evaluate_text(
+        sku=str(pack.get("sku", "")),
+        market=str(pack.get("market", "")),
+        content_type=str(content_type),
+        text=final_text,
+    )
+    if fresh_quality["export_gate"] == "blocked":
+        raise DemoExportError("Fresh fact or packaging checks block export.")

@@ -5,6 +5,10 @@
 **Status:** local and GitHub-hosted release gates passed; approved for
 publication.
 
+**Scope clarification (2026-08-16):** this approval applies only to the
+Apache-2.0 open-source preview and frozen deterministic Demo. The separate
+hosted free-trial decision is **NO-GO**; see `reports/free_trial_readiness.md`.
+
 ## Completed locally
 
 - Added Apache License 2.0, NOTICE, data/material notices, and an asset

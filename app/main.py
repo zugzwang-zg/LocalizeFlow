@@ -45,6 +45,7 @@ from src.demo_service import (  # noqa: E402
     selling_point_options,
     update_pack_with_manual_text,
 )
+from src.export_service import ExportGateError, beta_audit_export_bytes  # noqa: E402
 from src.operations import (  # noqa: E402
     DEFAULT_OPERATIONS_MONITOR,
     OperationsError,
@@ -1013,21 +1014,23 @@ def _render_page_product(st: Any) -> None:
             except OperationsError as error:
                 operational_export_ready = False
                 st.info(f"Closed Beta 内容导出已由紧急开关关闭：{error}")
-            export_payload = {
-                "run": {key: value for key, value in beta_result.items() if key != "output"},
-                "output": beta_result["output"],
-                "quality": beta_quality,
-                "human_review": {
-                    "status": "approved" if export_ready else "pending",
-                    "approved_at": st.session_state.beta_approved_at if export_ready else None,
-                },
-            }
+            export_bytes = b""
+            if export_ready and operational_export_ready:
+                try:
+                    export_bytes = beta_audit_export_bytes(
+                        confirmed_import,
+                        beta_result,
+                        approved_at=st.session_state.beta_approved_at,
+                        operations_settings=operations_settings,
+                    )
+                except (ExportGateError, OperationsError) as error:
+                    st.error(f"Closed Beta 导出被阻断：{error}")
             downloaded = st.download_button(
                 "下载 Closed Beta 审计包 JSON",
-                data=json.dumps(export_payload, ensure_ascii=False, indent=2).encode(),
+                data=export_bytes,
                 file_name=f"{beta_result['run_id']}_reviewed.json",
                 mime="application/json",
-                disabled=not export_ready or not operational_export_ready,
+                disabled=not export_bytes,
                 use_container_width=True,
             )
             if downloaded:

@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "audited_at": "2026-08-16",
+  "scope": "hosted_free_trial",
+  "decision": "NO_GO",
+  "gates": [
+    {
+      "id": "user_data_policy",
+      "local_status": "partial",
+      "release_status": "blocked",
+      "evidence": [
+        "PRIVACY.md",
+        "TERMS.md",
+        "ACCEPTABLE_USE_POLICY.md",
+        "docs/legal/LEGAL_RELEASE_CHECKLIST.md"
+      ],
+      "blockers": [
+        "Hosted operator, dedicated privacy contact, applicable jurisdictions, and production processing inventory are not approved.",
+        "Relay/model legal entities, regions, retention, subprocessors, transfers, and no-training settings are not verified."
+      ]
+    },
+    {
+      "id": "tenant_authorization",
+      "local_status": "passed",
+      "release_status": "blocked",
+      "evidence": [
+        "src/tenant_store.py",
+        "tests/test_tenant_store.py",
+        "docs/tenant_isolation.md"
+      ],
+      "blockers": [
+        "No hosted identity verification, allowlist, MFA/recovery, secure-cookie, HTTPS, KMS, or multi-instance authorization evidence.",
+        "The local SQLite/session implementation is not a production identity boundary."
+      ]
+    },
+    {
+      "id": "quota_cost_abuse",
+      "local_status": "passed",
+      "release_status": "blocked",
+      "evidence": [
+        "src/trial_limits.py",
+        "tests/test_trial_limits.py",
+        "docs/trial_limits.md"
+      ],
+      "blockers": [
+        "Counters and cost reservations are process-local rather than durable, atomic, and multi-instance.",
+        "Trusted edge identity, provider billing reconciliation, external abuse alerts, and administrative controls are not connected."
+      ]
+    },
+    {
+      "id": "fact_packaging_export_gate",
+      "local_status": "passed",
+      "release_status": "ready",
+      "evidence": [
+        "src/beta_quality.py",
+        "src/packaging_checker.py",
+        "tests/test_beta_quality.py",
+        "tests/test_demo_service.py"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "monitoring_incident_rollback_support",
+      "local_status": "passed",
+      "release_status": "blocked",
+      "evidence": [
+        "src/operations.py",
+        "tests/test_operations.py",
+        "docs/operations/MONITORING_AND_ALERTING.md",
+        "docs/operations/INCIDENT_RESPONSE.md",
+        "docs/operations/RELEASE_RUNBOOK.md"
+      ],
+      "blockers": [
+        "Metrics are process-local; independent probes, durable multi-instance storage, and external alert delivery are absent.",
+        "No actual hosting rollback target, credential-rotation drill, on-call coverage, or GitHub-hosted release-smoke evidence."
+      ]
+    },
+    {
+      "id": "self_service_export_deletion",
+      "local_status": "passed",
+      "release_status": "blocked",
+      "evidence": [
+        "src/tenant_store.py",
+        "tests/test_tenant_store.py",
+        "docs/tenant_isolation.md"
+      ],
+      "blockers": [
+        "Local primary-store export/deletion passes, but hosted databases, caches, logs, object storage, support systems, and backups are not connected or rehearsed.",
+        "No production identity-verification and privacy-request workflow exists."
+      ]
+    }
+  ]
+}

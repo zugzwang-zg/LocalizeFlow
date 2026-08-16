@@ -24,9 +24,22 @@ committed until an issue has an owner and an accepted implementation plan.
 
 ## Free trial — future
 
-- Authentication, project isolation, deletion, and export controls.
-- Replace the local quota primitive with durable atomic counters, trusted account/IP identity, billing reconciliation, and external abuse alerts.
-- Production monitoring, incident response, rollback, and support workflow.
+Current release decision: **NO-GO**. D1–D4 provide locally testable safeguards,
+but five of six hosted release gates remain blocked. See
+`reports/free_trial_readiness.md`.
+
+- Replace local authentication, sessions, encrypted SQLite, deletion, and
+  export controls with tested hosted identity, KMS, storage, backups, and
+  multi-instance authorization.
+- Replace the local quota primitive with durable atomic counters, trusted
+  account/IP identity, billing reconciliation, administration, and external
+  abuse alerts.
+- Complete operator/provider/privacy disclosures and production data lifecycle.
+- Connect external probes/alerts, actual rollback, credential rotation,
+  support/privacy channels, and on-call delivery; rehearse them against the
+  immutable hosted candidate.
+- Complete the planned real-user Closed Beta before reassessing adoption and
+  public self-service scope.
 
 ## Explicitly out of scope for the current preview
 

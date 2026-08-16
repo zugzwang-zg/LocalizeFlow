@@ -5,6 +5,7 @@ import unittest
 
 from src.demo_service import (
     CONTENT_TYPES,
+    DemoExportError,
     generate_content_pack,
     list_products,
     pack_as_csv_bytes,
@@ -84,8 +85,36 @@ class DemoServiceTests(unittest.TestCase):
             selling_points=[],
             brand_tone=["温和", "可信"],
         )
-        self.assertEqual(json.loads(pack_as_json_bytes(pack))["sku"], "MV-CLEAN-001")
-        self.assertIn(b"run_id", pack_as_csv_bytes(pack))
+        with self.assertRaises(DemoExportError):
+            pack_as_json_bytes(pack)
+        reviewed = update_pack_with_manual_text(
+            pack, pack["versions"]["product_listing"]["enhanced"]
+        )
+        self.assertEqual(
+            json.loads(pack_as_json_bytes(reviewed))["sku"], "MV-CLEAN-001"
+        )
+        self.assertIn(b"run_id", pack_as_csv_bytes(reviewed))
+
+    def test_blocked_manual_revision_cannot_use_low_level_serializers(self) -> None:
+        pack = generate_content_pack(
+            sku="MV-HAND-001",
+            market="US",
+            primary_content_type="short_video_script",
+            target_user="default",
+            marketing_goal="consideration",
+            selling_points=[],
+            brand_tone=["温和", "可信"],
+        )
+        blocked = update_pack_with_manual_text(
+            pack,
+            pack["versions"]["short_video_script"]["enhanced"].replace(
+                "aluminum tube", "glass jar"
+            ),
+        )
+        with self.assertRaises(DemoExportError):
+            pack_as_json_bytes(blocked)
+        with self.assertRaises(DemoExportError):
+            pack_as_csv_bytes(blocked)
 
 
 if __name__ == "__main__":

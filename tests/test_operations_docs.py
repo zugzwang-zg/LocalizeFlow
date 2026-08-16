@@ -16,6 +16,7 @@ def test_status_and_support_do_not_claim_a_hosted_service_or_sla() -> None:
     support = normalized("SUPPORT.md")
 
     assert "Hosted account / free trial | **Not launched**" in status
+    assert "machine-checked release decision is `NO_GO`" in status
     assert "not a live status page or uptime guarantee" in status
     assert "does not offer 24/7 support" in support
     assert "not a public SLA" in support
@@ -63,6 +64,7 @@ def test_release_smoke_and_support_issue_contracts_exist() -> None:
         "uv run pytest -q",
         "uv run python app/main.py --smoke-test",
         "uv run python scripts/run_operations_drill.py",
+        "uv run python scripts/check_free_trial_release_gate.py --expect-no-go",
         "pnpm security:audit",
         "pnpm test",
         "pnpm build",
@@ -70,3 +72,14 @@ def test_release_smoke_and_support_issue_contracts_exist() -> None:
         assert command in workflow
     assert "Do not submit secrets" in issue
     assert "Use SECURITY.md" in issue
+
+
+def test_readme_and_roadmap_expose_the_free_trial_no_go_decision() -> None:
+    readme = normalized("README.md")
+    roadmap = normalized("ROADMAP.md")
+    readiness = normalized("reports/free_trial_readiness.md")
+
+    assert "托管免费试用发布结论：NO-GO" in readme
+    assert "reports/free_trial_readiness.md" in readme
+    assert "Current release decision: **NO-GO**" in roadmap
+    assert "Decision: **NO-GO" in readiness
