@@ -3,14 +3,33 @@
 from __future__ import annotations
 
 import html
+import json
 import sys
+import uuid
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+load_dotenv(PROJECT_ROOT / ".env")
 
+from src.beta_import import (  # noqa: E402
+    BetaImportError,
+    confirm_beta_import,
+    parse_beta_upload,
+)
+from src.beta_model import (  # noqa: E402
+    BetaModelError,
+    BetaModelSettings,
+    InMemoryRunStore,
+    build_beta_request,
+    run_limited_beta_generation,
+)
+from src.beta_quality import evaluate_beta_output  # noqa: E402
 from src.demo_service import (  # noqa: E402
     CONTENT_TYPE_LABELS,
     CONTENT_TYPES,
@@ -26,6 +45,26 @@ from src.demo_service import (  # noqa: E402
     selling_point_options,
     update_pack_with_manual_text,
 )
+from src.export_service import ExportGateError, beta_audit_export_bytes  # noqa: E402
+from src.operations import (  # noqa: E402
+    DEFAULT_OPERATIONS_MONITOR,
+    OperationsError,
+)
+from src.tenant_store import (  # noqa: E402
+    EncryptedTenantStore,
+    TenantAuthenticationError,
+    TenantStoreError,
+    TenantStoreSettings,
+)
+from src.trial_limits import (  # noqa: E402
+    DEFAULT_TRIAL_USAGE_STORE,
+    TrialLimitError,
+    TrialLimitSettings,
+    TrialUsageGuard,
+    TrialUsageSubject,
+)
+
+BETA_TEMPLATE_PATH = PROJECT_ROOT / "templates" / "LocalizeFlow_Beta_SKU_Import_Template.xlsx"
 
 STEP_LABELS = {
     1: "商品资料",
@@ -336,10 +375,188 @@ def _initialize_state(st: Any) -> None:
         "final_pack": None,
         "final_editor": "",
         "confirmed": False,
+        "beta_project_id": "local-beta-project",
+        "beta_actor_id": f"local-{uuid.uuid4()}",
+        "beta_client_id": f"session-{uuid.uuid4()}",
+        "beta_tenant_store": None,
+        "beta_tenant_session": None,
+        "beta_loaded_project_id": None,
+        "beta_prepared_export": None,
+        "beta_preview": None,
+        "beta_confirmed_import": None,
+        "beta_upload_nonce": 0,
+        "beta_run_store": InMemoryRunStore(),
+        "beta_model_result": None,
+        "beta_human_approved": False,
+        "beta_approved_at": None,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = value
+
+
+def _clear_beta_working_state(st: Any) -> None:
+    st.session_state.beta_preview = None
+    st.session_state.beta_confirmed_import = None
+    st.session_state.beta_model_result = None
+    st.session_state.beta_run_store = InMemoryRunStore()
+    st.session_state.beta_human_approved = False
+    st.session_state.beta_approved_at = None
+    st.session_state.beta_upload_nonce += 1
+
+
+def _render_beta_tenant_access(
+    st: Any,
+) -> tuple[EncryptedTenantStore, str] | None:
+    settings = TenantStoreSettings.from_env(project_root=PROJECT_ROOT)
+    try:
+        settings.validate()
+        if not settings.enabled:
+            raise TenantStoreError("本地租户仓库未启用，Closed Beta 入口保持关闭。")
+        store = st.session_state.beta_tenant_store
+        if store is None:
+            store = EncryptedTenantStore(settings)
+            st.session_state.beta_tenant_store = store
+    except TenantStoreError as error:
+        st.error(f"租户安全入口不可用：{error}")
+        return None
+
+    session = st.session_state.beta_tenant_session
+    if session is None:
+        st.info("请登录本地加密租户仓库。此认证仅用于本机验证，不是生产身份服务。")
+        login_tab, register_tab = st.tabs(["登录", "创建本地测试账户"])
+        with login_tab, st.form("beta_login_form"):
+            email = st.text_input("邮箱", key="beta_login_email")
+            password = st.text_input("密码", type="password", key="beta_login_password")
+            if st.form_submit_button("登录", use_container_width=True):
+                try:
+                    authenticated = store.authenticate(email=email, password=password)
+                    st.session_state.beta_tenant_session = authenticated
+                    st.session_state.beta_actor_id = authenticated.account_id
+                    st.rerun()
+                except TenantStoreError as error:
+                    st.error(str(error))
+        with register_tab, st.form("beta_register_form"):
+            email = st.text_input("测试账户邮箱", key="beta_register_email")
+            password = st.text_input(
+                "密码（至少 12 字符）", type="password", key="beta_register_password"
+            )
+            if st.form_submit_button("创建并登录", use_container_width=True):
+                try:
+                    store.create_account(email=email, password=password)
+                    authenticated = store.authenticate(email=email, password=password)
+                    st.session_state.beta_tenant_session = authenticated
+                    st.session_state.beta_actor_id = authenticated.account_id
+                    st.rerun()
+                except TenantStoreError as error:
+                    st.error(str(error))
+        return None
+
+    token = session.token
+    try:
+        projects = store.list_projects(token)
+    except TenantAuthenticationError as error:
+        st.session_state.beta_tenant_session = None
+        st.error(str(error))
+        return None
+
+    account_columns = st.columns([3, 1])
+    account_columns[0].success(
+        f"本地账户已认证 · {session.account_id[:8]}… · 会话到期 {session.expires_at}"
+    )
+    if account_columns[1].button("退出登录", use_container_width=True):
+        store.logout(token)
+        st.session_state.beta_tenant_session = None
+        st.session_state.beta_loaded_project_id = None
+        _clear_beta_working_state(st)
+        st.rerun()
+
+    with st.expander("创建项目", expanded=not projects):
+        with st.form("beta_create_project_form"):
+            project_id = st.text_input("项目编号", value="beta-project-001", max_chars=64)
+            project_name = st.text_input("项目名称", value="Closed Beta project", max_chars=120)
+            if st.form_submit_button("创建隔离项目", use_container_width=True):
+                try:
+                    store.create_project(
+                        token, project_id=project_id, name=project_name
+                    )
+                    st.rerun()
+                except TenantStoreError as error:
+                    st.error(str(error))
+    if not projects:
+        st.warning("请先创建一个隔离项目，再上传商品资料。")
+        return None
+
+    selected_project = st.selectbox(
+        "当前隔离项目",
+        [item["project_id"] for item in projects],
+        format_func=lambda value: next(
+            f"{item['name']} · {value}" for item in projects if item["project_id"] == value
+        ),
+    )
+    if st.session_state.beta_loaded_project_id != selected_project:
+        payload = store.load_project(token, project_id=selected_project) or {}
+        _clear_beta_working_state(st)
+        st.session_state.beta_confirmed_import = payload.get("confirmed_import")
+        st.session_state.beta_model_result = payload.get("model_result")
+        st.session_state.beta_loaded_project_id = selected_project
+    st.session_state.beta_project_id = selected_project
+
+    with st.expander("项目与账户数据控制"):
+        control_columns = st.columns(2)
+        if control_columns[0].button("准备当前项目导出", use_container_width=True):
+            st.session_state.beta_prepared_export = {
+                "filename": f"{selected_project}_export.json",
+                "payload": store.export_project(token, project_id=selected_project),
+            }
+        if control_columns[1].button("准备账户完整导出", use_container_width=True):
+            st.session_state.beta_prepared_export = {
+                "filename": "localizeflow_account_export.json",
+                "payload": store.export_account(token),
+            }
+        prepared = st.session_state.beta_prepared_export
+        if prepared:
+            st.download_button(
+                "下载已准备的导出 JSON",
+                data=json.dumps(prepared["payload"], ensure_ascii=False, indent=2).encode(),
+                file_name=prepared["filename"],
+                mime="application/json",
+                use_container_width=True,
+            )
+        confirm_project_delete = st.checkbox(
+            "我确认永久删除当前项目的加密正文", key="beta_confirm_project_delete"
+        )
+        if st.button(
+            "永久删除当前项目",
+            disabled=not confirm_project_delete,
+            use_container_width=True,
+        ):
+            store.delete_project(token, project_id=selected_project)
+            st.session_state.beta_loaded_project_id = None
+            st.session_state.beta_prepared_export = None
+            _clear_beta_working_state(st)
+            st.rerun()
+        delete_password = st.text_input(
+            "删除账户需再次输入密码", type="password", key="beta_account_delete_password"
+        )
+        confirm_account_delete = st.checkbox(
+            "我确认永久删除账户及全部项目", key="beta_confirm_account_delete"
+        )
+        if st.button(
+            "永久删除本地账户",
+            disabled=not confirm_account_delete or not delete_password,
+            use_container_width=True,
+        ):
+            try:
+                store.delete_account(token, password=delete_password)
+                st.session_state.beta_tenant_session = None
+                st.session_state.beta_loaded_project_id = None
+                st.session_state.beta_prepared_export = None
+                _clear_beta_working_state(st)
+                st.rerun()
+            except TenantStoreError as error:
+                st.error(str(error))
+    return store, token
 
 
 def _navigate(st: Any, step: int) -> None:
@@ -538,6 +755,303 @@ def _render_page_product(st: Any) -> None:
         _render_expression_rows(st, expressions["allowed"], "allowed")
     with expression_tabs[1]:
         _render_expression_rows(st, expressions["prohibited"], "prohibited")
+
+    st.markdown("### Closed Beta 安全导入预检")
+    st.warning(
+        "此入口用于本地验证认证、加密租户存储和确认门禁。托管 HTTPS、外部密钥管理与备份清除演练完成前，请勿上传真实资料。"
+    )
+    tenant_context = _render_beta_tenant_access(st)
+    if tenant_context is None:
+        return
+    tenant_store, tenant_token = tenant_context
+    beta_columns = st.columns([1, 1])
+    with beta_columns[0]:
+        st.download_button(
+            "下载 XLSX 导入模板",
+            data=BETA_TEMPLATE_PATH.read_bytes(),
+            file_name=BETA_TEMPLATE_PATH.name,
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            use_container_width=True,
+        )
+    with beta_columns[1]:
+        st.text_input(
+            "当前租户项目编号", value=st.session_state.beta_project_id, disabled=True
+        )
+    beta_file = st.file_uploader(
+        "上传 CSV、XLSX 或 JSON",
+        type=["csv", "xlsx", "json"],
+        key=f"beta_upload_{st.session_state.beta_upload_nonce}",
+        help="最大 2 MB、最多 3 个 SKU / 50 条事实；拒绝公式、宏、外部链接、嵌入对象和异常压缩包。",
+    )
+    if st.button("运行导入安全预检", disabled=beta_file is None, use_container_width=True):
+        try:
+            st.session_state.beta_preview = parse_beta_upload(
+                beta_file.name,
+                beta_file.getvalue(),
+                project_id=st.session_state.beta_project_id,
+            )
+            st.session_state.beta_confirmed_import = None
+        except BetaImportError as error:
+            st.session_state.beta_preview = None
+            st.error(str(error))
+
+    preview = st.session_state.beta_preview
+    if preview:
+        summary = preview["summary"]
+        metrics = st.columns(4)
+        metrics[0].metric("SKU", summary["sku_count"])
+        metrics[1].metric("事实", summary["fact_count"])
+        metrics[2].metric("阻断", summary["error_count"])
+        metrics[3].metric("需复核", summary["warning_count"])
+        if preview["facts"]:
+            st.dataframe(
+                [
+                    {
+                        "fact_id": fact["fact_id"],
+                        "sku": fact["sku"],
+                        "attribute": fact["attribute"],
+                        "value": fact["value"],
+                        "evidence": fact["evidence_level"],
+                        "source": fact["source"],
+                        "status": fact["status"],
+                    }
+                    for fact in preview["facts"]
+                ],
+                use_container_width=True,
+                hide_index=True,
+            )
+        for issue in preview["issues"]:
+            location = f"第 {issue['row']} 行 · " if issue["row"] else ""
+            message = f"{location}{issue['message']}"
+            if issue["severity"] == "error":
+                st.error(message)
+            else:
+                st.warning(message)
+        authorized = st.checkbox(
+            "我有权处理这些资料，并已逐条核对事实值、来源、市场范围和证据等级",
+            key="beta_fact_confirmation_check",
+        )
+        if st.button(
+            "确认事实并锁定当前版本",
+            type="primary",
+            disabled=not preview["ready_for_confirmation"] or not authorized,
+            use_container_width=True,
+        ):
+            try:
+                st.session_state.beta_confirmed_import = confirm_beta_import(
+                    preview,
+                    confirmed_by=st.session_state.beta_actor_id,
+                )
+                tenant_store.save_project(
+                    tenant_token,
+                    project_id=st.session_state.beta_project_id,
+                    payload={
+                        "confirmed_import": st.session_state.beta_confirmed_import,
+                        "model_result": None,
+                    },
+                )
+                st.success("事实版本已确认。未经再次确认的修改不会进入真实模型链路。")
+            except (BetaImportError, TenantStoreError) as error:
+                st.error(str(error))
+    if st.session_state.beta_confirmed_import:
+        confirmation = st.session_state.beta_confirmed_import["confirmation"]
+        st.info(
+            f"已确认 · {confirmation['confirmed_at']} · "
+            "正文已加密保存到当前本地租户项目。"
+        )
+        st.markdown("#### 真实模型生成链路")
+        settings = BetaModelSettings.from_env()
+        trial_settings = TrialLimitSettings.from_env()
+        operations_settings = DEFAULT_OPERATIONS_MONITOR.settings
+        trial_guard = None
+        try:
+            operations_settings.require_model_calls()
+            settings.validate()
+            trial_settings.validate()
+            if not trial_settings.enabled:
+                raise TrialLimitError(
+                    "limits_disabled",
+                    "试用配额保护未启用；为避免无上限调用，模型入口保持关闭。",
+                )
+            trial_guard = TrialUsageGuard(trial_settings, DEFAULT_TRIAL_USAGE_STORE)
+            model_ready = True
+            st.success(
+                f"模型网关已启用 · {settings.model} · "
+                f"单次 ${settings.max_request_cost_usd:.4f} · "
+                f"账户每月 {trial_settings.monthly_generations_per_account} 次"
+            )
+            st.caption(
+                "额度来源：项目方小额赠送额度并严格封顶；当前计数存于本机进程，"
+                "不代表生产级账户或 IP 防滥用。"
+            )
+        except (BetaModelError, OperationsError, TrialLimitError) as error:
+            model_ready = False
+            st.info(f"模型网关未开放：{error}")
+        confirmed_import = st.session_state.beta_confirmed_import
+        beta_skus = sorted({fact["sku"] for fact in confirmed_import["facts"]})
+        model_columns = st.columns(3)
+        with model_columns[0]:
+            beta_sku = st.selectbox("Beta SKU", beta_skus, key="beta_generation_sku")
+        with model_columns[1]:
+            beta_market = st.selectbox("Beta 市场", ["US", "MX"], key="beta_generation_market")
+        with model_columns[2]:
+            beta_content_type = st.selectbox(
+                "Beta 内容类型",
+                list(CONTENT_TYPES),
+                format_func=CONTENT_TYPE_LABELS.get,
+                key="beta_generation_content_type",
+            )
+        beta_target_user = st.text_input("Beta 目标用户", value="授权项目定义的目标用户", max_chars=500)
+        beta_marketing_goal = st.text_input("Beta 营销目标", value="consideration", max_chars=200)
+        beta_tones = st.multiselect(
+            "Beta 品牌语气",
+            ["温和", "清晰", "可信", "简洁", "克制"],
+            default=["清晰", "可信", "克制"],
+        )
+        transfer_consent = st.checkbox(
+            "我确认已了解中转站和模型提供方的数据流，并同意把当前任务所需的最小已确认事实发送给它们",
+            key="beta_model_transfer_consent",
+        )
+        if st.button(
+            "调用已配置模型生成",
+            type="primary",
+            disabled=not model_ready or not transfer_consent,
+            use_container_width=True,
+        ):
+            try:
+                beta_request = build_beta_request(
+                    confirmed_import,
+                    sku=beta_sku,
+                    market=beta_market,
+                    content_type=beta_content_type,
+                    target_user=beta_target_user,
+                    marketing_goal=beta_marketing_goal,
+                    brand_tone=beta_tones,
+                )
+                with st.spinner("正在调用受控模型链路并验证结构、事实与包装……"):
+                    assert trial_guard is not None
+                    trial_subject = TrialUsageSubject(
+                        account_id=st.session_state.beta_actor_id,
+                        project_id=confirmed_import["project_id"],
+                        client_id=st.session_state.beta_client_id,
+                        language="en-US" if beta_market == "US" else "es-MX",
+                    )
+                    result = run_limited_beta_generation(
+                        beta_request,
+                        settings=settings,
+                        run_store=st.session_state.beta_run_store,
+                        trial_guard=trial_guard,
+                        trial_subject=trial_subject,
+                        operations_monitor=DEFAULT_OPERATIONS_MONITOR,
+                    )
+                result["quality"] = evaluate_beta_output(confirmed_import, result["output"])
+                DEFAULT_OPERATIONS_MONITOR.record_quality_gate(
+                    account_id=st.session_state.beta_actor_id,
+                    sku=beta_sku,
+                    hard_block_count=sum(
+                        check["status"] == "fail" for check in result["quality"]["checks"]
+                    ),
+                )
+                st.session_state.beta_model_result = result
+                tenant_store.save_project(
+                    tenant_token,
+                    project_id=st.session_state.beta_project_id,
+                    payload={
+                        "confirmed_import": st.session_state.beta_confirmed_import,
+                        "model_result": result,
+                    },
+                )
+                st.session_state.beta_human_approved = False
+                st.session_state.beta_approved_at = None
+            except (BetaModelError, OperationsError, TenantStoreError) as error:
+                st.error(str(error))
+
+        beta_result = st.session_state.beta_model_result
+        if beta_result:
+            beta_quality = beta_result["quality"]
+            audit_columns = st.columns(4)
+            audit_columns[0].metric("模型", beta_result["model"])
+            audit_columns[1].metric("延迟", f"{beta_result['latency_ms']} ms")
+            audit_columns[2].metric("Tokens", beta_result["input_tokens"] + beta_result["output_tokens"])
+            audit_columns[3].metric("成本估算", f"${beta_result['estimated_cost_usd']:.6f}")
+            st.caption(
+                f"{beta_result['run_id']} · prompt {beta_result['prompt_version']} · "
+                f"schema {beta_result['schema_version']} · rules {beta_result['rule_set_id']}"
+            )
+            trial_usage = beta_result.get("trial_usage")
+            if trial_usage:
+                st.caption(
+                    "试用额度：账户本月 "
+                    f"{trial_usage['account_monthly_generations_used']}/"
+                    f"{trial_usage['account_monthly_generations_limit']} 次 · "
+                    f"账户今日 ${trial_usage['account_daily_cost_used_usd']:.4f}/"
+                    f"${trial_usage['account_daily_cost_limit_usd']:.4f} · "
+                    f"全局本月 ${trial_usage['global_monthly_cost_used_usd']:.4f}/"
+                    f"${trial_usage['global_monthly_cost_limit_usd']:.2f}"
+                )
+            st.json(beta_result["output"], expanded=False)
+            for check in beta_quality["checks"]:
+                if check["status"] == "fail":
+                    st.error(f"{check['name']}：{check['detail']}")
+                else:
+                    st.success(f"{check['name']}：{check['detail']}")
+            st.checkbox(
+                "我已完成事实、平台规则和目标语言人工终审",
+                key="beta_human_approved",
+                disabled=beta_quality["export_gate"] == "blocked",
+            )
+            if st.session_state.beta_human_approved and not st.session_state.beta_approved_at:
+                st.session_state.beta_approved_at = datetime.now(UTC).isoformat()
+            if not st.session_state.beta_human_approved:
+                st.session_state.beta_approved_at = None
+            export_ready = (
+                beta_quality["export_gate"] != "blocked"
+                and st.session_state.beta_human_approved
+            )
+            try:
+                operations_settings.require_exports()
+                operational_export_ready = True
+            except OperationsError as error:
+                operational_export_ready = False
+                st.info(f"Closed Beta 内容导出已由紧急开关关闭：{error}")
+            export_bytes = b""
+            if export_ready and operational_export_ready:
+                try:
+                    export_bytes = beta_audit_export_bytes(
+                        confirmed_import,
+                        beta_result,
+                        approved_at=st.session_state.beta_approved_at,
+                        operations_settings=operations_settings,
+                    )
+                except (ExportGateError, OperationsError) as error:
+                    st.error(f"Closed Beta 导出被阻断：{error}")
+            downloaded = st.download_button(
+                "下载 Closed Beta 审计包 JSON",
+                data=export_bytes,
+                file_name=f"{beta_result['run_id']}_reviewed.json",
+                mime="application/json",
+                disabled=not export_bytes,
+                use_container_width=True,
+            )
+            if downloaded:
+                DEFAULT_OPERATIONS_MONITOR.record_export(
+                    account_id=st.session_state.beta_actor_id,
+                    sku=beta_result["sku"],
+                    success=True,
+                )
+            with st.expander("本地运维指标（不含正文）"):
+                try:
+                    operations_snapshot = DEFAULT_OPERATIONS_MONITOR.snapshot()
+                    st.json(operations_snapshot, expanded=False)
+                    st.caption(
+                        "仅保存在当前进程，标识符使用 HMAC-SHA256；"
+                        "这不是持久化生产监控或外部告警。"
+                    )
+                except OperationsError as error:
+                    st.warning(f"本地运维指标不可用：{error}")
+    if st.button("清空当前页面缓存（不删除租户项目）", use_container_width=True):
+        _clear_beta_working_state(st)
+        st.rerun()
 
     st.markdown("### 补充中文商品资料")
     uploaded = st.file_uploader(

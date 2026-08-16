@@ -1,15 +1,34 @@
 {
   "schema_version": "1.0",
   "prompt_set_id": "LF-PROMPTS-2026-07-28",
-  "version": "1.0.0",
-  "updated_at": "2026-07-28",
-  "status": "stage_8_pending_acceptance",
-  "execution_status": "offline_structure_validation_only",
+  "version": "1.2.0",
+  "updated_at": "2026-08-15",
+  "status": "closed_beta_candidate",
+  "execution_status": "synthetic_live_gateway_smoke_passed",
   "api_calls_made_in_stage_8": 0,
+  "closed_beta_api_attempts": 4,
+  "closed_beta_generation_successes": 1,
+  "closed_beta_smoke": {
+    "run_id": "BETA-RUN-1C81B8CDD458ABCC",
+    "data_class": "ai_synthetic_sku",
+    "model": "gpt-5.4-mini",
+    "api_style": "openai_chat_completions",
+    "input_tokens": 4209,
+    "output_tokens": 599,
+    "latency_ms": 12204,
+    "estimated_cost_usd": 0.00585225,
+    "provider_attempt_count": 1,
+    "idempotency_cache_hit": true,
+    "quality_pass": 4,
+    "quality_fail": 0,
+    "export_gate": "human_review",
+    "body_logging": "disabled",
+    "response_digest": "3e52e077dd425d12276e4d152ce578b23de4cf6c4d243d1e203ad6143055f2fc"
+  },
   "provider_configuration": {
-    "provider": "OpenAI",
-    "api": "Responses API",
-    "model_source": "OPENAI_MODEL environment variable",
+    "provider": "Relay supporting OpenAI Chat Completions and Anthropic Messages; provider must be disclosed before real-data use",
+    "api": "API style selected by LOCALIZEFLOW_MODEL_API_STYLE with application JSON Schema validation",
+    "model_source": "LOCALIZEFLOW_MODEL_NAME environment variable",
     "model_value_during_stage_8": null,
     "model_selection_status": "not_fixed_until_representative_evaluation",
     "structured_output": {
@@ -90,6 +109,13 @@
       "path": "prompts/social_copy_prompt.md",
       "node_id": "N04_CONTENT_GENERATOR",
       "version": "1.0.0",
+      "schema_path": "prompts/schemas/content_output.schema.json"
+    },
+    {
+      "prompt_id": "LF-PROMPT-BETA-GENERATOR-1.7",
+      "path": "prompts/beta_generation_prompt.md",
+      "node_id": "N04_CONTENT_GENERATOR",
+      "version": "1.7.0",
       "schema_path": "prompts/schemas/content_output.schema.json"
     },
     {

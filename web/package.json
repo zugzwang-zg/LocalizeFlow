@@ -1,6 +1,6 @@
 {
   "name": "localizeflow-web-demo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "packageManager": "pnpm@11.19.0",
   "engines": {
@@ -10,7 +10,7 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "vinext start",
-    "test": "pnpm run build && node --test tests/rendered-html.test.mjs tests/safe-image-size.test.mjs",
+    "test": "pnpm run build && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --max-warnings=0",
     "security:audit": "pnpm audit --audit-level high"
   },

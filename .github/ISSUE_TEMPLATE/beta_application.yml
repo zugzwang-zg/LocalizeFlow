@@ -1,0 +1,51 @@
+name: Beta interest registration
+description: Register interest only; this does not grant Beta access or start a free trial
+title: "[Beta interest] "
+labels: ["epic:beta", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This public form records interest only and does not grant Beta access.
+        Do not submit personal data, product files, customer content, unpublished
+        product facts, employer/client identity, API keys, credentials, or other
+        confidential material. LocalizeFlow is not currently accepting real data.
+  - type: dropdown
+    id: role
+    attributes:
+      label: 你的角色
+      options: [品牌方, 跨境电商运营, 本地化/翻译, 合规/审核, 开发者, 研究者]
+    validations:
+      required: true
+  - type: dropdown
+    id: use_case
+    attributes:
+      label: 主要使用场景
+      options: [商品 Listing, 广告与社媒文案, 短视频脚本, 事实与合规审核, 产品评估]
+    validations:
+      required: true
+  - type: dropdown
+    id: market
+    attributes:
+      label: 感兴趣的目标市场
+      options: [美国 / en-US, 墨西哥 / es-MX, 两者, 仅了解产品]
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: 你希望验证什么
+      description: 只描述一般目标和工作流；Do not submit product files or private examples.
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 试用确认
+      options:
+        - label: I understand this is interest registration only and does not grant Beta access.
+          required: true
+        - label: I removed personal data, secrets, customer content, product files, and confidential product facts.
+          required: true
+        - label: I will not send product material until I receive a private invitation after the hosted-data gates pass.
+          required: true

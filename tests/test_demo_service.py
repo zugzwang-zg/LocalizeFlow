@@ -5,6 +5,7 @@ import unittest
 
 from src.demo_service import (
     CONTENT_TYPES,
+    DemoExportError,
     generate_content_pack,
     list_products,
     pack_as_csv_bytes,
@@ -33,6 +34,11 @@ class DemoServiceTests(unittest.TestCase):
                     )
                     self.assertEqual(len(pack["versions"]), 3)
                     self.assertTrue(pack["claims"])
+                    self.assertEqual(
+                        pack["primary_quality"]["packaging_gate"]["status"],
+                        "pass",
+                        f"{product['sku']} {market} {content_type}",
+                    )
 
     def test_profile_contains_traceable_facts(self) -> None:
         profile = product_profile("MV-SERUM-001", "US")
@@ -42,7 +48,7 @@ class DemoServiceTests(unittest.TestCase):
             all(item["fact_id"].startswith("MV-SERUM-001") for item in profile["features"])
         )
 
-    def test_hand_cream_packaging_mismatch_is_blocked(self) -> None:
+    def test_verified_hand_cream_aluminum_tube_passes_packaging_gate(self) -> None:
         pack = generate_content_pack(
             sku="MV-HAND-001",
             market="US",
@@ -52,10 +58,9 @@ class DemoServiceTests(unittest.TestCase):
             selling_points=[],
             brand_tone=["温和", "可信"],
         )
-        self.assertEqual(pack["primary_quality"]["risk_level"], "high")
-        self.assertEqual(pack["primary_quality"]["export_gate"], "blocked")
+        self.assertEqual(pack["primary_quality"]["packaging_gate"]["status"], "pass")
 
-    def test_manual_revision_can_remove_packaging_blocker(self) -> None:
+    def test_manual_revision_is_rechecked_for_packaging(self) -> None:
         pack = generate_content_pack(
             sku="MV-HAND-001",
             market="US",
@@ -66,9 +71,9 @@ class DemoServiceTests(unittest.TestCase):
             brand_tone=["温和", "可信"],
         )
         original = pack["versions"]["short_video_script"]["enhanced"]
-        revised = original.replace("aluminum tube", "tube")
+        revised = original.replace("aluminum tube", "glass jar")
         final = update_pack_with_manual_text(pack, revised)
-        self.assertNotEqual(final["final_quality"]["export_gate"], "blocked")
+        self.assertEqual(final["final_quality"]["export_gate"], "blocked")
 
     def test_exports_are_valid(self) -> None:
         pack = generate_content_pack(
@@ -80,8 +85,36 @@ class DemoServiceTests(unittest.TestCase):
             selling_points=[],
             brand_tone=["温和", "可信"],
         )
-        self.assertEqual(json.loads(pack_as_json_bytes(pack))["sku"], "MV-CLEAN-001")
-        self.assertIn(b"run_id", pack_as_csv_bytes(pack))
+        with self.assertRaises(DemoExportError):
+            pack_as_json_bytes(pack)
+        reviewed = update_pack_with_manual_text(
+            pack, pack["versions"]["product_listing"]["enhanced"]
+        )
+        self.assertEqual(
+            json.loads(pack_as_json_bytes(reviewed))["sku"], "MV-CLEAN-001"
+        )
+        self.assertIn(b"run_id", pack_as_csv_bytes(reviewed))
+
+    def test_blocked_manual_revision_cannot_use_low_level_serializers(self) -> None:
+        pack = generate_content_pack(
+            sku="MV-HAND-001",
+            market="US",
+            primary_content_type="short_video_script",
+            target_user="default",
+            marketing_goal="consideration",
+            selling_points=[],
+            brand_tone=["温和", "可信"],
+        )
+        blocked = update_pack_with_manual_text(
+            pack,
+            pack["versions"]["short_video_script"]["enhanced"].replace(
+                "aluminum tube", "glass jar"
+            ),
+        )
+        with self.assertRaises(DemoExportError):
+            pack_as_json_bytes(blocked)
+        with self.assertRaises(DemoExportError):
+            pack_as_csv_bytes(blocked)
 
 
 if __name__ == "__main__":

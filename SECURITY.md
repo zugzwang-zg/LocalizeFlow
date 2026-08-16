@@ -40,3 +40,25 @@ not approved for confidential customer data. A future model-backed or hosted
 version must add authentication, tenant isolation, retention controls, rate
 limits, abuse prevention, and production monitoring before accepting real
 product material.
+
+The local Closed Beta gateway includes process-local account, project, and
+client quotas plus daily/monthly cost reservations. Identifiers are stored as
+HMAC-SHA256 digests. These controls are a testable safety primitive, not a
+production security boundary: the local client key is session-generated, the
+store resets on process restart, and no trusted reverse-proxy IP adapter or
+external alert destination exists. See `docs/trial_limits.md`.
+
+The optional local tenant store adds scrypt password hashing, expiring
+in-memory sessions, encrypted account/project content, server-side tenant
+filters, self-service export, and destructive project/account deletion. It does
+not provide hosted HTTPS, email verification, MFA, password recovery, managed
+KMS, encrypted backups, or multi-instance authorization. See
+`docs/tenant_isolation.md` before evaluating this code for hosted use.
+
+The local D4 operations monitor adds bounded content-free events, HMAC-SHA256
+account/SKU grouping, deterministic thresholds, immediate safety alerts, and
+independent model-call and hosted-content-export switches. It is process-local
+and does not provide durable multi-instance metrics, independent probes,
+external alert delivery, production rollback, or 24/7 response. See
+`docs/operations/` and keep hosted access closed until those controls are
+connected and rehearsed in the actual deployment.

@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "reviewed_at": "2026-08-16",
+  "scope": "hosted_free_trial_preconditions",
+  "decision": "UNRESOLVED",
+  "active_strategy": "portfolio_only_public_demo",
+  "strategy_decision": {
+    "status": "approved_for_current_portfolio_phase",
+    "selected_at": "2026-08-16",
+    "selected_by": "project_owner",
+    "selection": "portfolio_only_public_demo",
+    "rationale": "Maximize portfolio evidence per unit of time and cost while avoiding unsupported real-user-data and production-service claims.",
+    "revisit_triggers": [
+      "A concrete job, interview, accelerator, or partner requires hosted infrastructure evidence.",
+      "A dedicated monthly budget and primary/backup operational owner are available.",
+      "Authorized participants and two independent target-language reviewers are available.",
+      "The operator, private contacts, jurisdictions, and relay/model data terms can be verified."
+    ]
+  },
+  "owner_approval_recorded": false,
+  "prerequisites": [
+    {
+      "id": "operator_jurisdiction",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["user_data_policy"],
+      "required_decision": "Identify the responsible operator, address, offered countries, applicable jurisdictions, minimum age, and contracting capacity.",
+      "required_evidence": ["Owner identity record", "Approved jurisdiction and eligibility scope"],
+      "evidence_paths": [],
+      "safe_default": "Do not offer accounts, accept uploads, or present hosted terms as active."
+    },
+    {
+      "id": "privacy_support_contacts",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["user_data_policy", "monitoring_incident_rollback_support", "self_service_export_deletion"],
+      "required_decision": "Select dedicated private privacy, support, security escalation, and legal-notice channels with coverage and backup ownership.",
+      "required_evidence": ["Channel ownership record", "End-to-end request and escalation test"],
+      "evidence_paths": [],
+      "safe_default": "Keep hosted privacy requests and real-user support closed."
+    },
+    {
+      "id": "hosting_runtime_region",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["tenant_authorization", "user_data_policy", "monitoring_incident_rollback_support"],
+      "required_decision": "Select the production runtime, immutable deployment mechanism, network boundary, domains, TLS termination, and processing region.",
+      "required_evidence": ["Architecture diagram", "Region and TLS configuration export", "Immutable deployment identifier"],
+      "evidence_paths": [],
+      "safe_default": "Use only the deterministic public Demo with fictional data."
+    },
+    {
+      "id": "identity_tenant_boundary",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["tenant_authorization", "self_service_export_deletion"],
+      "required_decision": "Select hosted identity, invite-only allowlisting, verification, recovery, session, MFA/admin, and server-side tenant authorization controls.",
+      "required_evidence": ["Identity configuration export", "Cross-tenant denial test", "Recovery and access-revocation drill"],
+      "evidence_paths": [],
+      "safe_default": "Disable registration and treat the local session store as development-only."
+    },
+    {
+      "id": "primary_data_backup_kms",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["tenant_authorization", "user_data_policy", "self_service_export_deletion"],
+      "required_decision": "Select production database, object storage if needed, cache, encryption/KMS, backup retention, restoration, and purge behavior.",
+      "required_evidence": ["Storage inventory", "Encryption configuration", "Backup restore and deletion drill"],
+      "evidence_paths": [],
+      "safe_default": "Do not persist real uploads or user-generated content in a hosted service."
+    },
+    {
+      "id": "relay_model_data_terms",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["user_data_policy", "quota_cost_abuse"],
+      "required_decision": "Verify both relay and underlying model legal entities, terms, DPA, regions, retention, training, human access, abuse monitoring, subprocessors, deletion, and account settings.",
+      "required_evidence": ["Applicable contract and DPA", "Provider/account-setting capture", "End-to-end data-flow record"],
+      "evidence_paths": [],
+      "safe_default": "Keep user-data model calls disabled; local API configuration is not provider due diligence."
+    },
+    {
+      "id": "durable_quota_billing_abuse",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["quota_cost_abuse"],
+      "required_decision": "Select atomic multi-instance counters, trusted client identity, funding cap, provider billing reconciliation, administrative suspension, and external abuse alerting.",
+      "required_evidence": ["Concurrency and bypass test", "Billing reconciliation", "Abuse alert and suspension drill"],
+      "evidence_paths": [],
+      "safe_default": "Keep owner-funded model access closed and retain conservative local limits only as reference behavior."
+    },
+    {
+      "id": "monitoring_alerting_oncall",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["monitoring_incident_rollback_support"],
+      "required_decision": "Select durable metrics, independent probes, service-external P0/P1 delivery, status publication, primary/backup coverage, and escalation ownership.",
+      "required_evidence": ["Probe and alert configuration", "Delivered P0/P1 exercise", "Coverage and escalation record"],
+      "evidence_paths": [],
+      "safe_default": "Do not describe the manual status file as live monitoring or promise an SLA."
+    },
+    {
+      "id": "deployment_rollback_drills",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["monitoring_incident_rollback_support"],
+      "required_decision": "Define immutable release promotion, database migration compatibility, rollback target, credential rotation, and recovery notification procedures.",
+      "required_evidence": ["Hosted release-smoke URL", "Rollback and recovery drill", "Credential-rotation drill"],
+      "evidence_paths": [],
+      "safe_default": "Do not deploy or open hosted switches from local validation alone."
+    },
+    {
+      "id": "beta_participants_reviewers",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["user_data_policy", "tenant_authorization"],
+      "required_decision": "Recruit authorized participants and two independent target-language reviewers, define scheduling and withdrawal, and keep applicant intake content-free.",
+      "required_evidence": ["Private participant approvals", "Reviewer assignment record", "Completed preflight and withdrawal rehearsal"],
+      "evidence_paths": [],
+      "safe_default": "Accept public expressions of interest only; do not grant access or accept product files."
+    },
+    {
+      "id": "final_owner_legal_security_approval",
+      "status": "unresolved",
+      "decision_owner": "project_owner",
+      "selection": null,
+      "blocking_gate_ids": ["user_data_policy", "tenant_authorization", "quota_cost_abuse", "monitoring_incident_rollback_support", "self_service_export_deletion"],
+      "required_decision": "Approve the exact immutable candidate, residual risks, effective legal documents, budget, support coverage, and narrowly capped opening plan after every prerequisite is verified.",
+      "required_evidence": ["Signed release decision", "Completed legal/security/privacy checklists", "Final GO gate output"],
+      "evidence_paths": [],
+      "safe_default": "Keep the release decision NO-GO."
+    }
+  ]
+}

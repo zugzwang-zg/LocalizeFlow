@@ -16,6 +16,8 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Iterable, TypedDict
 
+from src.packaging_checker import check_packaging_text, pre_generation_gate
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 FACT_PATH = PROJECT_ROOT / "data" / "products" / "product_facts.json"
 CONTENT_LIBRARY_PATH = (
@@ -39,6 +41,10 @@ PRODUCT_LABELS = {
     "MV-HAND-001": "柔护无香护手霜 · Hand Cream",
     "MV-KIT-001": "轻行基础护肤套装 · Travel Skincare Set",
 }
+
+
+class DemoExportError(RuntimeError):
+    """Raised when a deterministic pack has not passed review and fresh gates."""
 
 
 class MarketConfig(TypedDict):
@@ -313,6 +319,11 @@ def generate_content_pack(
         "brand_tone": brand_tone,
         "source_note": source_note,
         "versions": versions,
+        "pre_generation_packaging_gate": pre_generation_gate(
+            sku,
+            ["capacity" if sku != "MV-KIT-001" else "components"],
+            market,
+        ),
     }
     pack["claims"] = build_claim_evidence(pack)
     pack["primary_quality"] = evaluate_text(
@@ -516,16 +527,20 @@ def evaluate_text(
             category="fact",
         )
 
-    packaging_issue = False
-    if sku == "MV-HAND-001" and (
-        "aluminum tube" in normalized or "tubo de aluminio" in normalized
-    ):
-        packaging_issue = True
+    packaging_report = check_packaging_text(sku, text, market)
+    packaging_issue = packaging_report["status"] == "blocked"
+    if packaging_issue:
+        first_finding = packaging_report["findings"][0]
+        expected = first_finding["expected"]
         add_check(
             "包装事实",
             "fail",
-            "内容写为铝管，但事实库仅支持软管包装。",
-            "删除材质推断，改为 tube / tubo，或补充经核验的包装材质事实。",
+            f"“{first_finding['matched_text']}”无证据或与 {first_finding['field']} 事实冲突；已核实值：{expected}。",
+            (
+                f"替换为 {first_finding['replacement']} 后重新检查。"
+                if first_finding["replacement"]
+                else "删除无证据表述，或先补充经核验的包装字段。"
+            ),
             "fact",
         )
     else:
@@ -671,6 +686,7 @@ def evaluate_text(
             "fail": len(failed),
         },
         "packaging_issue": packaging_issue,
+        "packaging_gate": packaging_report,
     }
 
 
@@ -697,10 +713,12 @@ def update_pack_with_manual_text(
 
 
 def pack_as_json_bytes(pack: dict[str, Any]) -> bytes:
+    _require_exportable_pack(pack)
     return json.dumps(pack, ensure_ascii=False, indent=2).encode("utf-8")
 
 
 def pack_as_csv_bytes(pack: dict[str, Any]) -> bytes:
+    _require_exportable_pack(pack)
     buffer = io.StringIO()
     writer = csv.writer(buffer)
     writer.writerow(
@@ -757,3 +775,23 @@ def pack_as_csv_bytes(pack: dict[str, Any]) -> bytes:
                 ]
             )
     return ("\ufeff" + buffer.getvalue()).encode("utf-8")
+
+
+def _require_exportable_pack(pack: dict[str, Any]) -> None:
+    content_type = pack.get("primary_content_type")
+    versions = pack.get("versions", {})
+    payload = versions.get(content_type, {}) if isinstance(versions, dict) else {}
+    final_text = payload.get("final") if isinstance(payload, dict) else None
+    if not isinstance(final_text, str) or not final_text.strip():
+        raise DemoExportError("A reviewed final version is required before export.")
+    human_review = pack.get("human_review")
+    if not isinstance(human_review, dict) or human_review.get("status") != "confirmed":
+        raise DemoExportError("Human review must be confirmed before export.")
+    fresh_quality = evaluate_text(
+        sku=str(pack.get("sku", "")),
+        market=str(pack.get("market", "")),
+        content_type=str(content_type),
+        text=final_text,
+    )
+    if fresh_quality["export_gate"] == "blocked":
+        raise DemoExportError("Fresh fact or packaging checks block export.")

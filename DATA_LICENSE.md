@@ -12,6 +12,10 @@ the project owner holds rights capable of being licensed.
 - AI-generated fictional prices, packaging, claims, product descriptions,
   marketing content, and evaluation candidates created only for demonstration
   and evaluation.
+- One AI-generated portfolio social-preview image at
+  `web/public/og-portfolio.png`, created on 2026-08-16 with OpenAI's built-in
+  image generation. It is a visual communication asset, not evaluation or
+  product-performance evidence.
 - Project-authored measurements, annotations, reports, screenshots, charts,
   presentation material, and demonstration video.
 - Summaries and links to official platform-rule sources.

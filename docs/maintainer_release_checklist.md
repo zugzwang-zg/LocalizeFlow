@@ -1,61 +1,42 @@
 # Maintainer release checklist
 
-Use this checklist for `v0.1.0-preview.1`. Repository settings and publishing
-steps intentionally occur only after the release candidate has been reviewed.
+> Candidate: `v0.2.0-preview.1`
+> Candidate state: owner accepted; release content ready
+> Formal release: blocked until final protected GitHub checks, protected merge,
+> `main` release smoke, and the clean-source smoke test pass
 
-## 1. Review and merge the release candidate
+This checklist applies to the Apache-2.0 source preview and deterministic
+public Demo. It does not authorize a hosted free trial or real-data processing.
 
-- [ ] Review the complete diff, especially license ownership, synthetic-content
-      disclosures, dependency overrides, and security contact instructions.
-- [ ] Confirm the collective `LocalizeFlow contributors` copyright wording,
-      or replace it with the project's legal copyright holder before release.
-- [ ] Push the release candidate to a branch and open a pull request.
-- [ ] Wait for CI and CodeQL to pass on GitHub-hosted runners.
-- [ ] Confirm the README badges resolve after the workflows run.
+## 1. Repository controls
 
-## 2. Configure repository security
+- [x] Repository is public and GitHub recognizes Apache-2.0.
+- [x] Issues are enabled; Wiki and Discussions remain intentionally disabled.
+- [x] Dependency graph/Dependabot security updates are enabled.
+- [x] Secret scanning and push protection are enabled.
+- [x] Private vulnerability reporting is enabled.
+- [x] `SECURITY.md` is present.
+- [x] `main` requires a pull request, current CI/CodeQL checks, an up-to-date
+      branch, linear history, conversation resolution, and blocks force pushes
+      and deletion.
+- [x] Maintainer labels include triage, safety, localization, accessibility,
+      dependency, Python, Web, epic, incident, and support scopes.
 
-In GitHub, open **Settings → Code security and analysis**:
+## 2. Review the candidate
 
-- [ ] Enable Dependency graph and Dependabot alerts.
-- [ ] Enable Dependabot security updates.
-- [ ] Enable secret scanning and push protection where available.
-- [ ] Enable Private vulnerability reporting.
-- [ ] Verify `SECURITY.md` appears under the repository Security tab.
+- [x] Review the complete Draft PR diff, especially license ownership,
+      synthetic-content disclosures, generated-image provenance, security
+      contacts, release boundaries, and the 30-case evaluation claims.
+- [x] Confirm `LocalizeFlow contributors` is the intended copyright wording,
+      or replace it with the legal copyright holder before release.
+- [x] Confirm the public Demo URL, README anchors, trust pages, and release-note
+      links resolve from the GitHub-rendered branch.
+- [x] Confirm `v0.2.0-preview.1` is the desired tag and set the release date in
+      `CHANGELOG.md` to `2026-08-16`.
+- [x] Resolve or explicitly defer open dependency PRs; do not merge unreviewed
+      upgrades into the frozen candidate.
 
-## 3. Create labels
-
-Create these labels before accepting external issues:
-
-- [ ] `needs-triage`
-- [ ] `fact-safety`
-- [ ] `platform-rule`
-- [ ] `localization`
-- [ ] `accessibility`
-- [ ] `dependencies`
-- [ ] `python`
-- [ ] `web`
-- [ ] `epic:open-source`
-- [ ] `epic:fact-safety`
-- [ ] `epic:demo`
-- [ ] `epic:beta`
-- [ ] `epic:free-trial`
-- [ ] `epic:security`
-- [ ] `epic:privacy`
-
-## 4. Protect `main`
-
-After the first pull request has produced check names, configure a ruleset for
-`main`:
-
-- [ ] Require a pull request before merging.
-- [ ] Require the Python 3.11, 3.12, 3.13 and Web CI checks.
-- [ ] Require both CodeQL language checks.
-- [ ] Require branches to be up to date before merge.
-- [ ] Block force pushes and branch deletion.
-- [ ] Keep maintainer bypass limited and documented.
-
-## 5. Run the final local gate
+## 3. Required local gate
 
 ```powershell
 .\.venv\Scripts\uv.exe sync --locked --extra dev
@@ -64,37 +45,57 @@ After the first pull request has produced check names, configure a ruleset for
 .\.venv\Scripts\uv.exe run pytest -q --cov=src --cov=app --cov-fail-under=70
 .\.venv\Scripts\uv.exe run python prompts\tests\validate_prompts_offline.py
 .\.venv\Scripts\uv.exe run python app\main.py --smoke-test
+.\.venv\Scripts\uv.exe run python scripts\run_operations_drill.py
+.\.venv\Scripts\uv.exe run python scripts\check_open_source_release_candidate.py --require-release-ready
+.\.venv\Scripts\uv.exe run python scripts\check_hosted_trial_prerequisites.py --expect-unresolved
+.\.venv\Scripts\uv.exe run python scripts\check_free_trial_release_gate.py --expect-no-go
 cd web
 pnpm install --frozen-lockfile
+pnpm security:audit
 pnpm lint
 pnpm test
 pnpm build
-pnpm security:audit
 ```
 
-- [ ] Run a Python dependency audit against the installed clean environment.
-- [ ] Confirm no secrets exist in the worktree or Git history.
-- [ ] Confirm PDF, PPTX, video, screenshots, and office files contain no private
-      comments, paths, credentials, customer data, or unwanted author metadata.
-- [ ] Confirm all official platform-rule URLs and verification dates.
+- [x] Run the complete local gate against the candidate tree; repeat only if
+      the candidate changes after the final commit.
+- [x] Confirm no secrets, personal/customer data, raw production logs, or
+      private incident material exists in the candidate or Git history.
+- [x] Confirm PDF, PPTX, video, screenshots, workbooks, and generated images
+      have the documented provenance and no unwanted private metadata.
+- [x] Run Python and Web dependency audits with no known vulnerabilities.
+- [x] Confirm all seven official platform-rule links remain reachable; keep the
+      frozen 2026-07-28 rule verification date for evaluation reproducibility.
 
-## 6. Publish the preview
+## 4. GitHub candidate gate
 
-- [ ] Replace `TBD` in `CHANGELOG.md` with the release date.
-- [ ] Merge only after all required checks pass.
-- [ ] Create annotated tag `v0.1.0-preview.1` from the reviewed `main` commit.
+- [x] Draft PR targets `main` from the candidate branch.
+- [ ] Python 3.11, 3.12, 3.13 and Web CI pass on the final head SHA.
+- [ ] CodeQL Python and JavaScript/TypeScript analyses pass on the final head SHA.
+- [x] README badges resolve on the branch.
+- [ ] Merge the protected PR, then run `Release smoke` on the exact `main` SHA;
+      this workflow is first introduced by the candidate and cannot be manually
+      dispatched until it exists on the default branch.
+- [ ] All review conversations are resolved and the branch is up to date.
+
+## 5. Publish only after owner acceptance
+
+- [ ] Merge the reviewed PR without bypassing branch protection.
+- [ ] Confirm the merge commit/tree matches the reviewed candidate.
+- [ ] Create annotated tag `v0.2.0-preview.1` from reviewed `main`; never move
+      an existing tag.
 - [ ] Create a GitHub prerelease using `RELEASE_NOTES.md`.
-- [ ] Attach only reviewed release assets; source archives are sufficient unless
-      an additional artifact has a documented need.
-- [ ] Re-download the source archive into a clean directory and repeat the
-      startup smoke test.
-- [ ] Verify GitHub recognizes Apache-2.0 and displays the Security policy.
-- [ ] Record the release URL and final commit in
-      `reports/open_source_readiness.md`.
+- [ ] Attach only reviewed assets; source archives are sufficient by default.
+- [ ] Re-download the public source archive into a clean directory and repeat
+      startup and release-candidate smoke checks.
+- [ ] Record the release URL, final commit, CI, CodeQL, release-smoke, and
+      clean-source evidence in the GitHub prerelease and maintainer acceptance
+      record so the frozen tagged source does not require a post-release edit.
 
 ## Rollback
 
-If a critical license, secret, personal-data, or dependency issue appears,
-mark the release unavailable, rotate any affected credential, publish a clear
-security notice through the private-reporting process, and issue a corrected
-preview from a new tag. Do not silently move an existing public tag.
+If a critical license, secret, personal-data, dependency, or evidence issue is
+found, do not publish or merge. If discovered after release, mark the affected
+release unavailable, rotate credentials when applicable, publish a security
+notice through the private-reporting process, and issue a corrected prerelease
+from a new tag. Never silently move a public tag.

@@ -7,21 +7,38 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11--3.13-3776AB.svg)](pyproject.toml)
 
-[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [业务价值报告](reports/business_value_report.md)
+[在线体验](https://localizeflow-demo-86182.reidmozzie.chatgpt.site) · [90 秒证据](#90-秒看懂这个项目) · [3 分钟工作流](#demo从商品到可导出版本) · [完整评测](reports/evaluation_report.md) · [本地运行](#本地运行) · [发布状态](STATUS.md)
 
-GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
+![LocalizeFlow evidence-led localization desk](web/public/og-portfolio.png)
 
-在线交互式 Demo：<https://localizeflow-demo-86182.reidmozzie.chatgpt.site>
+> 上图由 AI 生成，仅作为作品集社交预览，不属于项目证据。完整来源见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
 
-> 当前在线版本使用冻结的虚拟 SKU 和确定性内容，不调用模型 API，也不接收真实客户数据。它用于体验产品工作流，不是生产环境或真实免费试用。
+## 90 秒看懂这个项目
 
-> **合成内容声明：** 虚拟品牌、虚拟 SKU、价格、产品事实、营销候选和评测材料均为 AI 生成的合成内容；其余代码、文档、测量、图表与演示资产由项目方原创。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
+| 招聘方最关心的问题 | 当前答案 |
+|---|---|
+| 解决什么 | 将商品事实、目标市场语言与平台规则放进同一条可追溯、失败关闭的内容工作流 |
+| 我负责什么 | 独立主导产品范围、事实/语言资产、Python 检查链路、Web Demo、A/B 评测设计与开源发布；AI 辅助评测 |
+| 样本有多大 | 5 个虚拟 SKU × 2 个市场 × 3 种内容类型，共 30 组 A/B、60 条匿名候选 |
+| 结果如何 | LocalizeFlow 30/30 配对胜出；平均复核时间 -25.8%；平均修改次数 -61.5% |
+| 最重要的边界 | 事实通过率仍只有 66.7%，10 个增强候选未达阈值；没有真实用户采用或专业独立评审证据 |
+| 现在能体验什么 | 公开确定性 Demo：冻结虚拟数据、浏览器内处理、不调用模型 API、不接收真实商品资料 |
 
-![LocalizeFlow Demo 首页](assets/streamlit_demo_home.jpg)
+### 当前发布边界
+
+- **公开 Demo：READY。** 可体验事实追溯、问题定位、确定性修复、人工终审与带处置记录的导出。
+- **托管免费试用发布结论：NO-GO。** 注册、真实资料上传、用户数据模型调用和托管导出保持关闭；依据见 [`reports/free_trial_readiness.md`](reports/free_trial_readiness.md)。
+- **生产前置条件：UNRESOLVED。** 运营主体、供应商条款、托管身份/存储、持久化配额、备份删除、外部告警和值守尚未验证；依据见 [`reports/hosted_trial_prerequisites.json`](reports/hosted_trial_prerequisites.json)。
+
+虚拟品牌、SKU、价格、商品事实、营销候选和评测材料为 AI 生成的合成内容。除此之外，代码、文档、测量、图表和演示资产由项目方原创；AI 社交预览图已单独披露。自动检查不代表平台批准、法律意见、医疗证据或专业目标语言终审。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)、[`DISCLAIMER.md`](DISCLAIMER.md) 与 [`docs/legal/`](docs/legal/)。
+
+[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [隐私说明](PRIVACY.md) · [预览条款](TERMS.md) · [可接受使用政策](ACCEPTABLE_USE_POLICY.md) · [支持说明](SUPPORT.md)
 
 ## 项目概览
 
 LocalizeFlow 是一个面向跨境电商内容运营人员的离线可运行原型。它解决的不是“把中文翻译成外语”这一个问题，而是将商品事实、消费者洞察、品牌语气、双语术语和平台规则放进同一条可追溯工作流，使运营人员能看到内容为何这样写、用了哪些事实、存在哪些风险，以及人工修改后是否仍满足放行条件。
+
+当前 Web 首页按招聘方 3–5 分钟阅读路径组织：先看项目结论和量化证据，再区分个人职责、关键产品决策与诚实边界，最后进入确定性五步 Demo。设计与验收口径见 [`reports/portfolio_experience_readiness.md`](reports/portfolio_experience_readiness.md)。
 
 | 项目维度 | 当前实现 |
 |---|---|
@@ -31,7 +48,7 @@ LocalizeFlow 是一个面向跨境电商内容运营人员的离线可运行原�
 | 事实资产 | 结构化事实库、来源、证据等级、允许/禁止宣称 |
 | 语言资产 | 品牌语气指南、英西双语术语表、禁用词与谨慎词 |
 | 质量门槛 | 事实核验、品牌/术语/平台规则检查、人工终审 |
-| 交互与导出 | Streamlit 五步 Demo、版本对比、CSV/JSON 导出 |
+| 交互与导出 | Web / Streamlit 五步 Demo、问题定位与确定性修复、版本对比、带人工处置记录的 CSV/JSON 导出 |
 | 评测规模 | 30 组 A/B、60 条匿名候选、5 SKU × 2 市场 × 3 内容类型 |
 
 ## 业务痛点
@@ -103,6 +120,7 @@ AND 人工终审已批准
 
 - [`data/products/product_master.xlsx`](data/products/product_master.xlsx)：商品主表；
 - [`data/products/product_facts.json`](data/products/product_facts.json)：机器可读事实库；
+- [`data/products/packaging_facts.json`](data/products/packaging_facts.json)：字段级包装事实与生成前/生成后硬门禁；
 - [`data/products/product_cards/`](data/products/product_cards/)：便于人工阅读的商品卡；
 - [`data/products/data_dictionary.md`](data/products/data_dictionary.md)：字段与证据等级说明。
 
@@ -134,19 +152,28 @@ AND 人工终审已批准
 
 ## Demo：从商品到可导出版本
 
-Streamlit Demo 将完整链路压缩成五步：
+Web 与 Streamlit Demo 将完整链路压缩成五步，公开 Web Demo 提供推荐的约 3 分钟体验路径：
 
 1. **商品资料**：选择 SKU，查看结构化事实、允许和禁止表达；
 2. **营销任务**：选择市场、平台、内容类型、目标人群和营销目标；
 3. **生成结果**：查看三类内容及每条事实声明的来源；
-4. **质量检查**：定位事实、包装、术语、语法和平台规则问题；
-5. **版本与导出**：比较 Baseline 与增强版，人工修订、复检、确认并导出。
+4. **质量检查**：定位命中文本、一键执行确定性修复、自动复检，并记录警告保留原因；
+5. **版本与导出**：比较 Baseline 与增强版，人工修订、复检、确认并导出处理动作与时间戳。
 
 ![质量检查页面](assets/streamlit_demo_quality.jpg)
 
 ![版本与导出页面](assets/streamlit_demo_export.jpg)
 
 当前 Demo 采用冻结评测内容与确定性模板，不调用模型 API，也不连接真实发布平台；因此可在没有密钥的环境中稳定复现端到端流程。
+
+### Closed Beta 本地候选（默认关闭）
+
+仓库包含一条尚未对外开放的 Closed Beta 候选链路：CSV/XLSX/JSON 安全导入、缺失/冲突/低证据提示、人工事实确认、OpenAI Chat Completions 或 Anthropic Messages 中转站调用、JSON Schema 校验、事实与包装复检、人工终审和审计包导出。模型开关默认关闭；未完成身份、项目隔离、删除、模型提供方披露与成本保护验证前，不得用托管环境接收真实资料。
+
+- [`templates/LocalizeFlow_Beta_SKU_Import_Template.xlsx`](templates/LocalizeFlow_Beta_SKU_Import_Template.xlsx)：受控 SKU 导入模板；
+- [`templates/LocalizeFlow_Closed_Beta_Evaluation.xlsx`](templates/LocalizeFlow_Closed_Beta_Evaluation.xlsx)：真实任务、双评审和采用意愿记录；
+- [`docs/beta/closed_beta_protocol.md`](docs/beta/closed_beta_protocol.md)：范围、招募、退出与停止条件；
+- [`docs/beta/model_gateway_operations.md`](docs/beta/model_gateway_operations.md)：模型网关、数据最小化、成本与审计要求。
 
 ## 内容案例与事实检查
 
@@ -158,7 +185,7 @@ Streamlit Demo 将完整链路压缩成五步：
 - `contradicted`：与已知事实矛盾；
 - `subjective`：主观表达，不能作为事实证明。
 
-高风险 `unsupported` 或任何 `contradicted` 会阻断导出。项目保留了包装材质被错误补全、医学化功效、绝对化承诺、目标市场范围错误等真实失败案例，详见 [`reports/evaluation_failure_cases.md`](reports/evaluation_failure_cases.md) 与 [`reports/fact_check/`](reports/fact_check/)。
+高风险 `unsupported` 或任何 `contradicted` 会阻断导出。包装已拆分为容量、容器、材质、泵、旋盖、内盖、透明度和套装组件等字段；缺失字段一律为 `unknown`，不得推断。门禁在生成前、生成后和人工编辑后运行。30/30 个冻结增强输出通过当前包装门禁，错误材质、错误容器、未知字段声明和混用 SKU 回归用例均被阻断，详见 [`reports/packaging_gate_validation.md`](reports/packaging_gate_validation.md)。
 
 ## A/B 评测
 
@@ -201,12 +228,12 @@ Streamlit Demo 将完整链路压缩成五步：
 - 仅测试 1 个虚拟品牌、5 个虚拟 SKU，不能直接外推到其他品类；
 - 盲评只有一位评审者，无法计算评审者间一致性；
 - 洞察样本缺少评论者国家字段，只作为语言代理，不代表美国或墨西哥总体趋势；
-- 增强版仍存在包装事实错误，说明事实库字段和生成约束需要继续加强；
+- 字段级包装门禁已覆盖当前 5 个 SKU，但词典式文本识别仍不是通用语义验证器，新品类和新语言必须补充字段与回归样本；
 - 当前 Demo 为离线确定性原型，API 成本为 0 不代表未来在线模型成本；
 - 规则预检不代表 Google、TikTok 或其他平台实际批准；
 - 任何高风险功效、医疗、认证或法律判断仍需专业人员终审。
 
-下一步应优先增加包装字段硬约束、多评审者复核、目标国家本地样本，以及在配置 API 后记录真实模型响应、延迟、成本与结构化输出成功率。
+合成 SKU 的首次真实模型冒烟已通过并记录 Token、延迟、成本、Schema、质量闸门与幂等缓存结果。下一步应优先增加重复模型样本、多评审者复核和目标国家本地样本；单次成功不代表真实 SKU 的质量目标已经达成。
 
 ## 本地运行
 
@@ -263,12 +290,31 @@ Python Demo 与 Web Demo 使用同一组冻结的虚拟事实和评测内容。P
 
 ## API 配置
 
-当前版本无需 API 即可运行。若后续接入在线模型：
+公开 Demo 无需 API 即可运行。本地 Closed Beta 路径支持显式配置的模型中转站，
+但不构成公开免费试用。若启用在线模型：
 
 1. 复制 `.env.example` 为 `.env`；
 2. 只在本地 `.env` 中填写真实密钥；
 3. 不要将密钥写入代码、文档、截图或提交记录；
-4. 补充模型名称、提示词版本、调用次数、延迟、费用与失败日志。
+4. 填写准确的输入/输出 Token 单价，否则成本保护不能启用；
+5. 同时启用试用配额保护，并配置独立的 HMAC 标识密钥；
+6. 启用不记录正文的运维监控后，再显式打开模型调用开关；内容导出开关需单独审批；
+7. 补充模型名称、提示词版本、调用次数、延迟、费用与失败机器码。
+
+本地默认策略为“项目方小额赠送额度并严格封顶”：账户和项目每月各 3 次计费生成运行，
+账户每日 USD 0.10、全局每日 USD 1.00、全局每月 USD 10.00，并设置账户、项目和
+客户端 10 分钟频率限制。详细规则与生产缺口见
+[`docs/trial_limits.md`](docs/trial_limits.md)。当前计数只保存在本机进程，不能替代
+生产环境的登录、可信 IP、持久化原子计数和外部告警。
+
+本地 D4 监控记录 HMAC 化账户/SKU、成功率、延迟、重试、Schema、成本、
+硬阻断、导出与反馈计数，不记录上传或生成正文；它和紧急开关均为进程内参考实现。
+指标口径、事件响应和发布/回滚步骤见 [`docs/operations/`](docs/operations/)。
+
+Closed Beta 还提供一个默认关闭的本地加密租户仓库，用于验证登录、项目隔离、
+数据导出与永久删除。密码使用 scrypt，租户正文写入 SQLite 前使用 Fernet 加密；
+这不替代托管环境的身份服务、HTTPS、KMS、备份和多实例授权。配置与限制见
+[`docs/tenant_isolation.md`](docs/tenant_isolation.md)。
 
 ## 项目结构
 

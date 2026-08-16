@@ -17,8 +17,12 @@ test("server-renders the LocalizeFlow demo shell", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /<title>LocalizeFlow｜跨境商品本地化 Copilot<\/title>/i);
-  assert.match(html, /先把商品事实钉牢/);
+  assert.match(html, /<title>LocalizeFlow｜证据驱动的跨境内容工作台<\/title>/i);
+  assert.match(html, /不是翻译器，而是跨境内容的证据与放行工作台/);
+  assert.match(html, /开始 3 分钟演示/);
+  assert.match(html, /30 \/ 30/);
+  assert.match(html, /WHAT I OWNED/);
+  assert.match(html, /FREE TRIAL · NO-GO/);
   assert.match(html, /NO API/);
   assert.match(html, /商品资料/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
@@ -34,7 +38,12 @@ test("keeps the public demo deterministic and accessible", async () => {
   assert.match(page, /offline_deterministic_demo/);
   assert.match(page, /model_api_called:\s*false/);
   assert.match(page, /aria-label="工作流步骤"/);
+  assert.match(page, /明确同意在下载的本地反馈文件中附带完整终稿/);
+  assert.match(page, /Content body included: no/);
+  assert.match(page, /登记 Beta 兴趣/);
+  assert.doesNotMatch(page, /申请 Beta 试用/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(layout, /lang="zh-CN"/);
+  assert.match(layout, /og-portfolio\.png/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 });
