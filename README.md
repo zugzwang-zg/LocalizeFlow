@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11--3.13-3776AB.svg)](pyproject.toml)
 
-[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [隐私说明](PRIVACY.md) · [预览条款](TERMS.md) · [可接受使用政策](ACCEPTABLE_USE_POLICY.md) · [免责声明](DISCLAIMER.md)
+[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [服务状态](STATUS.md) · [支持说明](SUPPORT.md) · [隐私说明](PRIVACY.md) · [预览条款](TERMS.md) · [可接受使用政策](ACCEPTABLE_USE_POLICY.md) · [免责声明](DISCLAIMER.md)
 
 GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
 
@@ -16,6 +16,8 @@ GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
 > 当前在线版本使用冻结的虚拟 SKU 和确定性内容，不调用模型 API，也不接收真实客户数据。它用于体验产品工作流，不是生产环境或真实免费试用。
 
 > 托管免费试用仍未开放。模型数据政策要求用户上传内容默认不得用于训练；在模型/中转服务的法律实体、数据区域、保留期、跨境路径及无训练设置完成核验前，用户数据的模型调用必须保持关闭。参见 [`docs/legal/`](docs/legal/)。
+
+> 运维边界：仓库已提供不记录正文的进程内指标、阈值告警、模型/内容导出紧急开关、P0/P1/P2 响应流程和发布演练；但尚无持久化多实例指标、外部探针、告警投递或真实值守。参见 [`docs/operations/`](docs/operations/)；这些缺口继续阻断托管试用。
 
 > **合成内容声明：** 虚拟品牌、虚拟 SKU、价格、产品事实、营销候选和评测材料均为 AI 生成的合成内容；其余代码、文档、测量、图表与演示资产由项目方原创。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
 
@@ -283,13 +285,18 @@ Python Demo 与 Web Demo 使用同一组冻结的虚拟事实和评测内容。P
 3. 不要将密钥写入代码、文档、截图或提交记录；
 4. 填写准确的输入/输出 Token 单价，否则成本保护不能启用；
 5. 同时启用试用配额保护，并配置独立的 HMAC 标识密钥；
-6. 补充模型名称、提示词版本、调用次数、延迟、费用与失败日志。
+6. 启用不记录正文的运维监控后，再显式打开模型调用开关；内容导出开关需单独审批；
+7. 补充模型名称、提示词版本、调用次数、延迟、费用与失败机器码。
 
 本地默认策略为“项目方小额赠送额度并严格封顶”：账户和项目每月各 3 次计费生成运行，
 账户每日 USD 0.10、全局每日 USD 1.00、全局每月 USD 10.00，并设置账户、项目和
 客户端 10 分钟频率限制。详细规则与生产缺口见
 [`docs/trial_limits.md`](docs/trial_limits.md)。当前计数只保存在本机进程，不能替代
 生产环境的登录、可信 IP、持久化原子计数和外部告警。
+
+本地 D4 监控记录 HMAC 化账户/SKU、成功率、延迟、重试、Schema、成本、
+硬阻断、导出与反馈计数，不记录上传或生成正文；它和紧急开关均为进程内参考实现。
+指标口径、事件响应和发布/回滚步骤见 [`docs/operations/`](docs/operations/)。
 
 Closed Beta 还提供一个默认关闭的本地加密租户仓库，用于验证登录、项目隔离、
 数据导出与永久删除。密码使用 scrypt，租户正文写入 SQLite 前使用 Fernet 加密；

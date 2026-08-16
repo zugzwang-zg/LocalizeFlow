@@ -33,6 +33,6 @@ test("quality workflow exposes locate, deterministic repair, warning disposition
 });
 
 test("public trust pages exist", async () => {
-  const pages = await Promise.all(["privacy", "terms", "acceptable-use", "disclaimer"].map((name) => readFile(new URL(`../app/${name}/page.tsx`, import.meta.url), "utf8")));
+  const pages = await Promise.all(["status", "support", "privacy", "terms", "acceptable-use", "disclaimer"].map((name) => readFile(new URL(`../app/${name}/page.tsx`, import.meta.url), "utf8")));
   assert.ok(pages.every((page) => page.includes("返回 Demo")));
 });

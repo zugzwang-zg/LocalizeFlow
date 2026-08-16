@@ -16,6 +16,12 @@ from src.beta_model import (
     run_beta_generation,
     run_limited_beta_generation,
 )
+from src.operations import (
+    InMemoryOperationsStore,
+    OperationsError,
+    OperationsMonitor,
+    OperationsSettings,
+)
 from src.trial_limits import (
     InMemoryTrialUsageStore,
     TrialLimitSettings,
@@ -344,6 +350,18 @@ class BetaModelTests(unittest.TestCase):
             client_id="client-1",
             language="en-US",
         )
+        operations_store = InMemoryOperationsStore()
+        operations_monitor = OperationsMonitor(
+            OperationsSettings(
+                enabled=True,
+                model_calls_enabled=True,
+                exports_enabled=False,
+                identifier_hmac_secret=(
+                    "test-only-operations-secret-with-at-least-32-characters"
+                ),
+            ),
+            operations_store,
+        )
 
         def factory(**_: object) -> FakeClient:
             return FakeClient(completions)
@@ -354,6 +372,7 @@ class BetaModelTests(unittest.TestCase):
             run_store=run_store,
             trial_guard=guard,
             trial_subject=trial_subject,
+            operations_monitor=operations_monitor,
             client_factory=factory,
         )
         second = run_limited_beta_generation(
@@ -362,6 +381,7 @@ class BetaModelTests(unittest.TestCase):
             run_store=run_store,
             trial_guard=guard,
             trial_subject=trial_subject,
+            operations_monitor=operations_monitor,
             client_factory=factory,
         )
         self.assertFalse(first["cache_hit"])
@@ -380,9 +400,62 @@ class BetaModelTests(unittest.TestCase):
                 run_store=run_store,
                 trial_guard=guard,
                 trial_subject=trial_subject,
+                operations_monitor=operations_monitor,
                 client_factory=factory,
             )
         self.assertEqual(completions.calls, 1)
+        self.assertEqual(
+            [event.outcome for event in operations_store.events],
+            ["success", "success", "blocked"],
+        )
+        self.assertTrue(operations_store.events[1].cache_hit)
+        self.assertNotIn("account-1", repr(operations_store.events))
+
+    def test_operations_kill_switch_blocks_before_provider_call(self) -> None:
+        req = request()
+        completions = FakeCompletions(valid_output(req))
+        guard = TrialUsageGuard(
+            TrialLimitSettings(
+                enabled=True,
+                identifier_hmac_secret=(
+                    "test-only-hmac-secret-with-at-least-32-characters"
+                ),
+                max_requests_per_account_window=10,
+                max_requests_per_project_window=10,
+                max_requests_per_client_window=10,
+                max_cost_per_account_day_usd=1.0,
+                max_cost_global_day_usd=2.0,
+                max_cost_global_month_usd=10.0,
+            ),
+            InMemoryTrialUsageStore(),
+        )
+        monitor = OperationsMonitor(
+            OperationsSettings(
+                enabled=True,
+                model_calls_enabled=False,
+                exports_enabled=False,
+                identifier_hmac_secret=(
+                    "test-only-operations-secret-with-at-least-32-characters"
+                ),
+            ),
+            InMemoryOperationsStore(),
+        )
+        with self.assertRaisesRegex(OperationsError, "model calls disabled"):
+            run_limited_beta_generation(
+                req,
+                settings=settings(),
+                run_store=InMemoryRunStore(),
+                trial_guard=guard,
+                trial_subject=TrialUsageSubject(
+                    account_id="account-1",
+                    project_id="project-001",
+                    client_id="client-1",
+                    language="en-US",
+                ),
+                operations_monitor=monitor,
+                client_factory=lambda **_: FakeClient(completions),
+            )
+        self.assertEqual(completions.calls, 0)
 
     def test_ineligible_fact_reference_is_never_released(self) -> None:
         req = request()

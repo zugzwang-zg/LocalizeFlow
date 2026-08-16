@@ -42,6 +42,8 @@ Create these labels before accepting external issues:
 - [ ] `epic:free-trial`
 - [ ] `epic:security`
 - [ ] `epic:privacy`
+- [ ] `incident`
+- [ ] `support`
 
 ## 4. Protect `main`
 
@@ -69,6 +71,7 @@ fields block registrations, uploads, and model processing of user data.
 .\.venv\Scripts\uv.exe run pytest -q --cov=src --cov=app --cov-fail-under=70
 .\.venv\Scripts\uv.exe run python prompts\tests\validate_prompts_offline.py
 .\.venv\Scripts\uv.exe run python app\main.py --smoke-test
+.\.venv\Scripts\uv.exe run python scripts\run_operations_drill.py
 cd web
 pnpm install --frozen-lockfile
 pnpm lint
@@ -76,6 +79,13 @@ pnpm test
 pnpm build
 pnpm security:audit
 ```
+
+- [ ] Run the `Release smoke` workflow against the exact candidate commit and
+      save its URL with the release evidence.
+- [ ] Verify model-call and hosted content-export emergency switches in the
+      actual deployment; privacy export/deletion must remain available.
+- [ ] Send a test P0 and P1 alert through the external destination and record
+      delivery, acknowledgement, escalation, and recovery evidence.
 
 - [ ] Run a Python dependency audit against the installed clean environment.
 - [ ] Confirm no secrets exist in the worktree or Git history.

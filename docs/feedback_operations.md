@@ -1,6 +1,10 @@
 # Feedback operations
 
-The public demo offers three explicit feedback paths: download a local structured feedback file, open a GitHub error report, or submit the public Beta application form. The demo never silently submits a content body.
+The public demo offers four explicit feedback paths: download a local structured
+feedback file, open a GitHub error report, open a GitHub support request, or
+submit the public Beta application form. The demo never silently submits a
+content body. Security reports use `SECURITY.md`, and P0/P1 incidents follow
+`docs/operations/INCIDENT_RESPONSE.md` instead of waiting for weekly review.
 
 ## Intake fields
 
@@ -13,7 +17,10 @@ The public demo offers three explicit feedback paths: download a local structure
 
 ## Ownership and status
 
-The project maintainer owns the intake queue. Use `new`, `triaged`, `planned`, `resolved`, or `declined`. Security reports must follow `SECURITY.md`, not a public issue.
+The project maintainer owns the intake queue. Use `new`, `triaged`,
+`investigating`, `mitigating`, `monitoring`, `planned`, `resolved`, or
+`declined`, and assign P0/P1/P2 according to `SUPPORT.md`. Security reports must
+follow `SECURITY.md`, not a public issue.
 
 ## Weekly review
 

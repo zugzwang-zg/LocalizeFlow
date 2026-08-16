@@ -45,6 +45,10 @@ from src.demo_service import (  # noqa: E402
     selling_point_options,
     update_pack_with_manual_text,
 )
+from src.operations import (  # noqa: E402
+    DEFAULT_OPERATIONS_MONITOR,
+    OperationsError,
+)
 from src.tenant_store import (  # noqa: E402
     EncryptedTenantStore,
     TenantAuthenticationError,
@@ -857,8 +861,10 @@ def _render_page_product(st: Any) -> None:
         st.markdown("#### 真实模型生成链路")
         settings = BetaModelSettings.from_env()
         trial_settings = TrialLimitSettings.from_env()
+        operations_settings = DEFAULT_OPERATIONS_MONITOR.settings
         trial_guard = None
         try:
+            operations_settings.require_model_calls()
             settings.validate()
             trial_settings.validate()
             if not trial_settings.enabled:
@@ -877,7 +883,7 @@ def _render_page_product(st: Any) -> None:
                 "额度来源：项目方小额赠送额度并严格封顶；当前计数存于本机进程，"
                 "不代表生产级账户或 IP 防滥用。"
             )
-        except (BetaModelError, TrialLimitError) as error:
+        except (BetaModelError, OperationsError, TrialLimitError) as error:
             model_ready = False
             st.info(f"模型网关未开放：{error}")
         confirmed_import = st.session_state.beta_confirmed_import
@@ -935,8 +941,16 @@ def _render_page_product(st: Any) -> None:
                         run_store=st.session_state.beta_run_store,
                         trial_guard=trial_guard,
                         trial_subject=trial_subject,
+                        operations_monitor=DEFAULT_OPERATIONS_MONITOR,
                     )
                 result["quality"] = evaluate_beta_output(confirmed_import, result["output"])
+                DEFAULT_OPERATIONS_MONITOR.record_quality_gate(
+                    account_id=st.session_state.beta_actor_id,
+                    sku=beta_sku,
+                    hard_block_count=sum(
+                        check["status"] == "fail" for check in result["quality"]["checks"]
+                    ),
+                )
                 st.session_state.beta_model_result = result
                 tenant_store.save_project(
                     tenant_token,
@@ -948,7 +962,7 @@ def _render_page_product(st: Any) -> None:
                 )
                 st.session_state.beta_human_approved = False
                 st.session_state.beta_approved_at = None
-            except (BetaModelError, TenantStoreError) as error:
+            except (BetaModelError, OperationsError, TenantStoreError) as error:
                 st.error(str(error))
 
         beta_result = st.session_state.beta_model_result
@@ -989,7 +1003,16 @@ def _render_page_product(st: Any) -> None:
                 st.session_state.beta_approved_at = datetime.now(UTC).isoformat()
             if not st.session_state.beta_human_approved:
                 st.session_state.beta_approved_at = None
-            export_ready = beta_quality["export_gate"] != "blocked" and st.session_state.beta_human_approved
+            export_ready = (
+                beta_quality["export_gate"] != "blocked"
+                and st.session_state.beta_human_approved
+            )
+            try:
+                operations_settings.require_exports()
+                operational_export_ready = True
+            except OperationsError as error:
+                operational_export_ready = False
+                st.info(f"Closed Beta 内容导出已由紧急开关关闭：{error}")
             export_payload = {
                 "run": {key: value for key, value in beta_result.items() if key != "output"},
                 "output": beta_result["output"],
@@ -999,14 +1022,30 @@ def _render_page_product(st: Any) -> None:
                     "approved_at": st.session_state.beta_approved_at if export_ready else None,
                 },
             }
-            st.download_button(
+            downloaded = st.download_button(
                 "下载 Closed Beta 审计包 JSON",
                 data=json.dumps(export_payload, ensure_ascii=False, indent=2).encode(),
                 file_name=f"{beta_result['run_id']}_reviewed.json",
                 mime="application/json",
-                disabled=not export_ready,
+                disabled=not export_ready or not operational_export_ready,
                 use_container_width=True,
             )
+            if downloaded:
+                DEFAULT_OPERATIONS_MONITOR.record_export(
+                    account_id=st.session_state.beta_actor_id,
+                    sku=beta_result["sku"],
+                    success=True,
+                )
+            with st.expander("本地运维指标（不含正文）"):
+                try:
+                    operations_snapshot = DEFAULT_OPERATIONS_MONITOR.snapshot()
+                    st.json(operations_snapshot, expanded=False)
+                    st.caption(
+                        "仅保存在当前进程，标识符使用 HMAC-SHA256；"
+                        "这不是持久化生产监控或外部告警。"
+                    )
+                except OperationsError as error:
+                    st.warning(f"本地运维指标不可用：{error}")
     if st.button("清空当前页面缓存（不删除租户项目）", use_container_width=True):
         _clear_beta_working_state(st)
         st.rerun()

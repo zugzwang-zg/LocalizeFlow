@@ -21,6 +21,7 @@ from src.beta_quality import (
     target_language_findings,
     unavailable_attribute_findings,
 )
+from src.operations import OperationsMonitor
 from src.trial_limits import TrialLimitError, TrialUsageGuard, TrialUsageSubject
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -605,15 +606,32 @@ def run_limited_beta_generation(
     run_store: RunStore,
     trial_guard: TrialUsageGuard,
     trial_subject: TrialUsageSubject,
+    operations_monitor: OperationsMonitor | None = None,
     client_factory: Callable[..., Any] = OpenAI,
     http_requester: Callable[..., Any] = httpx.post,
 ) -> dict[str, Any]:
     """Run one generation behind cumulative trial quotas and cost reservations."""
 
+    if operations_monitor is not None:
+        operations_monitor.settings.require_model_calls()
+    operation_started = time.perf_counter()
     settings.validate()
     _, idempotency_key, _, estimated_max_cost = _request_identity(request, settings)
     cached = run_store.get(idempotency_key)
     if cached:
+        if operations_monitor is not None:
+            operations_monitor.record_generation(
+                account_id=trial_subject.account_id,
+                sku=request["task"]["sku"],
+                market=request["task"]["market"],
+                content_type=request["task"]["content_type"],
+                outcome="success",
+                duration_ms=0,
+                attempts=1,
+                cost_usd=0.0,
+                schema_valid=True,
+                cache_hit=True,
+            )
         return {
             **cached,
             "cache_hit": True,
@@ -628,6 +646,19 @@ def run_limited_beta_generation(
             estimated_cost_usd=estimated_max_cost,
         )
     except TrialLimitError as error:
+        if operations_monitor is not None:
+            operations_monitor.record_generation(
+                account_id=trial_subject.account_id,
+                sku=request["task"]["sku"],
+                market=request["task"]["market"],
+                content_type=request["task"]["content_type"],
+                outcome="blocked",
+                duration_ms=round((time.perf_counter() - operation_started) * 1000),
+                attempts=1,
+                cost_usd=0.0,
+                schema_valid=None,
+                error_code=error.code,
+            )
         retry_note = (
             f" Retry after {error.retry_after_seconds} seconds."
             if error.retry_after_seconds
@@ -644,6 +675,45 @@ def run_limited_beta_generation(
         )
     except Exception as error:
         trial_guard.fail(reservation, failure_code=type(error).__name__)
+        if operations_monitor is not None:
+            error_code, outcome, schema_valid = _operational_failure(error)
+            operations_monitor.record_generation(
+                account_id=trial_subject.account_id,
+                sku=request["task"]["sku"],
+                market=request["task"]["market"],
+                content_type=request["task"]["content_type"],
+                outcome=outcome,
+                duration_ms=round((time.perf_counter() - operation_started) * 1000),
+                attempts=1,
+                cost_usd=estimated_max_cost,
+                schema_valid=schema_valid,
+                error_code=error_code,
+            )
         raise
     trial_guard.complete(reservation, actual_cost_usd=result["estimated_cost_usd"])
+    if operations_monitor is not None:
+        operations_monitor.record_generation(
+            account_id=trial_subject.account_id,
+            sku=request["task"]["sku"],
+            market=request["task"]["market"],
+            content_type=request["task"]["content_type"],
+            outcome="success",
+            duration_ms=result["latency_ms"],
+            attempts=result["attempt_count"],
+            cost_usd=result["estimated_cost_usd"],
+            schema_valid=True,
+        )
     return {**result, "trial_usage": trial_guard.snapshot(trial_subject)}
+
+
+def _operational_failure(error: Exception) -> tuple[str, str, bool | None]:
+    """Map provider/application errors to bounded labels without logging messages."""
+
+    detail = str(error).lower()
+    if "timeout" in detail or "timed out" in detail:
+        return "provider_timeout", "timeout", None
+    if "json schema" in detail or "invalid json" in detail or "provider json" in detail:
+        return "schema_validation_failure", "failure", False
+    if isinstance(error, BetaModelError):
+        return "model_gateway_failure", "failure", None
+    return "generation_failure", "failure", None

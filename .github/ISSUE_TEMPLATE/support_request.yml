@@ -1,0 +1,61 @@
+name: Support request
+description: Ask about installation, the deterministic Demo, documentation, or workflow.
+title: "[Support]: "
+labels: ["support", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Public preview support is best effort. Do not submit secrets, personal
+        data, customer content, private product facts, production credentials,
+        or security exploit details. Use SECURITY.md for private vulnerability reports.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v0.1.0-preview.1 or commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Affected surface
+      options:
+        - Public deterministic Web Demo
+        - Local Streamlit Demo
+        - Installation or dependencies
+        - Product workflow or export
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact
+      options:
+        - P2 — question or isolated inconvenience
+        - P1 candidate — major feature unavailable or repeated failure
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question or problem
+      description: Describe the goal and observed behavior using fictional or sanitized data.
+    validations:
+      required: true
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What have you already tried?
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Public-ticket confirmation
+      options:
+        - label: I removed secrets, personal data, customer content, and confidential product material.
+          required: true
+        - label: This is not a security vulnerability or suspected data exposure requiring SECURITY.md.
+          required: true

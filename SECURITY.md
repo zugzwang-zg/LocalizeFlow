@@ -54,3 +54,11 @@ filters, self-service export, and destructive project/account deletion. It does
 not provide hosted HTTPS, email verification, MFA, password recovery, managed
 KMS, encrypted backups, or multi-instance authorization. See
 `docs/tenant_isolation.md` before evaluating this code for hosted use.
+
+The local D4 operations monitor adds bounded content-free events, HMAC-SHA256
+account/SKU grouping, deterministic thresholds, immediate safety alerts, and
+independent model-call and hosted-content-export switches. It is process-local
+and does not provide durable multi-instance metrics, independent probes,
+external alert delivery, production rollback, or 24/7 response. See
+`docs/operations/` and keep hosted access closed until those controls are
+connected and rehearsed in the actual deployment.
