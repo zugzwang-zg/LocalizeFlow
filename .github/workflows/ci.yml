@@ -37,7 +37,7 @@ jobs:
       - name: Validate prompt assets
         run: uv run python prompts/tests/validate_prompts_offline.py
       - name: Validate open-source release candidate
-        run: uv run python scripts/check_open_source_release_candidate.py --expect-draft-ready
+        run: uv run python scripts/check_open_source_release_candidate.py --require-release-ready
 
   web:
     name: Web

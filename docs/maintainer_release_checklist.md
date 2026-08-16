@@ -1,9 +1,9 @@
 # Maintainer release checklist
 
 > Candidate: `v0.2.0-preview.1`
-> Candidate state: Draft PR preparation
-> Formal release: blocked until owner acceptance, required GitHub checks, and
-> the clean-source smoke test pass
+> Candidate state: owner accepted; release content ready
+> Formal release: blocked until final protected GitHub checks, protected merge,
+> `main` release smoke, and the clean-source smoke test pass
 
 This checklist applies to the Apache-2.0 source preview and deterministic
 public Demo. It does not authorize a hosted free trial or real-data processing.
@@ -24,16 +24,16 @@ public Demo. It does not authorize a hosted free trial or real-data processing.
 
 ## 2. Review the candidate
 
-- [ ] Review the complete Draft PR diff, especially license ownership,
+- [x] Review the complete Draft PR diff, especially license ownership,
       synthetic-content disclosures, generated-image provenance, security
       contacts, release boundaries, and the 30-case evaluation claims.
-- [ ] Confirm `LocalizeFlow contributors` is the intended copyright wording,
+- [x] Confirm `LocalizeFlow contributors` is the intended copyright wording,
       or replace it with the legal copyright holder before release.
-- [ ] Confirm the public Demo URL, README anchors, trust pages, and release-note
+- [x] Confirm the public Demo URL, README anchors, trust pages, and release-note
       links resolve from the GitHub-rendered branch.
-- [ ] Confirm `v0.2.0-preview.1` is the desired tag and replace `TBD` in
-      `CHANGELOG.md` with the actual release date.
-- [ ] Resolve or explicitly defer open dependency PRs; do not merge unreviewed
+- [x] Confirm `v0.2.0-preview.1` is the desired tag and set the release date in
+      `CHANGELOG.md` to `2026-08-16`.
+- [x] Resolve or explicitly defer open dependency PRs; do not merge unreviewed
       upgrades into the frozen candidate.
 
 ## 3. Required local gate
@@ -46,7 +46,7 @@ public Demo. It does not authorize a hosted free trial or real-data processing.
 .\.venv\Scripts\uv.exe run python prompts\tests\validate_prompts_offline.py
 .\.venv\Scripts\uv.exe run python app\main.py --smoke-test
 .\.venv\Scripts\uv.exe run python scripts\run_operations_drill.py
-.\.venv\Scripts\uv.exe run python scripts\check_open_source_release_candidate.py --expect-draft-ready
+.\.venv\Scripts\uv.exe run python scripts\check_open_source_release_candidate.py --require-release-ready
 .\.venv\Scripts\uv.exe run python scripts\check_hosted_trial_prerequisites.py --expect-unresolved
 .\.venv\Scripts\uv.exe run python scripts\check_free_trial_release_gate.py --expect-no-go
 cd web
@@ -69,12 +69,13 @@ pnpm build
 
 ## 4. GitHub candidate gate
 
-- [ ] Draft PR targets `main` from the candidate branch.
-- [ ] Python 3.11, 3.12, 3.13 and Web CI pass on the exact head SHA.
-- [ ] CodeQL Python and JavaScript/TypeScript analyses pass.
-- [ ] README badges resolve on the branch.
-- [ ] Run the `Release smoke` workflow on the exact candidate SHA and record
-      its URL in `reports/open_source_release_candidate.md`.
+- [x] Draft PR targets `main` from the candidate branch.
+- [ ] Python 3.11, 3.12, 3.13 and Web CI pass on the final head SHA.
+- [ ] CodeQL Python and JavaScript/TypeScript analyses pass on the final head SHA.
+- [x] README badges resolve on the branch.
+- [ ] Merge the protected PR, then run `Release smoke` on the exact `main` SHA;
+      this workflow is first introduced by the candidate and cannot be manually
+      dispatched until it exists on the default branch.
 - [ ] All review conversations are resolved and the branch is up to date.
 
 ## 5. Publish only after owner acceptance
@@ -88,7 +89,8 @@ pnpm build
 - [ ] Re-download the public source archive into a clean directory and repeat
       startup and release-candidate smoke checks.
 - [ ] Record the release URL, final commit, CI, CodeQL, release-smoke, and
-      clean-source evidence in `reports/open_source_release_candidate.md`.
+      clean-source evidence in the GitHub prerelease and maintainer acceptance
+      record so the frozen tagged source does not require a post-release edit.
 
 ## Rollback
 

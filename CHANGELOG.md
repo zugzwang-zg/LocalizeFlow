@@ -6,7 +6,7 @@ interfaces remain experimental.
 
 ## [Unreleased]
 
-## [0.2.0-preview.1] - TBD
+## [0.2.0-preview.1] - 2026-08-16
 
 ### Added
 

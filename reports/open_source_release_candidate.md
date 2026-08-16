@@ -2,8 +2,9 @@
 
 > Candidate: `v0.2.0-preview.1`
 > Audit date: 2026-08-16
-> Local status: preparing Draft PR
-> Formal release: not authorized before owner acceptance and protected checks
+> Local status: owner accepted; release content ready
+> Formal release: pending final protected checks, protected merge, and `main`
+> release smoke
 
 ## Recommendation
 
@@ -40,26 +41,27 @@ review, no real-user adoption evidence, and a hosted free-trial `NO-GO`.
 
 ## Current release gate
 
-The local candidate may be pushed to a Draft PR when
-`scripts/check_open_source_release_candidate.py --expect-draft-ready`, the full
-Python/Web regression, dependency audits, prompt validation, startup smoke,
-operations drill, and fail-closed checks pass.
+The release content is ready when
+`scripts/check_open_source_release_candidate.py --require-release-ready`, the
+full Python/Web regression, dependency audits, prompt validation, startup
+smoke, operations drill, and fail-closed checks pass. This local decision does
+not authorize a tag or public release by itself.
 
 The formal prerelease remains blocked until:
 
-1. The project owner accepts this stage and confirms the version/tag.
-2. The Draft PR targets `main` and all protected CI/CodeQL checks pass.
-3. `CHANGELOG.md` replaces `TBD` with the actual release date.
-4. The exact candidate runs through the manually dispatched `Release smoke`.
-5. The PR is merged without bypassing branch protection.
-6. The public source archive is re-downloaded and smoke-tested before the
-   GitHub prerelease is published.
+1. The final PR head passes all protected CI/CodeQL checks.
+2. The PR is merged without bypassing branch protection.
+3. The exact merged `main` SHA passes the manually dispatched `Release smoke`.
+4. The public tag is created once and never moved.
+5. The public source archive is re-downloaded and smoke-tested; final immutable
+   evidence is recorded in the GitHub prerelease and maintainer acceptance
+   record rather than by changing the tagged source afterward.
 
 ## Local verification results
 
 | Gate | Result |
 |---|---|
-| Candidate decision | `DRAFT_READY`; formal release authorization remains false |
+| Candidate decision | `RELEASE_READY`; formal release authorization remains false until protected merge and `main` release smoke |
 | Python tests | 141 passed plus 6 subtests |
 | Python coverage | 72.22%, above the 70% threshold |
 | Ruff / mypy | Passed; 14 typed source files reported no issues |

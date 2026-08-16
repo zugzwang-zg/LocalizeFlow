@@ -1,4 +1,4 @@
-# LocalizeFlow v0.2.0-preview.1 release candidate
+# LocalizeFlow v0.2.0-preview.1
 
 LocalizeFlow v0.2.0-preview.1 turns the first open-source prototype into an
 evidence-led portfolio release with structured packaging facts, hard quality

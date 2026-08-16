@@ -36,7 +36,7 @@ jobs:
           uv run python prompts/tests/validate_prompts_offline.py
           uv run python app/main.py --smoke-test
           uv run python scripts/run_operations_drill.py
-          uv run python scripts/check_open_source_release_candidate.py --expect-draft-ready
+          uv run python scripts/check_open_source_release_candidate.py --require-release-ready
           uv run python scripts/check_hosted_trial_prerequisites.py --expect-unresolved
           uv run python scripts/check_free_trial_release_gate.py --expect-no-go
       - name: Install Web project

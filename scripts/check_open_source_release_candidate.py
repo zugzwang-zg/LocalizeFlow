@@ -11,6 +11,7 @@ from urllib.parse import unquote
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_VERSION = "0.2.0"
 EXPECTED_TAG = "v0.2.0-preview.1"
+EXPECTED_RELEASE_DATE = "2026-08-16"
 PUBLIC_DEMO_URL = "https://localizeflow-demo-86182.reidmozzie.chatgpt.site"
 
 
@@ -37,10 +38,13 @@ def evaluate_candidate() -> dict[str, Any]:
         errors.append("pyproject.toml version does not match the candidate.")
     if web_package["version"] != EXPECTED_VERSION:
         errors.append("web/package.json version does not match the candidate.")
-    if f"## [{EXPECTED_TAG.removeprefix('v')}] - TBD" not in changelog:
-        errors.append("CHANGELOG.md does not contain the dated candidate placeholder.")
-    if f"# LocalizeFlow {EXPECTED_TAG} release candidate" not in release_notes:
-        errors.append("RELEASE_NOTES.md does not identify the candidate tag.")
+    expected_heading = (
+        f"## [{EXPECTED_TAG.removeprefix('v')}] - {EXPECTED_RELEASE_DATE}"
+    )
+    if expected_heading not in changelog:
+        errors.append("CHANGELOG.md does not contain the expected release date.")
+    if f"# LocalizeFlow {EXPECTED_TAG}" not in release_notes:
+        errors.append("RELEASE_NOTES.md does not identify the release tag.")
 
     for marker in (
         PUBLIC_DEMO_URL,
@@ -83,11 +87,12 @@ def evaluate_candidate() -> dict[str, Any]:
             errors.append(f"Required release file is missing: {relative_path}")
 
     return {
-        "computed_decision": "DRAFT_READY" if not errors else "BLOCKED",
+        "computed_decision": "RELEASE_READY" if not errors else "BLOCKED",
         "candidate_tag": EXPECTED_TAG,
         "package_version": EXPECTED_VERSION,
+        "release_date": EXPECTED_RELEASE_DATE,
         "formal_release_authorized": False,
-        "required_next_gate": "owner acceptance plus protected GitHub checks",
+        "required_next_gate": "protected merge plus main release smoke",
         "hosted_free_trial_decision": free_trial.get("decision"),
         "hosted_prerequisite_decision": prerequisites.get("decision"),
         "public_demo_url": PUBLIC_DEMO_URL,
@@ -98,15 +103,15 @@ def evaluate_candidate() -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--expect-draft-ready", action="store_true", required=True)
+    parser.add_argument("--require-release-ready", action="store_true", required=True)
     args = parser.parse_args()
 
     result = evaluate_candidate()
     print(json.dumps(result, ensure_ascii=False, indent=2))
     if result["errors"]:
         return 2
-    if args.expect_draft_ready:
-        return 0 if result["computed_decision"] == "DRAFT_READY" else 1
+    if args.require_release_ready:
+        return 0 if result["computed_decision"] == "RELEASE_READY" else 1
     return 1
 
 
