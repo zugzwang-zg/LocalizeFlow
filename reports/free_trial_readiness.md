@@ -42,6 +42,11 @@ safe state with:
 .\.venv\Scripts\uv.exe run python scripts\check_hosted_trial_prerequisites.py --expect-unresolved
 ```
 
+The project owner selected the portfolio-only Strategy A for the current phase.
+The weighted rationale, scope and reassessment triggers are in
+`reports/portfolio_strategy_decision.md`. This strategy selection deliberately
+does not mark any production prerequisite as verified.
+
 ## What is genuinely complete
 
 - D1: locally testable quota, rate, idempotency, and cost-reservation primitive.

@@ -15,6 +15,8 @@ def test_current_prerequisite_register_is_valid_and_unresolved() -> None:
 
     assert result["computed_decision"] == "UNRESOLVED"
     assert result["declared_decision"] == "UNRESOLVED"
+    assert result["active_strategy"] == "portfolio_only_public_demo"
+    assert result["strategy_status"] == "approved_for_current_portfolio_phase"
     assert result["prerequisite_count"] == 11
     assert result["selected_count"] == 0
     assert result["verified_count"] == 0
@@ -34,6 +36,10 @@ def test_public_register_contains_no_selection_or_private_evidence_path() -> Non
         assert item["selection"] is None
         assert item["evidence_paths"] == []
         assert item["safe_default"]
+    strategy = register["strategy_decision"]
+    assert strategy["selected_by"] == "project_owner"
+    assert strategy["selection"] == "portfolio_only_public_demo"
+    assert len(strategy["revisit_triggers"]) >= 3
 
 
 def test_cli_requires_explicit_expectation_and_refuses_verified_state() -> None:
@@ -75,3 +81,21 @@ def test_beta_application_is_interest_only_and_content_free() -> None:
         assert boundary in form
     assert "interest registration only" in runbook
     assert "AI review may supplement quality evidence" in runbook
+
+
+def test_strategy_report_records_score_scope_and_reassessment() -> None:
+    report = (PROJECT_ROOT / "reports" / "portfolio_strategy_decision.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert "Strategy A" in report
+    assert "**4.70**" in report
+    assert "## Current scope" in report
+    assert "## Reassessment triggers" in report
+    for source in (
+        "https://render.com/docs/free",
+        "https://supabase.com/docs/guides/platform/free-project-pausing",
+        "https://supabase.com/docs/guides/platform/backups",
+        "https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app",
+    ):
+        assert source in report

@@ -121,6 +121,8 @@ def evaluate_gate(manifest_path: Path = MANIFEST_PATH) -> dict[str, Any]:
         "ready_count": ready_count,
         "blocked_ids": sorted(blocked_ids),
         "prerequisite_decision": prerequisite_decision,
+        "active_strategy": prerequisite_result.get("active_strategy"),
+        "strategy_status": prerequisite_result.get("strategy_status"),
         "errors": errors,
         "model_api_calls": 0,
     }

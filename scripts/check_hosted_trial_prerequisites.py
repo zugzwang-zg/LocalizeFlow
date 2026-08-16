@@ -40,6 +40,23 @@ def evaluate_prerequisites(register_path: Path = REGISTER_PATH) -> dict[str, Any
         errors.append("Prerequisite scope must be hosted_free_trial_preconditions.")
     if register.get("active_strategy") != "portfolio_only_public_demo":
         errors.append("The safe portfolio-only strategy must remain active while unresolved.")
+    strategy_decision = register.get("strategy_decision")
+    if not isinstance(strategy_decision, dict):
+        errors.append("The Strategy A decision record is missing.")
+        strategy_status = None
+    else:
+        strategy_status = strategy_decision.get("status")
+        if strategy_status != "approved_for_current_portfolio_phase":
+            errors.append("Strategy A must be approved for the current portfolio phase.")
+        if strategy_decision.get("selection") != register.get("active_strategy"):
+            errors.append("The strategy decision does not match the active strategy.")
+        if strategy_decision.get("selected_by") != "project_owner":
+            errors.append("The current strategy must be selected by the project owner.")
+        if not isinstance(strategy_decision.get("selected_at"), str):
+            errors.append("The strategy selection date is missing.")
+        revisit_triggers = strategy_decision.get("revisit_triggers")
+        if not isinstance(revisit_triggers, list) or len(revisit_triggers) < 3:
+            errors.append("At least three strategy reassessment triggers are required.")
 
     prerequisites = register.get("prerequisites")
     if not isinstance(prerequisites, list):
@@ -140,6 +157,8 @@ def evaluate_prerequisites(register_path: Path = REGISTER_PATH) -> dict[str, Any
     return {
         "computed_decision": computed_decision,
         "declared_decision": register.get("decision"),
+        "active_strategy": register.get("active_strategy"),
+        "strategy_status": strategy_status,
         "prerequisite_count": len(prerequisites),
         "selected_count": selected_count,
         "verified_count": verified_count,

@@ -92,8 +92,8 @@ def test_hosted_prerequisite_docs_keep_portfolio_strategy_active() -> None:
     backlog = normalized("docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md")
 
     assert "reports/hosted_trial_prerequisites.json" in status
-    assert "portfolio-only public Demo remains the active strategy" in decision
-    assert "Strategy A is the recommended default" in decision
+    assert "Strategy A approved for the current portfolio phase" in decision
+    assert "project owner selected Strategy A" in decision
     for batch in range(7):
         assert f"Batch {batch}" in backlog
     assert "AI review remains supplementary evidence" in backlog

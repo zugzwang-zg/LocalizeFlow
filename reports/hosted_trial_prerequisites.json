@@ -4,6 +4,19 @@
   "scope": "hosted_free_trial_preconditions",
   "decision": "UNRESOLVED",
   "active_strategy": "portfolio_only_public_demo",
+  "strategy_decision": {
+    "status": "approved_for_current_portfolio_phase",
+    "selected_at": "2026-08-16",
+    "selected_by": "project_owner",
+    "selection": "portfolio_only_public_demo",
+    "rationale": "Maximize portfolio evidence per unit of time and cost while avoiding unsupported real-user-data and production-service claims.",
+    "revisit_triggers": [
+      "A concrete job, interview, accelerator, or partner requires hosted infrastructure evidence.",
+      "A dedicated monthly budget and primary/backup operational owner are available.",
+      "Authorized participants and two independent target-language reviewers are available.",
+      "The operator, private contacts, jurisdictions, and relay/model data terms can be verified."
+    ]
+  },
   "owner_approval_recorded": false,
   "prerequisites": [
     {

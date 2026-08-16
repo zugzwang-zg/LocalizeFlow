@@ -29,6 +29,9 @@ interfaces remain experimental.
 - A D5 hosted-trial prerequisite decision register, dependency-ordered
   implementation backlog, machine validator, and interest-only Beta intake
   boundary; the active strategy remains the deterministic portfolio Demo.
+- A project-owner Strategy A decision record with weighted A/B/C scoring,
+  current official free-hosting constraints, scope boundaries, and explicit
+  triggers for reconsidering synthetic hosting or a real-data Beta.
 
 ### Changed
 

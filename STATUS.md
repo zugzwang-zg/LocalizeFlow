@@ -18,6 +18,8 @@ The current machine-checked release decision is `NO_GO`; see
 also `UNRESOLVED`; see `reports/hosted_trial_prerequisites.json`. A configured
 local `.env` or a model API connection does not resolve provider, privacy,
 identity, storage, monitoring, support, reviewer, or approval requirements.
+The project owner selected the portfolio-only Strategy A for the current phase;
+see `reports/portfolio_strategy_decision.md`.
 
 ## Incident and support channels
 

@@ -35,7 +35,8 @@ No participant receives access or sends a product file until:
 
 ## Low-cost portfolio path
 
-If these conditions cannot be met, keep the public Demo and interest list, use
-fictional data for technical rehearsals, and report real-user Beta evidence as
-not completed. AI review may supplement quality evidence but must not be
-reported as a participant, independent professional review or adoption intent.
+The project owner selected this low-cost path as Strategy A for the current
+portfolio phase. Keep the public Demo and interest list, use fictional data for
+technical rehearsals, and report real-user Beta evidence as not completed.
+AI review may supplement quality evidence but must not be reported as a
+participant, independent professional review or adoption intent.

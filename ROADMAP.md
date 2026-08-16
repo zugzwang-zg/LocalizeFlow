@@ -29,9 +29,11 @@ but five of six hosted release gates remain blocked. See
 `reports/free_trial_readiness.md`.
 
 D5 tracks the owner decisions that must precede production work. Its machine-
-readable status is `UNRESOLVED`, and the active strategy remains the portfolio-
-only deterministic public Demo. See `reports/hosted_trial_prerequisites.json`
-and `docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md`.
+readable status is `UNRESOLVED`. The project owner selected Strategy A for the
+current portfolio phase: retain the deterministic public Demo and defer hosted
+production work. See `reports/portfolio_strategy_decision.md`,
+`reports/hosted_trial_prerequisites.json`, and
+`docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md`.
 
 - Replace local authentication, sessions, encrypted SQLite, deletion, and
   export controls with tested hosted identity, KMS, storage, backups, and

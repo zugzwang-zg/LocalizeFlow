@@ -1,6 +1,8 @@
 # Hosted trial prerequisite decisions
 
-Status: **UNRESOLVED — portfolio-only public Demo remains the active strategy.**
+Production prerequisites: **UNRESOLVED**
+
+Strategy selection: **Strategy A approved for the current portfolio phase.**
 
 This register turns the five blocked hosted-release gates into owner decisions.
 It is not a vendor selection, deployment approval, legal opinion, or invitation
@@ -16,9 +18,12 @@ to upload real product data. The machine-readable source is
 | C. Real-data Closed Beta / free trial | Authorized uploads, model route, isolated accounts, export and deletion | Requires every D5 prerequisite, provider evidence, operations coverage and appropriate review | Blocked |
 
 Given the project's portfolio purpose and current time/economic constraints,
-Strategy A is the recommended default. Strategy B is useful only when its cost
+the project owner selected Strategy A on 2026-08-16. Strategy B is useful only when its cost
 buys evidence needed for a concrete application or interview. Strategy C must
 not be started merely to remove a checklist item.
+
+The weighted decision and current official hosting constraints are recorded in
+`reports/portfolio_strategy_decision.md`.
 
 ## Owner decision worksheet
 
