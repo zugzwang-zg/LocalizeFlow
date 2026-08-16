@@ -31,7 +31,7 @@
     "eslint-config-next": "16.2.12",
     "image-size": "link:vendor/image-size",
     "react-server-dom-webpack": "19.2.8",
-    "tailwindcss": "4.2.1",
+    "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
     "vinext": "0.0.50",
     "vite": "8.2.1",
