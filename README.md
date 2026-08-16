@@ -7,23 +7,32 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11--3.13-3776AB.svg)](pyproject.toml)
 
-[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [评测报告](reports/evaluation_report.md) · [服务状态](STATUS.md) · [支持说明](SUPPORT.md) · [隐私说明](PRIVACY.md) · [预览条款](TERMS.md) · [可接受使用政策](ACCEPTABLE_USE_POLICY.md) · [免责声明](DISCLAIMER.md)
+[在线体验](https://localizeflow-demo-86182.reidmozzie.chatgpt.site) · [90 秒证据](#90-秒看懂这个项目) · [3 分钟工作流](#demo从商品到可导出版本) · [完整评测](reports/evaluation_report.md) · [本地运行](#本地运行) · [发布状态](STATUS.md)
 
-GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
+![LocalizeFlow evidence-led localization desk](web/public/og-portfolio.png)
 
-在线交互式 Demo：<https://localizeflow-demo-86182.reidmozzie.chatgpt.site>
+> 上图由 AI 生成，仅作为作品集社交预览，不属于项目证据。完整来源见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
 
-> 当前在线版本使用冻结的虚拟 SKU 和确定性内容，不调用模型 API，也不接收真实客户数据。它用于体验产品工作流，不是生产环境或真实免费试用。
+## 90 秒看懂这个项目
 
-> **托管免费试用发布结论：NO-GO。** 模型数据政策要求用户上传内容默认不得用于训练；在真实托管身份/存储、运营主体、供应商与跨境披露、持久化配额、备份删除、外部监控告警和生产回滚完成前，注册、用户上传、用户数据模型调用与托管内容导出必须保持关闭。参见 [`reports/free_trial_readiness.md`](reports/free_trial_readiness.md) 和 [`docs/legal/`](docs/legal/)。
+| 招聘方最关心的问题 | 当前答案 |
+|---|---|
+| 解决什么 | 将商品事实、目标市场语言与平台规则放进同一条可追溯、失败关闭的内容工作流 |
+| 我负责什么 | 独立主导产品范围、事实/语言资产、Python 检查链路、Web Demo、A/B 评测设计与开源发布；AI 辅助评测 |
+| 样本有多大 | 5 个虚拟 SKU × 2 个市场 × 3 种内容类型，共 30 组 A/B、60 条匿名候选 |
+| 结果如何 | LocalizeFlow 30/30 配对胜出；平均复核时间 -25.8%；平均修改次数 -61.5% |
+| 最重要的边界 | 事实通过率仍只有 66.7%，10 个增强候选未达阈值；没有真实用户采用或专业独立评审证据 |
+| 现在能体验什么 | 公开确定性 Demo：冻结虚拟数据、浏览器内处理、不调用模型 API、不接收真实商品资料 |
 
-> 项目负责人已选择 **Strategy A：零额外托管成本的作品集策略**，继续保留冻结数据公开 Demo；选择依据见 [`reports/portfolio_strategy_decision.md`](reports/portfolio_strategy_decision.md)。D5 生产前置条件仍为 `UNRESOLVED`，并由 [`reports/hosted_trial_prerequisites.json`](reports/hosted_trial_prerequisites.json) 与 [`docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md`](docs/operations/HOSTED_TRIAL_IMPLEMENTATION_BACKLOG.md) 管理；公开 Beta 表单只登记兴趣，不授予访问权限或接收商品资料。
+### 当前发布边界
 
-> 运维边界：仓库已提供不记录正文的进程内指标、阈值告警、模型/内容导出紧急开关、P0/P1/P2 响应流程和发布演练；但尚无持久化多实例指标、外部探针、告警投递或真实值守。参见 [`docs/operations/`](docs/operations/)；这些缺口继续阻断托管试用。
+- **公开 Demo：READY。** 可体验事实追溯、问题定位、确定性修复、人工终审与带处置记录的导出。
+- **托管免费试用发布结论：NO-GO。** 注册、真实资料上传、用户数据模型调用和托管导出保持关闭；依据见 [`reports/free_trial_readiness.md`](reports/free_trial_readiness.md)。
+- **生产前置条件：UNRESOLVED。** 运营主体、供应商条款、托管身份/存储、持久化配额、备份删除、外部告警和值守尚未验证；依据见 [`reports/hosted_trial_prerequisites.json`](reports/hosted_trial_prerequisites.json)。
 
-> **AI 内容声明：** 虚拟品牌、虚拟 SKU、价格、产品事实、营销候选和评测材料均为 AI 生成的合成内容；作品集社交预览图 [`web/public/og-portfolio.png`](web/public/og-portfolio.png) 也由 AI 生成，仅用于视觉传播，不属于项目证据。除此之外，代码、文档、测量、图表与演示资产由项目方原创。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
+虚拟品牌、SKU、价格、商品事实、营销候选和评测材料为 AI 生成的合成内容。除此之外，代码、文档、测量、图表和演示资产由项目方原创；AI 社交预览图已单独披露。自动检查不代表平台批准、法律意见、医疗证据或专业目标语言终审。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)、[`DISCLAIMER.md`](DISCLAIMER.md) 与 [`docs/legal/`](docs/legal/)。
 
-![LocalizeFlow Demo 首页](assets/streamlit_demo_home.jpg)
+[演示视频](demo/LocalizeFlow_Demo.mp4) · [项目概览 PPT](demo/LocalizeFlow_Project_Overview.pptx) · [Demo 操作说明](docs/streamlit_demo.md) · [隐私说明](PRIVACY.md) · [预览条款](TERMS.md) · [可接受使用政策](ACCEPTABLE_USE_POLICY.md) · [支持说明](SUPPORT.md)
 
 ## 项目概览
 

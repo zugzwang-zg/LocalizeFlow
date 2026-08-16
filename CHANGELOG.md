@@ -6,6 +6,8 @@ interfaces remain experimental.
 
 ## [Unreleased]
 
+## [0.2.0-preview.1] - TBD
+
 ### Added
 
 - Apache License 2.0 and repository notices.
@@ -73,5 +75,6 @@ interfaces remain experimental.
 First open-source preview. The release date will be set only after the release
 candidate passes the clean-environment checklist.
 
-[Unreleased]: https://github.com/zugzwang-zg/LocalizeFlow/compare/v0.1.0-preview.1...HEAD
+[Unreleased]: https://github.com/zugzwang-zg/LocalizeFlow/compare/v0.2.0-preview.1...HEAD
+[0.2.0-preview.1]: https://github.com/zugzwang-zg/LocalizeFlow/compare/v0.1.0-preview.1...v0.2.0-preview.1
 [0.1.0-preview.1]: https://github.com/zugzwang-zg/LocalizeFlow/releases/tag/v0.1.0-preview.1
