@@ -35,6 +35,9 @@ interfaces remain experimental.
 - A recruiter-oriented portfolio readout with an evidence summary, explicit
   ownership, four product decisions, honest boundaries, and an AI-generated
   social-preview image with recorded provenance.
+- The accepted Strategy A portfolio candidate was published to the existing
+  public Sites URL with post-deployment route, metadata, and release-boundary
+  checks.
 
 ### Changed
 

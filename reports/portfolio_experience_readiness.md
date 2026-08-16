@@ -2,8 +2,8 @@
 
 > Review date: 2026-08-16
 > Scope: recruiter-facing Web information architecture and visual system
-> Local status: ready for owner acceptance
-> Hosted status: not published; the current public Demo is unchanged
+> Local status: accepted by the project owner
+> Hosted status: published on 2026-08-16 at the existing public Demo URL
 
 ## Product decision
 
@@ -84,8 +84,10 @@ Constraints: render every listed text string exactly as written; one cohesive fi
 
 ## Acceptance gate
 
-Before publication, the exact candidate must pass Web build, lint, tests,
-dependency audit, repository validation, and the existing free-trial
-fail-closed checks. The project owner must accept this local stage before the
-existing Sites project is updated. Publication must not enable authentication,
-uploads, model calls, or hosted export.
+The exact candidate passed Web build, lint, tests, dependency audit, repository
+validation, and the existing free-trial fail-closed checks before publication.
+After owner acceptance, it was published to the existing Sites project. The
+production checks confirmed the homepage markers, all public trust routes,
+social-preview asset, interest-only Beta link, and disabled hosted-trial
+language. Publication did not enable authentication, uploads, model calls, or
+hosted export.

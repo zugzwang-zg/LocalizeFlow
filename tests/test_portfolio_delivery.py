@@ -22,7 +22,7 @@ def test_portfolio_readout_preserves_evidence_and_release_boundaries() -> None:
     ):
         assert required_text in page
 
-    assert "Hosted status: not published" in normalized_report
+    assert "Hosted status: published on 2026-08-16" in normalized_report
     assert "not professional independent review" in normalized_report
     assert "hosted free-trial release decision remains `NO-GO`" in normalized_report
 
