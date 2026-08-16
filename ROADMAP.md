@@ -15,6 +15,9 @@ committed until an issue has an owner and an accepted implementation plan.
 - Inline issue highlighting and deterministic safe fixes.
 - Short guided onboarding, privacy notice, feedback, and minimal analytics.
 - Accessibility, responsive layout, and browser compatibility checks.
+- Strategy A portfolio readout is complete locally: recruiter-first evidence,
+  ownership, product decisions, limitations, and a clearance-manifest visual
+  system. Publication remains pending stage acceptance.
 
 ## Closed Beta — local candidate, external validation pending
 

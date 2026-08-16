@@ -32,6 +32,18 @@ test("quality workflow exposes locate, deterministic repair, warning disposition
   assert.doesNotMatch(page, /events\.push\([^\n]*(finalText|edited|enhanced|baseline)/);
 });
 
+test("portfolio readout exposes ownership, evidence and honest release boundaries", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /PORTFOLIO CASE STUDY · SOLO PRODUCT BUILD/);
+  assert.match(page, /从问题定义到发布闸门/);
+  assert.match(page, /AI 辅助评测/);
+  assert.match(page, /30 \/ 30/);
+  assert.match(page, /−25\.8%/);
+  assert.match(page, /−61\.5%/);
+  assert.match(page, /FREE TRIAL · NO-GO/);
+  assert.match(page, /仍有 10 个阈值失败候选/);
+});
+
 test("public trust pages exist", async () => {
   const pages = await Promise.all(["status", "support", "privacy", "terms", "acceptable-use", "disclaimer"].map((name) => readFile(new URL(`../app/${name}/page.tsx`, import.meta.url), "utf8")));
   assert.ok(pages.every((page) => page.includes("返回 Demo")));

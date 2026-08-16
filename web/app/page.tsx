@@ -358,7 +358,7 @@ export default function Home() {
       <aside className="sidebar">
         <div>
           <div className="brand">LocalizeFlow</div>
-          <div className="brandNote">evidence-led localization desk</div>
+          <div className="brandNote">evidence / localize / release</div>
         </div>
         <nav aria-label="工作流步骤">
           {STEPS.map((label, index) => {
@@ -383,7 +383,7 @@ export default function Home() {
       <section className="workspace">
         <header className="topbar">
           <div className="offline"><span /> NO API · REPRODUCIBLE</div>
-          <div className="topLinks"><a href="/status">状态</a><a href="/support">支持</a><a href="/privacy">隐私</a><a href="/terms">条款</a><a href="/acceptable-use">可接受使用</a><a href="https://github.com/zugzwang-zg/LocalizeFlow" target="_blank" rel="noreferrer">项目资料 ↗</a></div>
+          <div className="topLinks"><a href="/status">状态</a><a href="/support">支持</a><a href="/privacy">隐私</a><a href="/terms">条款</a><a href="/acceptable-use">可接受使用</a><a href="https://github.com/zugzwang-zg/LocalizeFlow" target="_blank" rel="noreferrer">GitHub ↗</a></div>
         </header>
 
         <div className="stepStrip" aria-label="当前进度">
@@ -392,10 +392,41 @@ export default function Home() {
 
         {step === 1 && (
           <div className="page">
-            <div className="eyebrow">01 / SOURCE OF TRUTH</div>
-            <h1>不是翻译器，而是跨境内容的证据与放行工作台。</h1>
-            <p className="lede">沿推荐路径，在约 3 分钟内完成事实核对、目标市场改写、风险修复和人工放行。所有数据只在浏览器中处理，不会发送到外部模型。</p>
-            <div className="introActions"><button className="primary" onClick={() => setStep(2)}>开始 3 分钟演示 →</button><span>推荐路径：事实 → 任务 → 结果 → 修复 → 放行</span></div>
+            <section className="portfolioHero" aria-labelledby="portfolio-title">
+              <div className="heroCopy">
+                <div className="eyebrow">PORTFOLIO CASE STUDY · SOLO PRODUCT BUILD · 2026</div>
+                <h1 id="portfolio-title">不是翻译器，而是跨境内容的证据与放行工作台。</h1>
+                <p className="lede">我把商品事实、目标市场语言、平台规则和人工终审做成一条可追溯工作流。招聘方可先用 90 秒看项目证据，再沿推荐路径完成约 3 分钟交互演示。</p>
+                <div className="introActions"><button className="primary" onClick={() => setStep(2)}>开始 3 分钟演示 →</button><a className="secondaryLink" href="#portfolio-evidence">先看作品集证据 ↓</a></div>
+              </div>
+              <aside className="releaseManifest" aria-label="LocalizeFlow 放行路线与项目边界">
+                <header><span>LF / RELEASE MANIFEST</span><b>可追溯内容放行</b></header>
+                <div className="manifestRoute">
+                  <div><span>01</span><b>事实</b><small>source bound</small></div>
+                  <div><span>02</span><b>本地化</b><small>market fit</small></div>
+                  <div><span>03</span><b>门禁</b><small>fail closed</small></div>
+                  <div><span>04</span><b>导出</b><small>human sign-off</small></div>
+                </div>
+                <div className="manifestDecisions"><span className="decisionReady">PUBLIC DEMO · READY</span><span className="decisionBlocked">FREE TRIAL · NO-GO</span></div>
+                <p>冻结虚拟数据 · 浏览器内处理 · 不调用模型 API · 不接收真实商品资料</p>
+              </aside>
+            </section>
+
+            <section className="portfolioEvidence" id="portfolio-evidence" aria-labelledby="evidence-title">
+              <div className="portfolioEvidenceHeader"><div><span>90-SECOND READOUT</span><h2 id="evidence-title">先看结果，再进入流程。</h2></div><p>目标岗位：AI 产品 / 本地化技术 / 全栈原型<br />角色：独立主导产品、数据、工程与开源发布；AI 辅助评测</p></div>
+              <div className="portfolioMetrics">
+                <article><small>冻结 A/B 配对</small><strong>30 / 30</strong><p>LocalizeFlow 候选胜出</p></article>
+                <article><small>平均复核时间</small><strong>−25.8%</strong><p>6.33 → 4.70 分钟</p></article>
+                <article><small>平均修改次数</small><strong>−61.5%</strong><p>3.63 → 1.40 次</p></article>
+                <article><small>评测矩阵</small><strong>5 × 2 × 3</strong><p>SKU × 市场 × 内容类型</p></article>
+              </div>
+              <div className="portfolioReadoutGrid">
+                <article className="ownershipCard"><span>WHAT I OWNED</span><h3>从问题定义到发布闸门</h3><ul><li>产品范围、用户路径与证据模型</li><li>事实库、提示词、规则和双语内容资产</li><li>Python 检查链路与交互式 Web Demo</li><li>A/B 评测设计、AI 辅助评分、失败复测与发布决策</li></ul></article>
+                <article className="decisionCard"><span>FOUR PRODUCT DECISIONS</span><h3>技术选择服务于可信度</h3><ol><li><b>事实编号先于生成</b><small>每条可验证声明都能回查来源。</small></li><li><b>硬失败不能被总分覆盖</b><small>事实与包装矛盾直接阻断导出。</small></li><li><b>公开 Demo 与模型链路分离</b><small>公开体验可复现，真实数据能力默认关闭。</small></li><li><b>把 NO-GO 也做成产物</b><small>机器闸门记录为何尚未开放免费试用。</small></li></ol></article>
+              </div>
+              <div className="evidenceCaveat"><b>诚实边界</b><span>事实通过率从 40.0% 提升到 66.7%，仍有 10 个阈值失败候选；当前没有真实用户采用或专业独立评审证据。</span><a href="https://github.com/zugzwang-zg/LocalizeFlow/blob/main/reports/evaluation_report.md" target="_blank" rel="noreferrer">查看完整评测 ↗</a></div>
+            </section>
+
             <div className="beforeAfter"><article><small>普通直译</small><p>{baseline.split("\n").slice(0, 2).join("\n")}</p><b>事实孤立 · 语气生硬 · 无放行记录</b></article><article><small>LocalizeFlow</small><p>{enhanced.split("\n").slice(0, 2).join("\n")}</p><b>证据绑定 · 市场化表达 · 可审计放行</b></article></div>
             <div className="sectionHeading compactHeading"><h2>核心事实</h2><span>本步约 30 秒 · 选定商品即完成</span></div>
             <label className="field wide"><span>选择商品</span><select value={sku} onChange={(event) => { setSku(event.target.value); setGenerated(false); setConfirmed(false); }}>{Object.entries(PRODUCTS).map(([id, label]) => <option value={id} key={id}>{id} · {label}</option>)}</select></label>
@@ -479,9 +510,9 @@ export default function Home() {
               <div className="outcomeGrid"><article><small>节省的机械步骤</small><strong>3 类检查合并</strong></article><article><small>本次拦截</small><strong>{quality.failed + quality.warned} 项风险</strong></article><article><small>证据覆盖</small><strong>{evidenceIds.length} 个事实编号</strong></article><article><small>下一步</small><strong>目标平台人工复核</strong></article></div>
               <label className={`confirm ${confirmed ? "checked" : ""}`}><input type="checkbox" checked={confirmed} disabled={quality.failed > 0 || unresolvedWarnings.length > 0} onChange={(event) => { const checked = event.target.checked; setConfirmed(checked); setConfirmedAt(checked ? new Date().toISOString() : ""); if (checked) recordEvent("human_signoff_completed", { step: 5 }); }} /><span><b>我已核对事实、术语和平台规则</b><small>{quality.failed ? "仍有阻断项，暂不能确认。" : unresolvedWarnings.length ? "仍有警告未记录处理结论。" : "确认时间会写入导出记录；不会上传。"}</small></span></label>
               <div className="exportPanel"><div><small>EXPORT GATE</small><strong>{confirmed ? "READY TO EXPORT" : quality.failed ? "BLOCKED" : "AWAITING REVIEW"}</strong></div><div className="actions compact"><button disabled={!confirmed} onClick={exportCsv}>下载 CSV</button><button className="primary" disabled={!confirmed} onClick={exportPack}>下载 JSON</button></div></div>
-              <section className="feedbackPanel"><div className="sectionHeading"><h2>结果是否有用？</h2><span>结构化反馈 · 每周由维护者复盘</span></div><div className="feedbackGrid"><label className="field"><span>结果评价</span><select value={feedbackUseful} onChange={(event) => setFeedbackUseful(event.target.value)}><option value="yes">有用</option><option value="no">无用</option></select></label><label className="field"><span>问题类别</span><select value={feedbackCategory} onChange={(event) => setFeedbackCategory(event.target.value)}><option value="localization">本地化</option><option value="fact_error">事实错误</option><option value="platform_rule">平台规则</option><option value="usability">操作体验</option></select></label><label className="field feedbackNote"><span>补充说明</span><input value={feedbackNote} onChange={(event) => setFeedbackNote(event.target.value)} placeholder="不要粘贴敏感或未公开内容" /></label></div><label className="contentConsent"><input type="checkbox" checked={includeContent} onChange={(event) => setIncludeContent(event.target.checked)} />明确同意在下载的本地反馈文件中附带完整终稿（默认不附带；GitHub 提交始终不附带）</label><div className="actions compact"><button onClick={downloadFeedback}>下载反馈单</button><button onClick={openFeedbackIssue}>在 GitHub 报告错误 ↗</button><a className="buttonLink" href="https://github.com/zugzwang-zg/LocalizeFlow/issues/new?template=beta_application.yml" target="_blank" rel="noreferrer">申请 Beta 试用 ↗</a></div></section>
+              <section className="feedbackPanel"><div className="sectionHeading"><h2>结果是否有用？</h2><span>结构化反馈 · 每周由维护者复盘</span></div><div className="feedbackGrid"><label className="field"><span>结果评价</span><select value={feedbackUseful} onChange={(event) => setFeedbackUseful(event.target.value)}><option value="yes">有用</option><option value="no">无用</option></select></label><label className="field"><span>问题类别</span><select value={feedbackCategory} onChange={(event) => setFeedbackCategory(event.target.value)}><option value="localization">本地化</option><option value="fact_error">事实错误</option><option value="platform_rule">平台规则</option><option value="usability">操作体验</option></select></label><label className="field feedbackNote"><span>补充说明</span><input value={feedbackNote} onChange={(event) => setFeedbackNote(event.target.value)} placeholder="不要粘贴敏感或未公开内容" /></label></div><label className="contentConsent"><input type="checkbox" checked={includeContent} onChange={(event) => setIncludeContent(event.target.checked)} />明确同意在下载的本地反馈文件中附带完整终稿（默认不附带；GitHub 提交始终不附带）</label><div className="actions compact"><button onClick={downloadFeedback}>下载反馈单</button><button onClick={openFeedbackIssue}>在 GitHub 报告错误 ↗</button><a className="buttonLink" href="https://github.com/zugzwang-zg/LocalizeFlow/issues/new?template=beta_application.yml" target="_blank" rel="noreferrer">登记 Beta 兴趣 ↗</a></div></section>
               <details className="privacyPanel"><summary>本地隐私指标与数据控制</summary><p>Demo 只在你的浏览器 localStorage 保存匿名运行 ID、事件名、完成时间、耗时、市场和内容类型；用途仅为你自行检查体验路径；最多保留 100 条且不超过 30 天。不记录正文，不设置第三方 Cookie，不会自动传输。</p><label className="contentConsent"><input type="checkbox" checked={metricsEnabled} onChange={(event) => { const enabled = event.target.checked; setMetricsEnabled(enabled); localStorage.setItem("localizeflow_metrics_disabled", String(!enabled)); }} />允许在本机保存匿名体验事件</label><div className="actions compact"><button onClick={exportPrivateMetrics}>导出本地指标</button><button onClick={clearPrivateMetrics}>清除本地指标</button></div></details>
-              <p className="fineprint">所有品牌、SKU、商品事实、价格、营销内容和评测材料均为 AI 生成的模拟数据，其余项目材料为原创。自动预检不替代平台、法务或目标语言专业人员的最终审核。参见 <a href="/disclaimer">免责声明</a>。</p>
+              <p className="fineprint">所有品牌、SKU、商品事实、价格、营销内容和评测材料均为 AI 生成的模拟数据；社交预览图也由 AI 生成且不属于项目证据。除此之外，代码、文档、测量、图表与演示资产为原创。自动预检不替代平台、法务或目标语言专业人员的最终审核。参见 <a href="/disclaimer">免责声明</a>。</p>
             </>}
           </div>
         )}

@@ -21,13 +21,15 @@ GitHub 仓库：<https://github.com/zugzwang-zg/LocalizeFlow>
 
 > 运维边界：仓库已提供不记录正文的进程内指标、阈值告警、模型/内容导出紧急开关、P0/P1/P2 响应流程和发布演练；但尚无持久化多实例指标、外部探针、告警投递或真实值守。参见 [`docs/operations/`](docs/operations/)；这些缺口继续阻断托管试用。
 
-> **合成内容声明：** 虚拟品牌、虚拟 SKU、价格、产品事实、营销候选和评测材料均为 AI 生成的合成内容；其余代码、文档、测量、图表与演示资产由项目方原创。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
+> **AI 内容声明：** 虚拟品牌、虚拟 SKU、价格、产品事实、营销候选和评测材料均为 AI 生成的合成内容；作品集社交预览图 [`web/public/og-portfolio.png`](web/public/og-portfolio.png) 也由 AI 生成，仅用于视觉传播，不属于项目证据。除此之外，代码、文档、测量、图表与演示资产由项目方原创。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
 
 ![LocalizeFlow Demo 首页](assets/streamlit_demo_home.jpg)
 
 ## 项目概览
 
 LocalizeFlow 是一个面向跨境电商内容运营人员的离线可运行原型。它解决的不是“把中文翻译成外语”这一个问题，而是将商品事实、消费者洞察、品牌语气、双语术语和平台规则放进同一条可追溯工作流，使运营人员能看到内容为何这样写、用了哪些事实、存在哪些风险，以及人工修改后是否仍满足放行条件。
+
+当前 Web 首页按招聘方 3–5 分钟阅读路径组织：先看项目结论和量化证据，再区分个人职责、关键产品决策与诚实边界，最后进入确定性五步 Demo。设计与验收口径见 [`reports/portfolio_experience_readiness.md`](reports/portfolio_experience_readiness.md)。
 
 | 项目维度 | 当前实现 |
 |---|---|

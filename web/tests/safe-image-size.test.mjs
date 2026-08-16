@@ -5,8 +5,10 @@ import test from "node:test";
 import { imageSize } from "image-size";
 
 test("reads the reviewed PNG social-card dimensions", async () => {
-  const image = await readFile(new URL("../public/og.png", import.meta.url));
-  assert.deepEqual(imageSize(image), { type: "png", width: 1536, height: 1024 });
+  for (const filename of ["og.png", "og-portfolio.png"]) {
+    const image = await readFile(new URL(`../public/${filename}`, import.meta.url));
+    assert.deepEqual(imageSize(image), { type: "png", width: 1536, height: 1024 });
+  }
 });
 
 test("rejects unsupported ICNS, JXL, and HEIF inputs without parsing", () => {

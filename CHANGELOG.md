@@ -32,12 +32,18 @@ interfaces remain experimental.
 - A project-owner Strategy A decision record with weighted A/B/C scoring,
   current official free-hosting constraints, scope boundaries, and explicit
   triggers for reconsidering synthetic hosting or a real-data Beta.
+- A recruiter-oriented portfolio readout with an evidence summary, explicit
+  ownership, four product decisions, honest boundaries, and an AI-generated
+  social-preview image with recorded provenance.
 
 ### Changed
 
 - Renamed the Web package from its starter-template name.
 - Clarified that the hosted experience is an interactive deterministic Demo,
   not a production free trial.
+- Reworked the public Web information hierarchy and visual language around a
+  cross-border clearance manifest so a reviewer can reach the core evidence
+  and contribution before entering the five-step workflow.
 - Upgraded Web dependencies and constrained transitive packages to remove
   known production dependency advisories found during the release audit.
 - Expanded the Web release gate to audit development/build dependencies and

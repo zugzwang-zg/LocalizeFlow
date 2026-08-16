@@ -1,0 +1,45 @@
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def read(relative_path: str) -> str:
+    return (PROJECT_ROOT / relative_path).read_text(encoding="utf-8")
+
+
+def test_portfolio_readout_preserves_evidence_and_release_boundaries() -> None:
+    page = read("web/app/page.tsx")
+    report = read("reports/portfolio_experience_readiness.md")
+    normalized_report = " ".join(report.split())
+
+    for required_text in (
+        "SOLO PRODUCT BUILD",
+        "WHAT I OWNED",
+        "30 / 30",
+        "FREE TRIAL · NO-GO",
+        "AI 辅助评测",
+        "10 个阈值失败候选",
+    ):
+        assert required_text in page
+
+    assert "Hosted status: not published" in normalized_report
+    assert "not professional independent review" in normalized_report
+    assert "hosted free-trial release decision remains `NO-GO`" in normalized_report
+
+
+def test_ai_social_card_is_present_and_disclosed_everywhere() -> None:
+    social_card = PROJECT_ROOT / "web/public/og-portfolio.png"
+
+    assert social_card.is_file()
+    assert social_card.stat().st_size > 100_000
+
+    for relative_path in (
+        "README.md",
+        "DATA_LICENSE.md",
+        "THIRD_PARTY_NOTICES.md",
+        "docs/open_source_asset_inventory.md",
+        "reports/portfolio_experience_readiness.md",
+    ):
+        document = read(relative_path)
+        assert "og-portfolio.png" in document
+        assert "AI" in document
