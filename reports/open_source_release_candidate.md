@@ -1,88 +1,79 @@
-# Open-source release candidate readiness
+# Open-source security patch candidate readiness
 
-> Candidate: `v0.2.0-preview.1`
+> Candidate: `v0.2.0-preview.2`
 > Audit date: 2026-08-16
-> Local status: owner accepted; release content ready
-> Formal release: pending final protected checks, protected merge, and `main`
-> release smoke
+> Candidate state: release content ready; owner acceptance pending
+> Formal release: not authorized before protected checks, protected merge, and
+> `main` release smoke
 
 ## Recommendation
 
-Use `v0.2.0-preview.1`, not a stable `v0.2.0` release. The candidate contains a
-substantial product, evidence, security, privacy, and operations increment over
-`v0.1.0-preview.1`, but it still has a small synthetic evaluation, AI-assisted
-review, no real-user adoption evidence, and a hosted free-trial `NO-GO`.
+Publish `v0.2.0-preview.2` as a security-only prerelease and direct new users to
+it. Keep `v0.2.0-preview.1` immutable for traceability; do not move or silently
+replace its tag.
 
-## GitHub repository audit
+The portfolio product, evaluation, public Demo, and hosted-trial boundaries are
+unchanged. The only runtime dependency update moves `cryptography` from 46.0.7
+to 50.0.0, the highest first-patched version required by four newly reported
+advisories.
 
-- Repository visibility: public.
-- Default branch: `main`.
-- License recognized by GitHub: Apache-2.0.
-- Public Demo is configured as the repository homepage.
-- Issues enabled; Wiki and Discussions intentionally disabled.
-- Dependabot security updates, secret scanning, push protection, and private
-  vulnerability reporting are enabled.
-- `main` requires a pull request, six current CI/CodeQL checks, an up-to-date
-  branch, linear history, conversation resolution, and blocks force pushes and
-  deletion.
-- Required project labels are present or created as part of this candidate.
-- Existing public prerelease: `v0.1.0-preview.1`.
+## Detection and response
 
-## Candidate contents
+- GitHub created eight open Dependabot alert records after the first 0.2.0
+  preview release. They represented four advisories duplicated across
+  `pyproject.toml` and `uv.lock`: three High and one Medium.
+- The earlier local audit completed before the new advisory records reached
+  GitHub, which explains the conflicting time-of-check result.
+- Dependabot PR #13 changed only `pyproject.toml`, `requirements.txt`, and
+  `uv.lock`, and upgraded `cryptography` to 50.0.0.
+- PR #13 passed Python 3.11/3.12/3.13, Web, and both CodeQL analyses. An
+  independent Windows Python 3.12 environment repeated the full Python gate.
+- After protected merge `d4af75bcc7c311bdc2d909a9e350e4a73ff01da8`,
+  dependency-graph refresh reduced open Dependabot alerts from eight to zero;
+  Code Scanning and Secret Scanning remained at zero.
 
-- Recruiter-first README and public Web portfolio experience.
-- 30-pair frozen evaluation with explicit limitations and provenance.
-- Structured packaging facts and fail-closed fact/rule/export gates.
-- Local Closed Beta reference controls for safe import, tenant separation,
-  quota/cost limits, model gateway validation, audit, deletion, and operations.
-- Public legal/trust documents and blocked hosted-policy templates.
-- Machine-readable `NO_GO` and `UNRESOLVED` release decisions.
-- Apache-2.0 notices and explicit AI-generated material disclosures.
+## Addressed advisories
 
-## Current release gate
+| Advisory | Severity | First patched version used |
+|---|---|---:|
+| GHSA-537c-gmf6-5ccf | High | 48.0.1 |
+| GHSA-g6cj-pr64-35w5 | High | 50.0.0 |
+| GHSA-jwv3-5hgf-82ww | High | 49.0.0 |
+| GHSA-m2h6-j472-rp4c | Medium | 49.0.0 |
 
-The release content is ready when
-`scripts/check_open_source_release_candidate.py --require-release-ready`, the
-full Python/Web regression, dependency audits, prompt validation, startup
-smoke, operations drill, and fail-closed checks pass. This local decision does
-not authorize a tag or public release by itself.
+The candidate pins 50.0.0 and requires `cryptography>=50.0.0,<51` in both
+requirement declarations.
 
-The formal prerelease remains blocked until:
-
-1. The final PR head passes all protected CI/CodeQL checks.
-2. The PR is merged without bypassing branch protection.
-3. The exact merged `main` SHA passes the manually dispatched `Release smoke`.
-4. The public tag is created once and never moved.
-5. The public source archive is re-downloaded and smoke-tested; final immutable
-   evidence is recorded in the GitHub prerelease and maintainer acceptance
-   record rather than by changing the tagged source afterward.
-
-## Local verification results
+## Verification results
 
 | Gate | Result |
 |---|---|
-| Candidate decision | `RELEASE_READY`; formal release authorization remains false until protected merge and `main` release smoke |
+| Candidate decision | `RELEASE_READY`; formal release authorization remains false |
+| Locked dependency | `cryptography==50.0.0` |
 | Python tests | 141 passed plus 6 subtests |
 | Python coverage | 72.22%, above the 70% threshold |
-| Ruff / mypy | Passed; 14 typed source files reported no issues |
-| Startup smoke | Passed |
+| Ruff / mypy | Passed |
 | Prompt/schema validation | 6 schemas, 9 prompts, 0 API calls; passed |
-| Operations drill | Passed; incident recovered to healthy, no content bodies logged |
-| Hosted free-trial gate | Expected `NO_GO`; 0 validation errors and 0 model calls |
-| Hosted prerequisites | Expected `UNRESOLVED`; 11 unresolved decisions |
-| Web | 9 tests, lint, production build, and complete dependency audit passed |
-| Python dependency audit | No known vulnerabilities |
-| Official platform sources | 7/7 Google and TikTok URLs reachable on 2026-08-16 |
-| Candidate credential/size scan | 244 candidate files, 0 credential-pattern hits, 0 files over 95 MB |
-| Git diff whitespace | Passed |
+| Startup smoke | Passed |
+| Operations drill | Passed; recovered to healthy, no content bodies logged |
+| Installed-environment audit | No known vulnerabilities |
+| Merged security update CI | Passed on Python 3.11/3.12/3.13 and Web |
+| Merged security update CodeQL | Python and JavaScript/TypeScript passed |
+| GitHub open security alerts | Dependabot 0; Code Scanning 0; Secret Scanning 0 |
 
-The first Web command attempt found a stale local `pnpm` cache shim. The same
-pinned pnpm 11.19.0 tool was restored through Corepack; frozen-lockfile install,
-supply-chain policy verification, audit, lint, tests, and both builds then
-passed without changing dependency versions.
+## Remaining release gate
 
-## Hosted-trial separation
+1. Project owner accepts this security patch candidate and tag.
+2. The final candidate PR head passes all protected CI/CodeQL checks.
+3. The PR is merged without bypassing branch protection.
+4. The exact merged `main` SHA passes manually dispatched `Release smoke`.
+5. A new annotated `v0.2.0-preview.2` tag is created once and never moved.
+6. Tag smoke and a clean public archive verification pass before publishing the
+   GitHub prerelease.
 
-This open-source candidate does not authorize accounts, real-data uploads,
-hosted model processing, server-side project persistence, or hosted content
-export. The deterministic public Demo remains the active Strategy A surface.
+## Unchanged hosted boundary
+
+The hosted free-trial gate remains `NO_GO`, all eleven production prerequisites
+remain `UNRESOLVED`, and the deterministic public Demo remains the active
+Strategy A surface. This candidate does not authorize accounts, real-data
+uploads, hosted model processing, server-side persistence, or hosted export.

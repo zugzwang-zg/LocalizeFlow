@@ -1,9 +1,9 @@
 # Maintainer release checklist
 
-> Candidate: `v0.2.0-preview.1`
-> Candidate state: owner accepted; release content ready
-> Formal release: blocked until final protected GitHub checks, protected merge,
-> `main` release smoke, and the clean-source smoke test pass
+> Candidate: `v0.2.0-preview.2`
+> Candidate state: security patch content ready; owner acceptance pending
+> Formal release: blocked until owner acceptance, final protected GitHub checks,
+> protected merge, `main` release smoke, and the clean-source smoke test pass
 
 This checklist applies to the Apache-2.0 source preview and deterministic
 public Demo. It does not authorize a hosted free trial or real-data processing.
@@ -22,19 +22,20 @@ public Demo. It does not authorize a hosted free trial or real-data processing.
 - [x] Maintainer labels include triage, safety, localization, accessibility,
       dependency, Python, Web, epic, incident, and support scopes.
 
-## 2. Review the candidate
+## 2. Review the security patch candidate
 
-- [x] Review the complete Draft PR diff, especially license ownership,
-      synthetic-content disclosures, generated-image provenance, security
-      contacts, release boundaries, and the 30-case evaluation claims.
-- [x] Confirm `LocalizeFlow contributors` is the intended copyright wording,
-      or replace it with the legal copyright holder before release.
-- [x] Confirm the public Demo URL, README anchors, trust pages, and release-note
-      links resolve from the GitHub-rendered branch.
-- [x] Confirm `v0.2.0-preview.1` is the desired tag and set the release date in
-      `CHANGELOG.md` to `2026-08-16`.
-- [x] Resolve or explicitly defer open dependency PRs; do not merge unreviewed
-      upgrades into the frozen candidate.
+- [x] Review Dependabot PR #13 and confirm it changes only Python dependency
+      declarations and `uv.lock` from cryptography 46.0.7 to 50.0.0.
+- [x] Confirm the four advisory requirements are covered and GitHub open
+      Dependabot alerts return zero after the dependency graph refresh.
+- [x] Confirm the public Demo, evaluation claims, license, and hosted-trial
+      boundaries are unchanged.
+- [ ] Confirm `v0.2.0-preview.2` is the desired security patch tag and approve
+      its release notes.
+- [x] Keep `v0.2.0-preview.1` immutable and mark it superseded in the new
+      release notes rather than moving or deleting its tag.
+- [x] Defer unrelated dependency upgrades; do not mix them into the security
+      patch candidate.
 
 ## 3. Required local gate
 
@@ -69,7 +70,7 @@ pnpm build
 
 ## 4. GitHub candidate gate
 
-- [x] Draft PR targets `main` from the candidate branch.
+- [ ] Draft PR targets `main` from the security patch candidate branch.
 - [ ] Python 3.11, 3.12, 3.13 and Web CI pass on the final head SHA.
 - [ ] CodeQL Python and JavaScript/TypeScript analyses pass on the final head SHA.
 - [x] README badges resolve on the branch.
@@ -82,7 +83,7 @@ pnpm build
 
 - [ ] Merge the reviewed PR without bypassing branch protection.
 - [ ] Confirm the merge commit/tree matches the reviewed candidate.
-- [ ] Create annotated tag `v0.2.0-preview.1` from reviewed `main`; never move
+- [ ] Create annotated tag `v0.2.0-preview.2` from reviewed `main`; never move
       an existing tag.
 - [ ] Create a GitHub prerelease using `RELEASE_NOTES.md`.
 - [ ] Attach only reviewed assets; source archives are sufficient by default.
