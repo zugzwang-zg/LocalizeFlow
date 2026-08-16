@@ -6,6 +6,18 @@ interfaces remain experimental.
 
 ## [Unreleased]
 
+## [0.2.0-preview.2] - 2026-08-16
+
+### Security
+
+- Upgraded `cryptography` from 46.0.7 to 50.0.0 to address
+  GHSA-537c-gmf6-5ccf, GHSA-g6cj-pr64-35w5, GHSA-jwv3-5hgf-82ww, and
+  GHSA-m2h6-j472-rp4c. No LocalizeFlow product behavior or hosted-trial
+  boundary changed.
+- Added release-candidate checks that prevent the project requirement,
+  compatibility requirement, or lock file from regressing below the patched
+  dependency version.
+
 ## [0.2.0-preview.1] - 2026-08-16
 
 ### Added
@@ -75,6 +87,7 @@ interfaces remain experimental.
 First open-source preview. The release date will be set only after the release
 candidate passes the clean-environment checklist.
 
-[Unreleased]: https://github.com/zugzwang-zg/LocalizeFlow/compare/v0.2.0-preview.1...HEAD
+[Unreleased]: https://github.com/zugzwang-zg/LocalizeFlow/compare/v0.2.0-preview.2...HEAD
+[0.2.0-preview.2]: https://github.com/zugzwang-zg/LocalizeFlow/compare/v0.2.0-preview.1...v0.2.0-preview.2
 [0.2.0-preview.1]: https://github.com/zugzwang-zg/LocalizeFlow/compare/v0.1.0-preview.1...v0.2.0-preview.1
 [0.1.0-preview.1]: https://github.com/zugzwang-zg/LocalizeFlow/releases/tag/v0.1.0-preview.1

@@ -10,8 +10,16 @@ from urllib.parse import unquote
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_VERSION = "0.2.0"
-EXPECTED_TAG = "v0.2.0-preview.1"
+EXPECTED_TAG = "v0.2.0-preview.2"
 EXPECTED_RELEASE_DATE = "2026-08-16"
+EXPECTED_CRYPTOGRAPHY_REQUIREMENT = "cryptography>=50.0.0,<51"
+EXPECTED_CRYPTOGRAPHY_VERSION = "50.0.0"
+ADDRESSED_ADVISORIES = (
+    "GHSA-537c-gmf6-5ccf",
+    "GHSA-g6cj-pr64-35w5",
+    "GHSA-jwv3-5hgf-82ww",
+    "GHSA-m2h6-j472-rp4c",
+)
 PUBLIC_DEMO_URL = "https://localizeflow-demo-86182.reidmozzie.chatgpt.site"
 
 
@@ -33,6 +41,8 @@ def evaluate_candidate() -> dict[str, Any]:
     readme = read_text("README.md")
     changelog = read_text("CHANGELOG.md")
     release_notes = read_text("RELEASE_NOTES.md")
+    requirements = read_text("requirements.txt").splitlines()
+    uv_lock = tomllib.loads(read_text("uv.lock"))
 
     if pyproject["project"]["version"] != EXPECTED_VERSION:
         errors.append("pyproject.toml version does not match the candidate.")
@@ -45,6 +55,23 @@ def evaluate_candidate() -> dict[str, Any]:
         errors.append("CHANGELOG.md does not contain the expected release date.")
     if f"# LocalizeFlow {EXPECTED_TAG}" not in release_notes:
         errors.append("RELEASE_NOTES.md does not identify the release tag.")
+
+    project_dependencies = pyproject["project"]["dependencies"]
+    if EXPECTED_CRYPTOGRAPHY_REQUIREMENT not in project_dependencies:
+        errors.append("pyproject.toml does not require the patched cryptography range.")
+    if EXPECTED_CRYPTOGRAPHY_REQUIREMENT not in requirements:
+        errors.append("requirements.txt does not require the patched cryptography range.")
+    locked_cryptography = next(
+        (package for package in uv_lock["package"] if package["name"] == "cryptography"),
+        None,
+    )
+    if locked_cryptography is None:
+        errors.append("uv.lock does not contain cryptography.")
+    elif locked_cryptography["version"] != EXPECTED_CRYPTOGRAPHY_VERSION:
+        errors.append("uv.lock does not pin the patched cryptography version.")
+    for advisory in ADDRESSED_ADVISORIES:
+        if advisory not in changelog or advisory not in release_notes:
+            errors.append(f"Security advisory is missing from release materials: {advisory}")
 
     for marker in (
         PUBLIC_DEMO_URL,
@@ -91,8 +118,15 @@ def evaluate_candidate() -> dict[str, Any]:
         "candidate_tag": EXPECTED_TAG,
         "package_version": EXPECTED_VERSION,
         "release_date": EXPECTED_RELEASE_DATE,
+        "cryptography_requirement": EXPECTED_CRYPTOGRAPHY_REQUIREMENT,
+        "cryptography_version": (
+            locked_cryptography["version"] if locked_cryptography is not None else None
+        ),
+        "addressed_security_advisories": list(ADDRESSED_ADVISORIES),
         "formal_release_authorized": False,
-        "required_next_gate": "protected merge plus main release smoke",
+        "required_next_gate": (
+            "owner acceptance plus protected merge and main release smoke"
+        ),
         "hosted_free_trial_decision": free_trial.get("decision"),
         "hosted_prerequisite_decision": prerequisites.get("decision"),
         "public_demo_url": PUBLIC_DEMO_URL,
