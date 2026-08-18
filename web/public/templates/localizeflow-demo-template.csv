@@ -1,0 +1,10 @@
+sku,attribute,value,unit,evidence_level,source,source_type,market_scope,allowed_expression,prohibited_expression,generation_policy
+DEMO-SKU-001,product_name,示例保湿精华,,A,商品资料表,primary_spec,US;MX,Hydrating Serum,,direct
+DEMO-SKU-001,specification,日常保湿精华 30 mL,,A,商品资料表,primary_spec,US;MX,30 mL daily hydrating serum,,direct
+DEMO-SKU-001,ingredient,透明质酸钠,,A,模拟配方表,label,US;MX,Sodium hyaluronate is listed in the formula,,cautious
+DEMO-SKU-001,usage_instruction,清洁后取适量涂抹于面部,,A,模拟包装标签,label,US;MX,Apply an appropriate amount after cleansing,,direct
+DEMO-SKU-001,packaging_container,按压泵瓶,,A,模拟包装规格,primary_spec,US;MX,Pump bottle,,direct
+DEMO-SKU-001,packaging_material,PP,,A,模拟包装规格,primary_spec,US;MX,PP packaging,,direct
+DEMO-SKU-001,packaging_capacity,30,mL,A,模拟包装规格,primary_spec,US;MX,30 mL,,direct
+DEMO-SKU-001,allowed_claim,帮助肌肤感觉水润柔软,,B,品牌批准用语,brand_policy,US;MX,Helps skin feel hydrated and soft,,cautious
+DEMO-SKU-001,prohibited_claim,72 小时保湿,,A,品牌禁用词表,brand_policy,US;MX,,72-hour hydration,blocked

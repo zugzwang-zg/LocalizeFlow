@@ -7,27 +7,28 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11--3.13-3776AB.svg)](pyproject.toml)
 
-[在线体验](https://localizeflow-demo-86182.reidmozzie.chatgpt.site) · [90 秒证据](#90-秒看懂这个项目) · [3 分钟工作流](#demo从商品到可导出版本) · [完整评测](reports/evaluation_report.md) · [本地运行](#本地运行) · [发布状态](STATUS.md)
+[在线体验](https://localizeflow-demo-86182.reidmozzie.chatgpt.site) · [快速了解](#快速了解项目) · [3 分钟工作流](#demo从商品到可导出版本) · [完整评测](reports/evaluation_report.md) · [本地运行](#本地运行) · [发布状态](STATUS.md)
 
 ![LocalizeFlow evidence-led localization desk](web/public/og-portfolio.png)
 
-> 上图由 AI 生成，仅作为作品集社交预览，不属于项目证据。完整来源见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
+> 上图由 AI 生成，仅作为项目社交预览，不属于项目证据。完整来源见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
 
-## 90 秒看懂这个项目
+## 快速了解项目
 
-| 招聘方最关心的问题 | 当前答案 |
+| 使用者想先了解什么 | 当前情况 |
 |---|---|
 | 解决什么 | 将商品事实、目标市场语言与平台规则放进同一条可追溯、失败关闭的内容工作流 |
-| 我负责什么 | 独立主导产品范围、事实/语言资产、Python 检查链路、Web Demo、A/B 评测设计与开源发布；AI 辅助评测 |
+| 产品范围 | 商品资料整理、市场化表达、内容检查、人工确认与结果导出 |
 | 样本有多大 | 5 个虚拟 SKU × 2 个市场 × 3 种内容类型，共 30 组 A/B、60 条匿名候选 |
 | 结果如何 | LocalizeFlow 30/30 配对胜出；平均复核时间 -25.8%；平均修改次数 -61.5% |
 | 最重要的边界 | 事实通过率仍只有 66.7%，10 个增强候选未达阈值；没有真实用户采用或专业独立评审证据 |
-| 现在能体验什么 | 公开确定性 Demo：冻结虚拟数据、浏览器内处理、不调用模型 API、不接收真实商品资料 |
+| 当前能体验什么 | 示例数据或 CSV/XLSX 表格导入；浏览器内生成、检查、修改和导出，不调用模型 API |
 
 ### 当前发布边界
 
 - **公开 Demo：READY。** 可体验事实追溯、问题定位、确定性修复、人工终审与带处置记录的导出。
-- **托管免费试用发布结论：NO-GO。** 注册、真实资料上传、用户数据模型调用和托管导出保持关闭；依据见 [`reports/free_trial_readiness.md`](reports/free_trial_readiness.md)。
+- **浏览器内免费试用：已开放。** 可使用示例数据或按模板导入 CSV/XLSX；文件只在当前浏览器会话中处理，不会上传。
+- **托管免费试用发布结论：NO-GO。** 此结论仅指账号、服务端存储、用户数据模型调用和托管导出，不影响上方的浏览器内免费试用；生产前置条件见 [`reports/free_trial_readiness.md`](reports/free_trial_readiness.md)。
 - **生产前置条件：UNRESOLVED。** 运营主体、供应商条款、托管身份/存储、持久化配额、备份删除、外部告警和值守尚未验证；依据见 [`reports/hosted_trial_prerequisites.json`](reports/hosted_trial_prerequisites.json)。
 
 虚拟品牌、SKU、价格、商品事实、营销候选和评测材料为 AI 生成的合成内容。除此之外，代码、文档、测量、图表和演示资产由项目方原创；AI 社交预览图已单独披露。自动检查不代表平台批准、法律意见、医疗证据或专业目标语言终审。详见 [`DATA_LICENSE.md`](DATA_LICENSE.md)、[`DISCLAIMER.md`](DISCLAIMER.md) 与 [`docs/legal/`](docs/legal/)。
@@ -38,7 +39,7 @@
 
 LocalizeFlow 是一个面向跨境电商内容运营人员的离线可运行原型。它解决的不是“把中文翻译成外语”这一个问题，而是将商品事实、消费者洞察、品牌语气、双语术语和平台规则放进同一条可追溯工作流，使运营人员能看到内容为何这样写、用了哪些事实、存在哪些风险，以及人工修改后是否仍满足放行条件。
 
-当前 Web 首页按招聘方 3–5 分钟阅读路径组织：先看项目结论和量化证据，再区分个人职责、关键产品决策与诚实边界，最后进入确定性五步 Demo。设计与验收口径见 [`reports/portfolio_experience_readiness.md`](reports/portfolio_experience_readiness.md)。
+当前 Web 首页按“先了解，再操作”的 3–5 分钟路径组织：先看范围和结果，再进入资料导入、内容生成、检查与导出。设计与验收口径见 [`reports/portfolio_experience_readiness.md`](reports/portfolio_experience_readiness.md)。
 
 | 项目维度 | 当前实现 |
 |---|---|
@@ -164,7 +165,7 @@ Web 与 Streamlit Demo 将完整链路压缩成五步，公开 Web Demo 提供�
 
 ![版本与导出页面](assets/streamlit_demo_export.jpg)
 
-当前 Demo 采用冻结评测内容与确定性模板，不调用模型 API，也不连接真实发布平台；因此可在没有密钥的环境中稳定复现端到端流程。
+当前 Demo 采用冻结评测内容与确定性模板，不调用模型 API，也不连接真实发布平台；同时支持按模板导入 CSV/XLSX，在浏览器本地整理自有的虚构或脱敏资料，因此可在没有密钥的环境中稳定复现端到端流程。
 
 ### Closed Beta 本地候选（默认关闭）
 

@@ -7,8 +7,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
-  const title = "LocalizeFlow｜证据驱动的跨境内容工作台";
-  const description = "独立主导的 AI 产品作品集：把商品事实、目标市场语言与平台规则放进可追溯、失败关闭的内容工作流。公开 Demo 不调用模型 API。";
+  const title = "LocalizeFlow｜跨境商品内容工作台";
+  const description = "面向跨境电商内容运营的浏览器工作台：导入商品表格，整理目标市场内容，检查风险并导出处理记录。文件不会上传，也不调用模型 API。";
   return {
     title,
     description,

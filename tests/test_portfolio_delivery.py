@@ -13,12 +13,12 @@ def test_portfolio_readout_preserves_evidence_and_release_boundaries() -> None:
     normalized_report = " ".join(report.split())
 
     for required_text in (
-        "SOLO PRODUCT BUILD",
-        "WHAT I OWNED",
+        "跨境商品内容工作台 · 在线体验",
+        "你可以完成的事情",
         "30 / 30",
-        "FREE TRIAL · NO-GO",
-        "AI 辅助评测",
-        "10 个阈值失败候选",
+        "浏览器试用 · 已开放",
+        "用自己的表格试一遍",
+        "10 条内容没有达到要求",
     ):
         assert required_text in page
 

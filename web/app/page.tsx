@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import factsData from "./data/product_facts.json";
 import contentData from "./data/content_library.json";
 import packagingData from "./data/packaging_facts.json";
+import { buildImportedContent, parseProductFile, type ImportResult, type ImportedProductFact } from "./lib/product-import";
 
 type Market = "US" | "MX";
 type ContentType = "product_listing" | "short_video_script" | "social_ad_copy";
@@ -45,18 +46,18 @@ const MARKET_META = {
 } as const;
 
 const TYPE_META: Record<ContentType, { label: string; platform: string }> = {
-  product_listing: { label: "商品 Listing", platform: "Google Merchant Center" },
-  short_video_script: { label: "15 秒短视频脚本", platform: "TikTok Ads" },
-  social_ad_copy: { label: "社媒广告文案", platform: "Generic Social" },
+  product_listing: { label: "商品页内容", platform: "商品页格式" },
+  short_video_script: { label: "15 秒短视频脚本", platform: "短视频格式" },
+  social_ad_copy: { label: "社媒广告文案", platform: "社媒文案格式" },
 };
 
 const STEPS = ["商品资料", "营销任务", "生成结果", "质量检查", "版本与导出"];
 const STEP_META = [
-  { purpose: "核对来源事实", time: "约 30 秒" },
-  { purpose: "定义市场与任务", time: "约 30 秒" },
-  { purpose: "查看证据绑定结果", time: "约 40 秒" },
-  { purpose: "定位并修复风险", time: "约 60 秒" },
-  { purpose: "人工签署与导出", time: "约 20 秒" },
+  { purpose: "确认商品资料", time: "约 30 秒" },
+  { purpose: "选择市场和内容形式", time: "约 30 秒" },
+  { purpose: "查看整理后的草稿", time: "约 40 秒" },
+  { purpose: "找出问题并修改", time: "约 60 秒" },
+  { purpose: "确认并下载记录", time: "约 20 秒" },
 ];
 const TONES = ["温和", "可信", "清晰", "克制"];
 
@@ -79,7 +80,9 @@ function firstMatch(text: string, pattern: RegExp) { return text.match(pattern)?
 
 function packagingChecks(text: string, sku: string): QualityCheck[] {
   const record = packaging[sku];
+  if (!record) return [{ id: "packaging-uploaded", name: "包装信息", status: "pass", detail: "已读取表格中的包装信息；示例商品专用的包装用词检查不会套用到你的资料。", factIds: [] }];
   const issues: QualityCheck[] = [];
+  const fieldLabels: Record<string, string> = { container_type: "容器类型", material: "包装材质", dispenser: "取用方式", closure: "封口方式", cap_material: "瓶盖材质", inner_lid: "内盖", transparency: "透明度", outer_container: "外包装" };
   for (const [field, candidates] of Object.entries(PACKAGING_TERMS)) {
     for (const [candidate, terms] of Object.entries(candidates)) {
       const hit = terms.find((term) => new RegExp(`\\b${term}\\b`, "i").test(text));
@@ -87,14 +90,14 @@ function packagingChecks(text: string, sku: string): QualityCheck[] {
       const allowed = record[field as keyof PackagingRecord] as string[] | undefined;
       if (!allowed?.includes(candidate)) {
         const expected = allowed?.join(" / ") ?? "unknown（无证据）";
-        issues.push({ id: `packaging-${field}-${candidate}`, name: "包装事实", status: "fail", matchedText: hit, replacement: allowed?.length === 1 ? allowed[0] : "", detail: `“${hit}”与 ${field} 字段冲突；已核实值：${expected}。`, suggestion: allowed?.length === 1 ? `替换为 ${allowed[0]} 后重新检查。` : "删除无证据表述，或先补充经核验的字段。", factIds: allowed ? [record.fact_id] : [], source: allowed ? record.source : "" });
+        issues.push({ id: `packaging-${field}-${candidate}`, name: "包装信息", status: "fail", matchedText: hit, replacement: allowed?.length === 1 ? allowed[0] : "", detail: `“${hit}”与已填写的${fieldLabels[field] ?? "包装信息"}不一致；当前资料为：${expected}。`, suggestion: allowed?.length === 1 ? `改为 ${allowed[0]} 后重新检查。` : "删除这句话，或先补充并确认包装资料。", factIds: allowed ? [record.fact_id] : [], source: allowed ? record.source : "" });
       }
     }
   }
   for (const match of text.matchAll(/(?<!\d)(\d+(?:\.\d+)?)\s*m[lL]\b/g)) {
-    if (!record.capacity.includes(Number(match[1]))) issues.push({ id: `packaging-capacity-${match.index}`, name: "包装事实", status: "fail", matchedText: match[0], replacement: record.capacity.length === 1 ? `${record.capacity[0]} mL` : "", detail: `“${match[0]}”与容量字段冲突；允许值：${record.capacity.join(" / ")} mL。`, suggestion: record.capacity.length === 1 ? `替换为 ${record.capacity[0]} mL。` : "按组件事实核对容量。", factIds: [record.fact_id], source: record.source });
+    if (!record.capacity.includes(Number(match[1]))) issues.push({ id: `packaging-capacity-${match.index}`, name: "包装信息", status: "fail", matchedText: match[0], replacement: record.capacity.length === 1 ? `${record.capacity[0]} mL` : "", detail: `“${match[0]}”与已填写的容量不一致；当前资料为：${record.capacity.join(" / ")} mL。`, suggestion: record.capacity.length === 1 ? `改为 ${record.capacity[0]} mL。` : "请按商品资料重新核对容量。", factIds: [record.fact_id], source: record.source });
   }
-  return issues.length ? issues : [{ id: "packaging-pass", name: "包装事实", status: "pass", detail: "包装表述与字段级事实一致。", factIds: [record.fact_id], source: record.source }];
+  return issues.length ? issues : [{ id: "packaging-pass", name: "包装信息", status: "pass", detail: "内容中的包装说法与商品资料一致。", factIds: [record.fact_id], source: record.source }];
 }
 
 function valueOf(fact?: Fact) {
@@ -114,16 +117,16 @@ function parseContent(text: string, type: ContentType) {
   return { title: "", bullets: lines, description: "" };
 }
 
-function inspectContent(text: string, type: ContentType, market: Market, sku: string) {
+function inspectContent(text: string, type: ContentType, market: Market, sku: string, prohibitedTerms: string[] = []) {
   const checks: QualityCheck[] = [];
   const prohibitedPattern = /\b(cure|cures|clinically proven|guaranteed|miracle|repair|repairs)\b|repara(?:r|n|s)?|all of your skincare needs|todas tus necesidades/i;
-  const prohibited = firstMatch(text, prohibitedPattern);
+  const prohibited = firstMatch(text, prohibitedPattern) ?? prohibitedTerms.find((term) => term.length > 2 && text.toLowerCase().includes(term.toLowerCase()));
   checks.push({
     id: "fact-boundary",
-    name: "事实与功效边界",
+    name: "是否超出商品资料",
     status: prohibited ? "fail" : "pass",
-    detail: prohibited ? "发现医疗化、保证性或超出证据边界的表述。" : "未发现医疗化、全能承诺或保证性功效。",
-    suggestion: prohibited ? "改为 helps skin feel… / ayuda a que la piel se sienta… 等感受型表达。" : undefined,
+    detail: prohibited ? "这句话可能超出了表格资料，或带有保证、治疗意味。" : "没有发现明显超出资料的保证性表达。",
+    suggestion: prohibited ? "改成“帮助肌肤感觉……”这类不过度保证的表达。" : undefined,
     matchedText: prohibited,
     replacement: prohibited ? (market === "MX" ? "ayuda a que la piel se sienta" : "helps skin feel") : undefined,
   });
@@ -136,19 +139,19 @@ function inspectContent(text: string, type: ContentType, market: Market, sku: st
     structureDetail = structure === "pass" ? "标题、5 个卖点和描述齐全。" : `当前识别到 ${parsed.bullets.length} 个卖点。`;
   } else if (type === "short_video_script") {
     structure = /00:00|0–3|0-3/.test(text) && /CTA/i.test(text) ? "pass" : "warning";
-    structureDetail = structure === "pass" ? "包含分镜时间与 CTA。" : "分镜时间或 CTA 不完整。";
+    structureDetail = structure === "pass" ? "时间段和结尾提示齐全。" : "时间段或结尾提示不完整。";
   } else {
     structure = /(HOOK|GANCHO):/i.test(text) && /CTA:/i.test(text) ? "pass" : "warning";
-    structureDetail = structure === "pass" ? "Hook、正文和 CTA 齐全。" : "Hook、正文或 CTA 缺失。";
+    structureDetail = structure === "pass" ? "开头、正文和结尾提示齐全。" : "开头、正文或结尾提示不完整。";
   }
-  checks.push({ id: "platform-structure", name: "平台结构", status: structure, detail: structureDetail });
+  checks.push({ id: "platform-structure", name: "内容结构", status: structure, detail: structureDetail });
   const terminologyPattern = market === "MX" ? /\bserum\b|crema de cara/i : /on the wet face|a opaque/i;
   const terminologyIssue = firstMatch(text, terminologyPattern);
   checks.push({
     id: "terminology",
-    name: "术语一致性",
+    name: "语言表达",
     status: terminologyIssue ? "warning" : "pass",
-    detail: terminologyIssue ? "发现目标市场术语或语法提示。" : "核心术语符合目标语言约定。",
+    detail: terminologyIssue ? "发现一个可以改得更自然的词或句子。" : "没有发现明显的词语或语法问题。",
     suggestion: terminologyIssue ? (market === "MX" ? "优先使用 sérum / crema hidratante facial。" : "使用 over a wet face / an opaque。") : undefined,
     matchedText: terminologyIssue,
     replacement: terminologyIssue ? ({ serum: "sérum", "crema de cara": "crema hidratante facial", "on the wet face": "over a wet face", "a opaque": "an opaque" } as Record<string, string>)[terminologyIssue.toLowerCase()] : undefined,
@@ -156,14 +159,14 @@ function inspectContent(text: string, type: ContentType, market: Market, sku: st
   const brandRisk = firstMatch(text, /buy now|compra ahora|must-have|life-changing/i);
   checks.push({
     id: "brand",
-    name: "品牌一致性",
+    name: "语气",
     status: brandRisk ? "warning" : "pass",
-    detail: brandRisk ? "CTA 偏强促销，与温和可信的语气存在张力。" : "语气整体温和、清晰、可信。",
+    detail: brandRisk ? "这句促销感偏强，可以换成更克制的说法。" : "语气整体清楚、可信、不过度承诺。",
     suggestion: brandRisk ? "改为 See product details / Consulta los detalles。" : undefined,
     matchedText: brandRisk,
     replacement: brandRisk ? (market === "MX" ? "Consulta los detalles" : "See product details") : undefined,
   });
-  checks.push({ id: "length", name: "字符预检", status: "pass", detail: `${text.length} 字符；真实发布前仍需按平台最新规则复核。` });
+  checks.push({ id: "length", name: "长度", status: "pass", detail: `当前 ${text.length} 个字符；发布前仍请按实际渠道要求确认。` });
   const failed = checks.filter((check) => check.status === "fail").length;
   const warned = checks.filter((check) => check.status === "warning").length;
   return {
@@ -189,6 +192,34 @@ function EvidenceChips({ ids }: { ids: string[] }) {
   return <div className="chips">{ids.map((id) => <span className="chip" key={id}>{id}</span>)}</div>;
 }
 
+function importedFactToAppFact(fact: ImportedProductFact): Fact {
+  const attributeMap: Record<string, string> = {
+    product_name: "product_name_zh",
+    specification: "specification",
+    ingredient: "ingredient",
+    usage_instruction: "usage_instruction",
+    packaging_container: "packaging_feature",
+    packaging_material: "packaging_feature",
+    packaging_capacity: "packaging_feature",
+    allowed_claim: "allowed_benefit",
+    prohibited_claim: "prohibited_claim",
+  };
+  const splitExpressions = (value: string) => value ? value.split(/[;|]/).map((item) => item.trim()).filter(Boolean) : [];
+  return {
+    fact_id: fact.fact_id,
+    sku: fact.sku,
+    attribute: attributeMap[fact.attribute] ?? fact.attribute,
+    value: fact.value,
+    unit: fact.unit || null,
+    evidence_level: fact.evidence_level,
+    source: `${fact.source} · 上传表格`,
+    allowed_expression: splitExpressions(fact.allowed_expression),
+    prohibited_expression: splitExpressions(fact.prohibited_expression),
+    generation_policy: fact.generation_policy,
+    status: fact.attribute === "prohibited_claim" ? "prohibited" : "active",
+  };
+}
+
 export default function Home() {
   const [step, setStep] = useState(1);
   const [sku, setSku] = useState("MV-SERUM-001");
@@ -211,23 +242,65 @@ export default function Home() {
   const [feedbackNote, setFeedbackNote] = useState("");
   const [includeContent, setIncludeContent] = useState(false);
   const [metricsEnabled, setMetricsEnabled] = useState(true);
+  const [importedFacts, setImportedFacts] = useState<ImportedProductFact[]>([]);
+  const [importedFileName, setImportedFileName] = useState("");
+  const [importMessage, setImportMessage] = useState("");
+  const [importWarnings, setImportWarnings] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const startedAt = useRef<number | null>(null);
 
-  const productFacts = useMemo(() => facts.filter((fact) => fact.sku === sku && ["active", "caution", "prohibited", "non_fact"].includes(fact.status)), [sku]);
+  const importedSkus = useMemo(() => [...new Set(importedFacts.map((fact) => fact.sku))], [importedFacts]);
+  const isImportedProduct = importedSkus.includes(sku);
+  const productFacts = useMemo(() => isImportedProduct ? importedFacts.filter((fact) => fact.sku === sku).map(importedFactToAppFact) : facts.filter((fact) => fact.sku === sku && ["active", "caution", "prohibited", "non_fact"].includes(fact.status)), [importedFacts, isImportedProduct, sku]);
   const findFact = (attribute: string) => productFacts.find((fact) => fact.attribute === attribute);
   const findFacts = (...attributes: string[]) => productFacts.filter((fact) => attributes.includes(fact.attribute));
-  const currentGroup = groups.find((group) => group.sku === sku && group.market === market && group.content_type === contentType)!;
-  const enhanced = currentGroup?.versions.localizeflow ?? "";
-  const baseline = currentGroup?.versions.baseline ?? "";
+  const currentGroup = groups.find((group) => group.sku === sku && group.market === market && group.content_type === contentType);
+  const importedContent = useMemo(() => isImportedProduct ? buildImportedContent(importedFacts.filter((fact) => fact.sku === sku), market, contentType) : null, [contentType, importedFacts, isImportedProduct, market, sku]);
+  const enhanced = importedContent?.enhanced ?? currentGroup?.versions.localizeflow ?? "";
+  const baseline = importedContent?.baseline ?? currentGroup?.versions.baseline ?? "";
   const finalText = edited || enhanced;
   const preGenerationPackaging = packagingChecks(enhanced, sku);
-  const quality = inspectContent(finalText, contentType, market, sku);
+  const configuredProhibitedTerms = productFacts.filter((fact) => fact.attribute === "prohibited_claim").flatMap((fact) => [String(fact.value), ...fact.prohibited_expression]).filter(Boolean);
+  const quality = inspectContent(finalText, contentType, market, sku, configuredProhibitedTerms);
   const unresolvedWarnings = quality.checks.filter((check) => check.status === "warning" && !reviewedWarnings[check.id]);
-  const evidenceIds = findFacts("verified_feature", "ingredient", "allowed_benefit", "usage_instruction", "packaging_feature").slice(0, 8).map((fact) => fact.fact_id);
+  const evidenceIds = findFacts("verified_feature", "ingredient", "allowed_benefit", "usage_instruction", "packaging_feature", "specification").slice(0, 8).map((fact) => fact.fact_id);
   const allowed = productFacts.filter((fact) => ["direct", "cautious"].includes(fact.generation_policy) && ["verified_feature", "allowed_benefit", "usage_instruction", "packaging_feature"].includes(fact.attribute)).slice(0, 8);
   const prohibited = productFacts.filter((fact) => fact.attribute === "prohibited_claim").slice(0, 8);
   const contentTypes = Object.keys(TYPE_META) as ContentType[];
+  const productOptions = [...Object.entries(PRODUCTS), ...importedSkus.filter((id) => !PRODUCTS[id]).map((id) => [id, `${id} · 上传的商品`] as [string, string])];
+
+  async function handleFileImport(file?: File) {
+    if (!file) return;
+    setImportMessage("正在读取表格…");
+    setImportWarnings([]);
+    try {
+      const result: ImportResult = await parseProductFile(file);
+      setImportedFacts(result.facts);
+      setImportedFileName(file.name);
+      setImportWarnings(result.warnings);
+      const firstSku = result.facts[0]?.sku;
+      if (firstSku) setSku(firstSku);
+      setGenerated(false);
+      setEdited("");
+      setConfirmed(false);
+      setImportMessage(`已载入 ${result.facts.length} 条资料，可在浏览器内免费试用。`);
+      setStep(1);
+    } catch (error) {
+      setImportMessage(error instanceof Error ? error.message : "表格读取失败，请检查模板格式。");
+    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  function clearImportedFacts() {
+    setImportedFacts([]);
+    setImportedFileName("");
+    setImportWarnings([]);
+    setImportMessage("已切回示例资料。");
+    setSku("MV-SERUM-001");
+    setGenerated(false);
+    setEdited("");
+  }
 
   function recordEvent(event: string, extra: { step?: number } = {}) {
     if (!metricsEnabled || typeof window === "undefined" || localStorage.getItem("localizeflow_metrics_disabled") === "true") return;
@@ -358,7 +431,7 @@ export default function Home() {
       <aside className="sidebar">
         <div>
           <div className="brand">LocalizeFlow</div>
-          <div className="brandNote">evidence / localize / release</div>
+          <div className="brandNote">资料 / 表达 / 导出</div>
         </div>
         <nav aria-label="工作流步骤">
           {STEPS.map((label, index) => {
@@ -374,15 +447,15 @@ export default function Home() {
           <div className="statusLabel">演示状态</div>
           <p><span>商品</span>{sku}</p>
           <p><span>市场</span>{market}</p>
-          <p><span>内容包</span>{generated ? "已生成" : "未生成"}</p>
+          <p><span>内容草稿</span>{generated ? "已生成" : "未生成"}</p>
           <div className="progress"><i style={{ width: generated ? "100%" : "28%" }} /></div>
-          <small>离线确定性 Demo · 不调用模型 API</small>
+          <small>浏览器内处理 · 不上传文件</small>
         </div>
       </aside>
 
       <section className="workspace">
         <header className="topbar">
-          <div className="offline"><span /> NO API · REPRODUCIBLE</div>
+          <div className="offline"><span /> 在浏览器里处理 · 不上传文件</div>
           <div className="topLinks"><a href="/status">状态</a><a href="/support">支持</a><a href="/privacy">隐私</a><a href="/terms">条款</a><a href="/acceptable-use">可接受使用</a><a href="https://github.com/zugzwang-zg/LocalizeFlow" target="_blank" rel="noreferrer">GitHub ↗</a></div>
         </header>
 
@@ -394,61 +467,69 @@ export default function Home() {
           <div className="page">
             <section className="portfolioHero" aria-labelledby="portfolio-title">
               <div className="heroCopy">
-                <div className="eyebrow">PORTFOLIO CASE STUDY · SOLO PRODUCT BUILD · 2026</div>
-                <h1 id="portfolio-title">不是翻译器，而是跨境内容的证据与放行工作台。</h1>
-                <p className="lede">我把商品事实、目标市场语言、平台规则和人工终审做成一条可追溯工作流。招聘方可先用 90 秒看项目证据，再沿推荐路径完成约 3 分钟交互演示。</p>
-                <div className="introActions"><button className="primary" onClick={() => setStep(2)}>开始 3 分钟演示 →</button><a className="secondaryLink" href="#portfolio-evidence">先看作品集证据 ↓</a></div>
+                <div className="eyebrow">跨境商品内容工作台 · 在线体验</div>
+                <h1 id="portfolio-title">把商品资料变成能检查、能修改、能放心交付的跨境内容。</h1>
+                <p className="lede">把商品资料、目标市场表达、发布要求和人工确认放在同一条清晰的处理流程里。你可以先用示例数据了解步骤，也可以按模板导入自己的表格，直接在浏览器内试用。</p>
+                <div className="introActions"><button className="primary" onClick={() => setStep(2)}>开始在线体验 →</button><a className="secondaryLink" href="#portfolio-evidence">了解工作方式 ↓</a></div>
               </div>
               <aside className="releaseManifest" aria-label="LocalizeFlow 放行路线与项目边界">
-                <header><span>LF / RELEASE MANIFEST</span><b>可追溯内容放行</b></header>
+                <header><span>LF / 处理流程</span><b>从资料到可下载结果</b></header>
                 <div className="manifestRoute">
-                  <div><span>01</span><b>事实</b><small>source bound</small></div>
-                  <div><span>02</span><b>本地化</b><small>market fit</small></div>
-                  <div><span>03</span><b>门禁</b><small>fail closed</small></div>
-                  <div><span>04</span><b>导出</b><small>human sign-off</small></div>
+                  <div><span>01</span><b>资料</b><small>查来源</small></div>
+                  <div><span>02</span><b>表达</b><small>按市场整理</small></div>
+                  <div><span>03</span><b>检查</b><small>发现问题先停</small></div>
+                  <div><span>04</span><b>下载</b><small>确认后导出</small></div>
                 </div>
-                <div className="manifestDecisions"><span className="decisionReady">PUBLIC DEMO · READY</span><span className="decisionBlocked">FREE TRIAL · NO-GO</span></div>
-                <p>冻结虚拟数据 · 浏览器内处理 · 不调用模型 API · 不接收真实商品资料</p>
+                <div className="manifestDecisions"><span className="decisionReady">公开体验 · 可用</span><span className="decisionReady">浏览器试用 · 已开放</span></div>
+                <p>可以先用示例，也可以上传自己的表格 · 文件只在本机处理，不会上传</p>
               </aside>
             </section>
 
             <section className="portfolioEvidence" id="portfolio-evidence" aria-labelledby="evidence-title">
-              <div className="portfolioEvidenceHeader"><div><span>90-SECOND READOUT</span><h2 id="evidence-title">先看结果，再进入流程。</h2></div><p>目标岗位：AI 产品 / 本地化技术 / 全栈原型<br />角色：独立主导产品、数据、工程与开源发布；AI 辅助评测</p></div>
+              <div className="portfolioEvidenceHeader"><div><span>使用前先了解</span><h2 id="evidence-title">先看能做什么，再开始操作。</h2></div><p>覆盖 5 个示例商品、2 个市场和 3 类内容<br />可在浏览器内完成整理、检查和下载</p></div>
               <div className="portfolioMetrics">
-                <article><small>冻结 A/B 配对</small><strong>30 / 30</strong><p>LocalizeFlow 候选胜出</p></article>
+                <article><small>同组内容对比</small><strong>30 / 30</strong><p>LocalizeFlow 版本被选中</p></article>
                 <article><small>平均复核时间</small><strong>−25.8%</strong><p>6.33 → 4.70 分钟</p></article>
                 <article><small>平均修改次数</small><strong>−61.5%</strong><p>3.63 → 1.40 次</p></article>
-                <article><small>评测矩阵</small><strong>5 × 2 × 3</strong><p>SKU × 市场 × 内容类型</p></article>
+                <article><small>测试范围</small><strong>5 × 2 × 3</strong><p>商品 × 市场 × 内容类型</p></article>
               </div>
               <div className="portfolioReadoutGrid">
-                <article className="ownershipCard"><span>WHAT I OWNED</span><h3>从问题定义到发布闸门</h3><ul><li>产品范围、用户路径与证据模型</li><li>事实库、提示词、规则和双语内容资产</li><li>Python 检查链路与交互式 Web Demo</li><li>A/B 评测设计、AI 辅助评分、失败复测与发布决策</li></ul></article>
-                <article className="decisionCard"><span>FOUR PRODUCT DECISIONS</span><h3>技术选择服务于可信度</h3><ol><li><b>事实编号先于生成</b><small>每条可验证声明都能回查来源。</small></li><li><b>硬失败不能被总分覆盖</b><small>事实与包装矛盾直接阻断导出。</small></li><li><b>公开 Demo 与模型链路分离</b><small>公开体验可复现，真实数据能力默认关闭。</small></li><li><b>把 NO-GO 也做成产物</b><small>机器闸门记录为何尚未开放免费试用。</small></li></ol></article>
+                <article className="ownershipCard"><span>你可以完成的事情</span><h3>从商品资料到可下载结果</h3><ul><li>选择商品、市场和内容形式</li><li>查看资料来源和可用范围</li><li>查看草稿、定位问题并直接修改</li><li>确认后下载 CSV / JSON 记录</li></ul></article>
+                <article className="decisionCard"><span>处理方式</span><h3>每一步都清楚、可查看、可回头修改</h3><ol><li><b>先看资料，再整理内容</b><small>可以查看每段内容参考了哪些商品信息。</small></li><li><b>发现不一致就先停下来</b><small>资料或包装对不上时，不会直接下载。</small></li><li><b>示例和自己的资料分开</b><small>上传内容只在当前浏览器页面中处理。</small></li><li><b>确认后再下载</b><small>下载的记录会保留修改和确认时间。</small></li></ol></article>
               </div>
-              <div className="evidenceCaveat"><b>诚实边界</b><span>事实通过率从 40.0% 提升到 66.7%，仍有 10 个阈值失败候选；当前没有真实用户采用或专业独立评审证据。</span><a href="https://github.com/zugzwang-zg/LocalizeFlow/blob/main/reports/evaluation_report.md" target="_blank" rel="noreferrer">查看完整评测 ↗</a></div>
+              <div className="evidenceCaveat"><b>结果说明</b><span>事实检查通过率从 40.0% 提升到 66.7%，仍有 10 条内容没有达到要求；当前结果来自项目样本，尚无真实用户采用或独立评审数据。</span><a href="https://github.com/zugzwang-zg/LocalizeFlow/blob/main/reports/evaluation_report.md" target="_blank" rel="noreferrer">查看完整评测 ↗</a></div>
             </section>
 
-            <div className="beforeAfter"><article><small>普通直译</small><p>{baseline.split("\n").slice(0, 2).join("\n")}</p><b>事实孤立 · 语气生硬 · 无放行记录</b></article><article><small>LocalizeFlow</small><p>{enhanced.split("\n").slice(0, 2).join("\n")}</p><b>证据绑定 · 市场化表达 · 可审计放行</b></article></div>
-            <div className="sectionHeading compactHeading"><h2>核心事实</h2><span>本步约 30 秒 · 选定商品即完成</span></div>
-            <label className="field wide"><span>选择商品</span><select value={sku} onChange={(event) => { setSku(event.target.value); setGenerated(false); setConfirmed(false); }}>{Object.entries(PRODUCTS).map(([id, label]) => <option value={id} key={id}>{id} · {label}</option>)}</select></label>
+            <section className="importPanel" aria-labelledby="import-title">
+              <div className="sectionHeading"><h2 id="import-title">用自己的表格试一遍</h2><span>免费 · 浏览器内处理</span></div>
+              <p>先下载模板，按示例填写商品名称、规格、成分和使用方法，再上传自己的 CSV 或 XLSX。文件只在当前页面内读取，不会发送到服务器；请使用虚构或已脱敏的资料。</p>
+              <div className="importActions"><a className="buttonLink" href="/templates/localizeflow-demo-template.csv" download>下载 CSV 模板 ↓</a><a className="buttonLink" href="/templates/localizeflow-demo-template.xlsx" download>下载 XLSX 模板 ↓</a><label className="uploadButton"><input ref={fileInputRef} type="file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={(event) => void handleFileImport(event.target.files?.[0])} />上传 CSV / XLSX</label>{isImportedProduct && <button className="textButton" onClick={clearImportedFacts}>返回示例资料</button>}</div>
+              {importedFileName && <div className="importSuccess"><b>{importedFileName}</b><span>{importMessage}</span></div>}
+              {!importedFileName && importMessage && <div className="importError" role="status">{importMessage}</div>}
+              {importWarnings.length > 0 && <ul className="importWarnings">{importWarnings.map((warning) => <li key={warning}>{warning}</li>)}</ul>}
+            </section>
+            <div className="beforeAfter"><article><small>原始资料</small><p>{baseline.split("\n").slice(0, 2).join("\n")}</p><b>信息分散 · 缺少检查 · 无确认记录</b></article><article><small>整理后的内容</small><p>{enhanced.split("\n").slice(0, 2).join("\n")}</p><b>资料可回查 · 表达更清楚 · 可留下处理记录</b></article></div>
+            <div className="sectionHeading compactHeading"><h2>商品资料</h2><span>先确认资料，再开始处理</span></div>
+            <label className="field wide"><span>选择商品</span><select value={sku} onChange={(event) => { setSku(event.target.value); setGenerated(false); setConfirmed(false); }}>{productOptions.map(([id, label]) => <option value={id} key={id}>{label}</option>)}</select></label>
             <div className="ledgerGrid">
               <article><small>商品</small><strong>{valueOf(findFact("product_name_zh"))}</strong></article>
-              <article><small>品类</small><strong>{valueOf(findFact("category"))}</strong></article>
-              <article><small>规格</small><strong>{valueOf(findFact("net_volume") ?? findFact("total_volume"))}</strong></article>
+              <article><small>规格 / 品类</small><strong>{valueOf(findFact("category") ?? findFact("specification"))}</strong></article>
+              <article><small>容量 / 包装</small><strong>{valueOf(findFact("net_volume") ?? findFact("total_volume") ?? findFact("packaging_feature"))}</strong></article>
               <article><small>参考价格 · {MARKET_META[market].currency}</small><strong>{valueOf(findFact(market === "US" ? "price_usd" : "price_mxn"))}</strong></article>
             </div>
             <section className="sectionBlock">
-              <div className="sectionHeading"><h2>结构化事实</h2><span>{productFacts.filter((fact) => fact.generation_policy === "direct").length} 条可直接使用</span></div>
+              <div className="sectionHeading"><h2>已读取的资料</h2><span>{productFacts.filter((fact) => fact.generation_policy === "direct").length} 条可以直接使用</span></div>
               {findFacts("verified_feature", "ingredient", "allowed_benefit", "usage_instruction", "packaging_feature").slice(0, advancedFacts ? 10 : 4).map((fact) => (
                 <div className="factRow" key={fact.fact_id}>
                   <div><small>{fact.attribute.replaceAll("_", " ")}</small><p>{valueOf(fact)}</p></div>
-                  <div className="evidenceRail"><b>证据 / EVIDENCE</b><EvidenceChips ids={[fact.fact_id]} /><small>{fact.source}</small></div>
+                  <div className="evidenceRail"><b>资料来源</b><EvidenceChips ids={[fact.fact_id]} /><small>{fact.source}</small></div>
                 </div>
               ))}
-              <button className="textButton" aria-expanded={advancedFacts} onClick={() => setAdvancedFacts((value) => !value)}>{advancedFacts ? "收起高级事实" : "展开完整事实与证据"}</button>
+              <button className="textButton" aria-expanded={advancedFacts} onClick={() => setAdvancedFacts((value) => !value)}>{advancedFacts ? "收起更多资料" : "查看更多资料和来源"}</button>
             </section>
             <div className="split">
-              <section className="sectionBlock"><div className="sectionHeading"><h2>允许表达</h2><span>可用边界</span></div>{allowed.map((fact) => <div className="ruleRow" key={fact.fact_id}><span className={fact.generation_policy === "direct" ? "tag pass" : "tag warning"}>{fact.generation_policy === "direct" ? "直接使用" : "谨慎表达"}</span><code>{fact.fact_id}</code><p>{valueOf(fact)}</p></div>)}</section>
-              <section className="sectionBlock"><div className="sectionHeading"><h2>禁止表达</h2><span>命中即阻断</span></div>{prohibited.map((fact) => <div className="ruleRow" key={fact.fact_id}><span className="tag fail">禁止生成</span><code>{fact.fact_id}</code><p>{valueOf(fact)}</p></div>)}</section>
+              <section className="sectionBlock"><div className="sectionHeading"><h2>可以这样说</h2><span>可直接使用或适当调整</span></div>{allowed.map((fact) => <div className="ruleRow" key={fact.fact_id}><span className={fact.generation_policy === "direct" ? "tag pass" : "tag warning"}>{fact.generation_policy === "direct" ? "可以直接用" : "建议调整"}</span><code>{fact.fact_id}</code><p>{valueOf(fact)}</p></div>)}</section>
+              <section className="sectionBlock"><div className="sectionHeading"><h2>不要这样说</h2><span>发现后需要修改</span></div>{prohibited.map((fact) => <div className="ruleRow" key={fact.fact_id}><span className="tag fail">需要修改</span><code>{fact.fact_id}</code><p>{valueOf(fact)}</p></div>)}</section>
             </div>
             <div className="actions"><button className="primary" onClick={() => setStep(2)}>设置营销任务 →</button></div>
           </div>
@@ -456,9 +537,9 @@ export default function Home() {
 
         {step === 2 && (
           <div className="page">
-            <div className="eyebrow">02 / CAMPAIGN BRIEF</div>
+            <div className="eyebrow">02 / 设置内容任务</div>
             <h1>把目标市场写进任务。</h1>
-            <p className="lede">选择市场、内容类型和传播目标。生成结果来自冻结评测样本，确保每次试用都能复现。</p>
+            <p className="lede">选择目标市场、内容形式和表达重点。示例资料使用固定内容；上传自己的表格后，草稿会根据表格里的信息整理。</p>
             <div className="formGrid">
               <label className="field"><span>目标市场</span><select value={market} onChange={(event) => { setMarket(event.target.value as Market); setGenerated(false); }}>{Object.entries(MARKET_META).map(([id, meta]) => <option value={id} key={id}>{meta.label}</option>)}</select></label>
               <label className="field"><span>内容类型</span><select value={contentType} onChange={(event) => { setContentType(event.target.value as ContentType); setGenerated(false); }}>{contentTypes.map((id) => <option value={id} key={id}>{TYPE_META[id].label} · {TYPE_META[id].platform}</option>)}</select></label>
@@ -466,21 +547,21 @@ export default function Home() {
               <label className="field"><span>营销目标</span><input value={goal} onChange={(event) => setGoal(event.target.value)} /></label>
             </div>
             <section className="sectionBlock toneBlock"><div className="sectionHeading"><h2>品牌语气</h2><span>可多选</span></div><div className="choiceRow">{TONES.map((tone) => <button className={tones.includes(tone) ? "choice selected" : "choice"} key={tone} onClick={() => setTones((current) => current.includes(tone) ? current.filter((item) => item !== tone) : [...current, tone])}>{tone}</button>)}</div></section>
-            <div className="briefCard"><div><small>运行编号</small><strong>LF-WEB-{sku}-{market}-{contentType}</strong></div><div><small>语言</small><strong>{MARKET_META[market].language}</strong></div><div><small>发布表面</small><strong>{TYPE_META[contentType].platform}</strong></div><div><small>生成前包装门禁</small><strong>{preGenerationPackaging.some((check) => check.status === "fail") ? "BLOCKED" : "PASS · evidence bound"}</strong></div></div>
-              <div className="sourceNotice"><b>冻结规则来源</b><span>LF-PLATFORM-RULES-2026-07-28 · v1.0.0 · 核验于 2026-07-28</span><a href="https://support.google.com/merchants/answer/7052112?hl=en" target="_blank" rel="noreferrer">Google 官方规范 ↗</a><a href="https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en" target="_blank" rel="noreferrer">TikTok 官方规范 ↗</a></div>
-            <div className="actions"><button onClick={() => setStep(1)}>← 返回事实</button><button className="primary" disabled={preGenerationPackaging.some((check) => check.status === "fail")} onClick={generate}>生成可追溯内容包 →</button></div>
+            <div className="briefCard"><div><small>本次记录</small><strong>LF-WEB-{sku}-{market}-{contentType}</strong></div><div><small>语言</small><strong>{MARKET_META[market].language}</strong></div><div><small>内容格式</small><strong>{TYPE_META[contentType].platform}</strong></div><div><small>生成前检查</small><strong>{preGenerationPackaging.some((check) => check.status === "fail") ? "暂缓" : "已通过"}</strong></div></div>
+              <div className="sourceNotice"><b>检查依据</b><span>项目内置的发布要求 · 更新于 2026-07-28</span><a href="https://support.google.com/merchants/answer/7052112?hl=en" target="_blank" rel="noreferrer">Google 官方要求 ↗</a><a href="https://ads.tiktok.com/help/article/tiktok-ads-policy-ad-format-and-functionality?lang=en" target="_blank" rel="noreferrer">TikTok 官方要求 ↗</a></div>
+            <div className="actions"><button onClick={() => setStep(1)}>← 返回商品资料</button><button className="primary" disabled={preGenerationPackaging.some((check) => check.status === "fail")} onClick={generate}>生成内容草稿 →</button></div>
           </div>
         )}
 
         {step === 3 && (
           <div className="page">
-            <div className="eyebrow">03 / TRACEABLE OUTPUT</div>
+            <div className="eyebrow">03 / 内容草稿</div>
             <h1>每句话都有来路。</h1>
-            <p className="lede">增强版内容同时使用商品事实、目标市场术语、品牌语气和平台结构。证据编号可回查原始事实库。</p>
-            {!generated ? <div className="empty"><b>还没有内容包</b><p>先完成营销任务，生成离线可复现结果。</p><button className="primary" onClick={() => setStep(2)}>前往营销任务</button></div> : <>
+            <p className="lede">这里会展示按资料整理的内容草稿。你可以切换内容形式，并查看每段文字引用了哪些商品信息。</p>
+            {!generated ? <div className="empty"><b>还没有内容草稿</b><p>先设置内容任务，再生成草稿。</p><button className="primary" onClick={() => setStep(2)}>前往设置任务</button></div> : <>
               <div className="tabBar">{contentTypes.map((id) => <button className={contentType === id ? "selected" : ""} key={id} onClick={() => { setContentType(id); setEdited(groups.find((group) => group.sku === sku && group.market === market && group.content_type === id)?.versions.localizeflow ?? ""); }}>{TYPE_META[id].label}</button>)}</div>
-              <article className="contentSheet"><div className="sheetHeader"><div><small>{TYPE_META[contentType].platform}</small><h2>{TYPE_META[contentType].label}</h2></div><span className="tag pass">增强版</span></div><pre>{enhanced}</pre><div className="evidenceBundle"><b>本内容包引用的事实</b><EvidenceChips ids={evidenceIds} /></div></article>
-              <div className="noteBand">洞察只用于选择内容角度，不能替代商品事实；规则预检也不代表平台最终批准。</div>
+              <article className="contentSheet"><div className="sheetHeader"><div><small>{TYPE_META[contentType].platform}</small><h2>{TYPE_META[contentType].label}</h2></div><span className="tag pass">内容草稿</span></div><pre>{enhanced}</pre><div className="evidenceBundle"><b>这份草稿参考了这些资料</b><EvidenceChips ids={evidenceIds} /></div></article>
+              <div className="noteBand">这里的整理结果只基于当前表格资料；发布前仍请按实际渠道要求做最后确认。</div>
               <div className="actions"><button onClick={() => setStep(2)}>← 调整任务</button><button className="primary" onClick={() => { setEdited(enhanced); setStep(4); recordEvent("quality_check_run", { step: 4 }); }}>运行质量检查 →</button></div>
             </>}
           </div>
@@ -488,31 +569,31 @@ export default function Home() {
 
         {step === 4 && (
           <div className="page">
-            <div className="eyebrow">04 / QUALITY GATE</div>
-            <h1>先定位风险，再决定放行。</h1>
-            <p className="lede">修改文案后，事实、包装、术语、品牌和结构检查会在浏览器中立即重算。</p>
-            {!generated ? <div className="empty"><b>请先生成内容包</b><button className="primary" onClick={() => setStep(2)}>前往营销任务</button></div> : <>
-              <div className="metricGrid"><article><small>质量分</small><strong>{quality.score}<i>/100</i></strong></article><article><small>风险等级</small><strong>{quality.risk}</strong></article><article><small>阻断项</small><strong>{quality.failed}</strong></article><article><small>导出闸门</small><strong>{quality.failed ? "阻断" : "等待人工确认"}</strong></article></div>
-              <div className="qualityGrid"><label className="editor"><span>人工编辑区</span><textarea ref={editorRef} value={finalText} onChange={(event) => { setEdited(event.target.value); setConfirmed(false); setReviewedWarnings({}); setLastFix(null); }} spellCheck="false" /></label><section className="checkPanel" aria-live="polite"><div className="sectionHeading"><h2>检查明细</h2><span>{quality.checks.length} 项</span></div>{quality.checks.map((check) => <div className="checkRow" key={check.id}><span className={`tag ${check.status}`}>{check.status === "pass" ? "通过" : check.status === "warning" ? "需复核" : "阻断"}</span><div><b>{check.name}</b><p>{check.detail}</p>{check.matchedText && <mark>命中文本：{check.matchedText}</mark>}{check.suggestion && <small>建议：{check.suggestion}</small>}{check.factIds?.length ? <small>证据：{check.factIds.join(", ")} · {check.source}</small> : null}<div className="checkActions">{check.matchedText && <button onClick={() => locateIssue(check)}>定位原文</button>}{check.replacement && <button onClick={() => applyFix(check)}>一键修复</button>}</div>{check.status === "warning" && <div className="disposition"><input aria-label={`${check.name}保留原因`} placeholder="填写保留原因（必填）" value={reviewReasons[check.id] ?? ""} onChange={(event) => setReviewReasons((current) => ({ ...current, [check.id]: event.target.value }))} /><button disabled={!reviewReasons[check.id]?.trim()} onClick={() => setReviewedWarnings((current) => ({ ...current, [check.id]: { action: "accepted", reason: reviewReasons[check.id].trim(), reviewed_at: new Date().toISOString() } }))}>{reviewedWarnings[check.id] ? "已记录复核" : "确认保留"}</button></div>}</div></div>)}</section></div>
-              {lastFix && <div className="diffCard" aria-live="polite"><small>最近一次确定性修复 · 已自动复检</small><del>{lastFix.before}</del><span>→</span><ins>{lastFix.after}</ins><b>{lastFix.check}</b></div>}
-              <div className="actions"><button onClick={() => { setEdited(enhanced); setReviewedWarnings({}); setLastFix(null); setRepairHistory([]); }}>恢复增强版</button><button className="primary" disabled={quality.failed > 0 || unresolvedWarnings.length > 0} onClick={() => setStep(5)}>{quality.failed ? "修复阻断项后继续" : unresolvedWarnings.length ? `处理 ${unresolvedWarnings.length} 个复核项后继续` : "进入人工终审 →"}</button></div>
+            <div className="eyebrow">04 / 检查和修改</div>
+            <h1>先找出问题，再决定是否下载。</h1>
+            <p className="lede">修改内容后，商品资料、包装信息、语言表达、语气和结构会在浏览器中立即重新检查。</p>
+            {!generated ? <div className="empty"><b>请先生成内容草稿</b><button className="primary" onClick={() => setStep(2)}>前往设置任务</button></div> : <>
+              <div className="metricGrid"><article><small>检查结果</small><strong>{quality.score}<i>/100</i></strong></article><article><small>风险提示</small><strong>{quality.risk}</strong></article><article><small>需要修改</small><strong>{quality.failed}</strong></article><article><small>导出状态</small><strong>{quality.failed ? "暂不能导出" : "等待人工确认"}</strong></article></div>
+              <div className="qualityGrid"><label className="editor"><span>修改内容</span><textarea ref={editorRef} value={finalText} onChange={(event) => { setEdited(event.target.value); setConfirmed(false); setReviewedWarnings({}); setLastFix(null); }} spellCheck="false" /></label><section className="checkPanel" aria-live="polite"><div className="sectionHeading"><h2>检查结果</h2><span>{quality.checks.length} 项</span></div>{quality.checks.map((check) => <div className="checkRow" key={check.id}><span className={`tag ${check.status}`}>{check.status === "pass" ? "通过" : check.status === "warning" ? "需要确认" : "需要修改"}</span><div><b>{check.name}</b><p>{check.detail}</p>{check.matchedText && <mark>发现：{check.matchedText}</mark>}{check.suggestion && <small>可以这样改：{check.suggestion}</small>}{check.factIds?.length ? <small>参考资料：{check.factIds.join(", ")} · {check.source}</small> : null}<div className="checkActions">{check.matchedText && <button onClick={() => locateIssue(check)}>查看原文</button>}{check.replacement && <button onClick={() => applyFix(check)}>直接修改</button>}</div>{check.status === "warning" && <div className="disposition"><input aria-label={`${check.name}保留原因`} placeholder="如果保留，请说明原因" value={reviewReasons[check.id] ?? ""} onChange={(event) => setReviewReasons((current) => ({ ...current, [check.id]: event.target.value }))} /><button disabled={!reviewReasons[check.id]?.trim()} onClick={() => setReviewedWarnings((current) => ({ ...current, [check.id]: { action: "accepted", reason: reviewReasons[check.id].trim(), reviewed_at: new Date().toISOString() } }))}>{reviewedWarnings[check.id] ? "已记录" : "记录处理结果"}</button></div>}</div></div>)}</section></div>
+              {lastFix && <div className="diffCard" aria-live="polite"><small>最近一次直接修改 · 已重新检查</small><del>{lastFix.before}</del><span>→</span><ins>{lastFix.after}</ins><b>{lastFix.check}</b></div>}
+              <div className="actions"><button onClick={() => { setEdited(enhanced); setReviewedWarnings({}); setLastFix(null); setRepairHistory([]); }}>恢复整理后的版本</button><button className="primary" disabled={quality.failed > 0 || unresolvedWarnings.length > 0} onClick={() => setStep(5)}>{quality.failed ? "修改问题后继续" : unresolvedWarnings.length ? `处理 ${unresolvedWarnings.length} 个提示后继续` : "进入最终确认 →"}</button></div>
             </>}
           </div>
         )}
 
         {step === 5 && (
           <div className="page">
-            <div className="eyebrow">05 / HUMAN SIGN-OFF</div>
-            <h1>版本清楚，责任清楚。</h1>
-            <p className="lede">对照直译基线、规则增强版与人工终稿。只有质量闸门通过并完成确认，才开放导出。</p>
-            {!generated ? <div className="empty"><b>请先生成内容包</b><button className="primary" onClick={() => setStep(2)}>前往营销任务</button></div> : <>
-              <div className="compareGrid"><article><header><span>V00</span><b>直译基线</b></header><pre>{baseline}</pre></article><article><header><span>V01</span><b>LocalizeFlow 增强版</b></header><pre>{enhanced}</pre></article><article className="final"><header><span>V02</span><b>人工终稿</b></header><pre>{finalText}</pre></article></div>
-              <div className="outcomeGrid"><article><small>节省的机械步骤</small><strong>3 类检查合并</strong></article><article><small>本次拦截</small><strong>{quality.failed + quality.warned} 项风险</strong></article><article><small>证据覆盖</small><strong>{evidenceIds.length} 个事实编号</strong></article><article><small>下一步</small><strong>目标平台人工复核</strong></article></div>
-              <label className={`confirm ${confirmed ? "checked" : ""}`}><input type="checkbox" checked={confirmed} disabled={quality.failed > 0 || unresolvedWarnings.length > 0} onChange={(event) => { const checked = event.target.checked; setConfirmed(checked); setConfirmedAt(checked ? new Date().toISOString() : ""); if (checked) recordEvent("human_signoff_completed", { step: 5 }); }} /><span><b>我已核对事实、术语和平台规则</b><small>{quality.failed ? "仍有阻断项，暂不能确认。" : unresolvedWarnings.length ? "仍有警告未记录处理结论。" : "确认时间会写入导出记录；不会上传。"}</small></span></label>
-              <div className="exportPanel"><div><small>EXPORT GATE</small><strong>{confirmed ? "READY TO EXPORT" : quality.failed ? "BLOCKED" : "AWAITING REVIEW"}</strong></div><div className="actions compact"><button disabled={!confirmed} onClick={exportCsv}>下载 CSV</button><button className="primary" disabled={!confirmed} onClick={exportPack}>下载 JSON</button></div></div>
-              <section className="feedbackPanel"><div className="sectionHeading"><h2>结果是否有用？</h2><span>结构化反馈 · 每周由维护者复盘</span></div><div className="feedbackGrid"><label className="field"><span>结果评价</span><select value={feedbackUseful} onChange={(event) => setFeedbackUseful(event.target.value)}><option value="yes">有用</option><option value="no">无用</option></select></label><label className="field"><span>问题类别</span><select value={feedbackCategory} onChange={(event) => setFeedbackCategory(event.target.value)}><option value="localization">本地化</option><option value="fact_error">事实错误</option><option value="platform_rule">平台规则</option><option value="usability">操作体验</option></select></label><label className="field feedbackNote"><span>补充说明</span><input value={feedbackNote} onChange={(event) => setFeedbackNote(event.target.value)} placeholder="不要粘贴敏感或未公开内容" /></label></div><label className="contentConsent"><input type="checkbox" checked={includeContent} onChange={(event) => setIncludeContent(event.target.checked)} />明确同意在下载的本地反馈文件中附带完整终稿（默认不附带；GitHub 提交始终不附带）</label><div className="actions compact"><button onClick={downloadFeedback}>下载反馈单</button><button onClick={openFeedbackIssue}>在 GitHub 报告错误 ↗</button><a className="buttonLink" href="https://github.com/zugzwang-zg/LocalizeFlow/issues/new?template=beta_application.yml" target="_blank" rel="noreferrer">登记 Beta 兴趣 ↗</a></div></section>
-              <details className="privacyPanel"><summary>本地隐私指标与数据控制</summary><p>Demo 只在你的浏览器 localStorage 保存匿名运行 ID、事件名、完成时间、耗时、市场和内容类型；用途仅为你自行检查体验路径；最多保留 100 条且不超过 30 天。不记录正文，不设置第三方 Cookie，不会自动传输。</p><label className="contentConsent"><input type="checkbox" checked={metricsEnabled} onChange={(event) => { const enabled = event.target.checked; setMetricsEnabled(enabled); localStorage.setItem("localizeflow_metrics_disabled", String(!enabled)); }} />允许在本机保存匿名体验事件</label><div className="actions compact"><button onClick={exportPrivateMetrics}>导出本地指标</button><button onClick={clearPrivateMetrics}>清除本地指标</button></div></details>
-              <p className="fineprint">所有品牌、SKU、商品事实、价格、营销内容和评测材料均为 AI 生成的模拟数据；社交预览图也由 AI 生成且不属于项目证据。除此之外，代码、文档、测量、图表与演示资产为原创。自动预检不替代平台、法务或目标语言专业人员的最终审核。参见 <a href="/disclaimer">免责声明</a>。</p>
+            <div className="eyebrow">05 / 确认和下载</div>
+            <h1>确认内容后，再下载记录。</h1>
+            <p className="lede">对照原始草稿、整理后的版本和最终修改稿。完成检查并确认后，可以下载处理记录。</p>
+            {!generated ? <div className="empty"><b>请先生成内容草稿</b><button className="primary" onClick={() => setStep(2)}>前往设置任务</button></div> : <>
+              <div className="compareGrid"><article><header><span>V00</span><b>原始草稿</b></header><pre>{baseline}</pre></article><article><header><span>V01</span><b>整理后的版本</b></header><pre>{enhanced}</pre></article><article className="final"><header><span>V02</span><b>最终修改稿</b></header><pre>{finalText}</pre></article></div>
+              <div className="outcomeGrid"><article><small>减少重复操作</small><strong>3 类检查合并</strong></article><article><small>本次提示</small><strong>{quality.failed + quality.warned} 项问题</strong></article><article><small>参考资料</small><strong>{evidenceIds.length} 条商品信息</strong></article><article><small>下一步</small><strong>发布前再次确认</strong></article></div>
+              <label className={`confirm ${confirmed ? "checked" : ""}`}><input type="checkbox" checked={confirmed} disabled={quality.failed > 0 || unresolvedWarnings.length > 0} onChange={(event) => { const checked = event.target.checked; setConfirmed(checked); setConfirmedAt(checked ? new Date().toISOString() : ""); if (checked) recordEvent("human_signoff_completed", { step: 5 }); }} /><span><b>我已核对商品资料、表达和发布要求</b><small>{quality.failed ? "还有需要修改的内容，暂时不能确认。" : unresolvedWarnings.length ? "还有需要确认的提示，请先记录处理结果。" : "确认时间会写入下载记录；不会上传。"}</small></span></label>
+              <div className="exportPanel"><div><small>下载条件</small><strong>{confirmed ? "可以下载" : quality.failed ? "需要修改" : "等待确认"}</strong></div><div className="actions compact"><button disabled={!confirmed} onClick={exportCsv}>下载 CSV</button><button className="primary" disabled={!confirmed} onClick={exportPack}>下载 JSON</button></div></div>
+              <section className="feedbackPanel"><div className="sectionHeading"><h2>结果是否有用？</h2><span>体验反馈 · 由维护者定期查看</span></div><div className="feedbackGrid"><label className="field"><span>结果评价</span><select value={feedbackUseful} onChange={(event) => setFeedbackUseful(event.target.value)}><option value="yes">有用</option><option value="no">无用</option></select></label><label className="field"><span>问题类别</span><select value={feedbackCategory} onChange={(event) => setFeedbackCategory(event.target.value)}><option value="localization">目标市场表达</option><option value="fact_error">商品资料错误</option><option value="platform_rule">发布要求</option><option value="usability">操作体验</option></select></label><label className="field feedbackNote"><span>补充说明</span><input value={feedbackNote} onChange={(event) => setFeedbackNote(event.target.value)} placeholder="不要粘贴敏感或未公开内容" /></label></div><label className="contentConsent"><input type="checkbox" checked={includeContent} onChange={(event) => setIncludeContent(event.target.checked)} />同意在下载的反馈文件中附带完整内容（默认不附带；GitHub 反馈也不会自动附带）</label><div className="actions compact"><button onClick={downloadFeedback}>下载反馈单</button><button onClick={openFeedbackIssue}>在 GitHub 报告错误 ↗</button><a className="buttonLink" href="https://github.com/zugzwang-zg/LocalizeFlow/issues/new?template=beta_application.yml" target="_blank" rel="noreferrer">登记后续体验意向 ↗</a></div></section>
+              <details className="privacyPanel"><summary>本机保存记录与数据控制</summary><p>页面可以在你的浏览器中保存匿名的操作时间、市场、内容类型和步骤，方便你查看本次体验；最多保留 100 条且不超过 30 天。不会保存正文、上传文件，也不会自动发送给项目维护者。</p><label className="contentConsent"><input type="checkbox" checked={metricsEnabled} onChange={(event) => { const enabled = event.target.checked; setMetricsEnabled(enabled); localStorage.setItem("localizeflow_metrics_disabled", String(!enabled)); }} />允许在本机保存匿名操作记录</label><div className="actions compact"><button onClick={exportPrivateMetrics}>下载本机记录</button><button onClick={clearPrivateMetrics}>清除本机记录</button></div></details>
+              <p className="fineprint">所有品牌、商品编号、商品资料、价格、营销内容和评测材料均为 AI 生成的模拟数据；社交预览图也由 AI 生成，不作为项目结果依据。除此之外，代码、文档、测量、图表与演示资产为原创。自动检查不能替代平台、法务或目标语言人员的最终审核。参见 <a href="/disclaimer">免责声明</a>。</p>
             </>}
           </div>
         )}
