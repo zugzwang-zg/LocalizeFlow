@@ -7,22 +7,22 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11--3.13-3776AB.svg)](pyproject.toml)
 
-[在线体验](https://localizeflow-demo-86182.reidmozzie.chatgpt.site) · [90 秒证据](#90-秒看懂这个项目) · [3 分钟工作流](#demo从商品到可导出版本) · [完整评测](reports/evaluation_report.md) · [本地运行](#本地运行) · [发布状态](STATUS.md)
+[在线体验](https://localizeflow-demo-86182.reidmozzie.chatgpt.site) · [项目摘要](#90-秒项目摘要) · [3 分钟工作流](#demo从商品到可导出版本) · [完整评测](reports/evaluation_report.md) · [本地运行](#本地运行) · [发布状态](STATUS.md)
 
 ![LocalizeFlow evidence-led localization desk](web/public/og-portfolio.png)
 
-> 上图由 AI 生成，仅作为作品集社交预览，不属于项目证据。完整来源见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
+> 上图由 AI 生成，仅作为项目社交预览，不属于验证证据。完整来源见 [`DATA_LICENSE.md`](DATA_LICENSE.md)。
 
-## 90 秒看懂这个项目
+## 90 秒项目摘要
 
-| 招聘方最关心的问题 | 当前答案 |
+| 核心问题 | 当前实现 |
 |---|---|
 | 解决什么 | 将商品事实、目标市场语言与平台规则放进同一条可追溯、失败关闭的内容工作流 |
-| 我负责什么 | 独立主导产品范围、事实/语言资产、Python 检查链路、Web Demo、A/B 评测设计与开源发布；AI 辅助评测 |
-| 样本有多大 | 5 个虚拟 SKU × 2 个市场 × 3 种内容类型，共 30 组 A/B、60 条匿名候选 |
-| 结果如何 | LocalizeFlow 30/30 配对胜出；平均复核时间 -25.8%；平均修改次数 -61.5% |
-| 最重要的边界 | 事实通过率仍只有 66.7%，10 个增强候选未达阈值；没有真实用户采用或专业独立评审证据 |
-| 现在能体验什么 | 公开确定性 Demo：冻结虚拟数据、浏览器内处理、不调用模型 API、不接收真实商品资料 |
+| 如何实现 | 结构化事实与语言资产、Python 检查链路、Web Demo、人工终审和可审计导出 |
+| 如何验证 | 5 个虚拟 SKU × 2 个市场 × 3 种内容类型，共 30 组 A/B、60 条匿名候选 |
+| 当前结果 | LocalizeFlow 30/30 配对胜出；平均复核时间 -25.8%；平均修改次数 -61.5% |
+| 适用边界 | 事实通过率仍只有 66.7%，10 个增强候选未达阈值；没有真实用户采用或专业独立评审证据 |
+| 体验范围 | 公开确定性 Demo：冻结虚拟数据、浏览器内处理、不调用模型 API、不接收真实商品资料 |
 
 ### 当前发布边界
 
@@ -38,7 +38,7 @@
 
 LocalizeFlow 是一个面向跨境电商内容运营人员的离线可运行原型。它解决的不是“把中文翻译成外语”这一个问题，而是将商品事实、消费者洞察、品牌语气、双语术语和平台规则放进同一条可追溯工作流，使运营人员能看到内容为何这样写、用了哪些事实、存在哪些风险，以及人工修改后是否仍满足放行条件。
 
-当前 Web 首页按招聘方 3–5 分钟阅读路径组织：先看项目结论和量化证据，再区分个人职责、关键产品决策与诚实边界，最后进入确定性五步 Demo。设计与验收口径见 [`reports/portfolio_experience_readiness.md`](reports/portfolio_experience_readiness.md)。
+当前 Web 首页按“摘要—证据—流程”组织：先呈现项目结论和量化证据，再说明实现范围、关键产品决策与适用边界，最后进入确定性五步 Demo。设计与验收口径见 [`reports/portfolio_experience_readiness.md`](reports/portfolio_experience_readiness.md)。
 
 | 项目维度 | 当前实现 |
 |---|---|

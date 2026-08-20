@@ -1,7 +1,7 @@
 # LocalizeFlow v0.2.0-preview.2
 
 LocalizeFlow v0.2.0-preview.2 is a security-only follow-up to the first 0.2.0
-portfolio preview. It preserves the same deterministic public Demo and product
+public project preview. It preserves the same deterministic public Demo and product
 behavior while updating the Python cryptography dependency used by the optional
 local encrypted tenant store.
 

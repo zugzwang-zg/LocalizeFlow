@@ -85,7 +85,7 @@ ready.
 Evaluate Strategy B or C only when at least one value trigger and every matching
 safety/resource trigger are present:
 
-1. A concrete job interview, employer, accelerator or partner requests hosted
+1. A concrete prospective user, accelerator or partner requests hosted
    infrastructure evidence that the current repository cannot demonstrate.
 2. A dedicated monthly budget and primary/backup operational owner exist.
 3. Authorized participants and two independent en-US/es-MX reviewers exist.

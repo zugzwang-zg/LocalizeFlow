@@ -15,8 +15,8 @@ committed until an issue has an owner and an accepted implementation plan.
 - Inline issue highlighting and deterministic safe fixes.
 - Short guided onboarding, privacy notice, feedback, and minimal analytics.
 - Accessibility, responsive layout, and browser compatibility checks.
-- Strategy A portfolio readout is published: recruiter-first evidence,
-  ownership, product decisions, limitations, and a clearance-manifest visual
+- Strategy A public product readout is published: evidence-first results,
+  implementation scope, product decisions, limitations, and a clearance-manifest visual
   system. The 2026-08-16 production check confirmed all public trust routes,
   social metadata, interest-only Beta intake, and fail-closed trial language.
 

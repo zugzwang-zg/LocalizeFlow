@@ -1,7 +1,7 @@
 # Third-Party Notices
 
 LocalizeFlow is project-authored except for disclosed AI-generated synthetic
-evaluation material, the disclosed AI-generated portfolio social-preview
+evaluation material, the disclosed AI-generated project social-preview
 image, third-party open-source software dependencies, and references to
 external platform documentation.
 

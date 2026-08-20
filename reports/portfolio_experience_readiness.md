@@ -1,17 +1,16 @@
 # Strategy A portfolio experience readiness
 
 > Review date: 2026-08-16
-> Scope: recruiter-facing Web information architecture and visual system
+> Scope: public-facing Web information architecture and visual system
 > Local status: accepted by the project owner
 > Hosted status: published on 2026-08-16 at the existing public Demo URL
 
 ## Product decision
 
 Strategy A keeps the deterministic public Demo and uses the available effort
-to make the portfolio evidence easier to understand. It does not reopen the
-hosted free-trial scope. The page is designed for recruiters and hiring
-managers evaluating AI product, localization technology, or full-stack
-prototype work.
+to make the project evidence easier to understand. It does not reopen the
+hosted free-trial scope. The page is designed to make the AI product,
+localization technology, and full-stack prototype legible to public readers.
 
 The intended reading path is:
 

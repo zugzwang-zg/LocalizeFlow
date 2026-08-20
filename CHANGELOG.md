@@ -46,8 +46,8 @@ interfaces remain experimental.
 - A project-owner Strategy A decision record with weighted A/B/C scoring,
   current official free-hosting constraints, scope boundaries, and explicit
   triggers for reconsidering synthetic hosting or a real-data Beta.
-- A recruiter-oriented portfolio readout with an evidence summary, explicit
-  ownership, four product decisions, honest boundaries, and an AI-generated
+- A product-oriented public readout with an evidence summary, implementation
+  scope, four product decisions, honest boundaries, and an AI-generated
   social-preview image with recorded provenance.
 - The accepted Strategy A portfolio candidate was published to the existing
   public Sites URL with post-deployment route, metadata, and release-boundary
