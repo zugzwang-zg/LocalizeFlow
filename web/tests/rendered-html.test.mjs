@@ -21,7 +21,7 @@ test("server-renders the LocalizeFlow demo shell", async () => {
   assert.match(html, /不是翻译器，而是跨境内容的证据与放行工作台/);
   assert.match(html, /开始 3 分钟演示/);
   assert.match(html, /30 \/ 30/);
-  assert.match(html, /WHAT I OWNED/);
+  assert.match(html, /IMPLEMENTATION SCOPE/);
   assert.match(html, /FREE TRIAL · NO-GO/);
   assert.match(html, /NO API/);
   assert.match(html, /商品资料/);

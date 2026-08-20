@@ -3,7 +3,7 @@
 > Review date: 2026-08-16
 > Owner confirmation: project code and project evidence are original;
 > evaluation brand and marketing candidates are AI-generated synthetic
-> material, and the portfolio social-preview image is AI-generated.
+> material, and the project social-preview image is AI-generated.
 
 | Path | Content | Provenance | Public redistribution status | Release action |
 |---|---|---|---|---|
@@ -17,7 +17,7 @@
 | `data/platform_rules/` | Project rule summaries and external links | Project-authored summaries | Approved | Include; external pages remain third-party |
 | `reports/` | Evaluation and validation reports | Project-authored | Approved | Include with sample-size limitations |
 | `assets/` | Screenshots and project charts | Project-authored | Approved | Include |
-| `web/public/og-portfolio.png` | Portfolio social-preview image | AI-generated on 2026-08-16 with OpenAI's built-in image generation | Approved by owner | Include with explicit disclosure; never cite as evidence |
+| `web/public/og-portfolio.png` | Project social-preview image | AI-generated on 2026-08-16 with OpenAI's built-in image generation | Approved by owner | Include with explicit disclosure; never cite as evidence |
 | `demo/` | Project video, PDF, and PPTX | Project-authored | Approved | Include; validate Release size |
 | `outputs/` (if added) | Synthetic sample outputs | Must be project-authored or AI-generated synthetic material | Not present in current release candidate | Review before inclusion; never mix with user exports |
 

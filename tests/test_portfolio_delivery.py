@@ -7,17 +7,17 @@ def read(relative_path: str) -> str:
     return (PROJECT_ROOT / relative_path).read_text(encoding="utf-8")
 
 
-def test_portfolio_readout_preserves_evidence_and_release_boundaries() -> None:
+def test_product_readout_preserves_evidence_and_release_boundaries() -> None:
     page = read("web/app/page.tsx")
     report = read("reports/portfolio_experience_readiness.md")
     normalized_report = " ".join(report.split())
 
     for required_text in (
-        "SOLO PRODUCT BUILD",
-        "WHAT I OWNED",
+        "EVIDENCE-LED WORKFLOW",
+        "IMPLEMENTATION SCOPE",
         "30 / 30",
         "FREE TRIAL · NO-GO",
-        "AI 辅助评测",
+        "评测含 AI 辅助评分",
         "10 个阈值失败候选",
     ):
         assert required_text in page

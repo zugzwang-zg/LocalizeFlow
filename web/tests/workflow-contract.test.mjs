@@ -32,11 +32,12 @@ test("quality workflow exposes locate, deterministic repair, warning disposition
   assert.doesNotMatch(page, /events\.push\([^\n]*(finalText|edited|enhanced|baseline)/);
 });
 
-test("portfolio readout exposes ownership, evidence and honest release boundaries", async () => {
+test("product readout exposes implementation scope, evidence and honest release boundaries", async () => {
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
-  assert.match(page, /PORTFOLIO CASE STUDY · SOLO PRODUCT BUILD/);
+  assert.match(page, /PRODUCT CASE STUDY · EVIDENCE-LED WORKFLOW/);
+  assert.match(page, /IMPLEMENTATION SCOPE/);
   assert.match(page, /从问题定义到发布闸门/);
-  assert.match(page, /AI 辅助评测/);
+  assert.match(page, /评测含 AI 辅助评分/);
   assert.match(page, /30 \/ 30/);
   assert.match(page, /−25\.8%/);
   assert.match(page, /−61\.5%/);

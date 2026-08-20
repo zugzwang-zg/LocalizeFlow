@@ -6,7 +6,7 @@
 
 ## Published scope
 
-The accepted recruiter-facing portfolio readout replaced the previous public
+The accepted product-facing public readout replaced the previous public
 version at the existing Sites URL. The published experience contains frozen
 fictional data and deterministic browser-side interactions. It does not enable
 authentication, uploads, hosted model calls, server-side project persistence,

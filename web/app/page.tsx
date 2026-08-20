@@ -394,10 +394,10 @@ export default function Home() {
           <div className="page">
             <section className="portfolioHero" aria-labelledby="portfolio-title">
               <div className="heroCopy">
-                <div className="eyebrow">PORTFOLIO CASE STUDY · SOLO PRODUCT BUILD · 2026</div>
+                <div className="eyebrow">PRODUCT CASE STUDY · EVIDENCE-LED WORKFLOW · 2026</div>
                 <h1 id="portfolio-title">不是翻译器，而是跨境内容的证据与放行工作台。</h1>
-                <p className="lede">我把商品事实、目标市场语言、平台规则和人工终审做成一条可追溯工作流。招聘方可先用 90 秒看项目证据，再沿推荐路径完成约 3 分钟交互演示。</p>
-                <div className="introActions"><button className="primary" onClick={() => setStep(2)}>开始 3 分钟演示 →</button><a className="secondaryLink" href="#portfolio-evidence">先看作品集证据 ↓</a></div>
+                <p className="lede">商品事实、目标市场语言、平台规则和人工终审被组织成一条可追溯工作流。先用 90 秒了解验证结果，再沿推荐路径完成约 3 分钟交互演示。</p>
+                <div className="introActions"><button className="primary" onClick={() => setStep(2)}>开始 3 分钟演示 →</button><a className="secondaryLink" href="#portfolio-evidence">先看验证证据 ↓</a></div>
               </div>
               <aside className="releaseManifest" aria-label="LocalizeFlow 放行路线与项目边界">
                 <header><span>LF / RELEASE MANIFEST</span><b>可追溯内容放行</b></header>
@@ -413,7 +413,7 @@ export default function Home() {
             </section>
 
             <section className="portfolioEvidence" id="portfolio-evidence" aria-labelledby="evidence-title">
-              <div className="portfolioEvidenceHeader"><div><span>90-SECOND READOUT</span><h2 id="evidence-title">先看结果，再进入流程。</h2></div><p>目标岗位：AI 产品 / 本地化技术 / 全栈原型<br />角色：独立主导产品、数据、工程与开源发布；AI 辅助评测</p></div>
+              <div className="portfolioEvidenceHeader"><div><span>90-SECOND READOUT</span><h2 id="evidence-title">先看结果，再进入流程。</h2></div><p>技术覆盖：AI 工作流 / 本地化规则 / 全栈原型<br />交付范围：产品、数据、工程与开源发布；评测含 AI 辅助评分</p></div>
               <div className="portfolioMetrics">
                 <article><small>冻结 A/B 配对</small><strong>30 / 30</strong><p>LocalizeFlow 候选胜出</p></article>
                 <article><small>平均复核时间</small><strong>−25.8%</strong><p>6.33 → 4.70 分钟</p></article>
@@ -421,7 +421,7 @@ export default function Home() {
                 <article><small>评测矩阵</small><strong>5 × 2 × 3</strong><p>SKU × 市场 × 内容类型</p></article>
               </div>
               <div className="portfolioReadoutGrid">
-                <article className="ownershipCard"><span>WHAT I OWNED</span><h3>从问题定义到发布闸门</h3><ul><li>产品范围、用户路径与证据模型</li><li>事实库、提示词、规则和双语内容资产</li><li>Python 检查链路与交互式 Web Demo</li><li>A/B 评测设计、AI 辅助评分、失败复测与发布决策</li></ul></article>
+                <article className="ownershipCard"><span>IMPLEMENTATION SCOPE</span><h3>从问题定义到发布闸门</h3><ul><li>产品范围、用户路径与证据模型</li><li>事实库、提示词、规则和双语内容资产</li><li>Python 检查链路与交互式 Web Demo</li><li>A/B 评测设计、AI 辅助评分、失败复测与发布决策</li></ul></article>
                 <article className="decisionCard"><span>FOUR PRODUCT DECISIONS</span><h3>技术选择服务于可信度</h3><ol><li><b>事实编号先于生成</b><small>每条可验证声明都能回查来源。</small></li><li><b>硬失败不能被总分覆盖</b><small>事实与包装矛盾直接阻断导出。</small></li><li><b>公开 Demo 与模型链路分离</b><small>公开体验可复现，真实数据能力默认关闭。</small></li><li><b>把 NO-GO 也做成产物</b><small>机器闸门记录为何尚未开放免费试用。</small></li></ol></article>
               </div>
               <div className="evidenceCaveat"><b>诚实边界</b><span>事实通过率从 40.0% 提升到 66.7%，仍有 10 个阈值失败候选；当前没有真实用户采用或专业独立评审证据。</span><a href="https://github.com/zugzwang-zg/LocalizeFlow/blob/main/reports/evaluation_report.md" target="_blank" rel="noreferrer">查看完整评测 ↗</a></div>
