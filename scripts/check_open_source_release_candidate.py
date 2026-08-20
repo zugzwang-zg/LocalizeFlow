@@ -75,7 +75,7 @@ def evaluate_candidate() -> dict[str, Any]:
 
     for marker in (
         PUBLIC_DEMO_URL,
-        "## 90 秒看懂这个项目",
+        "## 90 秒项目摘要",
         "LocalizeFlow 30/30 配对胜出",
         "托管免费试用发布结论：NO-GO",
         "生产前置条件：UNRESOLVED",
