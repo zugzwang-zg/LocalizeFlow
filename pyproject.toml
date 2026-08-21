@@ -40,7 +40,7 @@ dev = [
   "pytest>=9.0.3,<10",
   "pytest-cov>=6,<7",
   "ruff>=0.9,<1",
-  "uv==0.12.4",
+  "uv==0.12.5",
 ]
 
 [project.urls]
