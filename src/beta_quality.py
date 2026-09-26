@@ -9,6 +9,8 @@ import unicodedata
 from collections import defaultdict
 from typing import Any, Iterable
 
+from src.quality_rules import RULES, ingredient_findings, risk_matches
+
 PACKAGING_TERMS: dict[str, dict[str, tuple[str, ...]]] = {
     "packaging_container": {
         "bottle": ("bottle", "botella", "envase pet", "envase de pp"),
@@ -395,7 +397,8 @@ def evaluate_beta_output(
     )
 
     content_text = "\n".join(_content_strings(output["content"]))
-    prohibited_hits: list[str] = []
+    prohibited_hits = risk_matches(content_text)
+    prohibited_hits.extend(ingredient_findings(content_text, [fact for fact in facts if fact["fact_id"] in eligible_ids]))
     for fact in facts:
         if fact["attribute"] == "prohibited_claim" or fact["generation_policy"] == "blocked":
             for expression in (fact["value"], fact["prohibited_expression"]):
@@ -486,6 +489,8 @@ def evaluate_beta_output(
     if output["content_type"] == "product_listing":
         if not content["title"] or len(content["bullet_points"]) != 5 or not content["description"]:
             structure_findings.append("目标内容类型的必填结构不完整。")
+        if len(content["title"]) > RULES["listing_title_max"]:
+            structure_findings.append("标题超过 150 字符。")
     elif output["content_type"] == "short_video_script":
         if not content["scenes"] or not content["caption"]:
             structure_findings.append("目标内容类型的必填结构不完整。")

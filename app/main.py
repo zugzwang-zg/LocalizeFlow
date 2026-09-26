@@ -77,6 +77,7 @@ STEP_LABELS = {
 STATUS_LABELS = {
     "pass": "通过",
     "warning": "需复核",
+    "not_checked": "未检查",
     "fail": "阻断",
 }
 
@@ -1348,8 +1349,6 @@ def _render_page_export(st: Any) -> None:
         st.code(payload["enhanced"], language=None, wrap_lines=True)
 
     st.markdown("### 人工编辑最终版本")
-    if not st.session_state.final_editor:
-        st.session_state.final_editor = payload["enhanced"]
     edited_text = st.text_area(
         "最终内容",
         key="final_editor",
@@ -1393,6 +1392,9 @@ def _render_page_export(st: Any) -> None:
         st.success("最终版本已确认。CSV 与 JSON 导出已开放。")
 
     final_pack = st.session_state.final_pack
+    if final_pack and final_pack["versions"][content_type].get("final") != edited_text:
+        st.session_state.confirmed = False
+        st.session_state.final_pack = None
     if st.session_state.confirmed and final_pack:
         st.markdown("### 最终检查")
         _render_quality(st, final_pack["final_quality"])

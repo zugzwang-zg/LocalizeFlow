@@ -1,0 +1,122 @@
+[
+  {
+    "name": "valid listing",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "TITLE: Serum\nBULLET 1: Simple care.\nBULLET 2: Simple care.\nBULLET 3: Simple care.\nBULLET 4: Simple care.\nBULLET 5: Simple care.\nDESCRIPTION: Simple care.",
+    "blocked": false
+  },
+  {
+    "name": "certification",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "TITLE: Serum\nBULLET 1: Simple care.\nBULLET 2: Simple care.\nBULLET 3: Simple care.\nBULLET 4: Simple care.\nBULLET 5: Simple care.\nDESCRIPTION: FDA-approved.",
+    "blocked": true
+  },
+  {
+    "name": "uncited retinol",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "TITLE: Serum\nBULLET 1: Simple care.\nBULLET 2: Simple care.\nBULLET 3: Simple care.\nBULLET 4: Simple care.\nBULLET 5: Simple care.\nDESCRIPTION: Contains retinol.",
+    "blocked": true
+  },
+  {
+    "name": "verified ingredient",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "TITLE: Serum\nBULLET 1: Simple care.\nBULLET 2: Simple care.\nBULLET 3: Simple care.\nBULLET 4: Simple care.\nBULLET 5: Simple care.\nDESCRIPTION: Made with glycerin and panthenol.",
+    "blocked": false
+  },
+  {
+    "name": "title limit",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "TITLE: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nBULLET 1: Simple care.\nBULLET 2: Simple care.\nBULLET 3: Simple care.\nBULLET 4: Simple care.\nBULLET 5: Simple care.\nDESCRIPTION: Simple care.",
+    "blocked": false
+  },
+  {
+    "name": "long title",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "TITLE: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nBULLET 1: Simple care.\nBULLET 2: Simple care.\nBULLET 3: Simple care.\nBULLET 4: Simple care.\nBULLET 5: Simple care.\nDESCRIPTION: Simple care.",
+    "blocked": true
+  },
+  {
+    "name": "empty body",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "social_ad_copy",
+    "text": "HOOK: Hello\nCTA: See details",
+    "blocked": true
+  },
+  {
+    "name": "valid social",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "social_ad_copy",
+    "text": "HOOK: Hello\nBODY: Simple care.\nCTA: See details",
+    "blocked": false
+  },
+  {
+    "name": "empty",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "",
+    "blocked": true
+  },
+  {
+    "name": "wrong capacity",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "TITLE: Serum\nBULLET 1: Simple care.\nBULLET 2: Simple care.\nBULLET 3: Simple care.\nBULLET 4: Simple care.\nBULLET 5: Simple care.\nDESCRIPTION: 50 mL",
+    "blocked": true
+  },
+  {
+    "name": "split medical",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "product_listing",
+    "text": "TITLE: Serum\nBULLET 1: Simple care.\nBULLET 2: Simple care.\nBULLET 3: Simple care.\nBULLET 4: Simple care.\nBULLET 5: Simple care.\nDESCRIPTION: This serum cures eczema.",
+    "blocked": true
+  },
+  {
+    "name": "empty labelled body",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "social_ad_copy",
+    "text": "HOOK: Hi\nBODY:\nCTA: Read",
+    "blocked": true
+  },
+  {
+    "name": "one character fields",
+    "sku": "MV-SERUM-001",
+    "market": "US",
+    "type": "social_ad_copy",
+    "text": "HOOK: H\nBODY: B\nCTA: C",
+    "blocked": false
+  },
+  {
+    "name": "Spanish unsupported ingredient",
+    "sku": "MV-SERUM-001",
+    "market": "MX",
+    "type": "social_ad_copy",
+    "text": "GANCHO: Hola\nCUERPO: Contiene retinol.\nCTA: Consulta los detalles.",
+    "blocked": true
+  },
+  {
+    "name": "Spanish certification",
+    "sku": "MV-SERUM-001",
+    "market": "MX",
+    "type": "social_ad_copy",
+    "text": "GANCHO: Hola\nCUERPO: Clínicamente comprobado.\nCTA: Consulta los detalles.",
+    "blocked": true
+  }
+]

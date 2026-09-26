@@ -1,0 +1,105 @@
+{
+  "version": "1.0",
+  "listing_title_max": 150,
+  "risk_patterns": [
+    "\\bcures?\\b",
+    "\\btreats?\\b.*\\b(?:acne|eczema|disease|condition)\\b",
+    "\\bprevents?\\b.*\\bdisease\\b",
+    "\\bheals?\\b",
+    "\\bcur[ae]\\b",
+    "\\btrat[ae]\\b.*\\b(?:acné|eczema|enfermedad)\\b",
+    "\\bpreviene\\b.*\\benfermedad\\b",
+    "\\bclinically proven\\b",
+    "\\bclinical(?:ly)? tested\\b",
+    "\\bclínicamente comprobado\\b",
+    "\\bpruebas clínicas\\b",
+    "\\bfda[- ]approved\\b",
+    "\\bapproved by (?:the )?fda\\b",
+    "\\bcofepris\\b",
+    "\\bdermatologist[- ]tested\\b",
+    "\\bhypoallergenic\\b",
+    "\\bcertified\\b",
+    "\\baprobado por\\b",
+    "\\bhipoalergénic[oa]\\b",
+    "\\brepairs?\\b.*\\bskin barrier\\b",
+    "\\brebuilds?\\b.*\\bskin barrier\\b",
+    "\\brepara\\b.*\\bbarrera cutánea\\b",
+    "\\breconstruye\\b.*\\bbarrera cutánea\\b",
+    "\\b(?:removes?|erases?)\\b.*\\b(?:wrinkles?|fine lines?)\\b",
+    "\\breverses?\\b.*\\baging\\b",
+    "\\b(?:elimina|borra)\\b.*\\b(?:arrugas|líneas de expresión)\\b",
+    "\\brevierte\\b.*\\benvejecimiento\\b",
+    "\\bguaranteed\\b",
+    "\\bmiracle\\b",
+    "\\bperfect skin\\b",
+    "\\b100%\\s+safe\\b",
+    "\\bfor everyone\\b",
+    "\\bgarantizad[oa]\\b",
+    "\\bmilagros[oa]\\b",
+    "\\bpiel perfecta\\b",
+    "\\b100%\\s+segur[oa]\\b",
+    "\\bpara todas las personas\\b",
+    "\\b(?:24|72)[- ]?hour\\b",
+    "\\b(?:24|72)\\s*horas\\b",
+    "\\b(repair|repairs)\\b|repara(?:r|n|s)?",
+    "all of your skincare needs|todas tus necesidades"
+  ],
+  "ingredient_aliases": {
+    "水": [
+      "water",
+      "agua"
+    ],
+    "甘油": [
+      "glycerin",
+      "glicerina"
+    ],
+    "泛醇": [
+      "panthenol",
+      "pantenol"
+    ],
+    "透明质酸钠": [
+      "sodium hyaluronate",
+      "hialuronato de sodio"
+    ],
+    "椰油酰甘氨酸钠": [
+      "sodium cocoyl glycinate",
+      "cocoil glicinato de sodio"
+    ],
+    "角鲨烷": [
+      "squalane",
+      "escualano"
+    ],
+    "乳木果脂": [
+      "shea butter",
+      "manteca de karité"
+    ],
+    "尿囊素": [
+      "allantoin",
+      "alantoína"
+    ],
+    "甜菜碱": [
+      "betaine",
+      "betaína"
+    ],
+    "生育酚": [
+      "tocopherol",
+      "tocoferol"
+    ],
+    "视黄醇": [
+      "retinol"
+    ],
+    "烟酰胺": [
+      "niacinamide",
+      "niacinamida"
+    ],
+    "水杨酸": [
+      "salicylic acid",
+      "ácido salicílico"
+    ],
+    "维生素C": [
+      "vitamin c",
+      "vitamina c"
+    ]
+  },
+  "scope": "Deterministic configured risks only; unknown paraphrases require human review."
+}

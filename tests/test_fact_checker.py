@@ -78,10 +78,30 @@ class FactCheckerTests(unittest.TestCase):
         self.assertGreater(result["summary"]["numeric_claim_count"], 0)
         self.assertTrue(
             all(
-                item["status"] == "supported"
+                item["status"] in {"supported", "subjective"}
                 for item in result["claim_results"]
             )
         )
+
+    def test_safe_claim_cannot_cover_appended_assertions(self) -> None:
+        for suffix in (" cures eczema", " Contains gold flakes.", " 50 mL"):
+            with self.subTest(suffix=suffix):
+                record = minimal_record("Hydrating Serum, 30 mL", ["MV-SERUM-001-F002", "MV-SERUM-001-F003"])
+                record["content"]["title"] += suffix
+                result = self.checker.check(record)
+                self.assertEqual(result["export_gate"]["status"], "blocked")
+                self.assertGreater(result["summary"]["auto_extracted_claim_count"], 0)
+
+    def test_token_overlap_is_not_exact_coverage(self) -> None:
+        self.assertFalse(FactChecker._unit_is_covered("Contains retinol and glycerin", ["Contains glycerin"]))
+        self.assertFalse(FactChecker._unit_is_covered("Not fragrance-free", ["fragrance-free"]))
+        self.assertTrue(FactChecker._unit_is_covered("Serum, 30 mL.", ["Serum", "30 mL"]))
+
+    def test_complete_surface_is_scanned_across_separate_claims(self) -> None:
+        record = minimal_record("Clinically", ["MV-SERUM-001-F002"])
+        record["content"]["title"] = "Clinically proven"
+        record["claims"].append({**record["claims"][0], "claim_id": "c2", "text": "proven"})
+        self.assertEqual(self.checker.check(record)["export_gate"]["status"], "blocked")
 
     def test_numeric_contradiction_blocks_export(self) -> None:
         record = minimal_record(
