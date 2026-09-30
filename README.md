@@ -1,5 +1,7 @@
 # LocalizeFlow｜跨境商品本地化 Copilot
 
+> 2026-09-30：已完成[单一 AI 评审](reports/ai_review_2026-09-30.md)，含逐条证据与修订清单；不等同于独立人工评测。
+
 > 把中文商品资料转化为面向美国英语与墨西哥西班牙语市场的可追溯营销内容，并在导出前完成事实、术语、品牌和平台规则预检。
 
 [![CI](https://github.com/zugzwang-zg/LocalizeFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/zugzwang-zg/LocalizeFlow/actions/workflows/ci.yml)

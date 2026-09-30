@@ -9,6 +9,13 @@ const bundle = await build({ entryPoints: [fileURLToPath(new URL("../lib/demo-qu
 const { inspectContent } = await import(`data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString("base64")}`);
 const cases = JSON.parse(await readFile(new URL("../../data/rules/quality_cases.json", import.meta.url), "utf8"));
 
+test("video duration requires review and Spanish pieces has a concrete repair", () => {
+  const video = inspectContent("00:00-00:15 Voice: Helps skin feel soft. CTA: Read more.", "short_video_script", "US", "MV-SERUM-001");
+  assert.equal(video.checks.find((check) => check.id === "narration-review").status, "warning");
+  const kit = inspectContent("GANCHO: 3 pieces\nTEXTO: Rutina\nCTA: Consulta los detalles", "social_ad_copy", "MX", "MV-KIT-001");
+  assert.equal(kit.checks.find((check) => check.id === "terminology").replacement, "3 piezas");
+});
+
 for (const fixture of cases) {
   test(`shared Python/browser gate: ${fixture.name}`, () => {
     const result = inspectContent(fixture.text, fixture.type, fixture.market, fixture.sku);

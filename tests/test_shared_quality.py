@@ -14,6 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SharedQualityTests(unittest.TestCase):
+    def test_video_timestamps_do_not_prove_narration_duration(self):
+        quality = evaluate_text(sku="MV-SERUM-001", market="US", content_type="short_video_script", text="00:00-00:15 Voice: Helps skin feel soft. CTA: Read more.")
+        self.assertTrue(any(check["name"] == "口播时长复核" and check["status"] == "warning" for check in quality["checks"]))
+
     def test_cross_runtime_contract(self):
         cases = json.loads((ROOT / "data/rules/quality_cases.json").read_text(encoding="utf-8"))
         for case in cases:

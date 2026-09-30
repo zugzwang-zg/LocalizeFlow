@@ -595,6 +595,13 @@ def evaluate_text(
             f"脚本长度 {len(text)} 字符；Demo 按 15 秒结构预检。",
             category="platform",
         )
+        add_check(
+            "口播时长复核",
+            "warning",
+            "分镜时间标签不能证明实际口播时长；当前未进行录音计时。",
+            "缩短每段口播并试读，确认节奏后记录复核结论。",
+            "platform",
+        )
     else:
         parsed = parse_content(text, content_type)
         structure_pass = all(parsed.values())
@@ -614,6 +621,8 @@ def evaluate_text(
 
     terminology_hits: list[str] = []
     if market == "MX":
+        if "3 pieces" in normalized:
+            terminology_hits.append("3 pieces → 3 piezas")
         if re.search(r"\bserum\b", text, flags=re.I):
             terminology_hits.append("serum → sérum")
         if "crema de cara" in normalized:

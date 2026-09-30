@@ -116,16 +116,17 @@ export function inspectContent(text: string, type: ContentType, market: Market, 
     structureDetail = structure === "pass" ? "Hook、正文和 CTA 齐全。" : "Hook、正文或 CTA 缺失。";
   }
   checks.push({ id: "platform-structure", name: "平台结构", status: structure, detail: structureDetail });
-  const terminologyPattern = market === "MX" ? /\bserum\b|crema de cara/i : /on the wet face|a opaque/i;
+  if (type === "short_video_script") checks.push({ id: "narration-review", name: "口播时长复核", status: "warning", detail: "分镜时间标签不能证明实际口播时长；当前未进行录音计时。", suggestion: "缩短每段口播并试读，确认节奏后记录复核结论。" });
+  const terminologyPattern = market === "MX" ? /3 pieces|\bserum\b|crema de cara/i : /on the wet face|a opaque/i;
   const terminologyIssue = firstMatch(text, terminologyPattern);
   checks.push({
     id: "terminology",
     name: "术语一致性",
     status: terminologyIssue ? "warning" : "pass",
     detail: terminologyIssue ? "发现目标市场术语或语法提示。" : "核心术语符合目标语言约定。",
-    suggestion: terminologyIssue ? (market === "MX" ? "优先使用 sérum / crema hidratante facial。" : "使用 over a wet face / an opaque。") : undefined,
+    suggestion: terminologyIssue ? (market === "MX" ? "优先使用 sérum / crema hidratante facial / 3 piezas。" : "使用 over a wet face / an opaque。") : undefined,
     matchedText: terminologyIssue,
-    replacement: terminologyIssue ? ({ serum: "sérum", "crema de cara": "crema hidratante facial", "on the wet face": "over a wet face", "a opaque": "an opaque" } as Record<string, string>)[terminologyIssue.toLowerCase()] : undefined,
+    replacement: terminologyIssue ? ({ "3 pieces": "3 piezas", serum: "sérum", "crema de cara": "crema hidratante facial", "on the wet face": "over a wet face", "a opaque": "an opaque" } as Record<string, string>)[terminologyIssue.toLowerCase()] : undefined,
   });
   const brandRisk = firstMatch(text, /buy now|compra ahora|must-have|life-changing/i);
   checks.push({

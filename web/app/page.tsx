@@ -251,7 +251,7 @@ export default function Home() {
       <section className="workspace">
         <header className="topbar">
           <div className="offline"><span /> NO API · REPRODUCIBLE</div>
-          <div className="topLinks"><a href="/status">状态</a><a href="/support">支持</a><a href="/privacy">隐私</a><a href="/terms">条款</a><a href="/acceptable-use">可接受使用</a><a href="https://github.com/zugzwang-zg/LocalizeFlow" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+          <div className="topLinks"><a href="https://github.com/zugzwang-zg/LocalizeFlow/blob/main/reports/ai_review_2026-09-30.md" target="_blank" rel="noreferrer">AI 评审与局限</a><a href="/status">状态</a><a href="/support">支持</a><a href="/privacy">隐私</a><a href="/terms">条款</a><a href="/acceptable-use">可接受使用</a><a href="https://github.com/zugzwang-zg/LocalizeFlow" target="_blank" rel="noreferrer">GitHub ↗</a></div>
         </header>
 
         <div className="stepStrip" aria-label="当前进度">
