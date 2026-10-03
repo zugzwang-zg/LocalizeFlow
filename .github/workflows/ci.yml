@@ -61,7 +61,11 @@ jobs:
         run: pnpm security:audit
       - name: Lint
         run: pnpm lint
+      - name: Type check
+        run: pnpm typecheck
       - name: Test
         run: pnpm test
-      - name: Build
-        run: pnpm build
+      - name: Install browser
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Browser workflow tests
+        run: pnpm test:e2e

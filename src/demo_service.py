@@ -7,6 +7,7 @@ API or a live commerce platform, so every output is reproducible and auditable.
 from __future__ import annotations
 
 import csv
+import hashlib
 import io
 import json
 import re
@@ -17,6 +18,7 @@ from pathlib import Path
 from typing import Any, Iterable, TypedDict
 
 from src.packaging_checker import check_packaging_text, pre_generation_gate
+from src.quality_rules import RULES, ingredient_findings, risk_matches
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 FACT_PATH = PROJECT_ROOT / "data" / "products" / "product_facts.json"
@@ -353,7 +355,7 @@ def parse_content(text: str, content_type: str) -> dict[str, Any]:
     if content_type == "social_ad_copy":
         return {
             "hook": _prefixed_value(lines, ("HOOK:", "GANCHO:")),
-            "body": _prefixed_value(lines, ("BODY:", "TEXTO:")),
+            "body": _prefixed_value(lines, ("BODY:", "TEXTO:", "CUERPO:")),
             "cta": _prefixed_value(lines, ("CTA:",)),
         }
     caption = _prefixed_value(lines, ("CAPTION:", "TEXTO:"))
@@ -501,16 +503,7 @@ def evaluate_text(
             }
         )
 
-    prohibited_patterns = {
-        r"\b(cure|cures|clinically proven|guaranteed|miracle)\b": "医疗化、临床或保证性表述",
-        r"\b(repair|repairs)\b|repara(?:r|n|s)?": "超出事实边界的修复功效",
-        r"all of your skincare needs|todas tus necesidades": "全能承诺",
-    }
-    prohibited_hits = [
-        label
-        for pattern, label in prohibited_patterns.items()
-        if re.search(pattern, normalized, flags=re.I)
-    ]
+    prohibited_hits = risk_matches(text)
     if prohibited_hits:
         add_check(
             "事实与功效边界",
@@ -523,10 +516,14 @@ def evaluate_text(
         add_check(
             "事实与功效边界",
             "pass",
-            "未发现医疗化、全能承诺或保证性功效。",
+            "未命中已配置的风险表达；未执行通用语义核验。",
             category="fact",
         )
 
+    if not text.strip():
+        add_check("内容完整性", "fail", "内容不能为空。", category="fact")
+    for hit in ingredient_findings(text, facts_for_sku(sku)):
+        add_check("成分证据", "fail", f"当前 SKU 没有支持 {hit} 的成分事实。", category="fact")
     packaging_report = check_packaging_text(sku, text, market)
     packaging_issue = packaging_report["status"] == "blocked"
     if packaging_issue:
@@ -556,9 +553,10 @@ def evaluate_text(
         structure_pass = bool(
             parsed["title"]
             and len(parsed["bullet_points"]) == 5
+            and all(bullet.strip() for bullet in parsed["bullet_points"])
             and parsed["description"]
         )
-        title_length_pass = len(parsed["title"]) <= 150
+        title_length_pass = len(parsed["title"]) <= RULES["listing_title_max"]
         add_check(
             "平台结构",
             "pass" if structure_pass else "fail",
@@ -584,7 +582,7 @@ def evaluate_text(
         has_cta = "cta" in normalized or "consulta los detalles" in normalized
         add_check(
             "平台结构",
-            "pass" if has_timing and has_cta else "warning",
+            "pass" if has_timing and has_cta else "fail",
             "包含分镜时间与 CTA。" if has_timing and has_cta else "分镜时间或 CTA 不完整。",
             "补充分镜时间和单一邀请式 CTA。"
             if not (has_timing and has_cta)
@@ -593,29 +591,38 @@ def evaluate_text(
         )
         add_check(
             "字符限制",
-            "pass",
+            "not_checked",
             f"脚本长度 {len(text)} 字符；Demo 按 15 秒结构预检。",
             category="platform",
+        )
+        add_check(
+            "口播时长复核",
+            "warning",
+            "分镜时间标签不能证明实际口播时长；当前未进行录音计时。",
+            "缩短每段口播并试读，确认节奏后记录复核结论。",
+            "platform",
         )
     else:
         parsed = parse_content(text, content_type)
         structure_pass = all(parsed.values())
         add_check(
             "平台结构",
-            "pass" if structure_pass else "warning",
+            "pass" if structure_pass else "fail",
             "Hook、正文和 CTA 齐全。" if structure_pass else "Hook、正文或 CTA 缺失。",
             "补齐 Hook、正文和单一 CTA。" if not structure_pass else "",
             "platform",
         )
         add_check(
             "字符限制",
-            "pass",
+            "not_checked",
             f"社媒文案长度 {len(text)} 字符；仍需在真实发布平台复核。",
             category="platform",
         )
 
     terminology_hits: list[str] = []
     if market == "MX":
+        if "3 pieces" in normalized:
+            terminology_hits.append("3 pieces → 3 piezas")
         if re.search(r"\bserum\b", text, flags=re.I):
             terminology_hits.append("serum → sérum")
         if "crema de cara" in normalized:
@@ -690,6 +697,11 @@ def evaluate_text(
     }
 
 
+def _review_digest(pack: dict[str, Any], text: str) -> str:
+    identity = [pack.get("sku"), pack.get("market"), pack.get("primary_content_type"), text]
+    return hashlib.sha256(json.dumps(identity, ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
 def update_pack_with_manual_text(
     pack: dict[str, Any], edited_text: str
 ) -> dict[str, Any]:
@@ -708,6 +720,7 @@ def update_pack_with_manual_text(
     updated["human_review"] = {
         "required": True,
         "status": "confirmed",
+        "content_digest": _review_digest(updated, edited_text),
     }
     return updated
 
@@ -787,6 +800,8 @@ def _require_exportable_pack(pack: dict[str, Any]) -> None:
     human_review = pack.get("human_review")
     if not isinstance(human_review, dict) or human_review.get("status") != "confirmed":
         raise DemoExportError("Human review must be confirmed before export.")
+    if human_review.get("content_digest") != _review_digest(pack, final_text):
+        raise DemoExportError("Content changed since human review; confirm the new version.")
     fresh_quality = evaluate_text(
         sku=str(pack.get("sku", "")),
         market=str(pack.get("market", "")),

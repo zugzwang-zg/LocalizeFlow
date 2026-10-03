@@ -393,12 +393,20 @@ class FactChecker:
         uncovered: list[dict[str, Any]] = []
         for index, unit in enumerate(units, start=1):
             candidates = by_location.get(unit.location, [])
-            if FactChecker._unit_is_covered(unit.text, candidates):
+            residual = FactChecker._uncovered_text(unit.text, candidates)
+            # Always scan the complete surface, even if multiple individually safe
+            # claims cover a phrase whose combination makes a high-risk assertion.
+            high_risk_surface = any(
+                re.search(pattern, _normalize_text(unit.text))
+                for patterns in HIGH_RISK_PATTERNS.values()
+                for pattern in patterns
+            )
+            if not residual and not high_risk_surface:
                 continue
             uncovered.append(
                 {
                     "claim_id": f"AUTO-{index:03d}",
-                    "text": unit.text,
+                    "text": unit.text if high_risk_surface else residual,
                     "location": unit.location,
                     "fact_ids": [],
                     "declared_evidence_level": None,
@@ -409,22 +417,24 @@ class FactChecker:
 
     @staticmethod
     def _unit_is_covered(unit_text: str, claim_texts: Iterable[str]) -> bool:
+        return not FactChecker._uncovered_text(unit_text, claim_texts)
+
+    @staticmethod
+    def _uncovered_text(unit_text: str, claim_texts: Iterable[str]) -> str:
         normalized_unit = _normalize_text(unit_text)
         candidates = [_normalize_text(text) for text in claim_texts if text]
         if not candidates:
-            return False
-        if any(
-            candidate in normalized_unit or normalized_unit in candidate
-            for candidate in candidates
-        ):
-            return True
-        unit_tokens = set(re.findall(r"[\wáéíóúüñ]+", normalized_unit))
-        covered_tokens: set[str] = set()
+            return normalized_unit
+        if any(re.search(r"(?<!\w)" + re.escape(normalized_unit) + r"(?!\w)", candidate) for candidate in candidates):
+            return ""
+        # Exact spans only: token overlap or a short substring does not account
+        # for appended claims, negation, or changed numbers.
+        covered = [False] * len(normalized_unit)
         for candidate in candidates:
-            covered_tokens.update(re.findall(r"[\wáéíóúüñ]+", candidate))
-        if not unit_tokens:
-            return True
-        return len(unit_tokens & covered_tokens) / len(unit_tokens) >= 0.6
+            for match in re.finditer(r"(?<!\w)" + re.escape(candidate) + r"(?!\w)", normalized_unit):
+                covered[match.start():match.end()] = [True] * len(match.group())
+        residual = "".join(" " if marked else character for character, marked in zip(normalized_unit, covered))
+        return residual.strip() if any(character.isalnum() for character in residual) else ""
 
     def _check_claim(
         self, claim: dict[str, Any], *, sku: str, market: str, language: str

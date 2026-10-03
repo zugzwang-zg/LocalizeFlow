@@ -41,3 +41,8 @@ next-env.d.ts
 /outputs/
 /work/
 /.site-package-stage-*/
+
+/playwright-report/
+/test-results/
+
+*.tsbuildinfo

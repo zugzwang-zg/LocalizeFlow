@@ -1,5 +1,7 @@
 # LocalizeFlow｜跨境商品本地化 Copilot
 
+> 2026-09-30：已完成[单一 AI 评审](reports/ai_review_2026-09-30.md)，含逐条证据与修订清单；不等同于独立人工评测。
+
 > 把中文商品资料转化为面向美国英语与墨西哥西班牙语市场的可追溯营销内容，并在导出前完成事实、术语、品牌和平台规则预检。
 
 [![CI](https://github.com/zugzwang-zg/LocalizeFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/zugzwang-zg/LocalizeFlow/actions/workflows/ci.yml)
@@ -189,6 +191,8 @@ Web 与 Streamlit Demo 将完整链路压缩成五步，公开 Web Demo 提供�
 
 ## A/B 评测
 
+> 来源说明：以下是含 AI 辅助的历史评分记录，人工独立性与计时来源待核实，不是本次修复后的新增实验。具体 AI/人工分工尚未形成完整逐项记录；详见 [评测来源与下一轮验证](docs/evaluation_provenance.md)。
+
 盲评覆盖 5 个 SKU、2 个市场和 3 种内容类型，共 30 组 A/B、60 条匿名候选。揭盲前后使用独立密钥与 SHA-256 核验候选未被替换。
 
 | 指标 | Baseline | LocalizeFlow | 变化 |
@@ -202,22 +206,22 @@ Web 与 Streamlit Demo 将完整链路压缩成五步，公开 Web Demo 提供�
 
 ![A/B 评测对比](assets/evaluation_ab_comparison.png)
 
-这些结果来自单评审者评分记录，适用于当前项目样本，不代表统计显著性检验或真实平台批准。完整结果见 [`reports/evaluation_report.md`](reports/evaluation_report.md)。
+这些结果来自仅记录一位评审者、且披露 AI 辅助的历史评分记录，适用于当前项目样本，不代表统计显著性检验或真实平台批准。完整结果见 [`reports/evaluation_report.md`](reports/evaluation_report.md)。
 
 ## 业务价值与证据等级
 
-对于代表性 SKU `MV-SERUM-001`，实际盲评与本地规则记录显示：
+对于代表性 SKU `MV-SERUM-001`，历史评分与本地规则记录显示：
 
 | 指标 | Baseline | LocalizeFlow | 证据性质 |
 |---|---:|---:|---|
-| 平均复核时间 | 5.83 分钟 | 4.67 分钟（-20.0%） | 实际盲评记录 |
-| 平均修改次数 | 3.33 | 1.50（-55.0%） | 实际盲评记录 |
-| 一次生成可用率 | 0.0% | 66.7% | 实际盲评 + 本地规则 |
+| 平均复核时间 | 5.83 分钟 | 4.67 分钟（-20.0%） | 历史评分记录（来源待核实） |
+| 平均修改次数 | 3.33 | 1.50（-55.0%） | 历史评分记录（来源待核实） |
+| 一次生成可用率 | 0.0% | 66.7% | 历史评分记录 + 本地规则 |
 | 平台规则预检通过率 | 50.0% | 100.0% | 本地规则检查 |
 | 术语一致率 | 66.7% | 83.3% | 本地术语规则 |
-| 事实错误率 | 33.3% | 33.3% | 实际盲评记录，未改善 |
+| 事实错误率 | 33.3% | 33.3% | 历史评分记录（来源待核实），未改善 |
 
-另有一项**情景分析**：六项纯人工任务的 AI 估算合计为 179 分钟，与 LocalizeFlow 的实际复核/系统记录组合后得到 84.4% 的情景节省率。该值不是专业人士现场计时，不能表述为“已实测节省 84.4%”。
+另有一项**情景分析**：六项纯人工任务的 AI 估算合计为 179 分钟，与 LocalizeFlow 的历史复核/系统记录组合后得到 84.4% 的情景节省率。该值不是专业人士现场计时，不能表述为“已实测节省 84.4%”。
 
 ![业务价值与成本效率](assets/business_value_cost_efficiency.png)
 
@@ -349,3 +353,9 @@ localizeflow/
 ## 开源许可证
 
 LocalizeFlow 采用 [Apache License 2.0](LICENSE)。虚拟品牌、商品、价格、营销候选和评测材料为 AI 生成的合成内容，仅用于演示与研究，不代表真实品牌、平台批准、法律意见或医疗证据。
+
+## 新增验证与串联案例
+
+- [评论证据到双语内容的离线案例](docs/cross_project_case.md)：`python scripts/run_evidence_case.py`。
+- Web 行为测试：`cd web` 后运行 `pnpm exec playwright install chromium`、`pnpm test:e2e`。
+- Python 与网页读取同一份 `data/rules/demo_quality_rules.json`，并执行相同的 `quality_cases.json` 回归样例；词典未覆盖的语义仍需人工判断。
