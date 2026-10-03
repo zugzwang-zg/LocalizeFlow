@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 
 async function generate(page: Page) {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "设置营销任务 →" }).click();
   await page.getByRole("button", { name: "生成可追溯内容包 →" }).click();
   await page.getByRole("button", { name: "运行质量检查 →" }).click();
